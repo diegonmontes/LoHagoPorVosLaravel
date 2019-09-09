@@ -2,43 +2,43 @@
 
 return [
     'words' => [
-        'cancel'  => 'Cancel',
-        'delete'  => 'Delete',
-        'edit'    => 'Edit',
-        'yes'     => 'Yes',
+        'cancel'  => 'Cancelar',
+        'delete'  => 'Borrar',
+        'edit'    => 'Editar',
+        'yes'     => 'Si',
         'no'      => 'No',
-        'minutes' => '1 minute| :count minutes',
+        'minutes' => '1 minuto| :count minutos',
     ],
 
     'discussion' => [
-        'new'          => 'New '.trans('chatter::intro.titles.discussion'),
-        'all'          => 'All '.trans('chatter::intro.titles.discussion'),
-        'create'       => 'Create '.trans('chatter::intro.titles.discussion'),
-        'posted_by'    => 'Posted by',
-        'head_details' => 'Posted in Category',
+        'new'          => 'Nueva '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+        'all'          => 'Todas las '.mb_strtolower(trans('chatter::intro.titles.discussions')),
+        'create'       => 'Crear una '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+        'posted_by'    => 'Publicado por',
+        'head_details' => 'Publicado en categoria',
 
     ],
     'response' => [
-        'confirm'     => 'Are you sure you want to delete this response?',
-        'yes_confirm' => 'Yes Delete It',
-        'no_confirm'  => 'No Thanks',
-        'submit'      => 'Submit response',
-        'update'      => 'Update Response',
+        'confirm'     => '¿Estás seguro de que quieres borrar la respuesta?',
+        'yes_confirm' => 'Si, borrar',
+        'no_confirm'  => 'No gracias',
+        'submit'      => 'Enviar respuesta',
+        'update'      => 'Actualizar respuesta',
     ],
 
     'editor' => [
-        'title'               => 'Title of '.trans('chatter::intro.titles.discussion'),
-        'select'              => 'Select a Category',
-        'tinymce_placeholder' => 'Type Your '.trans('chatter::intro.titles.discussion').' Here...',
-        'select_color_text'   => 'Select a Color for this '.trans('chatter::intro.titles.discussion').' (optional)',
+        'title'               => 'Titulo de la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+        'select'              => 'Selecciona una categoria',
+        'tinymce_placeholder' => 'Agrega el contenido para la '.mb_strtolower(trans('chatter::intro.titles.discussion')).' aquí...',
+        'select_color_text'   => 'Selecciona un color para la '.mb_strtolower(trans('chatter::intro.titles.discussion')).' (opcional)',
     ],
 
     'email' => [
-        'notify' => 'Notify me when someone replies',
+        'notify' => 'Notificarme cuando alguien conteste en la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
     ],
 
-    'auth' => 'Please <a href="/:home/login">login</a>
-                or <a href="/:home/register">register</a>
-                to leave a response.',
+    'auth' => 'Por favor <a href="/:home/login">Inicia sesión</a>
+                o <a href="/:home/register">Regístrate</a>
+                para dejar una respuesta.',
 
 ];

@@ -2,39 +2,37 @@
 
 return [
     'success' => [
-        'title'  => 'Well done!',
+        'title'  => '¡Bien hecho!',
         'reason' => [
-            'submitted_to_post'       => 'Response successfully submitted to '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-            'updated_post'            => 'Successfully updated the '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-            'destroy_post'            => 'Successfully deleted the response and '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-            'destroy_from_discussion' => 'Successfully deleted the response from the '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-            'created_discussion'      => 'Successfully created a new '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
+            'submitted_to_post'       => 'Respuesta enviada correctamente a la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+            'updated_post'            =>  trans('chatter::intro.titles.discussion').' actualizada correctamente.',
+            'destroy_post'            => 'Se ha borrado correctamente la respuesta y la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+            'destroy_from_discussion' => 'Se ha borrado correctamente la respuesta de la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+            'created_discussion'      => 'Se ha creado correctamente una nueva '.mb_strtolower(trans('chatter::intro.titles.discussion')),
         ],
     ],
     'info' => [
-        'title' => 'Heads Up!',
+        'title' => '¡Aviso!',
     ],
     'warning' => [
-        'title' => 'Wuh Oh!',
+        'title' => '¡Precaución!',
     ],
     'danger'  => [
-        'title'  => 'Oh Snap!',
+        'title'  => '¡Ha ocurrido un error!',
         'reason' => [
-            'errors'            => 'Please fix the following errors:',
-            'prevent_spam'      => 'In order to prevent spam, please allow at least :minutes in between submitting content.',
-            'trouble'           => 'Sorry, there seems to have been a problem submitting your response.',
-            'update_post'       => 'Nah ah ah... Could not update your response. Make sure you\'re not doing anything shady.',
-            'destroy_post'      => 'Nah ah ah... Could not delete the response. Make sure you\'re not doing anything shady.',
-            'create_discussion' => 'Whoops :( There seems to be a problem creating your '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-        	'title_required'    => 'Please write a title',
-        	'title_min'		    => 'The title has to have at least :min characters.',
-        	'title_max'		    => 'The title has to have no more than :max characters.',
-        	'content_required'  => 'Please write some content',
-        	'content_min'  		=> 'The content has to have at least :min characters',
-        	'category_required' => 'Please choose a category',
-
-       
-       
+            'errors'            => 'Por favor corrige los siguientes errores:',
+            'prevent_spam'      => 'Con el fin de prevenir el SPAM, podrás volver a enviar el contenido nuevamente en :minutes',
+            'trouble'           => 'Parece que ha ocurrido un problema al intentar enviar la respuesta, vuelve a intentarlo más tarde.',
+            'update_post'       => '¡Oh! No se ha podido actualizar la respuesta.',
+            'destroy_post'      => '¡Oh! No se ha podido borrar la respuesta.',
+            'create_discussion' => '¡Ups! Parece que hay un problema al crear la '.mb_strtolower(trans('chatter::intro.titles.discussion')).'. :(',
+        	'title_required'    => 'Por favor escribe un título',
+        	'title_min'		    => 'El título debe tener al menos :min caracteres.',
+        	'title_max'		    => 'El título no debe superar los :max caracteres.',
+        	'content_required'  => 'Es necesario escribir algo en el contenido',
+        	'content_min'  		=> 'El contenido debe tener al menos :min caracteres',
+        	'category_required' => 'Por favor selecciona una categoría',
+        	
         ],
     ],
 ];

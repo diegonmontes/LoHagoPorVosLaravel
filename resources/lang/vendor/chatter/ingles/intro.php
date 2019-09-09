@@ -12,8 +12,8 @@ return [
     */
 
     'titles' => [
-        'discussion'  => 'Discusión',
-        'discussions' => 'Discusiones',
+        'discussion'  => 'Discussion',
+        'discussions' => 'Discussions',
     ],
 
    /*
@@ -31,8 +31,8 @@ return [
     |
     */
 
-    'headline'      => 'Bienvenidos a Chatter',
-    'description'   => 'Un foro con un simple librería para Laravel',
+    'headline'      => 'Welcome to Chatter',
+    'description'   => 'A simple forum package for your Laravel app.',
 
 ];
 

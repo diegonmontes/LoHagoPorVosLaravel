@@ -1,14 +1,14 @@
 <?php
 
 return [
-    'preheader'       => 'Just wanted to let you know that someone has responded to a forum post.',
-    'greeting'        => 'Hi there,',
-    'body'            => 'Just wanted to let you know that someone has responded to a forum post at',
-    'view_discussion' => 'View the '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
-    'farewell'        => 'Have a great day!',
+    'preheader'       => 'Este texto es como un encabezado. Algunos clientes muestran este texto como una vista previa.',
+    'greeting'        => 'Hola,',
+    'body'            => 'Te informamos que alguien ha respondido a una '.mb_strtolower(trans('chatter::intro.titles.discussion')).' publicada en',
+    'view_discussion' => 'Ver la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+    'farewell'        => 'Que tengas un buen día.',
     'unsuscribe'      => [
-        'message' => 'If you no longer wish to be notified when someone responds to this form post be sure to uncheck the notification setting at the bottom of the page :)',
-        'action'  => 'Don\'t like these emails?',
-        'link'    => 'Unsubscribe to this '.mb_strtolower(trans('chatter::intro.titles.discussion')).'.',
+        'message' => 'Si ya no deseas ser notificado cuando alguien más responda, asegurate de desmarcar la configuración de notificación al final de la página :)',
+        'action'  => '¿No le gustan estos correos electrónicos?',
+        'link'    => 'Anular la suscripción a la '.mb_strtolower(trans('chatter::intro.titles.discussion')),
     ],
 ];
