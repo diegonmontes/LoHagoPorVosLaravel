@@ -38,6 +38,12 @@ CREATE TABLE `trabajo`(
     FOREIGN KEY (`idCategoriaTrabajo`) REFERENCES `categoriaTrabajo`(`idCategoriaTrabajo`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+CREATE TABLE `rol`(
+    `idRol` int NOT NULL AUTO_INCREMENT,
+    `descripcionRol` VARCHAR(80) NOT NULL,
+    PRIMARY KEY (`idRol`)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 CREATE TABLE `usuario`(
     `idUsuario` int NOT NULL AUTO_INCREMENT,
     `nombreUsuario` VARCHAR(80) NOT NULL,
@@ -48,12 +54,6 @@ CREATE TABLE `usuario`(
     `eliminado` TINYINT(1) DEFAULT 0,
     PRIMARY KEY (`idUsuario`),
     FOREIGN KEY (`idRol`) REFERENCES `rol`(`idRol`)
-)ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-CREATE TABLE `rol`(
-    `idRol` int NOT NULL AUTO_INCREMENT,
-    `descripcionRol` VARCHAR(80) NOT NULL,
-    PRIMARY KEY (`idRol`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `persona`(
