@@ -12,8 +12,8 @@ return [
     */
 
     'titles' => [
-        'discussion'  => 'Discusión',
-        'discussions' => 'Discusiones',
+        'discussion'  => 'anuncio',
+        'discussions' => 'anuncios',
     ],
 
    /*

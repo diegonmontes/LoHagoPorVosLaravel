@@ -15,9 +15,9 @@ return [
     'routes' => [
         'home'       => 'foro',
         'root'       => 'LoHagoPorVosLaravel/public/foro',
-        'discussion' => 'discussion',
-        'category'   => 'category',
-        'post'       => 'posts',
+        'discussion' => 'anuncio',
+        'category'   => 'categoria',
+        'post'       => 'comentario',
         'register'   => 'register',
         'login'      => 'login',
     ],
@@ -35,7 +35,7 @@ return [
     |
     */
 
-    'headline_logo' => '/vendor/devdojo/chatter/assets/images/logo-light.png',
+    'headline_logo' => '/LoHagoPorVosLaravel/vendor/devdojo/chatter/public/assets/images/logo-light.png',
 
     /*
     |--------------------------------------------------------------------------
@@ -148,7 +148,7 @@ return [
     */
 
     'security' => [
-        'limit_time_between_posts' => true, //
+        'limit_time_between_posts' => false, //
         'time_between_posts'       => 1, // In minutes
     ],
 
@@ -252,7 +252,7 @@ return [
     */
 
     'paginate' => [
-        'num_of_results' => 10,
+        'num_of_results' => 5,
     ],
     
     /*

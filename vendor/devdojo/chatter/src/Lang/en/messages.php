@@ -12,8 +12,8 @@ return [
 
     'discussion' => [
         'new'          => 'Nueva '.mb_strtolower(trans('chatter::intro.titles.discussion')),
-        'all'          => 'Todas las '.mb_strtolower(trans('chatter::intro.titles.discussions')),
-        'create'       => 'Crear una '.mb_strtolower(trans('chatter::intro.titles.discussion')),
+        'all'          => 'Todos los '.mb_strtolower(trans('chatter::intro.titles.discussions')),
+        'create'       => 'Crear un '.mb_strtolower(trans('chatter::intro.titles.discussion')),
         'posted_by'    => 'Publicado por',
         'head_details' => 'Publicado en categoria',
 
