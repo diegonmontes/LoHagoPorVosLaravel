@@ -44,8 +44,16 @@ CREATE TABLE `usuario`(
     `mailUsuario` VARCHAR(80) NOT NULL,
     `auth_key` VARCHAR(255),
     `claveUsuario` VARCHAR(32),
+    `idRol` INT NOT NULL,
     `eliminado` TINYINT(1) DEFAULT 0,
-    PRIMARY KEY (`idUsuario`)
+    PRIMARY KEY (`idUsuario`),
+    FOREIGN KEY (`idRol`) REFERENCES `rol`(`idRol`)
+)ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE `rol`(
+    `idRol` int NOT NULL AUTO_INCREMENT,
+    `descripcionRol` VARCHAR(80) NOT NULL,
+    PRIMARY KEY (`idRol`)
 )ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE `persona`(
