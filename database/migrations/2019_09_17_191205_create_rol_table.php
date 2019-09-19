@@ -15,7 +15,7 @@ class CreateRolTable extends Migration
     {
         Schema::create('rol', function (Blueprint $table) {
             $table->engine = ('InnoDB');
-            $table->bigIncrements('idRol');
+            $table->increments('idRol');
             $table->string('descripcionRol',80);
             $table->timestamps();
         });

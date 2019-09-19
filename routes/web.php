@@ -25,4 +25,5 @@ Route::resource('localidad', 'LocalidadController');
 
 Route::resource('rol', 'RolController');
 
+Route::resource('perfil', 'PersonaController');
 

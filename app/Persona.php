@@ -18,6 +18,6 @@ class Persona extends Model
 
     public function User()
     {
-        return $this->hasMany('App\User', 'idUsuario', 'id');    
+        return $this->hasMany('App\User', 'idUsuario', 'idUsuario');    
     }
 }

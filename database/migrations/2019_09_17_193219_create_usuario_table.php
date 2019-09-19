@@ -16,11 +16,13 @@ class CreateUsuarioTable extends Migration
         Schema::create('usuario', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigIncrements('idUsuario');
-            $table->string('nombreUsuairo',80);
+            $table->string('nombreUsuario',80);
             $table->string('emailUsuario',80)->unique();
-            $table->string('auth_key',255);
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('auth_key',255)->nullable();
             $table->string('claveUsuario',255);
             $table->integer('idRol')->unsigned();
+            $table->rememberToken();
             $table->timestamps();
             $table->foreign('idRol')->references('idRol')->on('rol');
         });
