@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Persona;
 use App\Localidad;
+use App\Provincia;
 use App\User;
 
 class PersonaController extends Controller
@@ -17,8 +18,10 @@ class PersonaController extends Controller
     public function index()
     {
         //
-        $personas=Persina::orderBy('idPersona','DESC')->paginate(15);
-        return view('Persona.index',compact('personas'));
+        $persona=Persona::all();
+        $localidades=Localidad::all();
+        $provincias=Provincia::all();
+        return view('Perfil.index',['persona'=>$persona,'localidades'=>$localidades,'provincias'=>$provincias]);
     }
 
     /**
@@ -42,7 +45,7 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombrePErsona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
         return redirect()->route('persona.index')->with('success','Registro creado satisfactoriamente');
     }

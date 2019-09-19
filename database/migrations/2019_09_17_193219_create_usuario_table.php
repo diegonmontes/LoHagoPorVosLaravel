@@ -17,7 +17,7 @@ class CreateUsuarioTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigIncrements('idUsuario');
             $table->string('nombreUsuario',80);
-            $table->string('emailUsuario',80)->unique();
+            $table->string('mailUsuario',80)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('auth_key',255)->nullable();
             $table->string('claveUsuario',255);

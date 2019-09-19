@@ -10,9 +10,9 @@
 
                         @csrf
 
-                            <label for="emailUsuario" class="sr-only">{{ __('Mail') }}</label>
+                            <label for="mailUsuario" class="sr-only">{{ __('Mail') }}</label>
 
-                                <input id="emailUsuario" type="email" class="form-control @error('emailUsuario') is-invalid @enderror" name="emailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="emailUsuario" autofocus placeholder="Correo electonico">
+                                <input id="mailUsuario" type="email" class="form-control @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" autofocus placeholder="Correo electonico">
 
                                 
 

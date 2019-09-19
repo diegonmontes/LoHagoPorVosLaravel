@@ -91,7 +91,7 @@ class PasswordBroker implements PasswordBrokerContract
             return $user;
         }
 
-        $password = $credentials['password'];
+        $password = $credentials['claveUsuario'];
 
         // Once the reset has been validated, we'll call the given callback with the
         // new password. This gives the user an opportunity to store the password
@@ -147,8 +147,8 @@ class PasswordBroker implements PasswordBrokerContract
     {
         if (isset($this->passwordValidator)) {
             [$password, $confirm] = [
-                $credentials['password'],
-                $credentials['password_confirmation'],
+                $credentials['claveUsuario'],
+                $credentials['claveUsuario_confirmation'],
             ];
 
             return call_user_func(
@@ -168,8 +168,8 @@ class PasswordBroker implements PasswordBrokerContract
     protected function validatePasswordWithDefaults(array $credentials)
     {
         [$password, $confirm] = [
-            $credentials['password'],
-            $credentials['password_confirmation'],
+            $credentials['claveUsuario'],
+            $credentials['claveUsuario_confirmation'],
         ];
 
         return $password === $confirm && mb_strlen($password) >= 8;

@@ -16,7 +16,7 @@
             </div>
 
             <div class="form-group">
-                <input id="emailUsuario" type="email" class="form-control @error('emailUsuario') is-invalid @enderror" name="emailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="emailUsuario" placeholder="Corre electrónico">
+                <input id="mailUsuario" type="email" class="form-control @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" placeholder="Corre electrónico">
                 @error('emailUsuario')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>

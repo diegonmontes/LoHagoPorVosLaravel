@@ -47,13 +47,13 @@ class GenericUser implements UserContract
     }
 
     /**
-     * Get the password for the user.
+     * Get the claveUsuario for the user.
      *
      * @return string
      */
     public function getAuthPassword()
     {
-        return $this->attributes['password'];
+        return $this->attributes['claveUsuario'];
     }
 
     /**
