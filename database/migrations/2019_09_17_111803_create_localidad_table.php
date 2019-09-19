@@ -18,6 +18,7 @@ class CreateLocalidadTable extends Migration
             $table->increments('idLocalidad');
             $table->string('nombreLocalidad');
             $table->integer('idProvincia')->unsigned();
+            $table->smallInteger('codigoPostal');
             $table->timestamps();
             $table->foreign('idProvincia')->references('idProvincia')->on('provincia');
         });

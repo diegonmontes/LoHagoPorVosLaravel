@@ -15,6 +15,7 @@
             <table id="mytable" class="table table-bordred table-striped">
              <thead>
                <th>Provincia</th>
+               <th>Codigo Iso 31662</th>
                <th>Editar</th>
                <th>Eliminar</th>
              </thead>
@@ -23,6 +24,8 @@
               @foreach($provincias as $provincia)
               <tr>
                 <td>{{$provincia->nombreProvincia}}</td>
+                <td>{{$provincia->codigoIso31662}}</td>
+
                 <td><a class="btn btn-primary btn-xs" href="{{action('ProvinciaController@edit', $provincia->idProvincia)}}" ><span class="glyphicon glyphicon-pencil"></span></a></td>
                 <td>
                   <form action="{{action('ProvinciaController@destroy', $provincia->idProvincia)}}" method="post">

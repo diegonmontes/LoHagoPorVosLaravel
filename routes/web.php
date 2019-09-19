@@ -23,4 +23,6 @@ Route::resource('provincia', 'ProvinciaController');
 
 Route::resource('localidad', 'LocalidadController');
 
+Route::resource('rol', 'RolController');
+
 

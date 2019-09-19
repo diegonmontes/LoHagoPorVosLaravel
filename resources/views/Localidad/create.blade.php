@@ -37,6 +37,14 @@
 							</div>
 							<div class="row">
 								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										<label>Codigo Postal:</label><br>
+										<input type="number" name="codigoPostal" id="codigoPostal" class="form-control input-sm">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6 col-sm-6 col-md-6">
 									<label for="idProvincia">Provincia:</label>
 									<select class="form-control" name="idProvincia" id="idProvincia">
 										@foreach($provincias as $unaProvincia)

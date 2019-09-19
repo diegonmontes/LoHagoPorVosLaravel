@@ -8,7 +8,7 @@ class Provincia extends Model
 {	
     protected $table='provincia';
     protected $primaryKey = 'idProvincia';
-    protected $fillable = ['idProvincia', 'nombreProvincia'];
+    protected $fillable = ['idProvincia', 'nombreProvincia','codigoIso31662'];
 
     public function Localidad()
     {

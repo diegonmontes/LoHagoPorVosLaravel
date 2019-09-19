@@ -9,7 +9,7 @@ class Localidad extends Model
     //
     protected $table='localidad';
     protected $primaryKey = 'idLocalidad';
-    protected $fillable = ['idLocalidad', 'nombreLocalidad','idProvincia'];
+    protected $fillable = ['idLocalidad', 'nombreLocalidad','idProvincia','codigoPostal'];
 
     public function Provincia()
     {

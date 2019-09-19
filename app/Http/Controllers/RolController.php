@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Localidad;
-use App\Provincia;
+use App\Rol;
 
-class LocalidadController extends Controller
+class RolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class LocalidadController extends Controller
     public function index()
     {
         //
-        $localidades=Localidad::orderBy('idLocalidad','DESC')->paginate(15);
-        return view('Localidad.index',compact('localidades'));
+        $roles=Rol::orderBy('idRol','DESC')->paginate(15);
+        return view('Rol.index',compact('roles')); 
     }
 
     /**
@@ -28,8 +27,7 @@ class LocalidadController extends Controller
     public function create()
     {
         //
-        $provincias=Provincia::all();
-        return view('Localidad.create',['provincias'=>$provincias]);
+        return view('Rol.create');
     }
 
     /**
@@ -41,9 +39,9 @@ class LocalidadController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombreLocalidad'=>'required','idProvincia'=>'required','codigoPostal'=>'required']);
-        Localidad::create($request->all());
-        return redirect()->route('localidad.index')->with('success','Registro creado satisfactoriamente');
+        $this->validate($request,[ 'descripcionRol'=>'required']);
+        Rol::create($request->all());
+        return redirect()->route('rol.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -55,8 +53,8 @@ class LocalidadController extends Controller
     public function show($id)
     {
         //
-        $localidades=Localidad::find($id);
-        return  view('localidad.show',compact('localidades'));
+        $roles=Rol::find($id);
+        return  view('rol.show',compact('roles'));
     }
 
     /**
@@ -68,9 +66,8 @@ class LocalidadController extends Controller
     public function edit($id)
     {
         //
-        $localidad=Localidad::find($id);
-        $provincias=Provincia::all();
-        return view('Localidad.edit',compact('localidad'),['provincias'=>$provincias]);
+        $rol=Rol::find($id);
+        return view('Rol.edit',compact('rol'));
     }
 
     /**
@@ -83,9 +80,9 @@ class LocalidadController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'nombreLocalidad'=>'required','idProvincia'=>'required', 'codigoPostal'=>'required']);
-        Localidad::find($id)->update($request->all());
-        return redirect()->route('localidad.index')->with('success','Registro actualizado satisfactoriamente');
+        $this->validate($request,[ 'descripcionRol'=>'required']);
+        Rol::find($id)->update($request->all());
+        return redirect()->route('rol.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -97,7 +94,7 @@ class LocalidadController extends Controller
     public function destroy($id)
     {
         //
-        Localidad::find($id)->delete();
-        return redirect()->route('localidad.index')->with('success','Registro eliminado satisfactoriamente');
+        Rol::find($id)->delete();
+        return redirect()->route('rol.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

@@ -21,25 +21,17 @@
  
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Nueva Provincia</h3>
+					<h3 class="panel-title">Nuev Rol</h3>
 				</div>
 				<div class="panel-body">					
 					<div class="table-container">
-						<form method="POST" action="{{ route('provincia.store') }}"  role="form">
+						<form method="POST" action="{{ route('rol.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="col-xs-6 col-sm-6 col-md-6">
 									<div class="form-group">
-										<label>Nombre:</label><br>
-										<input type="text" name="nombreProvincia" id="nombreProvincia" class="form-control input-sm">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<div class="form-group">
-										<label>Codigo Iso 31662:</label><br>
-										<input type="text" name="codigoIso31662" id="codigoIso31662" class="form-control input-sm">
+										<label>Descripcion del rol:</label><br>
+										<input type="text" name="descripcionRol" id="descripcionRol" class="form-control input-sm">
 									</div>
 								</div>
 							</div>					
@@ -47,7 +39,7 @@
  
 								<div class="col-xs-6 col-sm-6 col-md-6">
 									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
-									<a href="{{ route('provincia.index') }}" class="btn btn-info btn-block" >Atrás</a>
+									<a href="{{ route('rol.index') }}" class="btn btn-info btn-block" >Atrás</a>
 								</div>	
  
 							</div>

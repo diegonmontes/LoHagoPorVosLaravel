@@ -39,7 +39,7 @@ class ProvinciaController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombreProvincia'=>'required']);
+        $this->validate($request,[ 'nombreProvincia'=>'required', 'codigoIso31662'=>'required']);
         Provincia::create($request->all());
         return redirect()->route('provincia.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -80,7 +80,7 @@ class ProvinciaController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'nombreProvincia'=>'required']);
+        $this->validate($request,[ 'nombreProvincia'=>'required', 'codigoIso31662'=>'required']);
         Provincia::find($id)->update($request->all());
         return redirect()->route('provincia.index')->with('success','Registro actualizado satisfactoriamente');
     }
