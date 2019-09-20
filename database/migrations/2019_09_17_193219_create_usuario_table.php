@@ -15,7 +15,7 @@ class CreateUsuarioTable extends Migration
     {
         Schema::create('usuario', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->bigIncrements('idUsuario');
+            $table->increments('idUsuario');
             $table->string('nombreUsuario',80);
             $table->string('mailUsuario',80)->unique();
             $table->timestamp('email_verified_at')->nullable();

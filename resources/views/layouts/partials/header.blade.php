@@ -1,4 +1,5 @@
 	<!-- Slider -->
+	
 
 	<div class="main_slider" style="background-image:url(images/slider_1.jpg)">
 		<div class="container fill_height">

@@ -25,5 +25,13 @@ Route::resource('localidad', 'LocalidadController');
 
 Route::resource('rol', 'RolController');
 
-Route::resource('perfil', 'PersonaController');
+//Route::resource('persona', 'PersonaController');
 
+//Route::get('persona/create', 'UserProfileController@create')->name('profile');
+Route::prefix('usuario')->group(function(){
+     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth');
+     Route::get('store','PersonaController@store')->name('persona.store');   
+ 
+});
+
+Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');

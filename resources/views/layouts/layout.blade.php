@@ -2,10 +2,17 @@
 <html lang="es">
 <head>
 	<meta charset="utf-8">
-	<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=yes">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+	<link rel="stylesheet" type="text/css" href="{{asset('styles/bootstrap4/bootstrap.min.css')}}">
+	<link href="{{asset('plugins/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
+	<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+	<script src="{{asset('styles/bootstrap4/popper.js')}}"></script>
+	<script src="{{asset('styles/bootstrap4/bootstrap.min.js')}}"></script>
+	<script src="{{asset('plugins/Isotope/isotope.pkgd.min.js')}}"></script>
+	<script src="{{asset('plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
+	<script src="{{asset('plugins/easing/easing.js')}}"></script>
+	<script src="{{asset('js/custom.js')}}"></script>
+	<script src="{{asset('js/buscarLocalidades.js')}}"></script>
 </head>
 <body>
  

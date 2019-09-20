@@ -11,8 +11,8 @@ class Rol extends Model
     protected $primaryKey = 'idRol';
     protected $fillable = ['idRol', 'descripcionRol'];
 
-    public function Usuario()
+    public function User()
     {
-        return $this->hasMany('App\Usuario', 'idRol', 'idRol');    
+        return $this->hasMany('App\User', 'idRol', 'idRol');    
     }
 }

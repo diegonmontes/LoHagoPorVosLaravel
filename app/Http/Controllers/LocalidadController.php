@@ -56,7 +56,7 @@ class LocalidadController extends Controller
     {
         //
         $localidades=Localidad::find($id);
-        return  view('localidad.show',compact('localidades'));
+        return  view('Localidad.show',compact('localidades'));
     }
 
     /**
@@ -99,5 +99,9 @@ class LocalidadController extends Controller
         //
         Localidad::find($id)->delete();
         return redirect()->route('localidad.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    public function buscar($id){
+        return Localidad::where('idProvincia','=',$id)->get();
     }
 }

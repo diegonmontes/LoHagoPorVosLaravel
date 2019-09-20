@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 use App\Persona;
 use App\Localidad;
 use App\Provincia;
@@ -18,10 +19,8 @@ class PersonaController extends Controller
     public function index()
     {
         //
-        $persona=Persona::all();
-        $localidades=Localidad::all();
-        $provincias=Provincia::all();
-        return view('Perfil.index',['persona'=>$persona,'localidades'=>$localidades,'provincias'=>$provincias]);
+        $personas=Persona::orderBy('idPersona','DESC')->paginate(15);
+        return view('Persona.index',compact('personas'));
     }
 
     /**
@@ -32,8 +31,8 @@ class PersonaController extends Controller
     public function create()
     {
         //
-        $personas=Persona::all();
-        return view('Persona.create',['personas'=>$personas]);
+        $provincias=Provincia::all();
+        return view('Persona.create',['provincias'=>$provincias]);
     }
 
     /**
@@ -45,6 +44,7 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
         //
+        $request['idUsuario'] = Auth::user()->idUsuario;                
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
         return redirect()->route('persona.index')->with('success','Registro creado satisfactoriamente');
@@ -88,9 +88,9 @@ class PersonaController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'nombrePErsona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Localidad::find($id)->update($request->all());
-        return redirect()->route('localidad.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('persona.index')->with('success','Registro actualizado satisfactoriamente');
     
     }
 

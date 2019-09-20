@@ -5,6 +5,9 @@
                 <div class="col-lg-12 text-right">
                     <div class="logo_container">
                         <a href="#"><span>LO HAGO POR VOS</span></a>
+                        @if (Auth::check())
+		                    {{Auth::user()->idUsuario}}
+	                    @endif
                     </div>
                     <nav class="navbar">
                         <ul class="navbar_menu">
