@@ -11,8 +11,11 @@
 |
 */
 
+use App\Trabajo;
+
 Route::get('/', function () {
-    return view('layouts/mainlayout');
+    $listaTrabajos = Trabajo::all();
+    return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 })->name('inicio');
 
 Auth::routes();

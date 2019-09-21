@@ -5,7 +5,7 @@
                 <div class="col-lg-12 text-right">
                     <div class="logo_container align-content-start">
                         <a href="#">
-                            <img class="logo_container logoNavar" src="{{asset('images/LogoLoHagoPorVos.png')}}" alt="Logo Lo hago por vos" style="width: 20%; left: -20%;"/>
+                            <img class="logo_container logoNavar" src="{{asset('images/logoLoHagoPorVosNavar.png')}}" alt="Logo Lo hago por vos" style="width: 20%; left: -20%;"/>
                             <span>LO HAGO POR VOS</span>
                         </a>
                     </div>

@@ -561,7 +561,7 @@ section
 .main_nav_container
 {
 	width: 100%;
-	background: #FFFFFF;
+	background: #30F004;
 	box-shadow: 0 0 16px rgba(0, 0, 0, 0.15);
 }
 .navbar
@@ -579,9 +579,9 @@ section
 .navbar_menu li a
 {
 	display: block;
-	color: #1e1e27;
+	color: #FFFFFF;
 	font-size: 13px;
-	font-weight: 500;
+	font-weight: 600;
 	text-transform: uppercase;
 	padding: 20px;
 	-webkit-transition: color 0.3s ease;
@@ -836,7 +836,7 @@ section
 }
 .logo_container a span
 {
-	color: #30f004ff;
+	color: #FFFFFF;
 }
 
 /*********************************
