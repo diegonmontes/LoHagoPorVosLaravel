@@ -33,14 +33,14 @@ class PersonaController extends Controller
     {
         //
         $idUsuario = Auth::user()->idUsuario;
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-        if(count($persona)){
-            $laPersona = $persona[0];
+        $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
+        if(count($laPersona)){
+            $persona = $laPersona[0];
         }else{
-            $laPersona = $persona;
+            $persona = $laPersona;
         }
         $provincias=Provincia::all();
-        return view('Persona.create',['provincias'=>$provincias, 'persona'=>$laPersona]);
+        return view('Persona.create',compact('persona'),['provincias'=>$provincias]);
     }
 
     /**
@@ -56,7 +56,7 @@ class PersonaController extends Controller
         $request['idUsuario'] = Auth::user()->idUsuario;
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
-        return redirect()->route('persona.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -97,13 +97,15 @@ class PersonaController extends Controller
      * @return \Illuminate\Http\Response
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
         $request['idUsuario'] = Auth::user()->idUsuario;
+        $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
+        $request['idPersona'] =$laPersona[0]->idPersona;
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
-        Persona::find($id)->update($request->all());
-        return redirect()->route('persona.index')->with('success','Registro actualizado satisfactoriamente');
+        Persona::find($request['idPersona'])->update($request->all());
+        return redirect()->route('inicio')->with('success','Registro actualizado satisfactoriamente');
 
     }
 

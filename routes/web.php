@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('layouts/mainlayout');
-});
+})->name('inicio');
 
 Auth::routes();
 
@@ -33,11 +33,7 @@ Route::prefix('usuario')->group(function(){
     Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth');
     Route::get('store','PersonaController@store')->name('persona.store');
     Route::get('update','PersonaController@update')->name('persona.update');
-
-
 });
-
-
 
 Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 

@@ -11,9 +11,8 @@
                     </div>
                     <nav class="navbar">
                         <ul class="navbar_menu">
-                            <li><a href="#">INICIO</a></li>
-                            <li><a href="foro">APPMOBILE</a></li>
-                            <li><a href="contact.html">CONTACTO</a></li>
+                            <li><a href="{{route('inicio')}}">INICIO</a></li>
+                            <li><a href="{{route('trabajo.index')}}">CREAR ANUNCIO</a></li>
                         </ul>
                         <ul class="navbar_user">
                             {{-- <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> --}}
@@ -48,7 +47,6 @@
         </div>
     </div>
 
-</header>
 
 <div class="fs_menu_overlay"></div>
 <div class="hamburger_menu">

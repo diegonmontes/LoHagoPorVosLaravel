@@ -2,7 +2,6 @@
 @section('content')
     @if($persona->count())
         {{$existePersona = true}}
-        {{$persona->idPersona}}
     @else
         {{$existePersona = false}}
     @endif
@@ -25,7 +24,7 @@
 				{{Session::get('success')}}
 			</div>
 		@endif
-		<form method="GET" action="@if($existePersona){{ route('persona.update',$persona->idPersona) }}@else{{ route('persona.store') }}@endif"  role="form">
+		<form method="GET" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form">
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-6">

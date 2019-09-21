@@ -1,70 +1,71 @@
 @extends('layouts.layout')
 @section('content')
-    <section class="content">
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <strong>Error!</strong> Revise los campos obligatorios.<br><br>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-        @if(Session::has('success'))
-            <div class="alert alert-info">
-                {{Session::get('success')}}
-            </div>
-        @endif
-        <form method="GET" action="{{ route('trabajo.store') }}"  role="form">
-            {{ csrf_field() }}
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                    <div class="form-group">
-                        <label>Titulo del anuncio:</label><br>
-                        <input type="text" name="titulo" id="titulo" class="form-control input-sm">
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                    <div class="form-group">
-                        <label>Descripcion:</label><br>
-                        <input type="text" name="descripcion" id="descripcion" class="form-control input-sm">
-                    </div>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3">
-                    <div class="form-group">
-                        <label>Monto:</label><br>
-                        <input type="number" name="monto" id="monto" class="form-control input-sm">
-                    </div>
-                </div>
-            </div>
+    <br>
+    <section class="content" style="margin-left: 5%; margin-right: 5%;">
+        <div class="row justify-content-center">
 
-            <div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6">
-                    <label for="idCategoriaTrabajo">Provincia:</label>
-                    <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
-                        @foreach($listaCategoriaTrabajo as $unaCategoria)
-                            <option value="{{$unaCategoria->idCategoriaTrabajo}}">
-                                {{$unaCategoria->nombreCategoriaTrabajo}}</option>
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> Revise los campos obligatorios.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
                         @endforeach
-                    </select>
+                    </ul>
                 </div>
-            </div>
+            @endif
+            @if(Session::has('success'))
+                <div class="alert alert-info">
+                    {{Session::get('success')}}
+                </div>
+            @endif
 
-            <div class="row">
-            <br>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6">
-                    <input type="submit"  value="Guardar" class="btn btn-success btn-block">
+            <form method="GET" action="{{ route('trabajo.store') }}"  role="form">
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label>TITULO DEL ANUNCIO</label><br>
+                            <input type="text" name="titulo" id="titulo" class="form-control input-sm inputBordes" style="color: #1e1e27">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-6">
-                    <a href="{{ route('home') }}" class="btn btn-info btn-block" >Atrás</a>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label>DESCRIPCION</label><br>
+                            <input type="text" name="descripcion" id="descripcion" class="form-control input-sm inputBordes" style="color: #1e1e27">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <label>MONTO</label><br>
+                            <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" style="color: #1e1e27">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <label for="idCategoriaTrabajo">CATEGORIA</label>
+                        <select class="form-control inputSelect" name="idCategoriaTrabajo" id="idCategoriaTrabajo" style="color: #1e1e27">
+                            @foreach($listaCategoriaTrabajo as $unaCategoria)
+                                <option value="{{$unaCategoria->idCategoriaTrabajo}}">
+                                    {{$unaCategoria->nombreCategoriaTrabajo}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <input type="submit"  value="¡Publicar!" class="btn btn-success btn-block">
+                    </div>
+                </div>
+            </form>
+        </div>
     </section>
 @endsection
 

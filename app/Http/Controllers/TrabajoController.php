@@ -47,7 +47,7 @@ class TrabajoController extends Controller
         $persona = Persona::where('idUsuario','=',$idUsuario)->get();
         $request['idPersona']=$persona[0]->idPersona;
         Trabajo::create($request->all());
-        return redirect()->route('provincia.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
