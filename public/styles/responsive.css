@@ -24,7 +24,7 @@
 
 @media only screen and (max-width: 1600px)
 {
-	
+
 }
 
 /************
@@ -33,7 +33,7 @@
 
 @media only screen and (max-width: 1540px)
 {
-	
+
 }
 
 /************
@@ -42,7 +42,7 @@
 
 @media only screen and (max-width: 1380px)
 {
-	
+
 }
 
 /************
@@ -51,7 +51,7 @@
 
 @media only screen and (max-width: 1280px)
 {
-	
+
 }
 
 /************
@@ -107,7 +107,7 @@
 
 @media only screen and (max-width: 1024px)
 {
-	
+
 }
 
 /************
@@ -268,7 +268,7 @@
 
 @media only screen and (max-width: 959px)
 {
-	
+
 }
 
 /************
@@ -277,7 +277,7 @@
 
 @media only screen and (max-width: 880px)
 {
-	
+
 }
 
 /************
@@ -286,7 +286,7 @@
 
 @media only screen and (max-width: 768px)
 {
-	
+
 }
 
 /************
@@ -359,6 +359,8 @@
 	{
 		margin-top: 15px;
 	}
+
+
 }
 
 /************
@@ -405,6 +407,9 @@
 	{
 		font-size: 13px;
 	}
+    .logoNavar{
+        visibility: hidden;
+    }
 }
 
 /************
@@ -413,7 +418,7 @@
 
 @media only screen and (max-width: 539px)
 {
-	
+
 }
 
 /************
@@ -422,7 +427,7 @@
 
 @media only screen and (max-width: 480px)
 {
-	
+
 }
 
 /************
@@ -487,7 +492,7 @@
 	{
 		width: 15px;
 		height: 15px;
-		font-size: 10px;		
+		font-size: 10px;
 	}
 	.main_slider
 	{
@@ -644,13 +649,13 @@
 		font-size: 12px !important;
 		padding-left: 0px;
 	}
-	#newsletter_email::-moz-placeholder /* Firefox 19+ */ 
+	#newsletter_email::-moz-placeholder /* Firefox 19+ */
 	{
 		font-size: 12px !important;
 		padding-left: 0px;
-	} 
+	}
 	#newsletter_email:-ms-input-placeholder
-	{ 
+	{
 		font-size: 12px !important;
 		padding-left: 0px;
 	}
@@ -676,6 +681,9 @@
 		margin-top: 5px;
 		margin-bottom: 30px;
 	}
+    .logoNavar{
+        visibility: hidden;
+    }
 }
 
 /************
@@ -684,5 +692,5 @@
 
 @media only screen and (max-width: 400px)
 {
-	
+
 }

@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\CategoriaTrabajo;
 use Illuminate\Http\Request;
-use App\Localidad;
-use App\Provincia;
 
-class LocalidadController extends Controller
+class CategoriaTrabajoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +15,8 @@ class LocalidadController extends Controller
     public function index()
     {
         //
-        $localidades=Localidad::orderBy('idLocalidad','DESC')->paginate(15);
-        return view('Localidad.index',compact('localidades'));
+        $categoriasTrabajo=CategoriaTrabajo::orderBy('idLocalidad','DESC')->paginate(15);
+        return view('CategoriaTrabajo.index',compact('categoriasTrabajo'));
     }
 
     /**
@@ -28,8 +27,8 @@ class LocalidadController extends Controller
     public function create()
     {
         //
-        $provincias=Provincia::all();
-        return view('Localidad.create',['provincias'=>$provincias]);
+        $categoriasTrabajo=CategoriaTrabajo::all();
+        return view('CategoriaTrabajo.create',['categoriasTrabajo'=>$categoriasTrabajo]);
     }
 
     /**
@@ -42,9 +41,9 @@ class LocalidadController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombreLocalidad'=>'required','idProvincia'=>'required','codigoPostal'=>'required']);
-        Localidad::create($request->all());
-        return redirect()->route('localidad.index')->with('success','Registro creado satisfactoriamente');
+        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
+        CategoriaTrabajo::create($request->all());
+        return redirect()->route('categoriaTrabajo.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -56,8 +55,8 @@ class LocalidadController extends Controller
     public function show($id)
     {
         //
-        $localidades=Localidad::find($id);
-        return  view('Localidad.show',compact('localidades'));
+        $categoriasTrabajo=CategoriaTrabajo::find($id);
+        return  view('CategoriaTrabajo.show',compact('categoriasTrabajo'));
     }
 
     /**
@@ -69,9 +68,8 @@ class LocalidadController extends Controller
     public function edit($id)
     {
         //
-        $localidad=Localidad::find($id);
-        $provincias=Provincia::all();
-        return view('Localidad.edit',compact('localidad'),['provincias'=>$provincias]);
+        $categoriasTrabajo=CategoriaTrabajo::find();
+        return view('CategoriaTrabajo.edit',compact('categoriasTrabajo'));
     }
 
     /**
@@ -85,9 +83,9 @@ class LocalidadController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'nombreLocalidad'=>'required','idProvincia'=>'required', 'codigoPostal'=>'required']);
-        Localidad::find($id)->update($request->all());
-        return redirect()->route('localidad.index')->with('success','Registro actualizado satisfactoriamente');
+        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
+        CategoriaTrabajo::find($id)->update($request->all());
+        return redirect()->route('categoriaTrabajo.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -99,11 +97,7 @@ class LocalidadController extends Controller
     public function destroy($id)
     {
         //
-        Localidad::find($id)->delete();
-        return redirect()->route('localidad.index')->with('success','Registro eliminado satisfactoriamente');
-    }
-
-    public function buscar($id){
-        return Localidad::where('idProvincia','=',$id)->get();
+        CategoriaTrabajo::find($id)->delete();
+        return redirect()->route('categoriaTrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

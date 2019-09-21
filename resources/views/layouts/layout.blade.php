@@ -13,17 +13,21 @@
 	<script src="{{asset('plugins/easing/easing.js')}}"></script>
 	<script src="{{asset('js/custom.js')}}"></script>
 	<script src="{{asset('js/buscarLocalidades.js')}}"></script>
+    <link rel="stylesheet" type="text/css" href="{{asset('styles/main_styles.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('styles/responsive.css')}}">
 </head>
 <body>
- 
+@include('layouts.partials.nav')
+
+
 	<div class="container-fluid" style="margin-top: 100px">
- 
+
 		@yield('content')
 	</div>
 	<style type="text/css">
 	.table {
 		border-top: 2px solid #ccc;
- 
+
 	}
 </style>
 </body>

@@ -21,7 +21,7 @@ class CreatePersonaTable extends Migration
             $table->string('telefonoPersona');
             $table->integer('idUsuario')->unsigned();
             $table->integer('idLocalidad')->unsigned();
-            $table->tinyInteger('eliminado');
+            $table->tinyInteger('eliminado')->nullable();
             $table->timestamps();
             $table->foreign('idUsuario')->references('idUsuario')->on('usuario');
             $table->foreign('idLocalidad')->references('idLocalidad')->on('localidad');

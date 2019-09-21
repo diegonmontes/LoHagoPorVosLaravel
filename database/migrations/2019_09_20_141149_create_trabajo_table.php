@@ -22,7 +22,7 @@ class CreateTrabajoTable extends Migration
             $table->string('titulo',255);
             $table->string('descripcion',511);
             $table->float('monto',8,2);
-            $table->tinyInteger('eliminado');
+            $table->tinyInteger('eliminado')->nullable();
             $table->timestamps();
             $table->foreign('idPersona')->references('idPersona')->on('persona');
             $table->foreign('idTipoTrabajo')->references('idTipoTrabajo')->on('tipoTrabajo');

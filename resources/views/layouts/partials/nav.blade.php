@@ -3,11 +3,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-right">
-                    <div class="logo_container">
-                        <a href="#"><span>LO HAGO POR VOS</span></a>
-                        @if (Auth::check())
-		                    {{Auth::user()->idUsuario}}
-	                    @endif
+                    <div class="logo_container align-content-start">
+                        <a href="#">
+                            <img class="logo_container logoNavar" src="{{asset('images/LogoLoHagoPorVos.png')}}" alt="Logo Lo hago por vos" style="width: 20%; left: -20%;"/>
+                            <span>LO HAGO POR VOS</span>
+                        </a>
                     </div>
                     <nav class="navbar">
                         <ul class="navbar_menu">
@@ -16,14 +16,28 @@
                             <li><a href="contact.html">contact</a></li>
                         </ul>
                         <ul class="navbar_user">
-                            <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
-                            <li><a href="login"><i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            <li class="checkout">
-                                <a href="#">
-                                    <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                                    <span id="checkout_items" class="checkout_items">2</span>
-                                </a>
-                            </li>
+                            {{-- <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> --}}
+                            @if (Auth::check())
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <a href="login"><i class="fa fa-user" aria-hidden="true" style="text-decoration: none;color: #1e1e27;">{{Auth::user()->nombreUsuario}}</i></a>
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="usuario/perfil">Mi Perfil</a>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            {{ __('Cerrar sesion') }}
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                            @else
+                                <li><a href="login"><i class="fa fa-user" aria-hidden="true">Iniciar Secion</i></a></li>
+                            @endif
+
                         </ul>
                         <div class="hamburger_container">
                             <i class="fa fa-bars" aria-hidden="true"></i>

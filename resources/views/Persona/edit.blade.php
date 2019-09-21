@@ -1,52 +1,92 @@
 @extends('layouts.layout')
 @section('content')
-<div class="row">
-	<section class="content">
-		<div class="col-md-6 col-md-offset-2">
-			@if (count($errors) > 0)
-			<div class="alert alert-danger">
-				<strong>Error!</strong> Revise los campos obligatorios.<br><br>
-				<ul>
-					@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-			@endif
-			@if(Session::has('success'))
-			<div class="alert alert-info">
-				{{Session::get('success')}}
-			</div>
-			@endif
- 
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Editar Rol</h3>
-				</div>
-				<div class="panel-body">					
-					<div class="table-container">
-						<form method="POST" action="{{ route('rol.update',$rol->idRol) }}"  role="form">
-							{{ csrf_field() }}
-							<input name="_method" type="hidden" value="PATCH">
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<div class="form-group">
-										<label>Descripcion del Rol:</label><br>
-										<input type="text" name="descripcionRol" id="descripcionRol" class="form-control input-sm" value="{{$rol->descripcionRol}}">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
-									<a href="{{ route('rol.index') }}" class="btn btn-info btn-block" >Atrás</a>
-								</div>	
-							</div>
-						</form>
-					</div>
-				</div>
- 
-			</div>
-		</div>
-	</section>
-	@endsection
+    <br>
+    <br>
+    <section class="content" style="margin-left: 5%; margin-right: 5%;">
+        <div class="row justify-content-center">
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Error!</strong> Revise los campos obligatorios.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if(Session::has('success'))
+                <div class="alert alert-info">
+                    {{Session::get('success')}}
+                </div>
+            @endif
+            <form method="GET" action="{{ route('persona.update', $persona->idPersona) }}"  role="form">
+                {{ csrf_field() }}
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>NOMBRE</label><br>
+                            <input type="text" name="nombrePersona" id="nombrePersona" class="form-control input-sm" value="{{$persona->nombrePersona}}">
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>APELLIDO</label><br>
+                            <input type="text" name="apellidoPersona" id="apellidoPersona" class="form-control input-sm" value="{{$persona->apellidoPersona}}>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>DNI</label><br>
+                            <input type="text" name="dniPersona" id="dniPersona" class="form-control input-sm" value="{{$persona->dniPersona}}>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <label>TELEFONO</label><br>
+                            <input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm" value="{{$persona->telefonoPersona}}>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <label for="idProvincia">PROVINCIA</label>
+                        <select class="form-control" name="idProvincia" id="idProvincia" style="color: #1e1e27">
+                            @foreach ($provincias as $unaProvincia)
+                                <option value="{{$unaProvincia->idProvincia}}"
+                                        @if($unaProvincia->idProvincia == 20)
+                                        selected
+                                    @endif>
+                                    {{$unaProvincia->nombreProvincia}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <label for="idLocalidad" class="control-label">LOCALIDAD</label>
+                        <select name="idLocalidad" id="idLocalidad" class="form-control" style="color: #1e1e27">
+                            <option value="">Seleccione una opcion</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block">
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <a href="{{ route('home') }}" class="btn btn-info btn-block" >Atrás</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+@endsection
+
+
+
+
+

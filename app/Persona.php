@@ -13,11 +13,16 @@ class Persona extends Model
 
     public function Localidad()
     {
-        return $this->hasMany('App\Localidad', 'idLocalidad', 'idLocalidad');    
+        return $this->hasMany('App\Localidad', 'idLocalidad', 'idLocalidad');
     }
 
     public function User()
     {
-        return $this->hasMany('App\User', 'idUsuario', 'idUsuario');    
+        return $this->hasMany('App\User', 'idUsuario', 'idUsuario');
+    }
+
+    public function Trabajo()
+    {
+        return $this->hasMany('App\Trabajo', 'idPersona', 'idPersona');
     }
 }
