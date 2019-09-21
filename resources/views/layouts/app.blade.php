@@ -20,6 +20,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     @yield('css')
 
 </head>
@@ -55,7 +56,7 @@
                             @endif
                             {{--}}
                             @if (!Route::has('register'))
-                            
+
                             @endif
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Faker\Provider\Person;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
@@ -31,20 +32,28 @@ class PersonaController extends Controller
     public function create()
     {
         //
+        $idUsuario = Auth::user()->idUsuario;
+        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+        if(count($persona)){
+            $laPersona = $persona[0];
+        }else{
+            $laPersona = $persona;
+        }
         $provincias=Provincia::all();
-        return view('Persona.create',['provincias'=>$provincias]);
+        return view('Persona.create',['provincias'=>$provincias, 'persona'=>$laPersona]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request)
     {
         //
-        $request['idUsuario'] = Auth::user()->idUsuario;                
+        $request['idUsuario'] = Auth::user()->idUsuario;
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
         return redirect()->route('persona.index')->with('success','Registro creado satisfactoriamente');
@@ -69,10 +78,12 @@ class PersonaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
         //
-        $persona=Persona::find($id);
+        $idUsuario = Auth::user()->idUsuario;
+        $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
+        $persona = $laPersona[1];
         $provincias=Provincia::all();
         $localidades=Localidad::all();
         return view('Persona.edit',compact('persona'),['provincias'=>$provincias, 'localidades'=>$localidades]);
@@ -81,17 +92,19 @@ class PersonaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, $id)
     {
         //
+        $request['idUsuario'] = Auth::user()->idUsuario;
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
-        Localidad::find($id)->update($request->all());
+        Persona::find($id)->update($request->all());
         return redirect()->route('persona.index')->with('success','Registro actualizado satisfactoriamente');
-    
+
     }
 
     /**
@@ -105,6 +118,6 @@ class PersonaController extends Controller
         //
         Persona::find($id)->delete();
         return redirect()->route('persona.index')->with('success','Registro eliminado satisfactoriamente');
-   
+
     }
 }

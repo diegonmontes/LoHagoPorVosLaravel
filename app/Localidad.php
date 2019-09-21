@@ -15,4 +15,9 @@ class Localidad extends Model
     {
         return $this->belongsTo('App\Provincia', 'idProvincia', 'idProvincia');
     }
+
+    public function Persona()
+    {
+        return $this->hasMany('App\Persona', 'idLocalidad', 'idLocalidad');
+    }
 }

@@ -11,9 +11,9 @@
                     </div>
                     <nav class="navbar">
                         <ul class="navbar_menu">
-                            <li><a href="#">Inicio</a></li>
-                            <li><a href="foro">AppMobile</a></li>
-                            <li><a href="contact.html">contact</a></li>
+                            <li><a href="#">INICIO</a></li>
+                            <li><a href="foro">APPMOBILE</a></li>
+                            <li><a href="contact.html">CONTACTO</a></li>
                         </ul>
                         <ul class="navbar_user">
                             {{-- <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> --}}
@@ -23,7 +23,7 @@
                                         <a href="login"><i class="fa fa-user" aria-hidden="true" style="text-decoration: none;color: #1e1e27;">{{Auth::user()->nombreUsuario}}</i></a>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="usuario/perfil">Mi Perfil</a>
+                                        <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil">Mi Perfil</a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -35,7 +35,7 @@
                                     </div>
                                 </div>
                             @else
-                                <li><a href="login"><i class="fa fa-user" aria-hidden="true">Iniciar Secion</i></a></li>
+                                <li><a href="login"><i class="fa fa-user" aria-hidden="true">INICIAR</i></a></li>
                             @endif
 
                         </ul>

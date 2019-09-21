@@ -13,7 +13,7 @@ class Persona extends Model
 
     public function Localidad()
     {
-        return $this->hasMany('App\Localidad', 'idLocalidad', 'idLocalidad');
+        return $this->hasMany('App\Localidad', 'idLocalidad', 'idPersona');
     }
 
     public function User()

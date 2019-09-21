@@ -1,10 +1,16 @@
 $(document).ready(function(){
-  var valorInicial = $('select#idProvincia').val();  
+  var valorInicial = $('select#idProvincia').val();
   cargarLocalidades(valorInicial);
 
     $("#idProvincia").change(function(){
       var idProvincia = $(this).val();
       cargarLocalidades(idProvincia);
+    });
+
+    $('#borrarCampos').click(function() {
+        $('input[type="text"]').val('');
+        $('select[name="idProvincia"]').val('20');
+        cargarLocalidades(20);
     });
 });
 
@@ -18,3 +24,5 @@ function cargarLocalidades(idProvincia){
       $("#idLocalidad").html(opcionLocalidad);
   });
 }
+
+

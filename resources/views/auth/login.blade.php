@@ -12,13 +12,13 @@
 
                             <label for="mailUsuario" class="sr-only">{{ __('Mail') }}</label>
 
-                                <input id="mailUsuario" type="email" class="form-control @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" autofocus placeholder="Correo electonico">
+                                <input id="mailUsuario" type="email" class="form-control inputBordes @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" autofocus placeholder="Correo electonico">
 
-                                
+
 
                             <label for="claveUsuario" class="sr-only">{{ __('Contraseña') }}</label>
 
-                                <input id="claveUsuario" type="password" class="form-control @error('claveUsuario') is-invalid @enderror" name="claveUsuario" required autocomplete="current-claveUsuario" placeholder="Contraseña">
+                                <input id="claveUsuario" type="password" class="form-control inputBordes @error('claveUsuario') is-invalid @enderror" name="claveUsuario" required autocomplete="current-claveUsuario" placeholder="Contraseña">
 
                                 @error('emailUsuario')
                                     <span class="invalid-feedback" role="alert">
