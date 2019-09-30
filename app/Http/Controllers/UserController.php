@@ -32,22 +32,24 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-        $input = $request->only('mailUsuario', 'claveUsuario');
         $jwt_token = null;
-        if (!$jwt_token = JWTAuth::attempt($input)) {
-            return response()->json([
+        $user = User::where('mailUsuario','=',$request['mailUsuario'])->get();
+        if($user <> null){
+            $var=[
+                'success' => true,
+                'token' => $jwt_token,
+                'user' => $user
+            ];
+        }else{
+            $var=[
                 'success' => false,
-                'message' => 'Email o contraseña incorrectos',
-            ], 401);
+                'token' => $jwt_token,
+                'user' => null
+            ];
         }
-        //get the user
-        $user = JWTAuth::user();
+        
 
-        return response()->json([
-            'success' => true,
-            'token' => $jwt_token,
-            'user' => $user
-        ]);
+        return response()->json($var);
     }
     public function logout(Request $request)
     {
