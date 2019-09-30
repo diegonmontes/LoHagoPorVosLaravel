@@ -4,27 +4,30 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Auth;
 use Illuminate\Support\Facades\Hash;
-use JWTAuth;
+//use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\JWTAuth;
+
 //use Mail;
 //use App\Mail\PasswordReset;
 
 class UserController extends Controller
 {
     public function register(Request $request){
-        $plainPassword=$request->password;
-        $password=bcrypt($request->password);
-        $request->request->add(['password' => $password]);
+        $plainPassword=$request->claveUsuario;
+        $claveUsuario=bcrypt($request->claveUsuario);
+        $request->request->add(['claveUsuario' => $claveUsuario]);
         // create the user account
         $request['idRol'] = 2;
-        $request['claveUsuario'] = Hash::make($request['claveUsuario']);
         $created=User::create($request->all());
 
-        $request->request->add(['password' => $plainPassword]);
+        $request->request->add(['claveUsuario' => $plainPassword]);
         // login now..
-        return $this->login($request);
+        return response()->json([
+            'success' => true,
+        ]);
+        //return $this->login($request);
     }
     public function login(Request $request)
     {
@@ -37,8 +40,8 @@ class UserController extends Controller
                 'message' => 'Email o contraseña incorrectos',
             ], 401);
         }
-        // get the user
-        $user = Auth::user();
+        //get the user
+        $user = JWTAuth::user();
 
         return response()->json([
             'success' => true,

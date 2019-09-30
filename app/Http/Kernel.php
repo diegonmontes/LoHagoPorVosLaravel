@@ -68,7 +68,7 @@ class Kernel extends HttpKernel
      * This forces non-global middleware to always be in the given order.
      *
      * @var array
-     */
+
     protected $middlewarePriority = [
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -77,4 +77,5 @@ class Kernel extends HttpKernel
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
     ];
+     */
 }
