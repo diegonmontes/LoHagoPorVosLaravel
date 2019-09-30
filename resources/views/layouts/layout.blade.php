@@ -3,18 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-	<link rel="stylesheet" type="text/css" href="{{asset('styles/bootstrap4/bootstrap.min.css')}}">
-	<link href="{{asset('plugins/font-awesome-4.7.0/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
 	<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
-	<script src="{{asset('styles/bootstrap4/popper.js')}}"></script>
-	<script src="{{asset('styles/bootstrap4/bootstrap.min.js')}}"></script>
-	<script src="{{asset('plugins/Isotope/isotope.pkgd.min.js')}}"></script>
-	<script src="{{asset('plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
-	<script src="{{asset('plugins/easing/easing.js')}}"></script>
-	<script src="{{asset('js/custom.js')}}"></script>
 	<script src="{{asset('js/buscarLocalidades.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="{{asset('styles/main_styles.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('styles/responsive.css')}}">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <!-- Styles -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"  href="{{ asset('css/app.css') }}">
+
+
+
 </head>
 <body>
 @include('layouts.partials.nav')
@@ -30,5 +32,7 @@
 
 	}
 </style>
+<script src="{{ asset('js/navbar.js') }}"></script>
+
 </body>
 </html>

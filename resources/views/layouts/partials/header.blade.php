@@ -1,9 +1,7 @@
-<br><br><br><br>
-<br>
 <!-- Anuncios -->
-<div class="row" >
+<div class="row" style="margin: auto">
     @foreach($listaTrabajos as $trabajo)
-        <div class="card" style="width: 18rem;margin: 1%">
+        <div class="card" style="width: 18rem; margin-left: 1%; margin-right: 1%; margin-top: 1%;">
             <div class="card-body">
                 <h5 class="card-title">{{$trabajo->titulo}}</h5>
                 <p class="card-text">{{$trabajo->descripcion}}</p>

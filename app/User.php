@@ -1,10 +1,13 @@
 <?php
 
 namespace App;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use JWTAuth;
 
 class User extends Authenticatable
 {
@@ -38,5 +41,34 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function rol()
+    {
+        return $this->belongsToMany(Rol::class)->withTimestamps();
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+    public static function checkToken($token){
+        if($token->token){
+            return true;
+        }
+        return false;
+    }
+    public static function getCurrentUser($request){
+        if(!User::checkToken($request)){
+            return response()->json([
+                'message' => 'Token is required'
+            ],422);
+        }
+
+        $user = JWTAuth::parseToken()->authenticate();
+        return $user;
+    }
 
 }

@@ -1,98 +1,44 @@
-    <!-- Main Navigation -->
-    <div class="main_nav_container fixed-top">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-right">
-                    <div class="logo_container align-content-start">
-                        <a href="#">
-                            <img class="logo_container logoNavar" src="{{asset('images/logoLoHagoPorVosNavar.png')}}" alt="Logo Lo hago por vos" style="width: 20%; left: -20%;"/>
-                            <span>LO HAGO POR VOS</span>
-                        </a>
-                    </div>
-                    <nav class="navbar">
-                        <ul class="navbar_menu">
-                            <li><a href="{{route('inicio')}}">INICIO</a></li>
-                            <li><a href="{{route('trabajo.index')}}">CREAR ANUNCIO</a></li>
-                        </ul>
-                        <ul class="navbar_user">
-                            {{-- <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li> --}}
-                            @if (Auth::check())
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <a href="login"><i class="fa fa-user" aria-hidden="true" style="text-decoration: none;color: #1e1e27;">{{Auth::user()->nombreUsuario}}</i></a>
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil">Mi Perfil</a>
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
+<nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #30F004 !important;">
+    <a href="{{route('inicio')}}">
+        <img class="logoNavbar" src="{{asset('images/logoLoHagoPorVosNavar.png')}}" alt="Logo Lo hago por vos" style="width: 10%; left: -20%;"/>
+        <span>LO HAGO POR VOS</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('inicio')}}">INICIO</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('trabajo.index')}}">CREAR ANUNCIO</a>
+            </li>
+            @if (Auth::check())
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{Auth::user()->nombreUsuario}}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil">Mi Perfil</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                            {{ __('Cerrar sesion') }}
-                                        </a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            @csrf
-                                        </form>
-                                    </div>
-                                </div>
-                            @else
-                                <li><a href="login"><i class="fa fa-user" aria-hidden="true">INICIAR</i></a></li>
-                            @endif
-
-                        </ul>
-                        <div class="hamburger_container">
-                            <i class="fa fa-bars" aria-hidden="true"></i>
-                        </div>
-                    </nav>
+                        {{ __('Cerrar sesion') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
-            </div>
-        </div>
-    </div>
-
-
-<div class="fs_menu_overlay"></div>
-<div class="hamburger_menu">
-    <div class="hamburger_close"><i class="fa fa-times" aria-hidden="true"></i></div>
-    <div class="hamburger_menu_content text-right">
-        <ul class="menu_top_nav">
-            <li class="menu_item has-children">
-                <a href="#">
-                    usd
-                    <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="menu_selection">
-                    <li><a href="#">cad</a></li>
-                    <li><a href="#">aud</a></li>
-                    <li><a href="#">eur</a></li>
-                    <li><a href="#">gbp</a></li>
-                </ul>
             </li>
-            <li class="menu_item has-children">
-                <a href="#">
-                    English
-                    <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="menu_selection">
-                    <li><a href="#">French</a></li>
-                    <li><a href="#">Italian</a></li>
-                    <li><a href="#">German</a></li>
-                    <li><a href="#">Spanish</a></li>
-                </ul>
-            </li>
-            <li class="menu_item has-children">
-                <a href="#">
-                    My Account
-                    <i class="fa fa-angle-down"></i>
-                </a>
-                <ul class="menu_selection">
-                    <li><a href="#"><i class="fa fa-sign-in" aria-hidden="true"></i>Sign In</a></li>
-                    <li><a href="#"><i class="fa fa-user-plus" aria-hidden="true"></i>Register</a></li>
-                </ul>
-            </li>
-            <li class="menu_item"><a href="#">home</a></li>
-            <li class="menu_item"><a href="#">shop</a></li>
-            <li class="menu_item"><a href="#">promotion</a></li>
-            <li class="menu_item"><a href="#">pages</a></li>
-            <li class="menu_item"><a href="#">blog</a></li>
-            <li class="menu_item"><a href="#">contact</a></li>
+            @else
+                <li class="nav-item"><a class="nav-link" href="login">INGRESAR</a></li>
+            @endif
         </ul>
+        {{-- <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form> --}}
     </div>
-</div>
+</nav>
