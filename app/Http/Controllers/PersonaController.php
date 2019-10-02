@@ -78,16 +78,17 @@ class PersonaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function buscar()
+    public function buscar($idUsuario)
     {
-        //si existe una persona con ese idUsuario devuelve true de lo contrario false
         $existe=false;
-        $request['idUsuario'] = Auth::user()->idUsuario;
-        $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
-        if($laPersona!=null){
-            $existe=true;
-        }
-        return $existe;
+        $objPersona = null;
+        $listaPersonas = Persona::where('idUsuario','=',$idUsuario)->get();
+    if (count($listaPersonas)>0){
+        $objPersona = $listaPersonas[0];
+    } else {
+        $objPersona['idPersona']=null;
+    }
+        return $objPersona;
     }
 
     /**

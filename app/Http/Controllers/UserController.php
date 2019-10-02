@@ -72,8 +72,11 @@ class UserController extends Controller
         $user = Auth::user();
 
         //busco si ese usuario ya se creo un perfil
-        $request['idUsuario'] = Auth::user()->idUsuario;
-        $persona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
+        //$request['idUsuario'] = Auth::user()->idUsuario;
+        $idUsuario = Auth::user()->idUsuario;
+//        $persona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
+        $personaController = new PersonaController();
+        $persona = $personaController->buscar($idUsuario);
 
         return response()->json([
             'success' => true,
