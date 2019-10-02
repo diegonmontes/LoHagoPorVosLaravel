@@ -71,10 +71,15 @@ class UserController extends Controller
         //Obtengo el usuario
         $user = Auth::user();
 
+        //busco si ese usuario ya se creo un perfil
+        $request['idUsuario'] = Auth::user()->idUsuario;
+        $persona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
+
         return response()->json([
             'success' => true,
             'token' => Str::random(60),
             'user' => $user,
+            'persona'=>$persona['idPersona'],
             
         ]);
     }

@@ -73,6 +73,24 @@ class PersonaController extends Controller
     }
 
     /**
+     * Busca una persona por su id Usuario
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function buscar()
+    {
+        //si existe una persona con ese idUsuario devuelve true de lo contrario false
+        $existe=false;
+        $request['idUsuario'] = Auth::user()->idUsuario;
+        $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
+        if($laPersona!=null){
+            $existe=true;
+        }
+        return $existe;
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
