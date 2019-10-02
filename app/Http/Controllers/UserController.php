@@ -6,8 +6,13 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 //use JWTAuth;
+use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\JWTAuth;
+use Auth;
+//use Tymon\JWTAuth\JWTAuth;
+use JWTAuth;
+use Illuminate\Support\Facades\Validator;
+
 
 //use Mail;
 //use App\Mail\PasswordReset;
@@ -15,53 +20,79 @@ use Tymon\JWTAuth\JWTAuth;
 class UserController extends Controller
 {
     public function register(Request $request){
+        //Capturo la clave del usuario
         $plainPassword=$request->claveUsuario;
+        //Encripto la clave usuario
         $claveUsuario=bcrypt($request->claveUsuario);
+        //Y la agrego al arreglo $request
         $request->request->add(['claveUsuario' => $claveUsuario]);
-        // create the user account
+        //Agrego el rol al usuario que se va a registrar
+        //Por defecto el rol sera el 2 'Usuario'
         $request['idRol'] = 2;
-        $created=User::create($request->all());
+        //Busco si existe el mail con lo cual se quieren registrar
+        $usuario = User::where('mailUsuario','=',$request->mailUsuario)->get();
 
-        $request->request->add(['claveUsuario' => $plainPassword]);
-        // login now..
-        return response()->json([
-            'success' => true,
-        ]);
-        //return $this->login($request);
+        if(count($usuario)<1){
+            //Si no exsite creo el usuario y seteo la variable 'success' en true
+            User::create($request->all());
+            $respuesta = ['success'=>true];
+        }else{
+            //En caso que exista no creo el usuario y seteo la variable 'success' en false
+            $respuesta = ['success'=>false,
+                            'error'=>'El mail se encuentra registrado'];
+        }
+        
+        //Esto creo que no va
+        //$request->request->add(['claveUsuario' => $plainPassword]);
+
+        
+        return response()->json($respuesta);
     }
     public function login(Request $request)
     {
+        //Creo un arreglo con las credenciales del usuario
+        $credentials = [
+            'mailUsuario' => $request->mailUsuario,
+            'claveUsuario' => $request->claveUsuario
+        ];
 
+        //$input = $request->only('email', 'password');
+
+        //Seteo $jwt_token en null para hacer una comparacion 
         $jwt_token = null;
-        $user = User::where('mailUsuario','=',$request['mailUsuario'])->get();
-        if($user <> null){
-            $var=[
-                'success' => true,
-                'token' => $jwt_token,
-                'user' => $user
-            ];
-        }else{
-            $var=[
+        if (!$jwt_token = auth()->attempt($credentials)) {
+            //Si las credenciales son incorrectas la variable 'success' sera false
+            //Indicando que los datos ingresados son incorrectos
+            return response()->json([
                 'success' => false,
-                'token' => $jwt_token,
-                'user' => null
-            ];
+                'error' => 'Correo o contraseña incorrectos.',
+            ], 401);
         }
-        
+        //Obtengo el usuario
+        $user = Auth::user();
 
-        return response()->json($var);
+        return response()->json([
+            'success' => true,
+            'token' => Str::random(60),
+            'user' => $user,
+            
+        ]);
     }
+
+
+
     public function logout(Request $request)
     {
-        if(!User::checkToken($request)){
+        if(!User::checkToken($request->token)){
             return response()->json([
-                'message' => 'Token is required',
-                'success' => false,
+             'message' => 'Token is required',
+             'success' => false,
             ],422);
         }
 
         try {
-            JWTAuth::invalidate(JWTAuth::parseToken($request->token));
+            //JWTAuth::invalidate(JWTAuth::parseToken($request));
+            auth()->logout();
             return response()->json([
                 'success' => true,
                 'message' => 'User logged out successfully'
@@ -72,10 +103,11 @@ class UserController extends Controller
                 'message' => 'Sorry, the user cannot be logged out'
             ], 500);
         }
+
     }
 
     public function getCurrentUser(Request $request){
-        if(!User::checkToken($request)){
+        if(!User::checkToken($request->token)){
             return response()->json([
                 'success' => false,
                 'message' => 'Token is required'

@@ -55,7 +55,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     public static function checkToken($token){
-        if($token->token){
+        if($token){
             return true;
         }
         return false;
