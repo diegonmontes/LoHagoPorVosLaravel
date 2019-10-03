@@ -48,6 +48,28 @@ class UserController extends Controller
         
         return response()->json($respuesta);
     }
+    public function crearPerfil(Request $request){
+        //Capturo la clave del usuario
+        $usuario=$request->idUsuario;
+        //Busco si existe una persona para ese usuario
+        $persona = PersonaController::buscar($usuario);
+
+        if(count($persona)<1){
+            //Si no exsite creo el perfil y seteo la variable 'success' en true
+            PersonaController::store($request);
+            $respuesta = ['success'=>true];
+        }else{
+            //En caso que exista no creo el usuario y seteo la variable 'success' en false
+            $respuesta = ['success'=>false,
+                            'error'=>'Ya tiene un perfil creado'];
+        }
+        
+        //Esto creo que no va
+        //$request->request->add(['claveUsuario' => $plainPassword]);
+
+        
+        return response()->json($respuesta);
+    }
     public function login(Request $request)
     {
         //Creo un arreglo con las credenciales del usuario
