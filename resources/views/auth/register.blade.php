@@ -8,7 +8,6 @@
             <h1 class="h3 mb-3 font-weight-normal">{{ __('Completar el formulario para registrarse') }}</h1>
             @csrf
             <div class="form-group">
-
                 <input id="nombreUsuario" type="text" class="form-control inputBordes @error('nombreUsuario') is-invalid @enderror" name="nombreUsuario" value="{{ old('nombreUsuario') }}" required autocomplete="nombreUsuario" placeholder="Usuario" autofocus>                                @error('name')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
