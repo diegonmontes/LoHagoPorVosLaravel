@@ -24,9 +24,11 @@
 				{{Session::get('success')}}
 			</div>
 		@endif
-		<form method="GET" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form">
+		<form method="GET" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="row">
+					<input type="file" name="archivo">
+
 				<div class="col-xs-6 col-sm-6 col-md-6">
 					<div class="form-group">
 						<label>NOMBRE</label><br>

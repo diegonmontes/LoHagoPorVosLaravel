@@ -9,6 +9,8 @@ use App\Persona;
 use App\Localidad;
 use App\Provincia;
 use App\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PersonaController extends Controller
 {
@@ -56,6 +58,14 @@ class PersonaController extends Controller
         $request['idUsuario'] = Auth::user()->idUsuario;
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
+        $file = $request['archivo'];
+        if(isset($file)){
+            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $laPersona= Persona::where('idUsuario','=',$request['idUsuario'])->get();
+            $idPersona=$laPersona[0]->idPersona;
+            Storage::disk('local')->put('fotoperfil'.$idPersona, $file);
+        }
+
         return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
     }
 
@@ -122,8 +132,14 @@ class PersonaController extends Controller
         $request['idUsuario'] = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
         $request['idPersona'] =$laPersona[0]->idPersona;
+        $idPersona = $request['idPersona'];
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
-        Persona::find($request['idPersona'])->update($request->all());
+        Persona::find($idPersona)->update($request->all());
+        $file = $request['archivo'];
+        if(isset($file)){
+            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            Storage::disk('local')->put('fotoperfil'.$idPersona, $file);
+        }
         return redirect()->route('inicio')->with('success','Registro actualizado satisfactoriamente');
 
     }
