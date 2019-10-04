@@ -73,6 +73,8 @@ body {
   color: #212529;
   text-align: left;
   background-color: #f8fafc;
+  padding-top: 4.5rem;
+  background-color: #ebebeb;
 }
 
 [tabindex="-1"]:focus {
@@ -16537,6 +16539,7 @@ readers do not read off random characters that represent icons */
 
 #navbarmenu{
     font-weight: 800;
+    background-color: #21B300 !important;
 }
 
 #navbarmenu a{
@@ -16544,3 +16547,22 @@ readers do not read off random characters that represent icons */
     text-decoration: none;
 }
 
+.dropdown-menu a{
+  color: #000000 !important;
+}
+
+/*
+*
+*/
+.color-footer{
+  background-color: #74797d;
+}
+
+.color-navFooter{
+  background-color: #545454;
+}
+
+.footer{
+  margin-top: 1.4rem;
+  color: #FFFFFF;
+}

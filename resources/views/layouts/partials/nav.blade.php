@@ -1,6 +1,6 @@
-<nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #30F004 !important;">
+<nav id="navbarmenu" class="navbar navbar-expand-lg navbar-light bg-light fixed-top sombraNavbar">
     <a href="{{route('inicio')}}">
-        <img class="logoNavbar" src="{{asset('images/logoLoHagoPorVosNavar.png')}}" alt="Logo Lo hago por vos" style="width: 10%; left: -20%;"/>
+        <img class="logoNavbar" src="{{asset('images/logoLoHagoPorVosNavar.png')}}" alt="Logo Lo hago por vos" style="width: 6%; left: -20%;"/>
         <span>LO HAGO POR VOS</span>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

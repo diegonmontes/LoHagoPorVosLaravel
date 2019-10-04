@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="page-footer font-small teal pt-4">
+<footer class="page-footer font-small teal pt-4 color-footer footer">
 
     <!-- Footer Text -->
     <div class="container-fluid text-center text-md-left">
@@ -40,7 +40,7 @@
     <!-- Footer Text -->
 
     <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2019 Copyright:
+    <div class="footer-copyright text-center py-3 color-navFooter">© 2019 Copyright:
         <a href="#">Lo hago por vos</a>
     </div>
     <!-- Copyright -->

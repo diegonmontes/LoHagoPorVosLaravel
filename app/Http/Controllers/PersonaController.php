@@ -33,16 +33,19 @@ class PersonaController extends Controller
      */
     public function create()
     {
-        //
+        
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
         if(count($laPersona)){
             $persona = $laPersona[0];
+            $existePersona = true;
         }else{
             $persona = $laPersona;
+            $existePersona = false;
         }
+
         $provincias=Provincia::all();
-        return view('Persona.create',compact('persona'),['provincias'=>$provincias]);
+        return view('Persona.create',compact('persona'),['provincias'=>$provincias, 'existePersona'=>$existePersona]);
     }
 
     /**

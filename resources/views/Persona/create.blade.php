@@ -1,13 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-    @if($persona->count())
-        {{$existePersona = true}}
-    @else
-        {{$existePersona = false}}
-    @endif
-    <br>
-    <br>
-	<section class="content" style="margin-left: 5%; margin-right: 5%;">
+  	<section class="content" style="margin-left: 5%; margin-right: 5%;">
             <div class="row justify-content-center">
 		@if (count($errors) > 0)
 			<div class="alert alert-danger">

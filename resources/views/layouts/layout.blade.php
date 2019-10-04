@@ -21,18 +21,9 @@
 <body>
 @include('layouts.partials.nav')
 
+@yield('content')
 
-	<div class="container-fluid" style="margin-top: 100px">
-
-		@yield('content')
-	</div>
-	<style type="text/css">
-	.table {
-		border-top: 2px solid #ccc;
-
-	}
-</style>
-<script src="{{ asset('js/navbar.js') }}"></script>
-
+@include('layouts.partials.footer')
+@include('layouts.partials.footer-scripts')
 </body>
 </html>
