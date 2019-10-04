@@ -50,13 +50,15 @@ class UserController extends Controller
     }
     public function crearPerfil(Request $request){
         //Capturo la clave del usuario
-        $usuario=$request->idUsuario;
+        $idUsuario=$request['idUsuario'];
         //Busco si existe una persona para ese usuario
-        $persona = PersonaController::buscar($usuario);
+        $personaController = new PersonaController();
+        $persona = $personaController->buscar($idUsuario);
 
-        if(count($persona)<1){
+
+        if($persona==null){
             //Si no exsite creo el perfil y seteo la variable 'success' en true
-            PersonaController::store($request);
+            $personaController->store($request);
             $respuesta = ['success'=>true];
         }else{
             //En caso que exista no creo el usuario y seteo la variable 'success' en false
