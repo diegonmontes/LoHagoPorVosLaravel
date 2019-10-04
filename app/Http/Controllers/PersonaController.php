@@ -99,7 +99,7 @@ class PersonaController extends Controller
     if (count($listaPersonas)>0){
         $objPersona = $listaPersonas[0];
     } else {
-        $objPersona['idPersona']=null;
+        $objPersona=null;
     }
         return $objPersona;
     }
