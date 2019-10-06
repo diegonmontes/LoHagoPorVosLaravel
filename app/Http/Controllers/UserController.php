@@ -4,20 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use Illuminate\Support\Facades\Hash;
-//use JWTAuth;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
-use Auth;
-//use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 use JWTAuth;
-use Illuminate\Support\Facades\Validator;
 
 
 //use Mail;
 //use App\Mail\PasswordReset;
 
 class UserController extends Controller
+
 {
     public function register(Request $request){
         //Capturo la clave del usuario
@@ -41,11 +38,11 @@ class UserController extends Controller
             $respuesta = ['success'=>false,
                             'error'=>'El mail se encuentra registrado'];
         }
-        
+
         //Esto creo que no va
         //$request->request->add(['claveUsuario' => $plainPassword]);
 
-        
+
         return response()->json($respuesta);
     }
     public function crearPerfil(Request $request){
@@ -65,11 +62,11 @@ class UserController extends Controller
             $respuesta = ['success'=>false,
                             'error'=>'Ya tiene un perfil creado'];
         }
-        
+
         //Esto creo que no va
         //$request->request->add(['claveUsuario' => $plainPassword]);
 
-        
+
         return response()->json($respuesta);
     }
     public function login(Request $request)
@@ -82,7 +79,7 @@ class UserController extends Controller
 
         //$input = $request->only('email', 'password');
 
-        //Seteo $jwt_token en null para hacer una comparacion 
+        //Seteo $jwt_token en null para hacer una comparacion
         $jwt_token = null;
         if (!$jwt_token = auth()->attempt($credentials)) {
             //Si las credenciales son incorrectas la variable 'success' sera false
@@ -93,11 +90,11 @@ class UserController extends Controller
             ], 401);
         }
         //Obtengo el usuario
-        $user = Auth::user();
+        $user = auth::user();
 
         //busco si ese usuario ya se creo un perfil
         //$request['idUsuario'] = Auth::user()->idUsuario;
-        $idUsuario = Auth::user()->idUsuario;
+        $idUsuario = auth::user()->idUsuario;
 //        $persona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
         $personaController = new PersonaController();
         $persona = $personaController->buscar($idUsuario);
@@ -107,7 +104,7 @@ class UserController extends Controller
             'token' => Str::random(60),
             'user' => $user,
             'persona'=>$persona['idPersona'],
-            
+
         ]);
     }
 

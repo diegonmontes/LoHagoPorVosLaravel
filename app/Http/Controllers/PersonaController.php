@@ -33,7 +33,7 @@ class PersonaController extends Controller
      */
     public function create()
     {
-        
+
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
         if(count($laPersona)){
@@ -58,7 +58,12 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
         //
-        $request['idUsuario'] = Auth::user()->idUsuario;
+        if(!isset($request['idUsuario'])){
+            $request['idUsuario'] = Auth::user()->idUsuario;
+        }else{
+            $request['archivo'] = base64_decode($request['imagenPersona']);
+        }
+
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         Persona::create($request->all());
         $file = $request['archivo'];
@@ -96,11 +101,11 @@ class PersonaController extends Controller
         $existe=false;
         $objPersona = null;
         $listaPersonas = Persona::where('idUsuario','=',$idUsuario)->get();
-    if (count($listaPersonas)>0){
-        $objPersona = $listaPersonas[0];
-    } else {
-        $objPersona=null;
-    }
+        if (count($listaPersonas)>0){
+            $objPersona = $listaPersonas[0];
+        } else {
+            $objPersona=null;
+        }
         return $objPersona;
     }
 
