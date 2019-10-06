@@ -67,6 +67,46 @@
             </form>
         </div>
     </section>
+
+    
+
+    <?php
+
+	MercadoPago\SDK::setClientId("7175237490278996");
+	MercadoPago\SDK::setClientSecret("bCl5t1V2TZAKKJKZ3Ss7qYebcqu6j33J");
+
+
+ $preference = new MercadoPago\Preference();
+
+ $produto1 = ['BOLA DE FUTEBOL', 1, '109,90'];
+ $produto2 = ['CHUTEIRA NIKE', 1, '100,90'];
+  
+  # Building an item
+  
+
+  $item2 = new MercadoPago\Item();
+  $item2->id = "00002";
+  $item2->title = $produto2[0]; 
+  $item2->quantity = $produto2[1];
+  $item2->unit_price = str_replace(',', '.', $produto2[2]);
+
+
+
+  
+  $preference->items = array($item2);
+  
+  $preference->save(); # Save the preference and send the HTTP Request to create
+  
+  # Return the HTML code for button
+  
+  echo "<a href='$preference->sandbox_init_point'> Pagar </a>";
+
+?>
+
+
+<script type="text/javascriptMP">
+    window.Mercadopago.setPublishableKey(ENV_PUBLIC_KEY);
+    </script>
 @endsection
 
 
