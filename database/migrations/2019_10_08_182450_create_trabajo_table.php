@@ -24,7 +24,7 @@ class CreateTrabajoTable extends Migration
             $table->string('descripcion',511);
             $table->float('monto',8,2);
             $table->string('imagenTrabajo',511);
-            $table->timestamps('tiempoExpiracion');
+            $table->timestamp('tiempoExpiracion')->nullable(false);
             $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
             $table->foreign('idEstado')->references('idEstado')->on('estado');

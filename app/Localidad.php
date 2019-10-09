@@ -18,6 +18,11 @@ class Localidad extends Model
 
     public function Persona()
     {
-        return $this->hasMany('App\Persona', 'idLocalidad', 'idLocalidad');
+        return $this->belongTo('App\Persona', 'idLocalidad', 'idLocalidad');
+    }
+
+    public function Trabajo()
+    {
+        return $this->hasMany('App\Trabajo', 'idTrabajo', 'idTrabajo');
     }
 }

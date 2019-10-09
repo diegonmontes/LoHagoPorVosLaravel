@@ -103,6 +103,7 @@ class LocalidadController extends Controller
         return redirect()->route('localidad.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
+    //Busca todas las localidad segun el id de la provincia
     public function buscar($id){
         return Localidad::where('idProvincia','=',$id)->get();
     }

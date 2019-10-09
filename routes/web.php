@@ -12,7 +12,6 @@
 */
 
 use App\Trabajo;
-
 Route::get('/', function () {
     $listaTrabajos = Trabajo::all();
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
@@ -41,7 +40,7 @@ Route::prefix('usuario')->group(function(){
 Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
 Route::prefix('anuncio')->group(function(){
-    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth');
+    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil');
     Route::get('store','TrabajoController@store')->name('trabajo.store');
 });
 

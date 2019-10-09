@@ -16566,3 +16566,72 @@ readers do not read off random characters that represent icons */
   margin-top: 1.4rem;
   color: #FFFFFF;
 }
+
+/* Estilo del área del input[file] */
+.drag-drop{
+  height: 8em;
+  width: 8em;
+  border-radius: 4em;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin: 0 auto 1em;
+  background-color: #FFFFFF;
+  background-image: url('../images/fotoperfil.png');
+}
+
+
+.drag-drop span.desc{
+  display: block;
+  font-size: .7em;
+  padding: 0 .5em;
+  color: #000;
+}
+
+input[type="file"]{
+      height: 10em;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%; 
+      z-index: 3;
+}
+
+.preview{
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; 
+  z-index: 4;
+ 
+}
+
+.preview{
+  display: block;
+  font-size: .7em;
+}
+
+.preview{
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+}
+/* Estilo del área del input[file] con :hover */
+
+.drag-drop:hover, input[type="file"]:hover {
+  background-color: #3276b1;
+  cursor: pointer;
+
+}
+
+.drag-drop:hover span.desc {
+  color: #fff;
+} 
+
+.drag-drop:hover .pulsating {
+  animation: pulse1 1s linear infinite;
+  animation-direction: alternate ;
+  -webkit-animation: pulse1 1s linear infinite;
+  -webkit-animation-direction: alternate ;
+}

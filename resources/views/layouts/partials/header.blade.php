@@ -1,5 +1,5 @@
 <!-- Anuncios -->
-<div class="row" style="margin: auto">
+<div class="row app" style="margin: auto">
     @foreach($listaTrabajos as $trabajo)
         <div class="card" style="width: 18rem; margin-left: 1%; margin-right: 1%; margin-top: 1%;">
             <div class="card-body">

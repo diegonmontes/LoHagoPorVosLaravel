@@ -39,7 +39,7 @@ class RolController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[ 'descripcionRol'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        $this->validate($request,[ 'nombreRol'=>'required', 'descripcionRol'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Rol::create($request->all()); //Creamos el elemento nuevo
         return redirect()->route('rol.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -80,7 +80,7 @@ class RolController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'descripcionRol'=>'required']); //Validamos los datos antes de actualizar
+        $this->validate($request,[ 'nombreRol'=>'required' ,'descripcionRol'=>'required']); //Validamos los datos antes de actualizar
         Rol::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('rol.index')->with('success','Registro actualizado satisfactoriamente');
     }

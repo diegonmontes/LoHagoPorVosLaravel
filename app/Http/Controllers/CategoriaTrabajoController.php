@@ -15,8 +15,8 @@ class CategoriaTrabajoController extends Controller
     public function index()
     {
         //
-        $categoriasTrabajo=CategoriaTrabajo::orderBy('idLocalidad','DESC')->paginate(15);
-        return view('CategoriaTrabajo.index',compact('categoriasTrabajo'));
+        $categoriasTrabajo=CategoriaTrabajo::orderBy('idCategoriaTrabajo','DESC')->paginate(15);
+        return view('categoriaTrabajo.index',compact('categoriasTrabajo'));
     }
 
     /**
@@ -28,7 +28,7 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $categoriasTrabajo=CategoriaTrabajo::all();
-        return view('CategoriaTrabajo.create',['categoriasTrabajo'=>$categoriasTrabajo]);
+        return view('categoriaTrabajo.create',['categoriasTrabajo'=>$categoriasTrabajo]);
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $categoriasTrabajo=CategoriaTrabajo::find($id);
-        return  view('CategoriaTrabajo.show',compact('categoriasTrabajo'));
+        return  view('categoriaTrabajo.show',compact('categoriasTrabajo'));
     }
 
     /**
@@ -69,7 +69,7 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $categoriasTrabajo=CategoriaTrabajo::find();
-        return view('CategoriaTrabajo.edit',compact('categoriasTrabajo'));
+        return view('categoriaTrabajo.edit',compact('categoriasTrabajo'));
     }
 
     /**
@@ -96,7 +96,7 @@ class CategoriaTrabajoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //Buscamos y eliminamos el elemento
         CategoriaTrabajo::find($id)->delete();
         return redirect()->route('categoriaTrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }

@@ -38,11 +38,6 @@ class UserController extends Controller
             $respuesta = ['success'=>false,
                             'error'=>'El mail se encuentra registrado'];
         }
-
-        //Esto creo que no va
-        //$request->request->add(['claveUsuario' => $plainPassword]);
-
-
         return response()->json($respuesta);
     }
     public function crearPerfil(Request $request){

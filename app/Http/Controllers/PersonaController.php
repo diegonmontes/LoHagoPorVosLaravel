@@ -1,6 +1,7 @@
 <?php
-
 namespace App\Http\Controllers;
+
+//require_once 'HTTP/Request2.php';
 
 use Faker\Provider\Person;
 use Illuminate\Http\Request;
@@ -64,7 +65,7 @@ class PersonaController extends Controller
             $request['archivo'] = base64_decode($request['imagenPersona']);
         }
 
-        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
         Persona::create($request->all());
         $file = $request['archivo'];
         if(isset($file)){
@@ -141,7 +142,7 @@ class PersonaController extends Controller
         $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
         $request['idPersona'] =$laPersona[0]->idPersona;
         $idPersona = $request['idPersona'];
-        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required','imagenPersona'=>'required']);
         Persona::find($idPersona)->update($request->all());
         $file = $request['archivo'];
         if(isset($file)){
@@ -165,4 +166,47 @@ class PersonaController extends Controller
         return redirect()->route('persona.index')->with('success','Registro eliminado satisfactoriamente');
 
     }
+
+
+
+    // public function validarImagen($imagen)
+    // {
+    //     // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
+
+    //     $request = new Http_Request2('https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate');
+    //     $url = $request->getUrl();
+
+    //     $headers = array(
+    //         // Request headers
+    //         'Content-Type' => 'application/json',
+    //         'Ocp-Apim-Subscription-Key' => 'f598fd509d5945d98f2f3494b27ea1f5',
+    //     );
+
+    //     $request->setHeader($headers);
+
+    //     $parameters = array(
+    //         // Request parameters
+    //         'CacheImage' => 'false',
+    //     );
+
+    //     $url->setQueryVariables($parameters);
+
+    //     $request->setMethod(HTTP_Request2::METHOD_POST);
+
+    //     // Request body
+    //     $request->setBody("{body}");
+
+    //     try
+    //     {
+    //         $response = $request->send();
+    //         $valido = $response->getBody();
+    //     }
+    //     catch (HttpException $ex)
+    //     {
+    //         $valido = $ex;
+    //     }
+    //     return $valido;
+    // }
+    
+
 }

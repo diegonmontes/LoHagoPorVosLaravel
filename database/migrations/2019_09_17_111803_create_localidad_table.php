@@ -16,7 +16,7 @@ class CreateLocalidadTable extends Migration
         Schema::create('localidad', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idLocalidad');
-            $table->string('nombreLocalidad');
+            $table->string('nombreLocalidad',50);
             $table->integer('idProvincia')->unsigned();
             $table->smallInteger('codigoPostal');
             $table->timestamps();

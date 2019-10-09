@@ -17,7 +17,7 @@ class CreateProvinciaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('idProvincia');
             $table->string('nombreProvincia',50);
-            $table->string('codigoIso31662',8);
+            $table->string('codigoIso31662',4)->nullable(false);
             $table->timestamps();
         });
     }

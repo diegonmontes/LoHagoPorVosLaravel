@@ -18,11 +18,19 @@ class Persona extends Model
 
     public function User()
     {
-        return $this->hasMany('App\User', 'idUsuario', 'idUsuario');
+        return $this->hasOne('App\User', 'idUsuario', 'idUsuario');
     }
 
     public function Trabajo()
     {
         return $this->hasMany('App\Trabajo', 'idPersona', 'idPersona');
     }
+
+    public function Valoracion()
+    {
+        return $this->hasMany('App\Valoracion', 'idValoracion', 'idValoracion');
+    }
+
+
+
 }

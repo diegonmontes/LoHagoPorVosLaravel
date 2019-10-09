@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTipoTrabajoTable extends Migration
+class CreateEstadoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateTipoTrabajoTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipoTrabajo', function (Blueprint $table) {
+        Schema::create('estado', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('idTipoTrabajo');
-            $table->string('nombreTipo',80);
+            $table->increments('idEstado');
+            $table->string('nombreEstado',80)->nullable(false);
+            $table->string('descripcionEstado',80)->nullable(false);
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateTipoTrabajoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipoTrabajo');
+        Schema::dropIfExists('estado');
     }
 }
