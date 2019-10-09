@@ -16,17 +16,21 @@ class CreateTrabajoTable extends Migration
         Schema::create('trabajo', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idTrabajo');
-            $table->integer('idPersona')->unsigned();
-            $table->integer('idTipoTrabajo')->unsigned();
-            $table->integer('idCategoriaTrabajo')->unsigned();
+            $table->integer('idEstado')->unsigned()->nullable(false);
+            $table->integer('idCategoriaTrabajo')->unsigned()->nullable(false);
+            $table->integer('idPersona')->unsigned()->nullable(false);
+            $table->integer('idLocalidad')->unsigned()->nullable(false);
             $table->string('titulo',255);
             $table->string('descripcion',511);
             $table->float('monto',8,2);
-            $table->tinyInteger('eliminado')->nullable();
+            $table->string('imagenTrabajo',511);
+            $table->timestamps('tiempoExpiracion');
+            $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
-            $table->foreign('idPersona')->references('idPersona')->on('persona');
-            $table->foreign('idTipoTrabajo')->references('idTipoTrabajo')->on('tipoTrabajo');
+            $table->foreign('idEstado')->references('idEstado')->on('estado');
             $table->foreign('idCategoriaTrabajo')->references('idCategoriaTrabajo')->on('categoriaTrabajo');
+            $table->foreign('idPersona')->references('idPersona')->on('persona');
+            $table->foreign('idLocalidad')->references('idLocalidad')->on('localidad');
         });
     }
 
