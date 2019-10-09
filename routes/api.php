@@ -24,3 +24,7 @@ Route::post('crearPerfil', 'UserController@crearPerfil');
 Route::get('user', 'UserController@getCurrentUser');
 Route::post('update', 'UserController@update');
 Route::get('logout', 'UserController@logout');
+Route::post('storeTrabajo','TrabajoController@storeApp');
+Route::post('listarCategorias','CategoriaTrabajoController@buscarCategorias');
+Route::post('listarProvincias','ProvinciaController@buscarProvincias');
+Route::post('listarLocalidades','LocalidadController@buscarLocalidades');

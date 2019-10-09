@@ -62,17 +62,16 @@ class PersonaController extends Controller
         if(!isset($request['idUsuario'])){
             $request['idUsuario'] = Auth::user()->idUsuario;
         }else{
-            $request['archivo'] = base64_decode($request['imagenPersona']);
+            $request['files'] = base64_decode($request['imagenPersona']);
         }
 
+        $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.png';
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
         Persona::create($request->all());
-        $file = $request['archivo'];
+        $file = $request['files'];
         if(isset($file)){
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            $laPersona= Persona::where('idUsuario','=',$request['idUsuario'])->get();
-            $idPersona=$laPersona[0]->idPersona;
-            Storage::disk('local')->put('fotoperfil'.$idPersona, $file);
+            Storage::disk('local')->put($request['imagenPersona'], $file);
         }
 
         return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');

@@ -97,4 +97,10 @@ class ProvinciaController extends Controller
         Provincia::find($id)->delete();
         return redirect()->route('provincia.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    public function buscarProvincias(){
+        $objProvincia = new Provincia();
+        $listaProvincias = $objProvincia->get();
+        return json_encode($listaProvincias);
+    }
 }

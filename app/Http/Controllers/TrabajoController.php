@@ -41,4 +41,25 @@ class TrabajoController extends Controller
         Trabajo::create($request->all());
         return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
     }
+
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeApp(Request $request)
+    {
+        //
+        $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
+        $request['idEstado'] = 1;
+        $request['idLocalidad']= 3005;
+        if (Trabajo::create($request->all())){
+            $respuesta = ['success'=>true];
+        } else {
+            $respuesta = ['success'=>true];
+        }
+ 
+        return response()->json($respuesta);
+    }
 }

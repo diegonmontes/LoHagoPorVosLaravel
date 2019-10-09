@@ -107,4 +107,18 @@ class LocalidadController extends Controller
     public function buscar($id){
         return Localidad::where('idProvincia','=',$id)->get();
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function buscarLocalidades(Request $request){
+        $idProvincia = $request['idProvincia'];
+        $objLocalidad = new Localidad();
+        $listaLocalidades = $objLocalidad->where('idProvincia','=',$idProvincia)->get();
+        return json_encode($listaLocalidades);
+    }
 }

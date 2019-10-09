@@ -9,7 +9,7 @@ class Persona extends Model
     //
     protected $table='persona';
     protected $primaryKey = 'idPersona';
-    protected $fillable = ['idPersona', 'nombrePersona','apellidoPersona','dniPersona','telefonoPersona','idLocalidad','idUsuario','eliminado'];
+    protected $fillable = ['idPersona', 'nombrePersona','apellidoPersona','dniPersona','telefonoPersona', 'imagenPersona','idLocalidad','idUsuario','eliminado'];
 
     public function Localidad()
     {

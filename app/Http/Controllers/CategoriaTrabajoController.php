@@ -100,4 +100,10 @@ class CategoriaTrabajoController extends Controller
         CategoriaTrabajo::find($id)->delete();
         return redirect()->route('categoriaTrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    public function buscarCategorias(){
+        $objCategoriaTrabajo = new CategoriaTrabajo();
+        $listaCategorias = $objCategoriaTrabajo->get();
+        return json_encode($listaCategorias);
+    }
 }
