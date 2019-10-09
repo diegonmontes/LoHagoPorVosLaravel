@@ -76,4 +76,9 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo('App\Persona', 'idUsuario', 'idUsuario');
     }
 
+    public function getAuthPassword()
+    {
+        return $this->claveUsuario;
+    }
+
 }
