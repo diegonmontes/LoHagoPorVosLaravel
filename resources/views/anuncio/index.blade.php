@@ -23,6 +23,13 @@
             <form method="GET" action="{{ route('trabajo.store') }}"  role="form">
                 {{ csrf_field() }}
                 <div class="row">
+                    <div class="drag-drop">
+                        <input type="file" id="files" name="files[]" />
+                        <output id="list" class="preview" style="z-index: -10"></output>
+                        <span class="desc">Pulse aquí para añadir archivos</span>
+                    </div>
+                </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
                             <label>TITULO DEL ANUNCIO</label><br>

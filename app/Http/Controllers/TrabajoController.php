@@ -51,9 +51,14 @@ class TrabajoController extends Controller
     public function storeApp(Request $request)
     {
         //
+        if(!isset($request['imagenTrabajo'])){
+            $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
+            $request['imagenPersona'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.png';
+            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            Storage::disk('local')->put($request['imagenPersona'], $file);
+        }
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;
-        $request['idLocalidad']= 3005;
         if (Trabajo::create($request->all())){
             $respuesta = ['success'=>true];
         } else {
@@ -63,3 +68,19 @@ class TrabajoController extends Controller
         return response()->json($respuesta);
     }
 }
+
+
+// if(!isset($request['idUsuario'])){
+//     $request['idUsuario'] = Auth::user()->idUsuario;
+// }else{
+//     $request['files'] = base64_decode($request['imagenPersona']);
+// }
+
+// $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.png';
+// $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
+// Persona::create($request->all());
+// $file = $request['files'];
+// if(isset($file)){
+//     //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+//     Storage::disk('local')->put($request['imagenPersona'], $file);
+// }
