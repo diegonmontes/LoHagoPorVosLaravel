@@ -7,6 +7,8 @@ use App\Trabajo;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class TrabajoController extends Controller
 {
@@ -51,11 +53,15 @@ class TrabajoController extends Controller
     public function storeApp(Request $request)
     {
         //
-        if(!isset($request['imagenTrabajo'])){
+        if(isset($request['imagenTrabajo'])){
             $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
-            $request['imagenPersona'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.png';
+            $file = $request['imagenTrabajo'];
+            $nombreImagen = $request['nombreImagen'];
+            $posicion = strrpos($nombreImagen,'.');
+            $extension = substr($nombreImagen,$posicion);
+            $request['imagenTrabajo'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").$extension;
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            Storage::disk('local')->put($request['imagenPersona'], $file);
+            Storage::disk('local')->put($request['imagenTrabajo'], $file);
         }
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;

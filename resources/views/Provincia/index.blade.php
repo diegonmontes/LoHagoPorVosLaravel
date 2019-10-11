@@ -1,24 +1,25 @@
-@extends('layouts.layout')
+@extends('admin')
 @section('content')
-<div class="row">
   <section class="content">
-    <div class="col-md-8 col-md-offset-2">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="pull-left"><h3>Lista Provincia</h3></div>
-          <div class="pull-right">
-            <div class="btn-group">
-              <a href="{{ route('provincia.create') }}" class="btn btn-info" >Añadir Provincia</a>
-            </div>
-          </div>
-          <div class="table-container">
-            <table id="mytable" class="table table-bordred table-striped">
-             <thead>
-               <th>Provincia</th>
-               <th>Codigo Iso 31662</th>
-               <th>Editar</th>
-               <th>Eliminar</th>
-             </thead>
+      <table class="table table-striped table-bordered table-hover">
+          <thead>
+              <tr>
+                <td colspan="4" style="background-color: #7D8D94">
+                  <div class="float_left">
+                      <h3>Lista Rol</h3>
+                  </div>
+                  <div class="float-right">
+                    <a href="{{ route('provincia.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i></i>Añadir Provincia</a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                  <th>Provincia</th>
+                  <th>Codigo Iso 31662</th>
+                  <th>Editar</th>
+                  <th>Eliminar</th>
+              </tr>
+          </thead>
              <tbody>
               @if($provincias->count())  
               @foreach($provincias as $provincia)
@@ -26,12 +27,12 @@
                 <td>{{$provincia->nombreProvincia}}</td>
                 <td>{{$provincia->codigoIso31662}}</td>
 
-                <td><a class="btn btn-primary btn-xs" href="{{action('ProvinciaController@edit', $provincia->idProvincia)}}" ><span class="glyphicon glyphicon-pencil"></span></a></td>
+                <td><a class="btn btn-primary btn-xs" href="{{action('ProvinciaController@edit', $provincia->idProvincia)}}" ><i class="fas fa-edit"></i></a></td>
                 <td>
                   <form action="{{action('ProvinciaController@destroy', $provincia->idProvincia)}}" method="post">
                   {{ csrf_field() }}
                   <input name="_method" type="hidden" value="DELETE">
-                  <button class="btn btn-danger btn-xs" type="submit"><span class="glyphicon glyphicon-trash"></span></button>
+                  <button class="btn btn-danger btn-xs" type="submit"><i class="far fa-trash-alt"></i></button>
                   </form>
                 </td>
               </tr>
@@ -44,11 +45,7 @@
             </tbody>
  
           </table>
-        </div>
-      </div>
       {{ $provincias->links() }}
-    </div>
-  </div>
 </section>
  
 @endsection

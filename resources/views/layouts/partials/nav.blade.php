@@ -21,7 +21,7 @@
                         {{Auth::user()->nombreUsuario}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil">Mi Perfil</a>
+                        <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil"><i class="fas fa-user"></i>Mi Perfil</a>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">

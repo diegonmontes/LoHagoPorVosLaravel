@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 //require_once 'HTTP/Request2.php';
 
 use Faker\Provider\Person;
+use HTTP_Request2;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
@@ -168,44 +169,45 @@ class PersonaController extends Controller
 
 
 
-    // public function validarImagen($imagen)
-    // {
-    //     // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
+    public function validarImagen($imagen)
+    {
+        // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
 
-    //     $request = new Http_Request2('https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate');
-    //     $url = $request->getUrl();
+        $request = new Http_Request2('https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate');
+        //$url = $request->getUrl();
+        $imageUrl =  'https://reviewcontentstoragebrs.blob.core.windows.net/lohagoporvos/IMG_201910ie9555109d0fe4c1bb7648056347665d8?sv=2015-12-11&sr=c&sig=kF9npeNpI%2FSrbdBIiK9to4xuxLM%2FbLunSn8%2F8tTRyS0%3D&se=2019-10-10T22%3A59%3A27Z&sp=r';
+        
+        $headers = array(
+            // Request headers
+            'Content-Type' => 'application/json',
+            'Ocp-Apim-Subscription-Key' => 'f598fd509d5945d98f2f3494b27ea1f5',
+        );
 
-    //     $headers = array(
-    //         // Request headers
-    //         'Content-Type' => 'application/json',
-    //         'Ocp-Apim-Subscription-Key' => 'f598fd509d5945d98f2f3494b27ea1f5',
-    //     );
+        $request->setHeader($headers);
 
-    //     $request->setHeader($headers);
+        $parameters = array(
+            // Request parameters
+            'CacheImage' => 'false',
+        );
 
-    //     $parameters = array(
-    //         // Request parameters
-    //         'CacheImage' => 'false',
-    //     );
+        $url->setQueryVariables($parameters);
 
-    //     $url->setQueryVariables($parameters);
+        $request->setMethod(HTTP_Request2::METHOD_POST);
 
-    //     $request->setMethod(HTTP_Request2::METHOD_POST);
+        // Request body
+        $request->setBody("{body}");
 
-    //     // Request body
-    //     $request->setBody("{body}");
+        try
+        {
+            $response = $request->send();
+            $valido = $response->getBody();
+        }
+        catch (HttpException $ex)
+        {
+            $valido = $ex;
+        }
+        return $valido;
+    }
 
-    //     try
-    //     {
-    //         $response = $request->send();
-    //         $valido = $response->getBody();
-    //     }
-    //     catch (HttpException $ex)
-    //     {
-    //         $valido = $ex;
-    //     }
-    //     return $valido;
-    // }
-    
 
 }

@@ -1,8 +1,8 @@
-@extends('layouts.layout')
+@extends('admin')
 @section('content')
 <div class="row">
 	<section class="content">
-		<div class="col-md-8 col-md-offset-2">
+		<div class="col-md-6 col-md-offset-2">
 			@if (count($errors) > 0)
 			<div class="alert alert-danger">
 				<strong>Error!</strong> Revise los campos obligatorios.<br><br>
@@ -18,46 +18,38 @@
 				{{Session::get('success')}}
 			</div>
 			@endif
+		</div>
  
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h3 class="panel-title">Nueva Provincia</h3>
-				</div>
-				<div class="panel-body">					
-					<div class="table-container">
-						<form method="POST" action="{{ route('provincia.store') }}"  role="form">
-							{{ csrf_field() }}
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<div class="form-group">
-										<label>Nombre:</label><br>
-										<input type="text" name="nombreProvincia" id="nombreProvincia" class="form-control input-sm">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<div class="form-group">
-										<label>Codigo Iso 31662:</label><br>
-										<input type="text" name="codigoIso31662" id="codigoIso31662" class="form-control input-sm">
-									</div>
-								</div>
-							</div>					
-							<div class="row">
- 
-								<div class="col-xs-6 col-sm-6 col-md-6">
-									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
-									<a href="{{ route('provincia.index') }}" class="btn btn-info btn-block" >Atrás</a>
-								</div>	
- 
-							</div>
-						</form>
+		<div class="card">
+			<div class="card-header">
+				<h3>Nueva Provincia</h3>
+			</div>
+			<div class="card-body">
+				<form method="POST" action="{{ route('provincia.store') }}"  role="form">
+					{{ csrf_field() }}
+					<div class="row">
+						<div class="form-group">
+							<label>Nombre:</label><br>
+							<input type="text" name="nombreProvincia" id="nombreProvincia" class="form-control input-sm">
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<label>Codigo Iso 31662:</label><br>
+							<input type="text" name="codigoIso31662" id="codigoIso31662" class="form-control input-sm">
+						</div>
+					</div>					
+					<div class="row">
+						<input type="submit"  value="Guardar" class="btn btn-success btn-block">
+						<a href="{{ route('provincia.index') }}" class="btn btn-info btn-block" >Atrás</a>
+					</div>	
+				</form>
 					</div>
 				</div>
- 
 			</div>
 		</div>
-	</section>
-	@endsection
+	</div>
+</section>
+@endsection
 
 	
