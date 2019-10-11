@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
+
 use App\CategoriaTrabajo;
 use App\Trabajo;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
+use App\Localidad;
+use App\Provincia;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -24,7 +25,8 @@ class TrabajoController extends Controller
          * Show the form for creating a new resource.
          */
         $listaCategoriaTrabajo=CategoriaTrabajo::all();
-        return view('anuncio.index',['listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
+        $listaProvincias=Provincia::all();  
+        return view('anuncio.index',['provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
     }
 
     /**
@@ -38,22 +40,15 @@ class TrabajoController extends Controller
         //
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required', 'imagenTrabajo', 'tiempoExpiracion']);
         $request['idTipoTrabajo'] = 1;
-        $idUsuario = Auth::user()->idUsuario;
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $request['idPersona']=$persona[0]->idPersona;
-        Trabajo::create($request->all());
-        return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
-    }
+        if (isset($request['idPersona'])){ // Significa que ya tenemos el idPersona (viene de flutter)
+            $usandoFlutter = true;
+        } else { // No tenemos idPersona. Esta en la pc
+            $idUsuario = Auth::user()->idUsuario;
+            $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+            $request['idPersona']=$persona[0]->idPersona;
+            $usandoFlutter = false;
+        }
 
-      /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function storeApp(Request $request)
-    {
-        //
         if(isset($request['imagenTrabajo'])){
             $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
             $file = $request['imagenTrabajo'];
@@ -64,15 +59,20 @@ class TrabajoController extends Controller
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             Storage::disk('local')->put($request['imagenTrabajo'], $file);
         }
+
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;
         if (Trabajo::create($request->all())){
-            $respuesta = ['success'=>true];
+            if ($usandoFlutter){
+                $respuesta = ['success'=>true];
+                return response()->json($respuesta);
+            } else { // Significa que esta en laravel y debe redireccionar a inicio
+                return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+            }
         } else {
-            $respuesta = ['success'=>true];
+            $respuesta = ['success'=>false];
         }
  
-        return response()->json($respuesta);
     }
     public function buscarTrabajos(){
         $objTrabajo = new Trabajo();
@@ -81,18 +81,3 @@ class TrabajoController extends Controller
     }
 }
 
-
-// if(!isset($request['idUsuario'])){
-//     $request['idUsuario'] = Auth::user()->idUsuario;
-// }else{
-//     $request['files'] = base64_decode($request['imagenPersona']);
-// }
-
-// $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.png';
-// $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
-// Persona::create($request->all());
-// $file = $request['files'];
-// if(isset($file)){
-//     //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-//     Storage::disk('local')->put($request['imagenPersona'], $file);
-// }

@@ -20,11 +20,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@login');
-Route::post('crearPerfil', 'UserController@crearPerfil');
+Route::post('crearPerfil', 'PersonaController@store');
 Route::get('user', 'UserController@getCurrentUser');
 Route::post('update', 'UserController@update');
 Route::get('logout', 'UserController@logout');
-Route::post('storeTrabajo','TrabajoController@storeApp');
+Route::post('storeTrabajo','TrabajoController@store');
 Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 Route::post('listarProvincias','ProvinciaController@buscarProvincias');
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');

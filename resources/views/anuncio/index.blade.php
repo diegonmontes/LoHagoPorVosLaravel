@@ -65,6 +65,27 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        <label for="idProvincia">PROVINCIA</label>
+                            <select class="form-control inputSelect" name="idProvincia" id="idProvincia" style="color: #1e1e27">
+                            @foreach ($provincias as $unaProvincia)
+                                <option value="{{$unaProvincia->idProvincia}}"
+                                        
+                                >{{$unaProvincia->nombreProvincia}}</option>
+                                @endforeach
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 col-md-4">
+                        <label for="idLocalidad" class="control-label">LOCALIDAD</label>
+                        <select name="idLocalidad" id="idLocalidad" class="form-control inputSelect" style="color: #1e1e27">
+                            <option value="">Seleccione una opcion</option>
+                        </select>
+                    </div>
+			</div>
+			<br>
+			
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
