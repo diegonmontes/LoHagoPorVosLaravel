@@ -20,25 +20,38 @@ class UserController extends Controller
     public function register(Request $request){
         //Capturo la clave del usuario
         $plainPassword=$request->claveUsuario;
-        //Encripto la clave usuario
-        $claveUsuario=bcrypt($request->claveUsuario);
-        //Y la agrego al arreglo $request
-        $request->request->add(['claveUsuario' => $claveUsuario]);
-        //Agrego el rol al usuario que se va a registrar
-        //Por defecto el rol sera el 2 'Usuario'
-        $request['idRol'] = 2;
-        //Busco si existe el mail con lo cual se quieren registrar
-        $usuario = User::where('mailUsuario','=',$request->mailUsuario)->get();
+        $nombreUsuario=$request->nombreUsuario;
+        $controller= new Controller;
+        $rta=$controller->moderarTexto($nombreUsuario);
+        $rta = json_decode($rta);
 
-        if(count($usuario)<1){
-            //Si no exsite creo el usuario y seteo la variable 'success' en true
-            User::create($request->all());
-            $respuesta = ['success'=>true];
-        }else{
-            //En caso que exista no creo el usuario y seteo la variable 'success' en false
-            $respuesta = ['success'=>false,
-                            'error'=>'El mail se encuentra registrado'];
+        
+        if($rta->Terms==null){ // Significa que no hay ninguna mala palabra
+            //Encripto la clave usuario
+            $claveUsuario=bcrypt($request->claveUsuario);
+            //Y la agrego al arreglo $request
+            $request->request->add(['claveUsuario' => $claveUsuario]);
+            //Agrego el rol al usuario que se va a registrar
+            //Por defecto el rol sera el 2 'Usuario'
+            $request['idRol'] = 2;
+            //Busco si existe el mail con lo cual se quieren registrar
+            $usuario = User::where('mailUsuario','=',$request->mailUsuario)->get();
+
+            if(count($usuario)<1){
+                //Si no exsite creo el usuario y seteo la variable 'success' en true
+                User::create($request->all());
+                $respuesta = ['success'=>true];
+            }else{
+                //En caso que exista no creo el usuario y seteo la variable 'success' en false
+                $respuesta = ['success'=>false,
+                                'error'=>'El mail se encuentra registrado'];
+            }
+        }else{ // Significa que no puede ingresar ninguna mala palabra
+            $respuesta= ['success'=>false,
+                        'error'=>'No puede ingresar palabras profanas'];
         }
+      //  print_r($rtaDecode);
+        
         return response()->json($respuesta);
     }
     public function crearPerfil(Request $request){
@@ -172,6 +185,9 @@ class UserController extends Controller
             'user' =>$user
         ]);
     }
+    
+    
+
 
 
 
