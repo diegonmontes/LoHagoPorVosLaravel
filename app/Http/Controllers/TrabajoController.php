@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\CategoriaTrabajo;
 use App\Trabajo;
 use Illuminate\Http\Request;
@@ -51,11 +52,13 @@ class TrabajoController extends Controller
     public function storeApp(Request $request)
     {
         //
-        if(!isset($request['imagenTrabajo'])){
+        if(isset($request['imagenTrabajo'])){
             $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
-            $request['imagenPersona'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.png';
+            $file=$request['imagenTrabajo'];
+            $request['imagenTrabajo'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.png';
+            //print_r($request['imagenPersona']);
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            Storage::disk('local')->put($request['imagenPersona'], $file);
+            Storage::disk('local')->put($request['imagenTrabajo'], $file);
         }
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;
@@ -66,6 +69,11 @@ class TrabajoController extends Controller
         }
  
         return response()->json($respuesta);
+    }
+    public function buscarTrabajos(){
+        $objTrabajo = new Trabajo();
+        $listaTrabajos = $objTrabajo->get();
+        return json_encode($listaTrabajos);
     }
 }
 
