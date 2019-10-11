@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\CategoriaTrabajo;
 use App\Trabajo;
 use Illuminate\Http\Request;
@@ -72,6 +73,11 @@ class TrabajoController extends Controller
         }
  
         return response()->json($respuesta);
+    }
+    public function buscarTrabajos(){
+        $objTrabajo = new Trabajo();
+        $listaTrabajos = $objTrabajo->get();
+        return json_encode($listaTrabajos);
     }
 }
 

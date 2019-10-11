@@ -25,6 +25,7 @@ Route::get('user', 'UserController@getCurrentUser');
 Route::post('update', 'UserController@update');
 Route::get('logout', 'UserController@logout');
 Route::post('storeTrabajo','TrabajoController@storeApp');
-Route::post('listarCategorias','CategoriaTrabajoController@buscarCategorias');
+Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 Route::post('listarProvincias','ProvinciaController@buscarProvincias');
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
+Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
