@@ -59,23 +59,41 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        if(!isset($request['idUsuario'])){
-            $request['idUsuario'] = Auth::user()->idUsuario;
-        }else{
-            $request['files'] = base64_decode($request['imagenPersona']);
+        //print_R($request['imagenPersona']);
+        if (isset($request['idUsuario'])){ // Significa que ya tenemos el idUsuario (viene de flutter)
+            $usandoFlutter = true;
+        } else { // No tenemos idUsuario. Esta en la pc
+            $idUsuario = Auth::user()->idUsuario;
+            $request['idUsuario'] = $idUsuario;
+            $usandoFlutter = false;
         }
 
-        $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.png';
-        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
-        Persona::create($request->all());
-        $file = $request['files'];
-        if(isset($file)){
+        if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
+            if ($usandoFlutter){ // Significa que el nombre de la img viene por parametro
+                $nombreImagen = $request['nombreImagen'];
+                $posicion = strrpos($nombreImagen,'.');
+                $extension = substr($nombreImagen,$posicion);
+            } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $posicion = strrpos($request['imagenPersona'],'.');
+                $extension = substr($request['imagenPersona'],$posicion);
+            }
+            $request['imagenPersona'] = base64_decode($request['imagenPersona']);
+            $file = $request['imagenPersona'];
+            $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").$extension;
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             Storage::disk('local')->put($request['imagenPersona'], $file);
         }
-
-        return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        if (Persona::create($request->all())){
+            if ($usandoFlutter){
+                $respuesta = ['success'=>true];
+                return response()->json($respuesta);
+            } else { // Significa que esta en laravel y debe redireccionar a inicio
+                return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+            }
+        } else {
+            $respuesta = ['success'=>false];
+        }
     }
 
     /**

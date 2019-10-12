@@ -37,7 +37,6 @@ class TrabajoController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required', 'imagenTrabajo', 'tiempoExpiracion']);
         $request['idTipoTrabajo'] = 1;
         if (isset($request['idPersona'])){ // Significa que ya tenemos el idPersona (viene de flutter)
@@ -49,16 +48,21 @@ class TrabajoController extends Controller
             $usandoFlutter = false;
         }
 
-        if(isset($request['imagenTrabajo'])){
+        if(isset($request['imagenTrabajo']) && $request['imagenTrabajo']!=null){
+            if ($usandoFlutter){ // Significa que el nombre de la img viene por parametro
+                $nombreImagen = $request['nombreImagen'];
+                $posicion = strrpos($nombreImagen,'.');
+                $extension = substr($nombreImagen,$posicion);
+            } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $posicion = strrpos($request['imagenTrabajo'],'.');
+                $extension = substr($request['imagenTrabajo'],$posicion);
+            }
             $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
             $file = $request['imagenTrabajo'];
-            $nombreImagen = $request['nombreImagen'];
-            $posicion = strrpos($nombreImagen,'.');
-            $extension = substr($nombreImagen,$posicion);
             $request['imagenTrabajo'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").$extension;
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             Storage::disk('local')->put($request['imagenTrabajo'], $file);
-        }
+        } 
 
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;

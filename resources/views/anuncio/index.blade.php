@@ -24,7 +24,7 @@
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="drag-drop">
-                        <input type="file" id="files" name="files[]" />
+                        <input type="file" id="files" name="imagenTrabajo" />
                         <output id="list" class="preview" style="z-index: -10"></output>
                         <span class="desc">Pulse aquí para añadir archivos</span>
                     </div>
