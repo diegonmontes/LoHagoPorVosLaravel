@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Trabajoaspirantes;
+use App\Persona;
+use App\Trabajo;
+use Auth;
 
 class TrabajoaspirantesController extends Controller
 {
@@ -11,10 +15,15 @@ class TrabajoaspirantesController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index($id)
     {
-        $Trabajoaspirantes=Trabajoaspirante::orderBy('idTrabajoaspirante','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-        return view('trabajoaspirante.index',compact('Trabajoaspirantes'));
+        //Buscamos la persona que esta autenticada con el idUsuario
+        $idUsuario = Auth::user()->idUsuario;
+        $persona = Persona::where('idUsuario','=',$idUsuario)->get()[0];
+        //Buscamos el trabajo que se quiere postular
+        $trabajo = Trabajo::find($id);
+
+        return view('trabajoaspirante.index',['persona'=>$persona, 'trabajo'=>$trabajo]);
     }
 
     /**
@@ -35,22 +44,15 @@ class TrabajoaspirantesController extends Controller
      * @throws ValidationException
      */
     public function store(Request $request)
-    {
+    {   
+        $existe = Trabajoaspirantes::where('idPersona','=',$request['idPersona'])->where('idTrabajo','=',$request['idTrabajo'])->get();
         $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
-        Trabajoaspirante::create($request->all()); //Creamos el elemento nuevo
-        return redirect()->route('trabajoaspirante.index')->with('success','Registro creado satisfactoriamente');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        $Trabajoaspirantes=Trabajoaspirante::find($id); //Buscamos el elemento para mostrarlo
-        return  view('trabajoaspirante.show',compact('Trabajoaspirantes'));
+        $success = false;
+        if(!count($existe)){
+            $success = true;
+            Trabajoaspirantes::create($request->all()); //Creamos el elemento nuevo
+        }
+        return view('trabajoaspirante.show',compact('success'));
     }
 
     /**
@@ -61,8 +63,8 @@ class TrabajoaspirantesController extends Controller
      */
     public function edit($id)
     {
-        $rol=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('trabajoaspirante.edit',compact('rol'));
+        $trabajoaspirantes=Trabajoaspirantes::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('trabajoaspirante.edit',compact('trabajoaspirantes'));
     }
 
 

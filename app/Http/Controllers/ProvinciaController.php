@@ -16,7 +16,7 @@ class ProvinciaController extends Controller
     {
         //
         $provincias=Provincia::orderBy('idProvincia','DESC')->paginate(15);
-        return view('Provincia.index',compact('provincias')); 
+        return view('provincia.index',compact('provincias')); 
     }
 
     /**
@@ -27,7 +27,7 @@ class ProvinciaController extends Controller
     public function create()
     {
         //
-        return view('Provincia.create');
+        return view('provincia.create');
     }
 
     /**
@@ -67,7 +67,7 @@ class ProvinciaController extends Controller
     {
         //
         $provincia=Provincia::find($id);
-        return view('Provincia.edit',compact('provincia'));
+        return view('provincia.edit',compact('provincia'));
     }
 
     /**

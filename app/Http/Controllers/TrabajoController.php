@@ -8,8 +8,6 @@ use App\Trabajo;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 
 class TrabajoController extends Controller
 {
@@ -74,11 +72,30 @@ class TrabajoController extends Controller
  
         return response()->json($respuesta);
     }
+
+    /*
+    * Funcion que lista todos los trabajos y codifica en json para mostrarlo en la aplicacion mobile
+    */
     public function buscarTrabajos(){
         $objTrabajo = new Trabajo();
         $listaTrabajos = $objTrabajo->get();
         return json_encode($listaTrabajos);
     }
+
+    /*
+    * Buscamos el anuncio segun el id y lo mostramos en ver el anuncio
+    */
+    public function veranuncio($id){
+        $trabajo =  Trabajo::find($id);
+        $listaTrabajo = Trabajo::all();
+        if(isset($trabajo)){
+            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo]);
+        }else{
+            return abort(404);
+        }
+       
+    }
+
 }
 
 

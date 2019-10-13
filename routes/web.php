@@ -27,9 +27,13 @@ Route::resource('localidad', 'LocalidadController');
 
 Route::resource('rol', 'RolController');
 
-//Route::resource('persona', 'PersonaController');
+Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
 
-//Route::get('persona/create', 'UserProfileController@create')->name('profile');
+Route::resource('estado', 'EstadoController');
+
+Route::get('postularme/{id}','TrabajoaspirantesController@index')->name('postularme')->middleware('auth','controlperfil');
+Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirantes.store')->middleware('auth','controlperfil');
+
 Route::prefix('usuario')->group(function(){
     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth');
     Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth');
@@ -38,6 +42,9 @@ Route::prefix('usuario')->group(function(){
 });
 
 Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
+
+Route::get('veranuncio/{id}', 'TrabajoController@veranuncio')->name('veranuncio');
+
 
 Route::prefix('anuncio')->group(function(){
     Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil');

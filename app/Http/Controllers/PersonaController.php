@@ -25,7 +25,7 @@ class PersonaController extends Controller
     {
         //
         $personas=Persona::orderBy('idPersona','DESC')->paginate(15);
-        return view('Persona.index',compact('personas'));
+        return view('persona.index',compact('personas'));
     }
 
     /**
@@ -35,6 +35,7 @@ class PersonaController extends Controller
      */
     public function create()
     {
+
 
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
@@ -47,7 +48,7 @@ class PersonaController extends Controller
         }
 
         $provincias=Provincia::all();
-        return view('Persona.create',compact('persona'),['provincias'=>$provincias, 'existePersona'=>$existePersona]);
+        return view('persona.create',compact('persona'),['provincias'=>$provincias, 'existePersona'=>$existePersona]);
     }
 
     /**
@@ -59,21 +60,33 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $file = $request['file'];
         if(!isset($request['idUsuario'])){
             $request['idUsuario'] = Auth::user()->idUsuario;
         }else{
             $request['files'] = base64_decode($request['imagenPersona']);
         }
+        //print_r($_GET['files']);
+        //$img = base64_encode($request['files'][0]);
+        //$posicion = strrpos($img,',');
+        //$img = substr($img,$posicion+1);
+        // $path = 'http://localhost/LoHagoPorVosLaravel/public/images/logoLoHagoPorVosNavar.png';
+        // $data = file_get_contents($path);
+        // $img = base64_encode($data);
+        // $imagenValida =  PersonaController::validarImagen($img);
+        $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.jpg';
 
-        $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").'.png';
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required', 'imagenPersona'=>'required']);
-        Persona::create($request->all());
-        $file = $request['files'];
-        if(isset($file)){
+
+        //Persona::create($request->all());
+        
+        print_r($file);
+        dd($file);
+        die();
+        //if(isset($file)){
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            Storage::disk('local')->put($request['imagenPersona'], $file);
-        }
+            Storage::disk('perfil')->put('hola.jpg',File::get($file));
+        //}
 
         return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
     }
@@ -124,7 +137,7 @@ class PersonaController extends Controller
         $persona = $laPersona[1];
         $provincias=Provincia::all();
         $localidades=Localidad::all();
-        return view('Persona.edit',compact('persona'),['provincias'=>$provincias, 'localidades'=>$localidades]);
+        return view('persona.edit',compact('persona'),['provincias'=>$provincias, 'localidades'=>$localidades]);
     }
 
     /**
@@ -169,14 +182,17 @@ class PersonaController extends Controller
 
 
 
-    public function validarImagen($imagen)
+    public function validarImagen($img)
     {
+
         // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
 
-        $request = new Http_Request2('https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate');
         //$url = $request->getUrl();
-        $imageUrl =  'https://reviewcontentstoragebrs.blob.core.windows.net/lohagoporvos/IMG_201910ie9555109d0fe4c1bb7648056347665d8?sv=2015-12-11&sr=c&sig=kF9npeNpI%2FSrbdBIiK9to4xuxLM%2FbLunSn8%2F8tTRyS0%3D&se=2019-10-10T22%3A59%3A27Z&sp=r';
-        
+        $uriBase = 'https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate';
+
+
+        $request = new Http_Request2($uriBase);
+        $url = $request->getUrl();
         $headers = array(
             // Request headers
             'Content-Type' => 'application/json',
@@ -188,24 +204,30 @@ class PersonaController extends Controller
         $parameters = array(
             // Request parameters
             'CacheImage' => 'false',
+
         );
 
         $url->setQueryVariables($parameters);
 
         $request->setMethod(HTTP_Request2::METHOD_POST);
 
+        // Request body parameters
+        $body = json_encode(array('DataRepresentation' => 'Raw', 'Value' => $img));
+
         // Request body
-        $request->setBody("{body}");
+        $request->setBody($body);
 
         try
         {
             $response = $request->send();
-            $valido = $response->getBody();
+            $valido = json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
         }
         catch (HttpException $ex)
         {
             $valido = $ex;
+
         }
+
         return $valido;
     }
 
