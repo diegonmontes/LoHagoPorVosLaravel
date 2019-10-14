@@ -79,7 +79,7 @@ class TrabajoController extends Controller
         $validoTitulo=$controller->moderarTexto($titulo,1); // 1 Significa que evaluamos la variable terms
         sleep(3);
         $validoDescripcion=$controller->moderarTexto($descripcion,1); // 1 Significa que evaluamos la variable terms
-        $validoDescripcion=true;
+        //$validoDescripcion=true;
         $errores="";
         if (!($validoTitulo)){
             $errores.="Titulo ";

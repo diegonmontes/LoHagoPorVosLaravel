@@ -44,7 +44,7 @@ public function moderarTexto($texto,$numeroOpcion){
             $response = $request->send();
             $respuestaAPITextoJson= $response->getBody();
             $respuestaAPITexto = json_decode($respuestaAPITextoJson);
-            print_r($respuestaAPITexto);
+       //     print_r($respuestaAPITexto);
             if ($numeroOpcion==1){
                 if($respuestaAPITexto->Terms==null){ // Significa que no hay ninguna mala palabra
                     $respuesta = true;
@@ -95,7 +95,7 @@ public function validarImagen($imagen,$numeroOpcion){
             $response = $request->send();
             $respuestaAPIJson= $response->getBody();
             $respuestaAPI = json_decode($respuestaAPIJson);
-            print_R($respuestaAPI);
+         //   print_R($respuestaAPI);
            
          //   echo $respuestaAPI->IsImageAdultClassified;
             if ($numeroOpcion==1){
