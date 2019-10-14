@@ -16539,9 +16539,12 @@ readers do not read off random characters that represent icons */
   position: relative;
   margin: 0 auto 1em;
   background-color: #FFFFFF;
-  background-image: url('../images/fotoperfil.png');
+  
 }
 
+#thumbnil{
+  background-image: url('../images/fotoperfil.png');
+}
 
 .drag-drop span.desc{
   display: block;
@@ -16579,6 +16582,7 @@ input[type="file"]{
   text-align: center;
   color: white;
 }
+
 /* Estilo del área del input[file] con :hover */
 
 .drag-drop:hover, input[type="file"]:hover {
@@ -16596,4 +16600,13 @@ input[type="file"]{
   animation-direction: alternate ;
   -webkit-animation: pulse1 1s linear infinite;
   -webkit-animation-direction: alternate ;
+}
+
+.datepicker {
+  position: relative;
+}
+.datepicker-picker {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden
 }
