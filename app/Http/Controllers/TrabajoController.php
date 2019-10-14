@@ -143,5 +143,9 @@ class TrabajoController extends Controller
        
     }
 
+    public function buscarTrabajoParam(Request $request){
+        $trabajo= Trabajo::where('idTrabajo','=',$request->idTrabajo)->get();
+        return json_encode($trabajo);
+    }
 }
 
