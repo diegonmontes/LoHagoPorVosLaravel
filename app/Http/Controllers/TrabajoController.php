@@ -76,10 +76,10 @@ class TrabajoController extends Controller
         } else { // Si no carga ninguna imagen, seteamos por defecto el valor a true
             $validoImagen = true;
         }
-
         $validoTitulo=$controller->moderarTexto($titulo,1); // 1 Significa que evaluamos la variable terms
+        sleep(3);
         $validoDescripcion=$controller->moderarTexto($descripcion,1); // 1 Significa que evaluamos la variable terms
-       // $validoDescripcion=true;
+        $validoDescripcion=true;
         $errores="";
         if (!($validoTitulo)){
             $errores.="Titulo ";
