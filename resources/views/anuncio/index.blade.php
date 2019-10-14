@@ -20,7 +20,7 @@
                 </div>
             @endif
 
-            <form method="GET" action="{{ route('trabajo.store') }}"  role="form">
+            <form method="post" action="{{ route('trabajo.store') }}" enctype="multipart/form-data" role="form">
                 {{ csrf_field() }}
                 <div class="row">
                     <div class="drag-drop">

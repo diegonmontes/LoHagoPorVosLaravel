@@ -41,7 +41,7 @@ Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
 Route::prefix('anuncio')->group(function(){
     Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil');
-    Route::get('store','TrabajoController@store')->name('trabajo.store');
+    Route::post('store','TrabajoController@store')->name('trabajo.store');
 });
 
 

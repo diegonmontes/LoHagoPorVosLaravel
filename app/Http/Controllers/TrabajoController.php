@@ -37,8 +37,9 @@ class TrabajoController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required', 'imagenTrabajo', 'tiempoExpiracion']);
+        //Seteamo como 'esperando postulaciones'
         $request['idTipoTrabajo'] = 1;
+
         if (isset($request['idPersona'])){ // Significa que ya tenemos el idPersona (viene de flutter)
             $usandoFlutter = true;
         } else { // No tenemos idPersona. Esta en la pc
@@ -53,28 +54,45 @@ class TrabajoController extends Controller
                 $nombreImagen = $request['nombreImagen'];
                 $posicion = strrpos($nombreImagen,'.');
                 $extension = substr($nombreImagen,$posicion);
+                $imagen = base64_decode($request['imagenTrabajo']); // Decodificamos la img
+                $request['imagenTrabajo'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").$extension; // Definimos el nombre
+                //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('trabajo')->put($request['imagenTrabajo'], $imagen);            
             } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
-                $posicion = strrpos($request['imagenTrabajo'],'.');
-                $extension = substr($request['imagenTrabajo'],$posicion);
+                $imagen=$request->file('imagenTrabajo'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.'. $extension;
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('trabajo')->put($nombreImagen, File::get($imagen));        
             }
-            $request['imagenTrabajo'] = base64_decode($request['imagenTrabajo']);
-            $file = $request['imagenTrabajo'];
-            $request['imagenTrabajo'] = $request['idPersona'].'fotoTrabajo'.date("YmdHms").$extension;
-            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            Storage::disk('local')->put($request['imagenTrabajo'], $file);
-        } 
+             //Aca deberiamos validar la imagen
+            //         llamamos a la funcion
+
+             $imagenValida = true;
+        } else { // No carga ninguna imagen
+            $imagenValida = true;
+        }
+
 
         $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
         $request['idEstado'] = 1;
-        if (Trabajo::create($request->all())){
-            if ($usandoFlutter){
-                $respuesta = ['success'=>true];
-                return response()->json($respuesta);
-            } else { // Significa que esta en laravel y debe redireccionar a inicio
-                return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+        if ($imagenValida){
+            if (Trabajo::create($request->all())){
+                if ($usandoFlutter){
+                    $respuesta = ['success'=>true];
+                    return response()->json($respuesta);
+                } else { // Significa que esta en laravel y debe redireccionar a inicio
+                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                }
+            } else {
+                $respuesta = ['success'=>false];
             }
-        } else {
-            $respuesta = ['success'=>false];
+        }else{
+            if ($usandoFlutter){
+                $respuesta = ['success'=>false];
+            } else {
+                return redirect()->route('inicio')->with('error','Error');
+            }
         }
  
     }

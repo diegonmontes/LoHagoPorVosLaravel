@@ -112,7 +112,7 @@ class UserController extends Controller
             'success' => true,
             'token' => Str::random(60),
             'user' => $user,
-            'persona'=>$persona['idPersona'],
+            'idPersona'=>$persona['idPersona'],
 
         ]);
     }

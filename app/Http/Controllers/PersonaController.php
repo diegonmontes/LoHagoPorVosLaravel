@@ -59,7 +59,6 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
-        //print_R($request['imagenPersona']);
         if (isset($request['idUsuario'])){ // Significa que ya tenemos el idUsuario (viene de flutter)
             $usandoFlutter = true;
         } else { // No tenemos idUsuario. Esta en la pc
@@ -73,26 +72,50 @@ class PersonaController extends Controller
                 $nombreImagen = $request['nombreImagen'];
                 $posicion = strrpos($nombreImagen,'.');
                 $extension = substr($nombreImagen,$posicion);
+                $imagen = base64_decode($request['imagenPersona']); // Decodificamos la img
+                $request['imagenPersona'] = $request['idUsuario'].'fotoPerfil'.date("YmdHms").$extension; // Definimos el nombre
+                //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('perfil')->put($request['imagenPersona'], $imagen);            
             } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
-                $posicion = strrpos($request['imagenPersona'],'.');
-                $extension = substr($request['imagenPersona'],$posicion);
+                $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('perfil')->put($nombreImagen, File::get($imagen));        
             }
-            $request['imagenPersona'] = base64_decode($request['imagenPersona']);
-            $file = $request['imagenPersona'];
-            $request['imagenPersona'] = $request['idUsuario'].'fotoperfil'.date("YmdHms").$extension;
-            //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-            Storage::disk('local')->put($request['imagenPersona'], $file);
+             //Aca deberiamos validar la imagen
+
+             // llamamos a la funcion
+             $imagenValida = true;
+        } else { // No carga ninguna imagen
+            $imagenValida = true;
         }
+
+
+
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
-        if (Persona::create($request->all())){
-            if ($usandoFlutter){
-                $respuesta = ['success'=>true];
-                return response()->json($respuesta);
-            } else { // Significa que esta en laravel y debe redireccionar a inicio
-                return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+        if ($imagenValida){
+            if (Persona::create($request->all())){
+                if ($usandoFlutter){
+                    $objPersona = new Persona(); // Creamos el obj persona
+                    $persona = $objPersona->where('idUsuario','=',$request['idUsuario'])->get(); //Buscamos el obj persona que tenga ese idusuario
+                    $persona = $persona[0]; // Obtenemos obj persona creado recientemente
+                    $idPersona = $persona['idPersona']; // Obtenemos id persona
+                
+                    $respuesta = ['success'=>true,'idPersona'=>$idPersona];
+                    return response()->json($respuesta);
+                } else { // Significa que esta en laravel y debe redireccionar a inicio
+                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                }
+            } else {
+                $respuesta = ['success'=>false];
             }
-        } else {
-            $respuesta = ['success'=>false];
+        }else{
+            if ($usandoFlutter){
+                $respuesta = ['success'=>false];
+            } else {
+                return redirect()->route('inicio')->with('error','Error');
+            }
         }
     }
 
