@@ -29,3 +29,4 @@ Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 Route::post('listarProvincias','ProvinciaController@buscarProvincias');
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
 Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
+Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
