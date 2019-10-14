@@ -211,54 +211,5 @@ class PersonaController extends Controller
 
 
 
-    public function validarImagen($img)
-    {
-
-        // This sample uses the Apache HTTP client from HTTP Components (http://hc.apache.org/httpcomponents-client-ga/)
-
-        //$url = $request->getUrl();
-        $uriBase = 'https://brazilsouth.api.cognitive.microsoft.com/contentmoderator/moderate/v1.0/ProcessImage/Evaluate';
-
-
-        $request = new Http_Request2($uriBase);
-        $url = $request->getUrl();
-        $headers = array(
-            // Request headers
-            'Content-Type' => 'application/json',
-            'Ocp-Apim-Subscription-Key' => 'f598fd509d5945d98f2f3494b27ea1f5',
-        );
-
-        $request->setHeader($headers);
-
-        $parameters = array(
-            // Request parameters
-            'CacheImage' => 'false',
-
-        );
-
-        $url->setQueryVariables($parameters);
-
-        $request->setMethod(HTTP_Request2::METHOD_POST);
-
-        // Request body parameters
-        $body = json_encode(array('DataRepresentation' => 'Raw', 'Value' => $img));
-
-        // Request body
-        $request->setBody($body);
-
-        try
-        {
-            $response = $request->send();
-            $valido = json_encode(json_decode($response->getBody()), JSON_PRETTY_PRINT);
-        }
-        catch (HttpException $ex)
-        {
-            $valido = $ex;
-
-        }
-
-        return $valido;
-    }
-
-
+    
 }

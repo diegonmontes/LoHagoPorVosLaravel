@@ -39,6 +39,9 @@ class TrabajoController extends Controller
     {
         //Seteamo como 'esperando postulaciones'
         $request['idTipoTrabajo'] = 1;
+        $titulo=$request->titulo;
+        $descripcion=$request->descripcion;
+        $controller= new Controller;
 
         if (isset($request['idPersona'])){ // Significa que ya tenemos el idPersona (viene de flutter)
             $usandoFlutter = true;
@@ -63,24 +66,40 @@ class TrabajoController extends Controller
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
                 $nombreImagen = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.'. $extension;
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-                Storage::disk('trabajo')->put($nombreImagen, File::get($imagen));        
+                $imagen = File::get($imagen);
+                 Storage::disk('trabajo')->put($nombreImagen, $imagen);        
             }
-             //Aca deberiamos validar la imagen
-            //         llamamos a la funcion
+            
+            //llamamos a la funcion que valida la imagen
+            $validoImagen = $controller->validarImagen($imagen,1);
+            
+        } else { // Si no carga ninguna imagen, seteamos por defecto el valor a true
+            $validoImagen = true;
+        }
 
-             $imagenValida = true;
-        } else { // No carga ninguna imagen
-            $imagenValida = true;
+        $validoTitulo=$controller->moderarTexto($titulo,1); // 1 Significa que evaluamos la variable terms
+        $validoDescripcion=$controller->moderarTexto($descripcion,1); // 1 Significa que evaluamos la variable terms
+       // $validoDescripcion=true;
+        $errores="";
+        if (!($validoTitulo)){
+            $errores.="Titulo ";
+        }
+
+        if (!($validoDescripcion)){
+            $errores.="Descripcion ";
+        }
+
+        if (!($validoImagen)){
+            $errores.= "Imagen ";
         }
 
 
-        $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
-        $request['idEstado'] = 1;
-        if ($imagenValida){
+        if ($validoDescripcion && $validoTitulo && $validoImagen){
+            $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
+            $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true];
-                    return response()->json($respuesta);
                 } else { // Significa que esta en laravel y debe redireccionar a inicio
                     return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
@@ -88,12 +107,16 @@ class TrabajoController extends Controller
                 $respuesta = ['success'=>false];
             }
         }else{
+            $errores.='con contenido indebido. Por favor cambielo.';
             if ($usandoFlutter){
-                $respuesta = ['success'=>false];
+                $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('inicio')->with('error','Error');
+                return redirect()->route('inicioasdasd  ')->with('error','Error');
             }
         }
+
+        return response()->json($respuesta);
+
  
     }
 

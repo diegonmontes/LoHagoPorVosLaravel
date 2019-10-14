@@ -22,11 +22,9 @@ class UserController extends Controller
         $plainPassword=$request->claveUsuario;
         $nombreUsuario=$request->nombreUsuario;
         $controller= new Controller;
-        $rta=$controller->moderarTexto($nombreUsuario);
-        $rta = json_decode($rta);
+        $validoNombreUsuario=$controller->moderarTexto($nombreUsuario,1); // 1 Significa que evaluamos la variable terms
 
-        
-        if($rta->Terms==null){ // Significa que no hay ninguna mala palabra
+        if($validoNombreUsuario){ // Significa que no hay ninguna mala palabra
             //Encripto la clave usuario
             $claveUsuario=bcrypt($request->claveUsuario);
             //Y la agrego al arreglo $request
@@ -48,7 +46,7 @@ class UserController extends Controller
             }
         }else{ // Significa que no puede ingresar ninguna mala palabra
             $respuesta= ['success'=>false,
-                        'error'=>'No puede ingresar palabras profanas'];
+                        'error'=>'Nombre de usuario indebido. Por favor ingrese otro.'];
         }
       //  print_r($rtaDecode);
         
