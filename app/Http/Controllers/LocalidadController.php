@@ -16,8 +16,8 @@ class LocalidadController extends Controller
     public function index()
     {
         //
-        $localidades=Localidad::orderBy('idLocalidad','DESC')->paginate(15);
-        return view('Localidad.index',compact('localidades'));
+        $localidades=Localidad::orderBy('idLocalidad','DESC')->paginate(6);
+        return view('localidad.index',compact('localidades'));
     }
 
     /**
@@ -29,7 +29,7 @@ class LocalidadController extends Controller
     {
         //
         $provincias=Provincia::all();
-        return view('Localidad.create',['provincias'=>$provincias]);
+        return view('localidad.create',['provincias'=>$provincias]);
     }
 
     /**
@@ -57,7 +57,7 @@ class LocalidadController extends Controller
     {
         //
         $localidades=Localidad::find($id);
-        return  view('Localidad.show',compact('localidades'));
+        return  view('localidad.show',compact('localidades'));
     }
 
     /**
@@ -71,7 +71,7 @@ class LocalidadController extends Controller
         //
         $localidad=Localidad::find($id);
         $provincias=Provincia::all();
-        return view('Localidad.edit',compact('localidad'),['provincias'=>$provincias]);
+        return view('localidad.edit',compact('localidad'),['provincias'=>$provincias]);
     }
 
     /**

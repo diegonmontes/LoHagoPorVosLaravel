@@ -27,6 +27,7 @@
 			<div class="card-body">
 				<form method="POST" action="{{ route('provincia.update',$provincia->idProvincia) }}"  role="form">
 					{{ csrf_field() }}
+					<input name="_method" type="hidden" value="PATCH">
 					<div class="row">
 						<div class="form-group">
 							<label>Nombre:</label><br>

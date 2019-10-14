@@ -92,6 +92,7 @@
 				</div>
 			</div>
 		</form>
+		<img src="/storage/4fotoperfil20191009221052.png" alt="image">
     </section>
 @endsection
 

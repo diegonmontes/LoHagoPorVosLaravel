@@ -13,7 +13,7 @@ class CreateTrabajoaspiranteTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajoaspirante', function (Blueprint $table) {
+        Schema::create('trabajoaspirantes', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('idTrabajoAspirantes');
             $table->integer('idTrabajo')->unsigned()->nullable(false);

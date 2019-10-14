@@ -16,7 +16,7 @@ class TipoTrabajoController extends Controller
     {
         //
         $tiposDeTrabajo=TipoTrabajo::orderBy('idTipoTrabajo','DESC')->paginate(15);
-        return view('TipoTrabajo.index',compact('tiposDeTrabajo'));
+        return view('tipotrabajo.index',compact('tiposDeTrabajo'));
     }
 
     /**
@@ -28,7 +28,7 @@ class TipoTrabajoController extends Controller
     {
         //
         $tipoDeTrabajo=TipoTrabajo::find($id);
-        return  view('TipoTrabajo.show',compact('tipoDeTrabajo'));
+        return  view('tipotrabajo.show',compact('tipoDeTrabajo'));
     }
 
     /**
@@ -42,7 +42,7 @@ class TipoTrabajoController extends Controller
         //
         $this->validate($request,[ 'nombreTipo'=>'required']);
         TipoTrabajo::create($request->all());
-        return redirect()->route('tipoTrabajo.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('tipotrabajo.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -55,7 +55,7 @@ class TipoTrabajoController extends Controller
     {
         //
         $tiposDeTrabajo=TipoTrabajo::find($id);
-        return  view('TipoTrabajo.show',compact('tiposDeTrabajo'));
+        return  view('tipotrabajo.show',compact('tiposDeTrabajo'));
     }
 
     /**
@@ -68,7 +68,7 @@ class TipoTrabajoController extends Controller
     {
         //
         $tipoTrabajo=Localidad::find($id);
-        return view('TipoTrabajo.edit',compact('tipoTrabajo'));
+        return view('tipotrabajo.edit',compact('tipoTrabajo'));
     }
 
     /**
@@ -83,7 +83,7 @@ class TipoTrabajoController extends Controller
         //
         $this->validate($request,[ 'nombreTipo'=>'required']);
         TipoTrabajo::find($id)->update($request->all());
-        return redirect()->route('tipoTrabajo.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('tipotrabajo.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -96,6 +96,6 @@ class TipoTrabajoController extends Controller
     {
         //
         TipoTrabajo::find($id)->delete();
-        return redirect()->route('tipoTrabajo.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('tipotrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 }

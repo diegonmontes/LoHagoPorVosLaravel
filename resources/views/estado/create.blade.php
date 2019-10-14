@@ -22,27 +22,27 @@
 
 			<div class="card">
 					<div class="card-header">
-						<h3>Nuevo Rol</h3>
+						<h3>Nuevo Estado</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('rol.store') }}"  role="form">
+						<form method="POST" action="{{ route('estado.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>Nombre:</label>
-										<input type="text" name="nombreRol" id="nombreRol" class="form-control input-sm">
-									</div>
+								<div class="form-group">
+									<label>Estado:</label>
+									<input type="text" name="nombreEstado" id="nombreEstado" class="form-control input-sm">
 								</div>
+							</div>
 							<div class="row">
 								<div class="form-group">
 									<label>Descripcion:</label>
-									<input type="text" name="descripcionRol" id="descripcionRol" class="form-control input-sm">
+									<input type="text" name="descripcionEstado" id="descripcionEstado" class="form-control input-sm">
 								</div>
 							</div>
 							<br>
 							<div class="row">
-									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
-									<a href="{{ route('rol.index') }}" class="btn btn-info btn-block" >Atrás</a>
+								<input type="submit"  value="Guardar" class="btn btn-success btn-block">
+								<a href="{{ route('estado.index') }}" class="btn btn-info btn-block" >Atrás</a>
 							</div>
 						</form>
 					</div>

@@ -31,22 +31,28 @@
 
                     <li class="list-group-item">
                         <a href="{{ route('rol.index') }}">
-                        Rol
+                        Roles
                         </a>
                     </li>
                     <li class="list-group-item">
                         <a href="{{ route('provincia.index') }}">
-                        Provincia
+                        Provincias
                         </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 3
+                        <a href="{{ route('localidad.index') }}">
+                            Localidades
+                        </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 4
+                        <a href="{{ route('categoriatrabajo.index') }}">
+                            Categorias de trabajo
+                        </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 5
+                        <a href="{{ route('estado.index') }}">
+                            Lista de estados
+                        </a>
                     </li>
                     <li class="list-group-item">
                         Opción 6

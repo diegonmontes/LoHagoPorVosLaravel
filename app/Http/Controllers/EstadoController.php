@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Estado;
 
 class EstadoController extends Controller
 {
@@ -13,7 +14,7 @@ class EstadoController extends Controller
    public function index()
    {
        //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-       $estados=Estado::orderBy('idEstado','DESC')->paginate(15);
+       $estados=Estado::orderBy('idEstado','ASC')->paginate(15);
        return view('estado.index',compact('estados'));
    }
 
@@ -53,7 +54,7 @@ class EstadoController extends Controller
    public function show($id)
    {
        $estados=Estado::find($id); //Buscamos el elemento para mostrarlo
-       return  view('rol.show',compact('estados'));
+       return  view('estado.show',compact('estados'));
    }
 
    /**
@@ -65,8 +66,8 @@ class EstadoController extends Controller
    public function edit($id)
    {
        //Buscamos el elemento para cargarlo en la vista para luego editarlo
-       $rol=Estado::find($id);
-       return view('rol.edit',compact('rol'));
+       $estado=Estado::find($id);
+       return view('estado.edit',compact('estado'));
    }
 
 

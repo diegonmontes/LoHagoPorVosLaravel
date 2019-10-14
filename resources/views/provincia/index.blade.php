@@ -1,23 +1,21 @@
 @extends('admin')
 @section('content')
   <section class="content">
-      <table class="table table-striped table-bordered table-hover">
-          <thead>
+      <table class="table table-light table-bordered table-hover">
+          <thead class="thead-dark">
               <tr>
-                <td colspan="4" style="background-color: #7D8D94">
-                  <div class="float_left">
-                      <h3>Lista Rol</h3>
-                  </div>
-                  <div class="float-right">
+                  <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
+                    <h3>Lista de provincias</h3>
+                  </td>
+                  <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                     <a href="{{ route('provincia.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i></i>Añadir Provincia</a>
-                  </div>
-                </td>
+                  </td>
               </tr>
               <tr>
                   <th>Provincia</th>
                   <th>Codigo Iso 31662</th>
-                  <th>Editar</th>
-                  <th>Eliminar</th>
+                  <th colspan="1">Editar</th>
+                  <th colspan="1">Eliminar</th>
               </tr>
           </thead>
              <tbody>

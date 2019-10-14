@@ -15,8 +15,8 @@ class CategoriaTrabajoController extends Controller
     public function index()
     {
         //
-        $categoriasTrabajo=CategoriaTrabajo::orderBy('idCategoriaTrabajo','DESC')->paginate(15);
-        return view('categoriaTrabajo.index',compact('categoriasTrabajo'));
+        $categoriasTrabajo=CategoriaTrabajo::orderBy('idCategoriaTrabajo','ASC')->paginate(6);
+        return view('categoriatrabajo.index',compact('categoriasTrabajo'));
     }
 
     /**
@@ -28,7 +28,7 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $categoriasTrabajo=CategoriaTrabajo::all();
-        return view('categoriaTrabajo.create',['categoriasTrabajo'=>$categoriasTrabajo]);
+        return view('categoriatrabajo.create',['categoriasTrabajo'=>$categoriasTrabajo]);
     }
 
     /**
@@ -43,7 +43,7 @@ class CategoriaTrabajoController extends Controller
         //
         $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
         CategoriaTrabajo::create($request->all());
-        return redirect()->route('categoriaTrabajo.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('categoriatrabajo.index')->with('success','Registro creado satisfactoriamente');
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $categoriasTrabajo=CategoriaTrabajo::find($id);
-        return  view('categoriaTrabajo.show',compact('categoriasTrabajo'));
+        return  view('categoriatrabajo.show',compact('categoriasTrabajo'));
     }
 
     /**
@@ -68,8 +68,8 @@ class CategoriaTrabajoController extends Controller
     public function edit($id)
     {
         //
-        $categoriasTrabajo=CategoriaTrabajo::find();
-        return view('categoriaTrabajo.edit',compact('categoriasTrabajo'));
+        $categoriaTrabajo=CategoriaTrabajo::find($id);//Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('categoriatrabajo.edit',compact('categoriaTrabajo'));
     }
 
     /**
@@ -85,7 +85,7 @@ class CategoriaTrabajoController extends Controller
         //
         $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
         CategoriaTrabajo::find($id)->update($request->all());
-        return redirect()->route('categoriaTrabajo.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('categoriatrabajo.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -98,7 +98,7 @@ class CategoriaTrabajoController extends Controller
     {
         //Buscamos y eliminamos el elemento
         CategoriaTrabajo::find($id)->delete();
-        return redirect()->route('categoriaTrabajo.index')->with('success','Registro eliminado satisfactoriamente');
+        return redirect()->route('categoriatrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
     public function buscarCategorias(){
