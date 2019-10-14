@@ -65,6 +65,22 @@
                         </select>
                     </div>
                 </div>
+
+                <input type="text" name="datetimes" />
+
+                <script>
+                $(function() {
+                $('input[name="datetimes"]').daterangepicker({
+                    timePicker: true,
+                    startDate: moment().startOf('hour'),
+                    locale: {
+                    format: 'M/DD hh:mm A'
+                    }
+                });
+                });
+                </script>
+
+
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">

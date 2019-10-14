@@ -36,9 +36,9 @@ Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirante
 
 Route::prefix('usuario')->group(function(){
     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth');
-    Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth');
-    Route::get('store','PersonaController@store')->name('persona.store');
-    Route::get('update','PersonaController@update')->name('persona.update');
+    Route::post('editar','PersonaController@edit')->name('persona.edit')->middleware('auth');
+    Route::post('store','PersonaController@store')->name('persona.store');
+    Route::post('update','PersonaController@update')->name('persona.update');
 });
 
 Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');

@@ -18,13 +18,11 @@
 				</div>
 			@endif
         </div>
-		<form method="GET" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
+		<form enctype="multipart/form-data" method="post" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif" >
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="drag-drop">
-					<input type="file" id="file" name="file" />
-					<output id="list" class="preview" style="z-index: -10"></output>
-					<span class="desc">Pulse aquí para añadir archivos</span>
+					<input type="file" id="archivo" name="archivo">
 				</div>
 			</div>
 			<br>
