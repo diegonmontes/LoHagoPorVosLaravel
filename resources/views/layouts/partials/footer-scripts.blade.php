@@ -13,5 +13,10 @@
                 controlType: 'select',
                 oneLine: true,
                 altTimeFormat: "H:m",
+                dateFormat: "dd/mm/yy",
+                timeFormat: "HH:mm",
+                minDate: 0
             });
+
+            
       </script>

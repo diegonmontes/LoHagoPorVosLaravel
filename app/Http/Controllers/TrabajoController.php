@@ -65,9 +65,9 @@ class TrabajoController extends Controller
                 $imagen=$request->file('imagenTrabajo'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
                 $nombreImagen = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.'. $extension;
-                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                 $imagen = File::get($imagen);
-                 Storage::disk('trabajo')->put($nombreImagen, $imagen);        
+                Storage::disk('trabajo')->put($nombreImagen, $imagen);        
             }
             
             //llamamos a la funcion que valida la imagen
