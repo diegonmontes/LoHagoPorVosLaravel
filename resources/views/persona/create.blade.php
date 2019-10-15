@@ -18,7 +18,7 @@
 				</div>
 			@endif
         </div>
-		<form method="GET" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
+		<form method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="drag-drop">
