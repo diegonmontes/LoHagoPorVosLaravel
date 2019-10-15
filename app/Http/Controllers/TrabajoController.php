@@ -65,11 +65,14 @@ class TrabajoController extends Controller
                 $imagen=$request->file('imagenTrabajo'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
                 $nombreImagen = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenTrabajo'); // Guardamos todo el obj sin la clave imagen trabajo
+                $request['imagenTrabajo']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                 $imagen = File::get($imagen);
-                 Storage::disk('trabajo')->put($nombreImagen, $imagen);        
+                Storage::disk('trabajo')->put($nombreImagen, $imagen);        
             }
-            
+
             //llamamos a la funcion que valida la imagen
             $validoImagen = $controller->validarImagen($imagen,1);
             
@@ -96,6 +99,8 @@ class TrabajoController extends Controller
 
         if ($validoDescripcion && $validoTitulo && $validoImagen){
             $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
+            print_R($request->except('imagenTrabajo'));
+            
             $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
                 if ($usandoFlutter){

@@ -85,9 +85,12 @@ class PersonaController extends Controller
                 $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
                 $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenPersona'); // Guardamos todo el obj sin la clave imagen persona
+                $request['imagenPersona']=$nombreImagen; // Asignamos de nuevo a imagenPersona, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                  $imagen = File::get($imagen);
-                 Storage::disk('trabajo')->put($nombreImagen, $imagen);       
+                 Storage::disk('perfil')->put($nombreImagen, $imagen);       
             }
 
              // llamamos a la funcion
