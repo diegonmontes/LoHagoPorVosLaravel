@@ -60,12 +60,17 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
+        $controller= new Controller;
+        $nombre=$request->nombrePersona;
+        $apellido=$request->apellidoPersona;
         if (isset($request['idUsuario'])){ // Significa que ya tenemos el idUsuario (viene de flutter)
             $usandoFlutter = true;
         } else { // No tenemos idUsuario. Esta en la pc
             $idUsuario = Auth::user()->idUsuario;
             $request['idUsuario'] = $idUsuario;
+            
             $usandoFlutter = false;
+            
         }
        
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
@@ -82,20 +87,35 @@ class PersonaController extends Controller
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
                 $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
-                Storage::disk('perfil')->put($nombreImagen, File::get($imagen));        
+                 $imagen = File::get($imagen);
+                 Storage::disk('trabajo')->put($nombreImagen, $imagen);       
             }
-             //Aca deberiamos validar la imagen
 
              // llamamos a la funcion
-             $imagenValida = true;
+             $validoImagen = $controller->validarImagen($imagen,1);
         } else { // No carga ninguna imagen
-            $imagenValida = true;
+            $validoImagen = true;
+        }
+        $validoNombre=$controller->moderarTexto($nombre,1); // 1 Significa que evaluamos la variable terms
+        sleep(3);
+        $validoApellido=$controller->moderarTexto($apellido,1); // 1 Significa que evaluamos la variable terms
+        //$validoDescripcion=true;
+        $errores="";
+        if (!($validoNombre)){
+            $errores.="Nombre ";
+        }
+
+        if (!($validoApellido)){
+            $errores.="Apellido ";
+        }
+
+        if (!($validoImagen)){
+            $errores.= "Imagen ";
         }
 
 
-
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
-        if ($imagenValida){
+        if ($validoImagen && $validoApellido && $validoNombre){
             if (Persona::create($request->all())){
                 if ($usandoFlutter){
                     $objPersona = new Persona(); // Creamos el obj persona
