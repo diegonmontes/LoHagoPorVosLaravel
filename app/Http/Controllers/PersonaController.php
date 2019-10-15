@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 //require_once 'HTTP/Request2.php';
 
 use Faker\Provider\Person;
-use HTTP_Request2;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
@@ -132,12 +131,14 @@ class PersonaController extends Controller
                 $respuesta = ['success'=>false];
             }
         }else{
+            $errores.='con contenido indebido. Por favor cambielo.';
             if ($usandoFlutter){
-                $respuesta = ['success'=>false];
+                $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('inicio')->with('error','Error');
+                return redirect()->route('inicioasdasd  ')->with('error','Error');
             }
         }
+        return response()->json($respuesta);
     }
 
     /**
