@@ -96,10 +96,17 @@ class TrabajoController extends Controller
             $errores.= "Imagen ";
         }
 
+        if(isset($request['horaSeleccionada']) && isset($request['diaSeleccionado'])){ // Si estan seteados estos valores es porque esta en flutter. hay que editar la fecha
+            $horaSinEditar = $request['horaSeleccionada']; // Obtenemos la hs sin editar
+            $diaSinEditar = $request['diaSeleccionado']; // El dia que selecciono sin editar
+            $diaEditado = substr($diaSinEditar,0,10);
+            $horaEditada = substr($horaSinEditar,10,5); // Eliminamos los milisegundos que vienen del timepicker
+            $request['tiempoExpiracion'] = $diaEditado.' '.$horaEditada; // concatenamos y seteamos
+        }
+
 
         if ($validoDescripcion && $validoTitulo && $validoImagen){
             $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
-            print_R($request->except('imagenTrabajo'));
             
             $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
