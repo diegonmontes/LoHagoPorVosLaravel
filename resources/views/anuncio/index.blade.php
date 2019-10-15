@@ -24,23 +24,24 @@
                 {{ csrf_field() }}
                 <div class="card">
                         <div class="card-header">
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="drag-drop">
-                                        <input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
-                                        <img id="thumbnil" class="preview"   src="http://localhost/LoHagoPorVosLaravel/public/images/fotoperfil.png"/>
-                                        <span class="desc">Pulse aquí para añadir una imagen</span>
-                                    </div>
-                                </div>
-                            </div>
+                            <h4>Completa todos los campos para publicar tu anuncio</h4>
                         </div>
 
                         <div class="card-body">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
-                                            <label>TITULO DEL ANUNCIO</label><br>
-                                            <input type="text" name="titulo" id="titulo" class="form-control inputBordes">
+                                            <label>TITULO DEL ANUNCIO</label>
+                                            <input type="text" name="titulo" id="titulo" class="form-control inputBordes" placeholder="El titulo de tu anuncio. Pensalo bien para llamar la atención.">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <label>IMAGEN</label>
+                                        <div class="drag-drop-imagenTrabajo">
+                                            <input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
+                                            <output id="thumbnil" class="preview-imagenTrabajo"></output>
                                         </div>
                                     </div>
                                 </div>
@@ -48,15 +49,16 @@
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <label>DESCRIPCION</label><br>
-                                            <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes"></textarea>
+                                            <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes" placeholder="Describe bien lo que quieres. Mientras más detalles mejor."></textarea>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 ">
                                         <label for="idCategoriaTrabajo">CATEGORIA</label>
                                         <select class="form-control inputSelect" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
+                                            <option value="" disabled selected>Seleccione una categoria</option>
                                             @foreach($listaCategoriaTrabajo as $unaCategoria)
                                             <option value="{{$unaCategoria->idCategoriaTrabajo}}">
                                                 {{$unaCategoria->nombreCategoriaTrabajo}}</option>
@@ -69,14 +71,14 @@
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label>MONTO</label>
-                                            <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes">
+                                            <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+">
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                         <div class="form-group">
                                             <label>ESPERAR POSTULANTES HASTA:</label>
-                                            <input type="text"  id="datepicker"  class="form-control inputBordes">
-                                            <input type="text" id="datepickerAlt" name="tiempoExpiracion" class="datepicker-picker">
+                                            <input type="text"  id="datepicker"  class="form-control inputBordes" placeholder="¿Hasta cuando se pueden postular?">
+                                            <input type="text" id="datepickerAlt" name="tiempoExpiracion" class="datepicker-picker" >
                                         </div>
                                     </div>
                                 </div>
@@ -86,7 +88,7 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                         <label for="idProvincia">PROVINCIA</label>
-                                        <select class="form-control inputSelect" name="idProvincia" id="idProvincia" style="color: #1e1e27">
+                                        <select class="form-control inputSelect" name="idProvincia" id="idProvincia" >
                                             @foreach ($provincias as $unaProvincia)
                                                 <option value="{{$unaProvincia->idProvincia}}">
                                                     {{$unaProvincia->nombreProvincia}}</option>
@@ -95,7 +97,7 @@
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                         <label for="idLocalidad" class="control-label">LOCALIDAD</label>
-                                        <select name="idLocalidad" id="idLocalidad" class="form-control inputSelect" style="color: #1e1e27">
+                                        <select name="idLocalidad" id="idLocalidad" class="form-control inputSelect">
                                             <option value="">Seleccione una opcion</option>
                                         </select>
                                     </div>
@@ -103,7 +105,7 @@
                                 <br>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <button type="submit"   class="btn btn-success btn-block">¡Publicar!</button>
+                                        <button type="submit"   class="btn btn-success btn-block btn-lg">¡Publicar!</button>
                                     </div>
                                 </div>
                         </div>

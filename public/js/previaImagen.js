@@ -11,7 +11,9 @@ function showMyImage(fileInput) {
         var reader = new FileReader();
         reader.onload = (function(aImg) { 
             return function(e) { 
-                aImg.src = e.target.result; 
+                aImg.src = e.target.result;
+                img.innerHTML = '<img id="thumbnil" class="preview-imagenTrabajo"   src="'+aImg.src+'" />';
+                console.log(aImg.src);
             }; 
         })(img);
         reader.readAsDataURL(file);
