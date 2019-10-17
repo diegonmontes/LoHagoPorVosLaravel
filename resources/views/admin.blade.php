@@ -55,13 +55,19 @@
                         </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 6
+                        <a href="{{ route('habilidad.index') }}">
+                            Lista de habilidades
+                        </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 7
+                        <a href="{{ route('habilidadpersona.index') }}">
+                            Lista de habilidades persona
+                        </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 8
+                        <a href="{{ route('preferenciapersona.index') }}">
+                            Lista de Preferencias persona
+                        </a>
                     </li>
                     <li class="list-group-item">
                         Opción 9

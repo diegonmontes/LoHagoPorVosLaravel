@@ -9,7 +9,7 @@ class CategoriaTrabajo extends Model
     //
     protected $table='categoriaTrabajo';
     protected $primaryKey='idCategoriaTrabajo';
-    protected $fillable = ['idCategoriaTrabajo', 'nombreCategoriaTrabajo'];
+    protected $fillable = ['idCategoriaTrabajo', 'nombreCategoriaTrabajo','descripcionTrabajo','imagenCategoriaTrabajo','eliminado'];
 
     public function Trabajo()
     {

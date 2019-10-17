@@ -9,7 +9,7 @@ class Valoracion extends Model
     //
     protected $table='valoracion';
     protected $primaryKey='idValoracion';
-    protected $fillable = ['idValoracion', 'valor', 'idTrabajo', 'idPersona'];
+    protected $fillable = ['idValoracion', 'valor', 'idTrabajo', 'idPersona','eliminado'];
 
     public function Trabajo() {
         return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');

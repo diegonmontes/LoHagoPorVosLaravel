@@ -27,9 +27,18 @@ Route::resource('localidad', 'LocalidadController');
 
 Route::resource('rol', 'RolController');
 
+Route::resource('habilidad', 'HabilidadController');
+
 Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
 
 Route::resource('estado', 'EstadoController');
+
+Route::resource('habilidadpersona', 'HabilidadPersonaController');
+
+Route::resource('preferenciapersona', 'PreferenciaPersonaController');
+
+
+
 
 Route::get('postularme/{id}','TrabajoaspirantesController@index')->name('postularme')->middleware('auth','controlperfil');
 Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirantes.store')->middleware('auth','controlperfil');

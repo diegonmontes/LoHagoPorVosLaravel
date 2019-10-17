@@ -23,6 +23,7 @@ class CreatePagorecibidoTable extends Migration
             $table->string('tarjeta',255)->nullable(false);
             $table->timestamp('fechapago')->nullable(true);
             $table->timestamp('fechaaprobado')->nullable(true);
+            $table->tinyInteger('eliminado')->default(0);
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
             $table->timestamps();
         });

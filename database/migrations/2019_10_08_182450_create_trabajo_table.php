@@ -23,7 +23,7 @@ class CreateTrabajoTable extends Migration
             $table->string('titulo',255);
             $table->string('descripcion',511);
             $table->float('monto',8,2);
-            $table->string('imagenTrabajo',511);
+            $table->string('imagenTrabajo',511)->nullable(true);
             $table->timestamp('tiempoExpiracion')->nullable(false);
             $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();

@@ -18,6 +18,7 @@ class CreateEstadoTable extends Migration
             $table->increments('idEstado');
             $table->string('nombreEstado',80)->nullable(false);
             $table->string('descripcionEstado',80)->nullable(false);
+            $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
         });
     }

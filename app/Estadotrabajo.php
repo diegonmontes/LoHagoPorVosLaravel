@@ -9,7 +9,7 @@ class Estadotrabajo extends Model
     //
     protected $table='estadotrabajo';
     protected $primaryKey='idEstadotrabajo';
-    protected $fillable = ['idEstadotrabajo', 'idTrabajo', 'idEstado'];
+    protected $fillable = ['idEstadotrabajo', 'idTrabajo', 'idEstado','eliminado'];
 
     public function Trabajo() {
         return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');

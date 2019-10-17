@@ -17,6 +17,9 @@ class CreateCategoriaTrabajoTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('idCategoriaTrabajo');
             $table->string('nombreCategoriaTrabajo',80);
+            $table->string('descripcionCategoriaTrabajo',255);
+            $table->string('imagenCategoriaTrabajo',511)->nullable(true);;
+            $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
         });
     }
