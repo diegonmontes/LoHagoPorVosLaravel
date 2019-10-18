@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <label>IMAGEN</label>
+                                        <label>INGRESE UNA IMAGEN</label>
                                         <div class="drag-drop-imagenTrabajo">
                                             <input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
                                             <output id="thumbnil" class="preview-imagenTrabajo"></output>
