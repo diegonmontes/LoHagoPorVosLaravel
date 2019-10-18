@@ -1,3 +1,4 @@
+
 @extends('layouts.layout')
 @section('content')
 <div class="row">
@@ -20,6 +21,22 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">{{$trabajo->titulo}}</li>
                 <li class="list-group-item">${{$trabajo->monto}}</li>
+                @php
+                    $laravel=true;
+                    
+                    $link = json_decode($link);
+                    # Return the HTML code for button
+                    
+                    echo "<a href=$link> Pagar </a>";
+
+                @endphp
+
+
+                <script type="text/javascriptMP">
+                    window.Mercadopago.setPublishableKey(ENV_PUBLIC_KEY);
+                </script>
+                
+                
                 <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
             </ul>
         </div>

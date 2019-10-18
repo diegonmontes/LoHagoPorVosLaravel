@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pagorecibido;
+
 
 class PagorecibidoController extends Controller
 {
@@ -39,7 +41,7 @@ class PagorecibidoController extends Controller
     {
         $this->validate($request,[ 'monto'=>'required', 'metodo'=>'required', 'tarjeta'=>'required', 'fechapago'=>'required', 'fechaaprobado'=>'required', 'idTrabajo'=>'required', 'idPago'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Pagorecibido::create($request->all()); //Creamos el elemento nuevo
-        return redirect()->route('pagorecibido.index')->with('success','Registro creado satisfactoriamente');
+        return redirect()->route('pagorecibido.success')->with('success','Registro creado satisfactoriamente');
     }
 
     /**

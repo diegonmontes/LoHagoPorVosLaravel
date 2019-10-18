@@ -31,6 +31,9 @@ Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
 
 Route::resource('estado', 'EstadoController');
 
+
+
+
 Route::get('postularme/{id}','TrabajoaspirantesController@index')->name('postularme')->middleware('auth','controlperfil');
 Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirantes.store')->middleware('auth','controlperfil');
 
@@ -46,9 +49,14 @@ Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 Route::get('veranuncio/{id}', 'TrabajoController@veranuncio')->name('veranuncio');
 
 
+
+
+
 Route::prefix('anuncio')->group(function(){
     Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
+    Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago');
+    
 });
 
 

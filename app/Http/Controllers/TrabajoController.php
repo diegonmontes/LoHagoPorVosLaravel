@@ -7,6 +7,7 @@ use App\Trabajo;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
+use App\Http\Controllers\MercadoPagoController;
 use App\Localidad;
 use App\Provincia;
 use Illuminate\Support\Facades\File;
@@ -146,13 +147,24 @@ class TrabajoController extends Controller
     */
     public function veranuncio($id){
         $trabajo =  Trabajo::find($id);
+        $monto = $trabajo['monto'];
+        $titulo = $trabajo['titulo'];
+        $idTrabajo = $trabajo['idTrabajo'];
+        $arregloTrabajo = ['monto'=>$monto,'titulo'=>$titulo,'idTrabajo'=>$idTrabajo];
+        $requestTrabajo = new Request($arregloTrabajo);
         $listaTrabajo = Trabajo::all();
+        $MPController = new MercadoPagoController();
+        $link = $MPController->crearPago($requestTrabajo);
         if(isset($trabajo)){
-            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo]);
+            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link]);
         }else{
             return abort(404);
         }
        
+    }
+
+    public function procesarPago(){
+        return view('anuncio.procesarpago');
     }
 
     public function buscarTrabajoParam(Request $request){
