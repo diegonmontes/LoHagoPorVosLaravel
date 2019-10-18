@@ -1,7 +1,6 @@
 <?php
 namespace App\Http\Controllers;
 
-//require_once 'HTTP/Request2.php';
 
 use Faker\Provider\Person;
 use Illuminate\Http\Request;
@@ -233,7 +232,25 @@ class PersonaController extends Controller
 
     }
 
+    public function getCurrentPerfil(Request $request){
+        $idPersona = $request->idPersona;
+        $persona = Persona::where('idPersona','=',$idPersona)->get()[0];
+        return response()->json([
+            'success' => true,
+            'persona' => $persona
+        ]);
+    }
 
+    public function actualizarPerfil(Request $request){
+        $idPersona = $request->idPersona;
+
+        Persona::find($idPersona)->update($request->all());
+
+        return response()->json([
+            'success' => true,
+            'mensaje' => 'Cambio actualizado'
+        ]);
+    }
 
     
 }

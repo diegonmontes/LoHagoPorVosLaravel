@@ -1,62 +1,88 @@
-.formingreso {
-  height: 100%;
-}
-
-.formingreso {
-  display: -ms-flexbox;
-  display: -webkit-box;
-  display: flex;
-  -ms-flex-align: center;
-  -ms-flex-pack: center;
-  -webkit-box-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
-}
-
-.sombra-ingreso{
-  border-radius: 10px 10px 10px 10px;
-  -moz-border-radius: 10px 10px 10px 10px;
-  -webkit-border-radius: 10px 10px 10px 10px;
-  border: 0px solid #000000;
-  -webkit-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.4);
-  -moz-box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.4);
-  box-shadow: 0px 0px 5px 3px rgba(0,0,0,0.4);
-  margin-top:0%;
-  margin-bottom:0%;
-  background-color: #FFFFFF;
+.fondoTarjeta{
+  
+background: rgba(41,194,41,1);
+background: -moz-linear-gradient(left, rgba(41,194,41,1) 0%, rgba(41,194,41,1) 5%, rgba(41,194,41,1) 20%, rgba(32,145,22,0.99) 79%, rgba(32,145,22,0.99) 100%);
+background: -webkit-gradient(left top, right top, color-stop(0%, rgba(41,194,41,1)), color-stop(5%, rgba(41,194,41,1)), color-stop(20%, rgba(41,194,41,1)), color-stop(79%, rgba(32,145,22,0.99)), color-stop(100%, rgba(32,145,22,0.99)));
+background: -webkit-linear-gradient(left, rgba(41,194,41,1) 0%, rgba(41,194,41,1) 5%, rgba(41,194,41,1) 20%, rgba(32,145,22,0.99) 79%, rgba(32,145,22,0.99) 100%);
+background: -o-linear-gradient(left, rgba(41,194,41,1) 0%, rgba(41,194,41,1) 5%, rgba(41,194,41,1) 20%, rgba(32,145,22,0.99) 79%, rgba(32,145,22,0.99) 100%);
+background: -ms-linear-gradient(left, rgba(41,194,41,1) 0%, rgba(41,194,41,1) 5%, rgba(41,194,41,1) 20%, rgba(32,145,22,0.99) 79%, rgba(32,145,22,0.99) 100%);
+background: linear-gradient(to right, rgba(41,194,41,1) 0%, rgba(41,194,41,1) 5%, rgba(41,194,41,1) 20%, rgba(32,145,22,0.99) 79%, rgba(32,145,22,0.99) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29c229', endColorstr='#209116', GradientType=1 );
 
 }
 
+.sombraTarjeta{
+    -webkit-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.75);
+}
 
-.form-signin {
-  width: 100%;
-  max-width: 330px;
-  padding: 15px;
-  margin: 20px auto;
+body{ 
+    background: rgba(140,9,145,1);
+    background: -moz-linear-gradient(top, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(140,9,145,1)), color-stop(1%, rgba(140,9,145,1)), color-stop(2%, rgba(140,9,145,1)), color-stop(49%, rgba(140,9,145,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(50%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
+    background: -webkit-linear-gradient(top, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: -o-linear-gradient(top, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: -ms-linear-gradient(top, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    background: linear-gradient(to bottom, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8c0991', endColorstr='#ffffff', GradientType=0 );
+    margin-bottom: 10% !important;
 }
-.form-signin .checkbox {
-  font-weight: 400;
+
+.redondearInput{
+    -moz-border-radius: 20px !important;
+    -webkit-border-radius: 20px !important;
+    border-radius: 20px !important;
+    padding: 0 4px 0 4px !important;
+    border: none !important;
 }
-.form-signin .form-control {
-  position: relative;
-  box-sizing: border-box;
-  height: auto;
-  padding: 10px;
-  font-size: 16px;
+
+.enlacesLogin{
+    color: #FFF !important;
 }
-.form-signin .form-control:focus {
-  z-index: 2;
+.botonIngresar{
+    padding: 2% !important;
+    color: #239219 !important;
+    font-weight: 600 !important;
+    font-size: smaller !important;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
+.fondoInput{
+
+    background: rgba(0,158,0,1) !important;
+    background: -moz-linear-gradient(left, rgba(0,158,0,1) 0%, rgba(113,240,93,1) 0%, rgba(113,240,93,1) 0%, rgba(12,245,59,1) 0%, rgba(5,148,5,1) 100%) !important;
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(0,158,0,1)), color-stop(0%, rgba(113,240,93,1)), color-stop(0%, rgba(113,240,93,1)), color-stop(0%, rgba(12,245,59,1)), color-stop(100%, rgba(5,148,5,1))) !important;
+    background: -webkit-linear-gradient(left, rgba(0,158,0,1) 0%, rgba(113,240,93,1) 0%, rgba(113,240,93,1) 0%, rgba(12,245,59,1) 0%, rgba(5,148,5,1) 100%) !important;
+    background: -o-linear-gradient(left, rgba(0,158,0,1) 0%, rgba(113,240,93,1) 0%, rgba(113,240,93,1) 0%, rgba(12,245,59,1) 0%, rgba(5,148,5,1) 100%) !important;
+    background: -ms-linear-gradient(left, rgba(0,158,0,1) 0%, rgba(113,240,93,1) 0%, rgba(113,240,93,1) 0%, rgba(12,245,59,1) 0%, rgba(5,148,5,1) 100%) !important;
+    background: linear-gradient(to right, rgba(0,158,0,1) 0%, rgba(113,240,93,1) 0%, rgba(113,240,93,1) 0%, rgba(12,245,59,1) 0%, rgba(5,148,5,1) 100%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#009e00', endColorstr='#059405', GradientType=1 ) !important;
+
 }
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
+
+#mailUsuario, #claveUsuario{
+    color: #FFF;
+    font-weight: 550;
 }
+
+#mailUsuario::placeholder, #claveUsuario::placeholder {
+    color:#FFF;
+}
+  
+#mailUsuario::-webkit-input-placeholder, #claveUsuario::-webkit-input-placeholder {
+    color: #FFF;
+}
+
+#mailUsuario::-moz-placeholder, #claveUsuario::-moz-placeholder {
+    color: #FFF;
+}
+
+#mailUsuario:-ms-input-placeholder, #claveUsuario:-ms-input-placeholder {
+    color: #FFF;
+}
+
+#mailUsuario:-moz-placeholder, #claveUsuario:-moz-placeholder {
+    color: #FFF;
+}
+
+
+/*#8c0991

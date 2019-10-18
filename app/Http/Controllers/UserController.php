@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Illuminate\Support\Facades\Auth;
@@ -49,7 +50,7 @@ class UserController extends Controller
                         'error'=>'Nombre de usuario indebido. Por favor ingrese otro.'];
         }
       //  print_r($rtaDecode);
-        
+
         return response()->json($respuesta);
     }
     public function crearPerfil(Request $request){
@@ -183,9 +184,38 @@ class UserController extends Controller
             'user' =>$user
         ]);
     }
-    
-    
 
+
+    public function actualizarMail(Request $request){
+        $idUsuario = $request->idUsuario;
+        $nuevoMail = $request->mailUsuario;
+        $claveUsuario = $request->clave;
+        //$claveUsuario = encryp($claveUsuario);
+        $usuario = User::find($idUsuario);
+
+        if(Hash::check($claveUsuario , $usuario->claveUsuario)){
+            $existeUsuario = User::where('mailUsuario','=',$nuevoMail)->get()[0];
+            if(count($existeUsuario[0])){
+                User::find($idUsuario)->update($request->all());
+                $respuesta = [
+                    'success' => true,
+                    'mensaje' => 'Mail actualizado'
+                ];
+            }else{
+                $respuesta = [
+                    'success' => false,
+                    'mensaje' => 'Mail en uso. Por favor ingrese otro'
+                ];
+            }
+        }else{
+            $respuesta = [
+                'success' => false,
+                'mensaje' => 'Contraseña incorrecta'
+            ];
+        }
+
+        return response()->json($respuesta);
+    }
 
 
 

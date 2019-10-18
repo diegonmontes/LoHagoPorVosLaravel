@@ -27,7 +27,6 @@
 
 </head>
 <body>
-        @include('layouts.partials.nav')
 
 
         <main class="py-4">
