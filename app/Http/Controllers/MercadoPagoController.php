@@ -21,7 +21,7 @@ class MercadoPagoController extends Controller
         $item2->title = $titulo; 
         $item2->quantity = 1;
         $item2->unit_price = str_replace(',', '.', $monto);
-        $redirectSuccess = "172.16.215.71/LoHagoPorVosLaravel/public/anuncio/procesarpago?idTrabajo=".$id;
+        $redirectSuccess = "localhost/LoHagoPorVosLaravel/public/anuncio/procesarpago?idTrabajo=".$id;
         $preference->items = array($item2);
         $preference->back_urls = array(
             "success" => $redirectSuccess,
