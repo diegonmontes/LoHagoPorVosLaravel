@@ -27,9 +27,15 @@ Route::resource('localidad', 'LocalidadController');
 
 Route::resource('rol', 'RolController');
 
+Route::resource('habilidad', 'HabilidadController');
+
 Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
 
 Route::resource('estado', 'EstadoController');
+
+Route::resource('habilidadpersona', 'HabilidadPersonaController');
+
+Route::resource('preferenciapersona', 'PreferenciaPersonaController');
 
 
 

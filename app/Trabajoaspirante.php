@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Trabajoaspirantes extends Model
 {
     //
-    protected $table='trabajoaspirantes';
+    protected $table='trabajoaspirante';
     protected $primaryKey='idTrabajoaspirante';
-    protected $fillable = ['idTrabajoaspirante', 'idTrabajo', 'idPersona'];
+    protected $fillable = ['idTrabajoaspirante', 'idTrabajo', 'idPersona','eliminado'];
 
     public function Trabajo() {
         return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');

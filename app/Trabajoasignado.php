@@ -9,7 +9,7 @@ class Trabajoasignado extends Model
     //
     protected $table='trabajoasignado';
     protected $primaryKey='idTrabajoasignado';
-    protected $fillable = ['idTrabajoaspirante', 'idTrabajo', 'idPersona'];
+    protected $fillable = ['idTrabajoaspirante', 'idTrabajo', 'idPersona','eliminado'];
 
 
     public function Trabajo() {

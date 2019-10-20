@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolTable extends Migration
+class CreateHabilidadTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateRolTable extends Migration
      */
     public function up()
     {
-        Schema::create('rol', function (Blueprint $table) {
-            $table->engine = ('InnoDB');
-            $table->increments('idRol');
-            $table->string('nombreRol',80)->nullable(false);
-            $table->string('descripcionRol',80)->nullable(false);
+        Schema::create('habilidad', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->increments('idHabilidad');
+            $table->string('nombreHabilidad',80);
+            $table->string('descripcionHabilidad',255);
+            $table->string('imagenHabilidad',511)->nullable(true);
             $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateRolTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rol');
+        Schema::dropIfExists('habilidad');
     }
 }

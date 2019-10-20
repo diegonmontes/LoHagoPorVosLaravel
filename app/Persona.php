@@ -35,6 +35,14 @@ class Persona extends Model
         return $this->hasMany('App\Trabajoaspirantes', 'idPersona', 'idPersona');
     }
 
+    public function PreferenciaPersona() {
+        return $this->hasMany('App\PreferenciaPersona', 'idPersona', 'idPersona');
+    }
+
+    public function HabilidadPersona() {
+        return $this->hasMany('App\HabilidadPersona', 'idPersona', 'idPersona');
+    }
+
 
 
 }

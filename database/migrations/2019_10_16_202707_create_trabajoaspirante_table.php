@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEstadotrabajoTable extends Migration
+class CreateTrabajoaspiranteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateEstadotrabajoTable extends Migration
      */
     public function up()
     {
-        Schema::create('estadotrabajo', function (Blueprint $table) {
+        Schema::create('trabajoaspirante', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('idEstadoTrabajo');
+            $table->increments('idTrabajoAspirante');
             $table->integer('idTrabajo')->unsigned()->nullable(false);
-            $table->integer('idEstado')->unsigned()->nullable(false);
+            $table->integer('idPersona')->unsigned()->nullable(false);
             $table->tinyInteger('eliminado')->default(0);
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
-            $table->foreign('idEstado')->references('idEstado')->on('estado');
+            $table->foreign('idPersona')->references('idPersona')->on('persona');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ class CreateEstadotrabajoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estadotrabajo');
+        Schema::dropIfExists('trabajoaspirante');
     }
 }

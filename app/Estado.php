@@ -9,7 +9,7 @@ class Estado extends Model
     //
     protected $table='estado';
     protected $primaryKey = 'idEstado';
-    protected $fillable = ['idEstado', 'nombreEstado', 'descripcionEstado'];
+    protected $fillable = ['idEstado', 'nombreEstado', 'descripcionEstado','eliminado'];
 
     public function Trabajo()
     {

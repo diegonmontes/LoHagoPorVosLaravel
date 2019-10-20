@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTrabajoasignadoTable extends Migration
+class CreatePreferenciapersonaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateTrabajoasignadoTable extends Migration
      */
     public function up()
     {
-        Schema::create('trabajoasignado', function (Blueprint $table) {
+        Schema::create('preferenciapersona', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->increments('idTrabajoAsignado');
-            $table->integer('idTrabajo')->unsigned()->nullable(false);
+            $table->increments('idPreferenciaPersona');
+            $table->integer('idCategoriaTrabajo')->unsigned()->nullable(false);
             $table->integer('idPersona')->unsigned()->nullable(false);
             $table->tinyInteger('eliminado')->default(0);
-            $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
+            $table->foreign('idCategoriaTrabajo')->references('idCategoriaTrabajo')->on('categoriaTrabajo');
             $table->foreign('idPersona')->references('idPersona')->on('persona');
             $table->timestamps();
         });
@@ -32,6 +32,6 @@ class CreateTrabajoasignadoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trabajoasignado');
+        Schema::dropIfExists('preferenciapersona');
     }
 }
