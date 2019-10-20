@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 })->name('inicio');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::resource('provincia', 'ProvinciaController');
 
