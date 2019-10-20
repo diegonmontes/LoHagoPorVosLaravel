@@ -24,6 +24,8 @@ Route::post('update', 'UserController@update');
 Route::get('logout', 'UserController@logout');
 Route::get('user', 'UserController@getCurrentUser');
 Route::post('actualizarMail', 'UserController@actualizarMail');
+Route::post('actualizarClave', 'UserController@actualizarClave');
+
 
 
 

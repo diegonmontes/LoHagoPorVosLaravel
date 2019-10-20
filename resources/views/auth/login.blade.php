@@ -1,7 +1,7 @@
 @extends('layouts.app')
-
 @section('content')
-
+<div class="fondoLogin">
+</div>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-4">

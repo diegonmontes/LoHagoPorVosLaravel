@@ -12,6 +12,7 @@
 */
 
 use App\Trabajo;
+
 Route::get('/', function () {
     $listaTrabajos = Trabajo::all();
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);

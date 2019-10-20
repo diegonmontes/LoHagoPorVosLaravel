@@ -190,12 +190,11 @@ class UserController extends Controller
         $idUsuario = $request->idUsuario;
         $nuevoMail = $request->mailUsuario;
         $claveUsuario = $request->clave;
-        //$claveUsuario = encryp($claveUsuario);
         $usuario = User::find($idUsuario);
 
         if(Hash::check($claveUsuario , $usuario->claveUsuario)){
-            $existeUsuario = User::where('mailUsuario','=',$nuevoMail)->get()[0];
-            if(count($existeUsuario[0])){
+            $existeUsuario = User::where('mailUsuario','=',$nuevoMail)->get();
+            if(count($existeUsuario)<1){
                 User::find($idUsuario)->update($request->all());
                 $respuesta = [
                     'success' => true,
@@ -204,7 +203,7 @@ class UserController extends Controller
             }else{
                 $respuesta = [
                     'success' => false,
-                    'mensaje' => 'Mail en uso. Por favor ingrese otro'
+                    'mensaje' => 'El mail ya esta en uso. Por favor ingrese otro'
                 ];
             }
         }else{
@@ -217,7 +216,28 @@ class UserController extends Controller
         return response()->json($respuesta);
     }
 
+    public function actualizarClave(Request $request){
+        $idUsuario = $request->idUsuario;
+        $claveVieja = $request->claveVieja;
+        $claveUsuario = $request->claveNueva;
+        $usuario = User::find($idUsuario);
+        if(Hash::check($claveVieja , $usuario->claveUsuario)){
+            $request['claveUsuario'] = bcrypt($claveUsuario);
+            User::find($idUsuario)->update($request->all());
+            $respuesta = [
+                'success' => true,
+                'mensaje' => 'Contraseña actualizada'
+            ];
+        }else{
+            $respuesta = [
+                'success' => false,
+                'mensaje' => 'Contraseña actual incorrecta'
+            ];
+        }
 
+        return response()->json($respuesta);
+
+    }
 
 }
 

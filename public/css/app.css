@@ -16542,7 +16542,13 @@ readers do not read off random characters that represent icons */
   
 }
 
-
+.imagenTrabajo{
+  opacity: 1 !important;
+  border: 0.1rem #ced4da solid !important;
+  -moz-appearance:none; /* Firefox */
+  -webkit-appearance:none; /* Safari and Chrome */
+  appearance:none;
+}
 
 .drag-drop span.desc{
   display: block;
@@ -16629,4 +16635,12 @@ select {
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
   appearance:none;
+}
+
+/* Card */
+.margenCardInicio{
+  width: 18rem; 
+  margin-left: 1%; 
+  margin-right: 1%; 
+  margin-top: 1%
 }
