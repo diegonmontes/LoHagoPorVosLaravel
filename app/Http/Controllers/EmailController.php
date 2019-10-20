@@ -10,7 +10,7 @@ class EmailController extends Controller
   
     public function contact(Request $request){
         $subject = "Asunto del correo";
-        $for = "alejandrowasilewski@gmail.com";
+        $for = "example@gmail.com";
         Mail::send('email',$request->all(), function($msj) use($subject,$for){
             $msj->from("tucorreo@gmail.com","NombreQueApareceráComoEmisor");
             $msj->subject($subject);
@@ -20,7 +20,12 @@ class EmailController extends Controller
     }
 
     public function validarmail($usuario){
-        $dato = ['mailUsuario' => $usuario->mailUsuario];
+        //$eldato = ['mailUsuario' => $usuario->mailUsuario];
+        $dato = [
+                    'mailUsuario' => $usuario->mailUsuario,
+                    'nombreUsuario' => $usuario->nombreUsuario,
+                    'link' => $usuario->auth_key //aca debe ir un linck, va ser home
+                ];
         $subject = "Bienvenido a Lo hago por vos";
         $for = "$usuario->mailUsuario";
         Mail::send('email/validarmail',$dato, function($msj) use($subject,$for){
@@ -29,6 +34,6 @@ class EmailController extends Controller
             $msj->to($for);
         });
         
-        return redirect()->route('login');
+        return redirect()->route('home');
     }
 }

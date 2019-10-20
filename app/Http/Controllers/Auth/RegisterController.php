@@ -68,6 +68,7 @@ class RegisterController extends Controller
             'nombreUsuario' => $data['nombreUsuario'],
             'mailUsuario' => $data['mailUsuario'],
             'claveUsuario' => Hash::make($data['claveUsuario']),
+            'auth_key' => rand(50,150),
             'idRol' => 2,
         ]);
 
