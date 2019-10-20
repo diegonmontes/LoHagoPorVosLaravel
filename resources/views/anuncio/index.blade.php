@@ -39,7 +39,10 @@
                                             <label>INGRESE UNA IMAGEN(opcional)</label>
                                             <div class="drag-drop-imagenTrabajo imagenTrabajo">
                                                 <input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
-                                                <output id="thumbnil" class="preview-imagenTrabajo"></output>
+                                                <output id="thumbnil" class="preview-imagenTrabajo">
+                                                        <img class="preview-imagenTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
+
+                                                </output>
                                             </div>
                                         </div>
                                     </div>

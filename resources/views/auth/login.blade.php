@@ -50,7 +50,8 @@
 
                             
                             <div class="row justify-content-center align-items-center">
-                                <button class="btn btn-light btn-block redondearInput botonIngresar" type="submit">
+                                
+                                <button class=" btn btn-light btn-block redondearInput botonIngresar" type="submit">
                                     {{ __('INGRESAR') }}
                                 </button>
                                 <br>

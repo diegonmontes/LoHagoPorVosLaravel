@@ -20,6 +20,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('provincia', 'ProvinciaController');
@@ -60,4 +61,8 @@ Route::prefix('anuncio')->group(function(){
     
 });
 
+// Route::get('/', function () {
+//     return view('test');
+// }); 
+// Route::post('contactar', 'EmailController@contact')->name('contact');
 
