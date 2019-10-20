@@ -8,6 +8,11 @@ use Auth;
 use App\Persona;
 use App\Localidad;
 use App\Provincia;
+use App\Habilidad;
+use App\HabilidadPersona;
+use App\CategoriaTrabajo;
+use App\Http\Controllers\HabilidadPersonaController;
+use App\Http\Controllers\PreferenciaPersonaController;
 use App\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -46,7 +51,9 @@ class PersonaController extends Controller
         }
 
         $provincias=Provincia::all();
-        return view('persona.create',compact('persona'),['provincias'=>$provincias, 'existePersona'=>$existePersona]);
+        $habilidades=Habilidad::all();
+        $categoriasTrabajo=CategoriaTrabajo::all();
+        return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona]);
     }
 
     /**
@@ -58,6 +65,16 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
+        $mensajesErrores =[
+            'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.'
+        ] ;
+
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
+
+        die();
         $controller= new Controller;
         $nombre=$request->nombrePersona;
         $apellido=$request->apellidoPersona;
@@ -66,9 +83,7 @@ class PersonaController extends Controller
         } else { // No tenemos idUsuario. Esta en la pc
             $idUsuario = Auth::user()->idUsuario;
             $request['idUsuario'] = $idUsuario;
-            
             $usandoFlutter = false;
-            
         }
        
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
@@ -117,13 +132,34 @@ class PersonaController extends Controller
 
         $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
         if ($validoImagen && $validoApellido && $validoNombre){
-            if (Persona::create($request->all())){
+            if (Persona::create($request->all())){ // Si crea una persona, obtenemos su id para llenar el resto de las tablas
+                $objPersona = new Persona(); // Creamos el obj persona
+                $persona = $objPersona->where('idUsuario','=',$request['idUsuario'])->get(); //Buscamos el obj persona que tenga ese idusuario
+                $persona = $persona[0]; // Obtenemos obj persona creado recientemente
+                $idPersona = $persona['idPersona']; // Obtenemos id persona
+
+                $listaHabilidades = $request->habilidades;
+                $listaPreferencias = $request->preferenciaPersona;
+
+                // Cargamos las habilidades que tenga
+
+                foreach ($listaHabilidades as $key => $valor){
+                    $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloHabilidadPersona);
+                    $habilidadPersonaController = new HabilidadPersonaController();
+                    $habilidadPersonaController->store($requestHabilidadPersona);
+                }
+
+                // Cargamos las preferencias 
+
+                foreach ($listaPreferencias as $key => $valor){
+                    $arregloPreferenciaPersona = ['idPersona'=>$idPersona,'idCategoriaTrabajo'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloPreferenciaPersona);
+                    $PreferenciaPersonaController = new PreferenciaPersonaController();
+                    $PreferenciaPersonaController->store($requestHabilidadPersona);
+                }
+
                 if ($usandoFlutter){
-                    $objPersona = new Persona(); // Creamos el obj persona
-                    $persona = $objPersona->where('idUsuario','=',$request['idUsuario'])->get(); //Buscamos el obj persona que tenga ese idusuario
-                    $persona = $persona[0]; // Obtenemos obj persona creado recientemente
-                    $idPersona = $persona['idPersona']; // Obtenemos id persona
-                
                     $respuesta = ['success'=>true,'idPersona'=>$idPersona];
                     return response()->json($respuesta);
                 } else { // Significa que esta en laravel y debe redireccionar a inicio

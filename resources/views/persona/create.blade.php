@@ -82,6 +82,31 @@
 					</select>
 				</div>
 			</div>
+			<br/>
+			@php
+			if (count($habilidades)>0){
+				echo '<h6>HABILIDADES</h6>';
+				foreach ($habilidades as $habilidad){
+					echo '<input type="checkbox" id="habilidades" name="habilidades[]" value="' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad;
+					echo '<br/>';
+				}
+			}
+			@endphp
+			<br/>
+
+			@php
+			if (count($categoriasTrabajo)>0){
+				echo '<h6>Preferencia de categorias a mostrar</h6>';
+
+				foreach ($categoriasTrabajo as $categoriaTrabajo){
+					echo '<input type="checkbox" id="preferenciaPersona" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
+					echo '<br/>';
+				}
+			}
+			@endphp
+
+
+		
 			<br>
 			<div class="row">
 				<div class="col-xs-6 col-sm-4 col-md-4">
@@ -92,7 +117,6 @@
 				</div>
 			</div>
 		</form>
-		<img src="/storage/4fotoperfil20191009221052.png" alt="image">
     </section>
 @endsection
 
