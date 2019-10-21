@@ -1,15 +1,19 @@
 @extends('layouts.app')
-
 @section('content')
-
+<div class="fondoLogin">
+</div>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
             <div class="col-md-4">
                 <form class="form-signin" method="POST" action="{{ route('login') }}">
                     @csrf
-                    
+                    @if(Session::has('success'))
+                            <div class="alert alert-info col-md-8">
+                                {{Session::get('success')}}
+                            </div>
+                            @endif
                     <div class="card fondoTarjeta sombraTarjeta">
-
+                            
                         <div class="card-body">
                             <div class="row justify-content-center align-items-center">
                             <img src={{asset('images/LogoLoHagoPorVos.png')}} alt="Logo Lo hago por vos" style="width: 35%;"/>
@@ -50,7 +54,8 @@
 
                             
                             <div class="row justify-content-center align-items-center">
-                                <button class="btn btn-light btn-block redondearInput botonIngresar" type="submit">
+                                
+                                <button class=" btn btn-light btn-block redondearInput botonIngresar" type="submit">
                                     {{ __('INGRESAR') }}
                                 </button>
                                 <br>

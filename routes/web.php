@@ -12,12 +12,14 @@
 */
 
 use App\Trabajo;
+
 Route::get('/', function () {
     $listaTrabajos = Trabajo::all();
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 })->name('inicio');
 
 Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -54,7 +56,7 @@ Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
 Route::get('veranuncio/{id}', 'TrabajoController@veranuncio')->name('veranuncio');
 
-
+Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 
 
 
@@ -65,4 +67,8 @@ Route::prefix('anuncio')->group(function(){
     
 });
 
+// Route::get('/', function () {
+//     return view('test');
+// }); 
+// Route::post('contactar', 'EmailController@contact')->name('contact');
 

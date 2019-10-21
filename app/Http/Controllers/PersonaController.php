@@ -222,7 +222,7 @@ class PersonaController extends Controller
         //
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $persona = $laPersona[1];
+        $persona = $laPersona[0];
         $provincias=Provincia::all();
         $localidades=Localidad::all();
         return view('persona.edit',compact('persona'),['provincias'=>$provincias, 'localidades'=>$localidades]);
@@ -279,13 +279,37 @@ class PersonaController extends Controller
 
     public function actualizarPerfil(Request $request){
         $idPersona = $request->idPersona;
+        $control = new Controller;
 
-        Persona::find($idPersona)->update($request->all());
+        if(isset($request['nombrePersona'])){
+            $texto = $request->nombrePersona;
+            $respuestaError = 'Nombre indebido. Por favor ingrese otro.';
+        }
 
-        return response()->json([
-            'success' => true,
-            'mensaje' => 'Cambio actualizado'
-        ]);
+        if(isset($request['apellidoPersona'])){
+            $texto = $request->apellidoPersona;
+            $respuestaError = 'Apellido indebido. Por favor ingrese otro.';
+
+        }
+
+        if(!isset($request['telefonoPersona'])){
+            $esValido = $control->moderarTexto($texto,1);
+        }else{
+            $esValido = true;
+        }
+        if($esValido){
+            Persona::find($idPersona)->update($request->all());
+
+            return response()->json([
+                'success' => true,
+                'mensaje' => 'Cambio actualizado'
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'mensaje' => $respuestaError
+            ]);
+        }
     }
 
     

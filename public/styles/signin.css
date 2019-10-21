@@ -17,7 +17,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#29c229', end
     box-shadow: 0px 0px 13px 3px rgba(0,0,0,0.75);
 }
 
-body{ 
+.fondoLogin{ 
     background: rgba(140,9,145,1);
     background: -moz-linear-gradient(top, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(140,9,145,1)), color-stop(1%, rgba(140,9,145,1)), color-stop(2%, rgba(140,9,145,1)), color-stop(49%, rgba(140,9,145,1)), color-stop(49%, rgba(255,255,255,1)), color-stop(50%, rgba(255,255,255,1)), color-stop(100%, rgba(255,255,255,1)));
@@ -27,6 +27,10 @@ body{
     background: linear-gradient(to bottom, rgba(140,9,145,1) 0%, rgba(140,9,145,1) 1%, rgba(140,9,145,1) 2%, rgba(140,9,145,1) 49%, rgba(255,255,255,1) 49%, rgba(255,255,255,1) 50%, rgba(255,255,255,1) 100%);
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8c0991', endColorstr='#ffffff', GradientType=0 );
     margin-bottom: 10% !important;
+    width: 100%;
+    height: 110%;
+    top: -10%;
+    position: absolute;
 }
 
 .redondearInput{
@@ -59,28 +63,28 @@ body{
 
 }
 
-#mailUsuario, #claveUsuario{
+#mailUsuario, #claveUsuario, #nombreUsuario, #claveUsuario-confirm{
     color: #FFF;
     font-weight: 550;
 }
 
-#mailUsuario::placeholder, #claveUsuario::placeholder {
+#mailUsuario::placeholder, #claveUsuario::placeholder, #nombreUsuario::placeholder, #claveUsuario-confirm::placeholder {
     color:#FFF;
 }
   
-#mailUsuario::-webkit-input-placeholder, #claveUsuario::-webkit-input-placeholder {
+#mailUsuario::-webkit-input-placeholder, #claveUsuario::-webkit-input-placeholder, #nombreUsuario::-webkit-input-placeholder, #claveUsuario-confirm::-webkit-input-placeholder {
     color: #FFF;
 }
 
-#mailUsuario::-moz-placeholder, #claveUsuario::-moz-placeholder {
+#mailUsuario::-moz-placeholder, #claveUsuario::-moz-placeholder, #nombreUsuario::-moz-placeholder, #claveUsuario-confirm::-moz-placeholder {
     color: #FFF;
 }
 
-#mailUsuario:-ms-input-placeholder, #claveUsuario:-ms-input-placeholder {
+#mailUsuario:-ms-input-placeholder, #claveUsuario:-ms-input-placeholder, #nombreUsuario:-ms-input-placeholder, #claveUsuario-confirm:-ms-input-placeholder {
     color: #FFF;
 }
 
-#mailUsuario:-moz-placeholder, #claveUsuario:-moz-placeholder {
+#mailUsuario:-moz-placeholder, #claveUsuario:-moz-placeholder, #nombreUsuario:-moz-placeholder, #claveUsuario-confirm:-moz-placeholder {
     color: #FFF;
 }
 
