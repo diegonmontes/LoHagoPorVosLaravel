@@ -47,7 +47,10 @@ Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 
 /** APIs de Provincias */
-Route::post('listarProvincias','ProvinciaController@buscarProvincias');
+Route::get('listarProvincias','ProvinciaController@buscarProvincias');
+
+/** APIs de Habilidades */
+Route::get('listarHabilidades','HabilidadController@buscarProvincias');
 
 
 /** APIs de Localidad */

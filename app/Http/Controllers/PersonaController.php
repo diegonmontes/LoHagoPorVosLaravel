@@ -11,6 +11,7 @@ use App\Provincia;
 use App\Habilidad;
 use App\HabilidadPersona;
 use App\CategoriaTrabajo;
+use App\PreferenciaPersona;
 use App\Http\Controllers\HabilidadPersonaController;
 use App\Http\Controllers\PreferenciaPersonaController;
 use App\User;
@@ -38,22 +39,24 @@ class PersonaController extends Controller
      */
     public function create()
     {
-
-
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
+        $listaHabilidadesSeleccionadas = null;
+        $listaPreferenciasSeleccionadas = null;
         if(count($laPersona)){
             $persona = $laPersona[0];
             $existePersona = true;
+            $idPersona=$persona->idPersona;
+            $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->get();
+            $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->get();
         }else{
             $persona = $laPersona;
             $existePersona = false;
         }
-
         $provincias=Provincia::all();
         $habilidades=Habilidad::all();
         $categoriasTrabajo=CategoriaTrabajo::all();
-        return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona]);
+        return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
     }
 
     /**
@@ -65,6 +68,8 @@ class PersonaController extends Controller
      */
     public function store(Request $request)
     {
+
+        print_R($request->nombrePersona);
         $mensajesErrores =[
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
@@ -74,7 +79,6 @@ class PersonaController extends Controller
 
         $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
 
-        die();
         $controller= new Controller;
         $nombre=$request->nombrePersona;
         $apellido=$request->apellidoPersona;

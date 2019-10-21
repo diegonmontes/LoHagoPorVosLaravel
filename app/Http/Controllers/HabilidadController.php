@@ -92,4 +92,10 @@ class HabilidadController extends Controller
         Habilidad::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('habilidad.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    public function buscarHabilidades(){
+        $objHabilidad = new Habilidad();
+        $listaHabilidades = $objHabilidad->get();
+        return json_encode($listaHabilidades);
+    }
 }
