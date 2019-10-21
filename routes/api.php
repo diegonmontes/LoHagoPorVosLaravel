@@ -50,11 +50,11 @@ Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 Route::get('listarProvincias','ProvinciaController@buscarProvincias');
 
 /** APIs de Habilidades */
-Route::get('listarHabilidades','HabilidadController@buscarProvincias');
+Route::get('listarHabilidades','HabilidadController@buscarHabilidades');
 
 
 /** APIs de Localidad */
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
-Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
+Route::get('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('datosMP', 'MercadoPagoController@crearPago');

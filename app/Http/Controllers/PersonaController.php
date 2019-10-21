@@ -69,7 +69,7 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
 
-        print_R($request->nombrePersona);
+        //print_R($request->nombrePersona);
         $mensajesErrores =[
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
