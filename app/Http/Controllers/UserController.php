@@ -239,6 +239,33 @@ class UserController extends Controller
 
     }
 
+    public function validarMail($auth_key,$id){
+        $usuario = User::where('idUsuario','=',$id)->get();
+        if(count($usuario) != 0){
+            $usuario = $usuario[0];
+            if($usuario->auth_key == $auth_key){
+                $fechaEmailVerificado = date("Y-m-d H:i:s");
+                $usuario->email_verified_at = $fechaEmailVerificado;
+                $usuario->auth_key = null;
+                $usuario->save();
+
+                return redirect()->route('persona.create')->with('success','Registro satisfactorio de su correo electronico. Ahora completa con tus datos el siguiente formulario.');
+
+            }elseif($usuario->auth_key == null && $usuario->email_verified_at != null){
+
+                return redirect()->route('persona.create')->with('success','Complete el siguiente formulario para poder terminar su perfil.');
+
+            }elseif($usuario->auth_key != $auth_key){
+
+                return redirect()->route('login')->with('success','Hubo un error en la autenticacion de su correo. Intentelo nuevamente mas tarde.');
+
+            }
+        }else{
+            return redirect()->route('login')->with('success','Usuario inexistente');
+
+        }
+    }
+
 }
 
 

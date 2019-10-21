@@ -67,8 +67,8 @@ class RegisterController extends Controller
         $usuario =  User::create([
             'nombreUsuario' => $data['nombreUsuario'],
             'mailUsuario' => $data['mailUsuario'],
-            'claveUsuario' => Hash::make($data['claveUsuario']),
-            'auth_key' => rand(50,150),
+            'claveUsuario' => bcrypt($data['claveUsuario']),
+            'auth_key' => str_random(150),
             'idRol' => 2,
         ]);
 

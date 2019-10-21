@@ -19,12 +19,17 @@ class EmailController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Funcion que envia el mail para autenticar el correo electronico
+     * object $usuario 
+     */
     public function validarmail($usuario){
-        //$eldato = ['mailUsuario' => $usuario->mailUsuario];
+        //Creamos un arreglo para enviar los datos que necesitamos a la vista del mail
         $dato = [
                     'mailUsuario' => $usuario->mailUsuario,
                     'nombreUsuario' => $usuario->nombreUsuario,
-                    'link' => $usuario->auth_key //aca debe ir un linck, va ser home
+                    'auth_key' => $usuario->auth_key,
+                    'id' => $usuario->idUsuario
                 ];
         $subject = "Bienvenido a Lo hago por vos";
         $for = "$usuario->mailUsuario";

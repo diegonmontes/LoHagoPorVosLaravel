@@ -50,7 +50,7 @@ Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
 Route::get('veranuncio/{id}', 'TrabajoController@veranuncio')->name('veranuncio');
 
-
+Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 
 
 
