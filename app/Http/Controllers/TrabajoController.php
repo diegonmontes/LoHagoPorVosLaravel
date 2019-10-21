@@ -97,12 +97,14 @@ class TrabajoController extends Controller
             $errores.= "Imagen ";
         }
 
-        if(isset($request['horaSeleccionada']) && isset($request['diaSeleccionado'])){ // Si estan seteados estos valores es porque esta en flutter. hay que editar la fecha
-            $horaSinEditar = $request['horaSeleccionada']; // Obtenemos la hs sin editar
-            $diaSinEditar = $request['diaSeleccionado']; // El dia que selecciono sin editar
-            $diaEditado = substr($diaSinEditar,0,10);
-            $horaEditada = substr($horaSinEditar,10,5); // Eliminamos los milisegundos que vienen del timepicker
-            $request['tiempoExpiracion'] = $diaEditado.' '.$horaEditada; // concatenamos y seteamos
+        if($usandoFlutter){
+            if(isset($request['horaSeleccionada']) && isset($request['diaSeleccionado'])){ // Si estan seteados estos valores es porque esta en flutter. hay que editar la fecha
+                $horaSinEditar = $request['horaSeleccionada']; // Obtenemos la hs sin editar
+                $diaSinEditar = $request['diaSeleccionado']; // El dia que selecciono sin editar
+                $diaEditado = substr($diaSinEditar,0,10);
+                $horaEditada = substr($horaSinEditar,10,5); // Eliminamos los milisegundos que vienen del timepicker
+                $request['tiempoExpiracion'] = $diaEditado.' '.$horaEditada; // concatenamos y seteamos
+            }
         }
 
 
@@ -124,7 +126,7 @@ class TrabajoController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('inicioasdasd  ')->with('error','Error');
+                return redirect()->route('trabajo.index')->with('success',$errores);
             }
         }
 

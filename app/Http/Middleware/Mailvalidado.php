@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class Mailvalidado
 {
@@ -16,12 +17,11 @@ class Mailvalidado
     public function handle($request, Closure $next)
     {
         if(Auth::check()){
-            $idUsuario = Auth::user()->idUsuario;
-            if(count(Persona::where('idUsuario','=',$idUsuario)->get())<1){
-                return redirect('usuario/perfil');
+            $mailValidado = Auth::user()->email_verified_at;
+            if($mailValidado == null){
+                Auth::logout();
+                return redirect('login')->with('success','Revise su correo para validar su mail');
             }
-        }else{
-            return redirect('login');
         }
         return $next($request);
     }

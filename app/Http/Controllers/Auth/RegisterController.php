@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = 'usuario/perfil';
+    protected $redirectTo = 'home';
 
     /**
      * Create a new controller instance.
@@ -74,7 +74,6 @@ class RegisterController extends Controller
 
         $mail = new EmailController;
         $mail->validarmail($usuario);
-
         return $usuario;
     }
 }
