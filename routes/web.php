@@ -21,7 +21,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('Mailvalidado');
 
 Route::resource('provincia', 'ProvinciaController');
 
@@ -40,8 +40,8 @@ Route::get('postularme/{id}','TrabajoaspirantesController@index')->name('postula
 Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirantes.store')->middleware('auth','controlperfil');
 
 Route::prefix('usuario')->group(function(){
-    Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth');
-    Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth');
+    Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','Mailvalidado');
+    Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth','controlperfil');
     Route::post('store','PersonaController@store')->name('persona.store');
     Route::get('update','PersonaController@update')->name('persona.update');
 });
@@ -55,14 +55,8 @@ Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('valida
 
 
 Route::prefix('anuncio')->group(function(){
-    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil');
+    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','controlperfil');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
     Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago');
     
 });
-
-// Route::get('/', function () {
-//     return view('test');
-// }); 
-// Route::post('contactar', 'EmailController@contact')->name('contact');
-

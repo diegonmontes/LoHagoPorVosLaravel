@@ -1,3 +1,9 @@
+<!-- Mensajes -->
+@if(Session::has('success'))
+    <div class="alert alert-info col-md-8">
+        {{Session::get('success')}}
+    </div>
+@endif
 <!-- Anuncios -->
 <div class="row app" style="margin: auto">
     @foreach($listaTrabajos as $trabajo)
@@ -14,3 +20,6 @@
     @endforeach
 </div>
 
+
+
+                
