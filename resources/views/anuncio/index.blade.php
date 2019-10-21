@@ -18,7 +18,7 @@
                 </div>
             @endif
             <div class="col-xs-12 col-sm-12 col-md-8">
-                <form method="post" action="{{ route('trabajo.store') }}" enctype="multipart/form-data" role="form">
+                <form method="post" id="formCrearAnuncio" action="{{ route('trabajo.store') }}" enctype="multipart/form-data" role="form">
                     {{ csrf_field() }}
                     <div class="card">
                             <div class="card-header">
@@ -84,8 +84,7 @@
                                         </div>
                                     </div>
 
-                                    
-                                        
+                                                                    
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <label for="idProvincia">PROVINCIA*</label>
@@ -107,7 +106,7 @@
                                     <h6>Lo campos que tienen (*) son obligatorios</h6>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <button type="submit"   class="btn btn-success btn-block btn-lg">¡Publicar!</button>
+                                            <button type="submit" id="boton" name="boton"  class="btn btn-success btn-block btn-lg">¡Publicar!</button>
                                         </div>
                                     </div>
                             </div>
@@ -115,6 +114,29 @@
                 </form>
             </div>
         </div>
+
+        <script type="text/javascript">     
+        $(document).ready(function (e){
+            $("#formCrearAnuncio").on('submit',(function(e){
+                e.preventDefault();
+                $.ajax({
+                    url: "{{ route('trabajo.store') }}",
+                    type: "POST",
+                    data:  {name: $("#name").val, email: $("#email").val, mobile: $("#mobile").val, date: $("#date").val, time: $("#time").val },
+                    contentType: "application/json",
+                    cache: false,
+                    processData:false,
+                    success: function(data){
+                    console.log(data)
+                },
+                error: function(msg){
+                    console.log(msg)
+                }                      
+                });
+            }));
+        });
+        </script>
+
 
     </section>
 @endsection

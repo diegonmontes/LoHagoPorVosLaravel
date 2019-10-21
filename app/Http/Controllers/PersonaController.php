@@ -69,7 +69,6 @@ class PersonaController extends Controller
     public function store(Request $request)
     {
 
-        print_R($request->nombrePersona);
         $mensajesErrores =[
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
@@ -241,13 +240,124 @@ class PersonaController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
-    {
-        //
-        $request['idUsuario'] = Auth::user()->idUsuario;
-        $laPersona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
-        $request['idPersona'] =$laPersona[0]->idPersona;
+    {   
+        $mensajesErrores =[
+            'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.'
+        ] ;
+
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
+        $controller= new Controller;
+        $nombre=$request->nombrePersona;
+        $apellido=$request->apellidoPersona;
+        if (isset($request['nombreImagen'])&& $request['nombreImagen']!=null){ // Significa que ya tenemos el nombre de la img (viene de flutter)
+            $usandoFlutter = true;
+        } else { // No tenemos el nombre de la imagen. Esta en la pc
+            $usandoFlutter = false;
+        }
+       
+        if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
+            if ($usandoFlutter){ // Significa que el nombre de la img viene por parametro
+                $nombreImagen = $request['nombreImagen'];
+                $posicion = strrpos($nombreImagen,'.');
+                $extension = substr($nombreImagen,$posicion);
+                $imagen = base64_decode($request['imagenPersona']); // Decodificamos la img
+                $request['imagenPersona'] = $request['idUsuario'].'fotoPerfil'.date("YmdHms").$extension; // Definimos el nombre
+                //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('perfil')->put($request['imagenPersona'], $imagen);            
+            } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenPersona'); // Guardamos todo el obj sin la clave imagen persona
+                $request['imagenPersona']=$nombreImagen; // Asignamos de nuevo a imagenPersona, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                 $imagen = File::get($imagen);
+                 Storage::disk('perfil')->put($nombreImagen, $imagen);       
+            };
+             // llamamos a la funcion
+             $validoImagen = $controller->validarImagen($imagen,1);
+        } else { // No carga ninguna imagen
+            $validoImagen = true;
+        }
+        $validoNombre=$controller->moderarTexto($nombre,1); // 1 Significa que evaluamos la variable terms
+        sleep(3);
+        $validoApellido=$controller->moderarTexto($apellido,1); // 1 Significa que evaluamos la variable terms
+        //$validoDescripcion=true;
+        $errores="";
+        if (!($validoNombre)){
+            $errores.="Nombre ";
+        }
+
+        if (!($validoApellido)){
+            $errores.="Apellido ";
+        }
+
+        if (!($validoImagen)){
+            $errores.= "Imagen ";
+        }
+
+        if ($validoImagen && $validoApellido && $validoNombre){
+            $idPersona=$request->idPersona;
+            if (Persona::find($idPersona)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
+                die();
+                $listaHabilidades = $request->habilidades;
+                $listaPreferencias = $request->preferenciaPersona;
+                // Cargamos las habilidades que tenga
+                foreach ($listaHabilidades as $key => $valor){
+                    $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloHabilidadPersona);
+                    $habilidadPersonaController = new HabilidadPersonaController();
+                    $habilidadPersonaController->store($requestHabilidadPersona);
+                }
+
+                // Cargamos las preferencias 
+
+                foreach ($listaPreferencias as $key => $valor){
+                    $arregloPreferenciaPersona = ['idPersona'=>$idPersona,'idCategoriaTrabajo'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloPreferenciaPersona);
+                    $PreferenciaPersonaController = new PreferenciaPersonaController();
+                    $PreferenciaPersonaController->store($requestHabilidadPersona);
+                }
+
+                if ($usandoFlutter){
+                    $respuesta = ['success'=>true,'idPersona'=>$idPersona];
+                    return response()->json($respuesta);
+                } else { // Significa que esta en laravel y debe redireccionar a inicio
+                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                }
+            } else {
+                $respuesta = ['success'=>false];
+            }
+        }else{
+            $errores.='con contenido indebido. Por favor cambielo.';
+            if ($usandoFlutter){
+                $respuesta = ['success'=>false, 'error'=>$errores];
+            } else {
+                return redirect()->route('inicioasdasd  ')->with('error','Error');
+            }
+        }
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         $idPersona = $request['idPersona'];
-        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required','imagenPersona'=>'required']);
         Persona::find($idPersona)->update($request->all());
         $file = $request['archivo'];
         if(isset($file)){

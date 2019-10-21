@@ -50,7 +50,7 @@ Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
 Route::get('listarProvincias','ProvinciaController@buscarProvincias');
 
 /** APIs de Habilidades */
-Route::get('listarHabilidades','HabilidadController@buscarProvincias');
+Route::get('listarHabilidades','HabilidadController@buscarHabilidades');
 
 
 /** APIs de Localidad */

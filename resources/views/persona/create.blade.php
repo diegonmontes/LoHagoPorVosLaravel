@@ -20,6 +20,7 @@
         </div>
 		<form method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
 			{{ csrf_field() }}
+
 			<div class="row">
 				<div class="drag-drop">
 					<input type="file" id="files" name="imagenPersona" />
@@ -29,6 +30,8 @@
 			</div>
 			<br>
 			<div class="row">
+			<input type="hidden" name="idPersona" id="idPersona" value="{{$persona->idPersona}}">
+
 				<div class="col-xs-6 col-sm-4 col-md-4">
 					<div class="form-group">
 						<label>NOMBRE</label><br>
@@ -83,12 +86,36 @@
 				</div>
 			</div>
 			<br/>
+			
 			@php
-			if (count($habilidades)>0){
+			if (count($habilidades)>0){ // Si existe alguna habilidad cargada en la base de datos
 				echo '<h6>HABILIDADES</h6>';
-				foreach ($habilidades as $habilidad){
+				if ($listaHabilidadesSeleccionadas!=null){ // Si lista de habilidades no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
+					foreach ($habilidades as $habilidad){ // por cada habilidad cargada en la bd
+						$cantidadHabilidadesSeleccionadas = count($listaHabilidadesSeleccionadas); // obtenemos la cantidad de habilidades que cargo previamente
+						$seleccionoHabilidad=false; // seteamos a falso
+						$i=0; // inicializamos
+						while ($seleccionoHabilidad!=true && $i<$cantidadHabilidadesSeleccionadas){
+							$habilidadActual=$listaHabilidadesSeleccionadas[$i]; // seteamos el obj de la habilidad actual
+							if ($habilidad->idHabilidad==$habilidadActual->idHabilidad){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
+								$seleccionoHabilidad=true;
+							};
+							$i++;
+						};
+						if ($seleccionoHabilidad){ // si lo selecciono, asignamos checked
+							echo '<input type="checkbox" id="habilidades" name="habilidades[]" checked value="' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad;
+							echo '<br/>';
+						} else {
+							echo '<input type="checkbox" id="habilidades" name="habilidades[]" value="' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad;
+							echo '<br/>';
+						}
+					};
+
+				} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna habilidad
+					foreach ($habilidades as $habilidad){
 					echo '<input type="checkbox" id="habilidades" name="habilidades[]" value="' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad;
 					echo '<br/>';
+					}
 				}
 			}
 			@endphp
@@ -98,9 +125,32 @@
 			if (count($categoriasTrabajo)>0){
 				echo '<h6>Preferencia de categorias a mostrar</h6>';
 
-				foreach ($categoriasTrabajo as $categoriaTrabajo){
-					echo '<input type="checkbox" id="preferenciaPersona" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
+				if ($listaPreferenciasSeleccionadas!=null){ // Si lista de preferencias no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
+					foreach ($categoriasTrabajo as $categoriaTrabajo){ // por cada categoria trabajo cargada en la bd
+						$cantidadPreferenciasSeleccionadas = count($listaPreferenciasSeleccionadas); // obtenemos la cantidad de preferencias que cargo previamente
+						$seleccionoPreferencia=false; // seteamos a falso
+						$i=0; // inicializamos
+						while ($seleccionoPreferencia!=true && $i<$cantidadPreferenciasSeleccionadas){
+							$preferenciaActual=$listaPreferenciasSeleccionadas[$i]; // seteamos el obj de la categoria actual
+							if ($categoriaTrabajo->idCategoriaTrabajo==$preferenciaActual->idCategoriaTrabajo){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
+								$seleccionoPreferencia=true;
+							};
+							$i++;
+						};
+						if ($seleccionoPreferencia){ // si lo selecciono, asignamos checked
+							echo '<input type="checkbox" id="preferenciaPersona" checked name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
+							echo '<br/>';
+						} else {
+							echo '<input type="checkbox" id="preferenciaPersona" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
+							echo '<br/>';
+						}
+					};
+
+				} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna preferencia
+					foreach ($categoriasTrabajo as $habilidad){
+						echo '<input type="checkbox" id="preferenciaPersona" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
 					echo '<br/>';
+					}
 				}
 			}
 			@endphp
