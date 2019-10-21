@@ -299,20 +299,25 @@ class PersonaController extends Controller
         if (!($validoImagen)){
             $errores.= "Imagen ";
         }
-
         if ($validoImagen && $validoApellido && $validoNombre){
             $idPersona=$request->idPersona;
             if (Persona::find($idPersona)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
-                die();
-                $listaHabilidades = $request->habilidades;
-                $listaPreferencias = $request->preferenciaPersona;
-                // Cargamos las habilidades que tenga
+                    
+                $listaHabilidades = $request->habilidades; // Obtenemos la lista de habilidades
+                foreach ($listaHabilidades as $idHabilidad){ // obtenemos cada uno de los id y lo eliminamos
+                    HabilidadPersona::destroy($idHabilidad);
+                };
                 foreach ($listaHabilidades as $key => $valor){
                     $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
                     $requestHabilidadPersona = new Request($arregloHabilidadPersona);
                     $habilidadPersonaController = new HabilidadPersonaController();
                     $habilidadPersonaController->store($requestHabilidadPersona);
                 }
+
+                $listaPreferencias = $request->preferenciaPersona; // Obtenemos la lista de habilidades
+                foreach ($listaPreferencias as $idPreferenciaPersona){ // obtenemos cada uno de los id y lo eliminamos
+                    PreferenciaPersona::destroy($idPreferenciaPersona);
+                };
 
                 // Cargamos las preferencias 
 
@@ -322,6 +327,8 @@ class PersonaController extends Controller
                     $PreferenciaPersonaController = new PreferenciaPersonaController();
                     $PreferenciaPersonaController->store($requestHabilidadPersona);
                 }
+
+                die();
 
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true,'idPersona'=>$idPersona];
