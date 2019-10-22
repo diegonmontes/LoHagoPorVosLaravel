@@ -2,90 +2,105 @@
 @section('content')
   	<section class="container">
         <div class="row justify-content-center">
-			@if (count($errors) > 0)
-				<div class="alert alert-danger">
-				<strong>Error!</strong> Revise los campos obligatorios.<br><br>
-				<ul>
-					@foreach ($errors->all() as $error)
-						<li>{{ $error }}</li>
-					@endforeach
-				</ul>
-				</div>
-			@endif
 			@if(Session::has('success'))
 				<div class="alert alert-info">
 					{{Session::get('success')}}
 				</div>
 			@endif
         </div>
-		<form method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form" enctype="multipart/form-data">
+		<form id="formPersona" method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form">
 			{{ csrf_field() }}
-
-			<div class="row">
-				<div class="drag-drop">
-					<input type="file" id="files" name="imagenPersona" />
-					<output id="list" class="preview" style="z-index: -10"></output>
-					<span class="desc">Pulse aquí para añadir archivos</span>
+			<div class="card">
+				<div class="card-header">
+					<h4> Completar para terminar el registro </h4>
 				</div>
-			</div>
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<span id="msgvalido" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="drag-drop-imagenPersona imagenPersona">
+							<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenPersona" />
+							<output id="thumbnil" class="preview-imagenPersona">
+								<img  class="preview-imagenPersona" src="@if($existePersona){{ asset('storage/perfiles/'.$persona->imagenPersona) }}@endif" style="width: 30%; margin: auto;">
+							</output>
+						</div>
+						<span id="msgimagenPersona" class="text-danger">{{ $errors->first('imagenPersona') }}</span>
+					</div>
+					<br>
+					<div class="row">
+						<input type="hidden" name="idPersona" id="idPersona" value="{{$persona->idPersona}}">
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label>NOMBRE</label>
+								<br>
+								<input type="text" name="nombrePersona" id="nombrePersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->nombrePersona }}@endif">
+								<span id="msgnombrePersona" class="text-danger">{{ $errors->first('nombrePersona') }}</span>
+
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label>APELLIDO</label>
+								<br>
+								<input type="text" name="apellidoPersona" id="apellidoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->apellidoPersona }}@endif">
+								<span id="msgapellidoPersona" class="text-danger">{{ $errors->first('apellidoPersona') }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label>DNI</label><br>
+								<input type="text" name="dniPersona" id="dniPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->dniPersona }}@endif">
+								<span id="msgdniPersona" class="text-danger">{{ $errors->first('dniPersona') }}</span>
+
+							</div>
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<div class="form-group">
+								<label>TELEFONO</label><br>
+								<input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif">
+								<span id="msgtelefonoPersona" class="text-danger">{{ $errors->first('telefonoPersona') }}</span>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<label for="idProvincia">PROVINCIA</label>
+								<select class="form-control inputSelect" name="idProvincia" id="idProvincia" style="color: #1e1e27">
+								@foreach ($provincias as $unaProvincia)
+									<option value="{{$unaProvincia->idProvincia}}"
+											@if($existePersona)
+												@if($unaProvincia->idProvincia == $persona->idLocalidad)
+													selected
+												@endif
+											@else
+												@if($unaProvincia->idProvincia == 20)
+													selected
+												@endif
+											@endif
+									>{{$unaProvincia->nombreProvincia}}</option>
+									@endforeach
+							</select>
+							<span id="msgidProvincia" class="text-danger">{{ $errors->first('idProvincia') }}</span>
+
+						</div>
+						<div class="col-xs-6 col-sm-4 col-md-4">
+							<label for="idLocalidad" class="control-label">LOCALIDAD</label>
+							<select name="idLocalidad" id="idLocalidad" class="form-control inputSelect" style="color: #1e1e27">
+								<option value="">Seleccione una opcion</option>
+							</select>
+							<span id="msgidLocalidad" class="text-danger">{{ $errors->first('idLocalidad') }}</span>
+						</div>
+					</div>
+				</div>
 			<br>
-			<div class="row">
-			<input type="hidden" name="idPersona" id="idPersona" value="{{$persona->idPersona}}">
-
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<div class="form-group">
-						<label>NOMBRE</label><br>
-						<input type="text" name="nombrePersona" id="nombrePersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->nombrePersona }}@endif">
-					</div>
-				</div>
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<div class="form-group">
-						<label>APELLIDO</label><br>
-						<input type="text" name="apellidoPersona" id="apellidoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->apellidoPersona }}@endif">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<div class="form-group">
-						<label>DNI</label><br>
-						<input type="text" name="dniPersona" id="dniPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->dniPersona }}@endif">
-					</div>
-				</div>
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<div class="form-group">
-						<label>TELEFONO</label><br>
-						<input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<label for="idProvincia">PROVINCIA</label>
-						<select class="form-control inputSelect" name="idProvincia" id="idProvincia" style="color: #1e1e27">
-						@foreach ($provincias as $unaProvincia)
-							<option value="{{$unaProvincia->idProvincia}}"
-									@if($existePersona)
-										@if($unaProvincia->idProvincia == $persona->idLocalidad)
-											selected
-										@endif
-									@else
-										@if($unaProvincia->idProvincia == 20)
-											selected
-										@endif
-									@endif
-							>{{$unaProvincia->nombreProvincia}}</option>
-							@endforeach
-					</select>
-				</div>
-				<div class="col-xs-6 col-sm-4 col-md-4">
-					<label for="idLocalidad" class="control-label">LOCALIDAD</label>
-					<select name="idLocalidad" id="idLocalidad" class="form-control inputSelect" style="color: #1e1e27">
-						<option value="">Seleccione una opcion</option>
-					</select>
-				</div>
-			</div>
-			<br/>
 			
 			@php
 			if (count($habilidades)>0){ // Si existe alguna habilidad cargada en la base de datos
@@ -118,12 +133,15 @@
 					}
 				}
 			}
-			@endphp
-			<br/>
+			
 
+			@endphp
+			<span id="msghabilidades" class="text-danger">{{ $errors->first('habilidades') }}</span>
+			<br/>
+			<div class="col-md-4">
 			@php
 			if (count($categoriasTrabajo)>0){
-				echo '<h6>Preferencia de categorias a mostrar</h6>';
+				echo '<h6>Preferencia de categorias a mostrar</h6><br>';
 
 				if ($listaPreferenciasSeleccionadas!=null){ // Si lista de preferencias no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
 					foreach ($categoriasTrabajo as $categoriaTrabajo){ // por cada categoria trabajo cargada en la bd
@@ -147,13 +165,15 @@
 					};
 
 				} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna preferencia
-					foreach ($categoriasTrabajo as $habilidad){
+					foreach ($categoriasTrabajo as $categoriaTrabajo){
 						echo '<input type="checkbox" id="preferenciaPersona" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo;
 					echo '<br/>';
 					}
 				}
 			}
 			@endphp
+			</div>
+			<span id="msgpreferenciaPersona" class="text-danger">{{ $errors->first('preferenciaPersona') }}</span>
 
 
 		
@@ -167,6 +187,47 @@
 				</div>
 			</div>
 		</form>
+
+		<script type="text/javascript">
+        
+			$(document).ready(function (e){
+				$("#formPersona").on('submit',(function(e){
+					e.preventDefault();
+					var nombrePersona = $("#nombrePersona").val();
+					var apellidoPersona = $("#apellidoPersona").val();
+					var dniPersona = $("#dniPersona").val(); 
+					var telefonoPersona = $("#telefonoPersona").val();
+					var imagenPersona = $("#imagenPersona").val();
+					var idProvincia = $('#idProvincia').val();
+					var idLocalidad = $('#idLocalidad').val();
+					var habilidades = $('#habilidades').val();
+					var preferenciaPersona =$('#preferenciaPersona').val();
+					var data={nombrePersona:nombrePersona,apellidoPersona:apellidoPersona,dniPersona:dniPersona,telefonoPersona:telefonoPersona,imagenPersona:imagenPersona,idProvincia:idProvincia,idLocalidad:idLocalidad,habilidades:habilidades,preferenciaPersona:preferenciaPersona};
+					$.ajax({
+						headers: {
+							'X-CSRF-TOKEN': "{{ csrf_token() }}"
+						},
+						url: "@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif",
+						method: "POST",
+						data:new FormData(this),
+						dataType:'json',
+						contentType: false,
+						cache: false,
+						processData: false,
+						success: function(data){
+							alert(data.message);
+							window.location = data.url;
+						},
+						error: function(msg){
+							var errors = $.parseJSON(msg.responseText);
+							$.each(errors.errors, function (key, val) {
+								$("#msg" + key).text(val[0]);
+							});
+						}                      
+					});
+				}));
+			});
+			</script>
     </section>
 @endsection
 

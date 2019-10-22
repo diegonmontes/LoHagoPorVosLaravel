@@ -23,6 +23,8 @@ use Illuminate\Http\Request;
         $informacionPagoRecibido = ['idTrabajo'=>$idTrabajo,'idPago'=>$idPago,'metodo'=>$metodo,'monto'=>$monto,'tarjeta'=>$tarjeta,'fechapago'=>$fechapago,'fechaaprobado'=>$fechaaprobado];
         $requestInformacionPagoRecibido = new Request($informacionPagoRecibido);
         $PagoRecibidoController->store($requestInformacionPagoRecibido);
+        header("Location: http://localhost/LoHagoPorVosLaravel/public/");
+        exit;
     } else {
         echo "error no hay informacion";
     }

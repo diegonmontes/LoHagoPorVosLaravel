@@ -8,9 +8,10 @@
                 <h5 class="card-title">{{$trabajo->titulo}}</h5>
             </div>
             @if(!$trabajo->imagenTrabajo)
-                <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Imagen del anuncio</text></svg>
+                <img src="{{ asset("images/$trabajo->imagenCategoria" )}}">
+            @else 
+                <img src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
             @endif
-        <img src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
             <div class="card-body">
                 <p class="card-text">{{$trabajo->descripcion}}</p>
             </div>
@@ -28,7 +29,7 @@
                     $link = json_decode($link);
                     # Return the HTML code for button
                     
-                    echo "<a href=$link> Pagar </a>";
+                    echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
 
                 @endphp
 
@@ -38,13 +39,13 @@
                 </script>
                 
                 
-                <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
+                {{-- <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li> --}}
             </ul>
         </div>
     </div>
 </div>
 
-<div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">
+{{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">
         <div class="carousel-inner">
             @php $cant = 0 @endphp
             <div class="carousel-item active">
@@ -99,6 +100,6 @@
           <span class="sr-only">Next</span>
         </a>
 
-</div>
+</div> --}}
 
 @endsection

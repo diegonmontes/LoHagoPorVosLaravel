@@ -39,8 +39,7 @@ class MercadoPagoController extends Controller
         MercadoPago\SDK::setClientSecret("SZtF1oMaavyNlIAUezLXcnHfmjZxsKnT");
         MercadoPago\SDK::setAccessToken("TEST-8231008415125275-100820-23f7f80f6828cbdb826456b4d1858568-478055454");
         $pago = MercadoPago\Payment::find_by_id($idPago);
-      //  print_R($pago);
-     //   die();
+    
         return $pago;
     }
 }
