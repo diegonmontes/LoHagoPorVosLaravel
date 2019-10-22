@@ -289,7 +289,9 @@ class PersonaController extends Controller
             } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
                 $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
-                $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
+                $usuario = Persona::find($request->idPersona);
+                $idUsuario = $usuario->idUsuario;
+                $nombreImagen = $idUsuario.'fotoPerfil'.date("YmdHms").'.'. $extension;
                 $request = $request->except('imagenPersona'); // Guardamos todo el obj sin la clave imagen persona
                 $request['imagenPersona']=$nombreImagen; // Asignamos de nuevo a imagenPersona, su nombre
                 $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
@@ -347,13 +349,17 @@ class PersonaController extends Controller
                     $PreferenciaPersonaController->store($requestHabilidadPersona);
                 }
 
-                die();
 
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true,'idPersona'=>$idPersona];
                     return response()->json($respuesta);
                 } else { // Significa que esta en laravel y debe redireccionar a inicio
-                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                    return response()->json([
+                        'url' => route('inicio'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        ], 200);
+                    //return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
             } else {
                 $respuesta = ['success'=>false];
@@ -363,7 +369,11 @@ class PersonaController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('inicioasdasd  ')->with('error','Error');
+                return response()->json([
+                    'success'   => false,
+                    'errors'   => ['valido' => [0 => $errores ]] //Se recibe en la seccion "success", data.message
+                    ], 422);
+                //return redirect()->route('inicioasdasd  ')->with('error','Error');
             }
         }
      

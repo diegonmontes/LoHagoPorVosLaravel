@@ -16587,6 +16587,31 @@ input[type="file"]{
   color: white;
 }
 
+output .preview-imagenPersona, input[name='imagenPersona']{
+  width: 150% !important;
+  margin: auto;
+  border-radius: 50%;
+  border: 1px #ced4da solid;
+}
+
+/* input[name='imagenPersona']{
+  width: 35% !important;
+  border-radius: 50% !important;
+  border: 1px black solid !important;
+} */
+
+.drag-drop-imagenPersona{
+  height: 8em;
+  width: 8em;
+  border-radius: 4em;
+  text-align: center;
+  color: white;
+  position: relative;
+  margin: 0 auto 1em;
+  background-color: #FFFFFF;
+  
+}
+
 /* Estilo del área del input[file] con :hover */
 
 .drag-drop:hover, input[type="file"]:hover {

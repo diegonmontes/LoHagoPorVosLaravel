@@ -178,15 +178,28 @@ class TrabajoController extends Controller
     * Buscamos el anuncio segun el id y lo mostramos en ver el anuncio
     */
     public function veranuncio($id){
+        //Buscamosel trabajo por el id para mistrar
         $trabajo =  Trabajo::find($id);
+
+        if($trabajo->imagenTrabajo == null){
+            $objetoCategoriaTrabajo = new CategoriaTrabajo;
+            //Buscamos el objeto de categoria trabajo
+            $categoriaTrabajo = $objetoCategoriaTrabajo->find($trabajo->idCategoriaTrabajo);
+            $trabajo['imagenTrabajo'] = $categoriaTrabajo->imagenCategoriaTrabajo;
+        }
+
+        //Seteamos los valores para crear el modelo de MP y obtener el link de pago
         $monto = $trabajo['monto'];
         $titulo = $trabajo['titulo'];
         $idTrabajo = $trabajo['idTrabajo'];
         $arregloTrabajo = ['monto'=>$monto,'titulo'=>$titulo,'idTrabajo'=>$idTrabajo];
         $requestTrabajo = new Request($arregloTrabajo);
-        $listaTrabajo = Trabajo::all();
         $MPController = new MercadoPagoController();
         $link = $MPController->crearPago($requestTrabajo);
+
+        //Listamos los trabajos para mostrar en un carousel
+        $listaTrabajo = Trabajo::all();
+
         if(isset($trabajo)){
             return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link]);
         }else{
