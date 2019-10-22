@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use JWTAuth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\Auth\RegisterController;
 
 //use Mail;
 //use App\Mail\PasswordReset;
@@ -38,7 +40,8 @@ class UserController extends Controller
 
             if(count($usuario)<1){
                 //Si no exsite creo el usuario y seteo la variable 'success' en true
-                User::create($request->all());
+                $request['auth_key']=str_random(150);
+                $objUsuario=User::create($request->all());
                 $respuesta = ['success'=>true];
             }else{
                 //En caso que exista no creo el usuario y seteo la variable 'success' en false
@@ -50,6 +53,8 @@ class UserController extends Controller
                         'error'=>'Nombre de usuario indebido. Por favor ingrese otro.'];
         }
       //  print_r($rtaDecode);
+        $mail = new EmailController;
+        $mail->validarmail($objUsuario);
 
         return response()->json($respuesta);
     }
