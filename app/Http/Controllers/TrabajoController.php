@@ -185,7 +185,7 @@ class TrabajoController extends Controller
             $objetoCategoriaTrabajo = new CategoriaTrabajo;
             //Buscamos el objeto de categoria trabajo
             $categoriaTrabajo = $objetoCategoriaTrabajo->find($trabajo->idCategoriaTrabajo);
-            $trabajo['imagenTrabajo'] = $categoriaTrabajo->imagenCategoriaTrabajo;
+            $trabajo['imagenCategoria'] = $categoriaTrabajo->imagenCategoriaTrabajo;
         }
 
         //Seteamos los valores para crear el modelo de MP y obtener el link de pago
