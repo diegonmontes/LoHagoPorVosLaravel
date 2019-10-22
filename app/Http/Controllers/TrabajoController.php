@@ -12,6 +12,8 @@ use App\Localidad;
 use App\Provincia;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
+
 
 class TrabajoController extends Controller
 {
@@ -80,10 +82,19 @@ class TrabajoController extends Controller
         } else { // Si no carga ninguna imagen, seteamos por defecto el valor a true
             $validoImagen = true;
         }
-        $validoTitulo=$controller->moderarTexto($titulo,1); // 1 Significa que evaluamos la variable terms
+        if($titulo != null){
+            $validoTitulo=$controller->moderarTexto($titulo,1); // 1 Significa que evaluamos la variable terms
+        }else{
+            $validoTitulo = true;
+        }
         sleep(3);
-        $validoDescripcion=$controller->moderarTexto($descripcion,1); // 1 Significa que evaluamos la variable terms
-        //$validoDescripcion=true;
+        if($descripcion != null){
+            $validoDescripcion=$controller->moderarTexto($descripcion,1); // 1 Significa que evaluamos la variable terms
+        }else{
+            $validoDescripcion = true;
+        }
+        
+            //$validoDescripcion=true;
         $errores="";
         if (!($validoTitulo)){
             $errores.="Titulo ";
@@ -109,14 +120,29 @@ class TrabajoController extends Controller
 
 
         if ($validoDescripcion && $validoTitulo && $validoImagen){
-            $this->validate($request,[ 'titulo'=>'required', 'descripcion'=>'required', 'monto'=>'required']);
-            
+            $mensajesErrores =[             
+                'titulo.required' => 'El titulo es obligatorio.',
+                'titulo.max' => 'Maximo de palabras sobrepasado.',
+                'descripcion.required' => 'La descripcion es obligatorio.',
+                'descripcion.max' => 'Maximo de palabras sobrepasado.',
+                'monto.required' => 'El monto es obligatorio.',
+                'monto.numeric' => 'Solamente se puede ingresar numeros.',
+                'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio'
+            ] ;
+
+            //Validaciones del trabajo
+            $this->validate($request,[ 'titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
             $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true];
                 } else { // Significa que esta en laravel y debe redireccionar a inicio
-                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                    return response()->json([
+                        'url' => route('inicio'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        ], 200);
+                    //return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
             } else {
                 $respuesta = ['success'=>false];
@@ -126,7 +152,11 @@ class TrabajoController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('trabajo.index')->with('success',$errores);
+                return response()->json([
+                    'success'   => false,
+                    'errors'   => ['valido' => [0 => $errores ]] //Se recibe en la seccion "success", data.message
+                    ], 422);
+                //return redirect()->route('trabajo.index')->with('success',$errores);
             }
         }
 

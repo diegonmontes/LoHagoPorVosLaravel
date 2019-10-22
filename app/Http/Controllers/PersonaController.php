@@ -50,7 +50,7 @@ class PersonaController extends Controller
             $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->get();
             $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->get();
         }else{
-            $persona = $laPersona;
+            $persona = new Persona;
             $existePersona = false;
         }
         $provincias=Provincia::all();
@@ -73,10 +73,20 @@ class PersonaController extends Controller
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
             'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
-            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.'
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'nombrePersona.required' => 'El nombre es obligatorio.',
+            'apellidoPersona.required' => 'El apellido es obligatorio.',
+            'nombrePersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'apellidoPersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'dniPersona.required' => 'El dni es obligatorio.',
+            'telefonoPersona.required' => 'El telefono es obligatorio.',
+            'idLocalidad.required' => 'La localidad es obligatoria.',
+            'idProvincia.required' => 'La provincia es obligatoria.',
+            'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
+
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
 
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -166,7 +176,12 @@ class PersonaController extends Controller
                     $respuesta = ['success'=>true,'idPersona'=>$idPersona];
                     return response()->json($respuesta);
                 } else { // Significa que esta en laravel y debe redireccionar a inicio
-                    return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
+                    return response()->json([
+                        'url' => route('inicio'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        ], 200);
+                    //return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
             } else {
                 $respuesta = ['success'=>false];
@@ -176,7 +191,11 @@ class PersonaController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
-                return redirect()->route('inicioasdasd  ')->with('error','Error');
+                return response()->json([
+                    'success'   => false,
+                    'errors'   => ['valido' => [0 => $errores ]] 
+                    ], 422);
+                //return redirect()->route('persona.create')->with('success',$errores);
             }
         }
         return response()->json($respuesta);
