@@ -252,16 +252,16 @@ INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (3,
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Asignado','El anunciante asigno un postulante');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (5,'Finalizado','Anuncio finalizado');
 
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas','categoriaMascota.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto','categoriaAuto.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (3,'Pago de servicios','Pago de servicios','categoriaServicios.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (4,'Turnos','Turnos','categoriaTurnos.png');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (5,'Tramites','Tramites','categoriaTramite.png');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa','categoriaCasa.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (7,'Jardin','Jardin','categoriaJardin.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (8,'Mantenimiento','Mantenimiento','categoriaMantenimiento.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (9,'Tecnico','Tecnico','categoriaTecnico.jpg');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (10,'Otro','Otro','categoriaOtro.png');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (3,'Pago de servicios','Pago de servicios',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (4,'Turnos','Turnos',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (5,'Tramites','Tramites',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (7,'Jardin','Jardin',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (8,'Mantenimiento','Mantenimiento',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (9,'Tecnico','Tecnico',NULL);
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (10,'Otro','Otro',NULL);
 
 
 
@@ -275,28 +275,28 @@ INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `mailUsuario`, `email_verif
 (6, 'elpana', 'elpana@gmail.com', NULL, NULL, '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 2, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
 
 
-INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`, `idLocalidad`, `eliminado`, `created_at`, `updated_at`) VALUES
-(1, 'Juan', 'Sanchez', '89576214', '2995049638', 1, 4634, 0, '2019-09-23 00:37:12', '2019-09-23 00:37:12'),
-(2, 'Maria Jose', 'Perez', '46325896', '02995698835', 2, 4634, 0, '2019-09-23 00:39:52', '2019-09-23 00:39:52'),
-(3, 'Sofia', 'Galletas', '45698746', '2991365289', 3, 4634, 0, '2019-09-23 00:41:13', '2019-09-23 00:41:13'),
-(4, 'Marcelo Antonio', 'Quintana', '43589633', '2994896324', 4, 4634, 0, '2019-09-23 00:42:34', '2019-09-23 00:42:34'),
-(5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11'),
-(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
+INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`, `idLocalidad`, `eliminado`, `created_at`,`updated_at`, `imagenPersona`) VALUES
+(1, 'Juan', 'Sanchez', '89576214', '2995049638', 1, 4634, 0, '2019-09-23 00:37:12', '2019-09-23 00:37:12','persona.jpg'),
+(2, 'Maria Jose', 'Perez', '46325896', '02995698835', 2, 4634, 0, '2019-09-23 00:39:52', '2019-09-23 00:39:52','persona.jpg'),
+(3, 'Sofia', 'Galletas', '45698746', '2991365289', 3, 4634, 0, '2019-09-23 00:41:13', '2019-09-23 00:41:13','persona.jpg'),
+(4, 'Marcelo Antonio', 'Quintana', '43589633', '2994896324', 4, 4634, 0, '2019-09-23 00:42:34', '2019-09-23 00:42:34','persona.jpg'),
+(5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11','persona.jpg'),
+(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03','persona.jpg');
 
 INSERT INTO `trabajo` (`idTrabajo`, `idPersona`, `idEstado`, `idCategoriaTrabajo`,`idLocalidad` ,`titulo`, `descripcion`, `monto`, `imagenTrabajo` ,`eliminado`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, NULL ,0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),
-(2, 5, 1, 2, 4634,'Quien me lava mi auto ????', 'Alguien que me lave el auto que no tengo ganas xD', 300.00, NULL,0, '2019-09-23 00:48:40', '2019-09-23 00:48:40'),
-(3, 1, 1, 2, 4634,'Recital de pablo londra', 'quien puede hacer la fila por mi el dia del recital', 150.00, NULL,0, '2019-09-23 00:51:06', '2019-09-23 00:51:06'),
-(4, 4, 1, 2, 4634,'cortar el cesped', 'tengo que cortar el cesped antes del finde. si queda bien lo llamo la proxima vez y recomiendo. pongo 5 estrellas', 560.00, NULL,0, '2019-09-23 00:55:10', '2019-09-23 00:55:10'),
-(5, 4, 1, 2, 4634,'armar la pelopincho', 'alguien para armar la pile porfa. me operaron y no puedo hacer fuerza. gracias', 360.00, NULL,0, '2019-09-23 00:56:35', '2019-09-23 00:56:35'),
-(6, 6, 1, 1, 4634,'pasear el perro', 'quien lo puede pasear a mi perro. es por el lunes a la tarde', 240.00, NULL, 0, '2019-09-23 01:01:51', '2019-09-23 01:01:51');
+(1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, 'fotoTrabajo.png' ,0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),
+(2, 5, 1, 2, 4634,'Quien me lava mi auto ????', 'Alguien que me lave el auto que no tengo ganas xD', 300.00, 'fotoTrabajo.png',0, '2019-09-23 00:48:40', '2019-09-23 00:48:40'),
+(3, 1, 1, 2, 4634,'Recital de pablo londra', 'quien puede hacer la fila por mi el dia del recital', 150.00, 'fotoTrabajo.png',0, '2019-09-23 00:51:06', '2019-09-23 00:51:06'),
+(4, 4, 1, 2, 4634,'cortar el cesped', 'tengo que cortar el cesped antes del finde. si queda bien lo llamo la proxima vez y recomiendo. pongo 5 estrellas', 560.00, 'fotoTrabajo.png',0, '2019-09-23 00:55:10', '2019-09-23 00:55:10'),
+(5, 4, 1, 2, 4634,'armar la pelopincho', 'alguien para armar la pile porfa. me operaron y no puedo hacer fuerza. gracias', 360.00, 'fotoTrabajo.png',0, '2019-09-23 00:56:35', '2019-09-23 00:56:35'),
+(6, 6, 1, 1, 4634,'pasear el perro', 'quien lo puede pasear a mi perro. es por el lunes a la tarde', 240.00, 'fotoTrabajo.png', 0, '2019-09-23 01:01:51', '2019-09-23 01:01:51');
 
 INSERT INTO `habilidad`(`idHabilidad`, `nombreHabilidad`,`descripcionHabilidad`,`imagenHabilidad`,`eliminado`) VALUES 
 (1,'Habilidad 1','Descripcion habilidad 1',NULL,0),
 (2,'Habilidad 2','Descripcion habilidad 1',NULL,0),
 (3,'Habilidad 3','Descripcion habilidad 1',NULL,0);
 
-INSERT INTO `preferenciaPersona`(`idPreferenciaPersona`, `idCategoriaTrabajo`,`idPersona`,`eliminado`) VALUES 
+INSERT INTO `preferenciapersona`(`idPreferenciaPersona`, `idCategoriaTrabajo`,`idPersona`,`eliminado`) VALUES 
 (1,1,1,0),
 (2,2,2,0),
 (3,3,3,0);
