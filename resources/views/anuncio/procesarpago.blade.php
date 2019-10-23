@@ -24,6 +24,6 @@ use Illuminate\Http\Request;
         $requestInformacionPagoRecibido = new Request($informacionPagoRecibido);
         $PagoRecibidoController->store($requestInformacionPagoRecibido);
     } else {
-        echo "error no hay informacion";
+        echo "La información proporcionada no es suficiente para poder realizar la acción";
     }
 @endphp
