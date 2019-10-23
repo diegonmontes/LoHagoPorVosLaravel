@@ -26,6 +26,6 @@ use Illuminate\Http\Request;
         header("Location: http://localhost/LoHagoPorVosLaravel/public/");
         exit;
     } else {
-        echo "error no hay informacion";
+        echo "La información proporcionada no es suficiente para poder realizar la acción";
     }
 @endphp
