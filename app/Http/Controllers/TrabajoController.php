@@ -171,6 +171,13 @@ class TrabajoController extends Controller
     public function buscarTrabajos(){
         $objTrabajo = new Trabajo();
         $listaTrabajos = $objTrabajo->get();
+        foreach($listaTrabajos as $trabajo){
+            if($trabajo->imagenTrabajo == null){
+                $objCategoriaTrabajo = new CategoriaTrabajo;
+                $categoriaTrabajo = $objCategoriaTrabajo->find($trabajo->idCategoriaTrabajo);
+                $trabajo->imagenTrabajo=$categoriaTrabajo->imagenCategoriaTrabajo;
+            }
+        }
         return json_encode($listaTrabajos);
     }
 
@@ -188,7 +195,6 @@ class TrabajoController extends Controller
             $trabajo['imagenCategoria'] = $categoriaTrabajo->imagenCategoriaTrabajo;
         }
 
-        //Seteamos los valores para crear el modelo de MP y obtener el link de pago
         $monto = $trabajo['monto'];
         $titulo = $trabajo['titulo'];
         $idTrabajo = $trabajo['idTrabajo'];

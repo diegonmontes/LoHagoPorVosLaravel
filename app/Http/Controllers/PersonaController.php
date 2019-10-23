@@ -143,7 +143,7 @@ class PersonaController extends Controller
         }
 
 
-        $this->validate($request,[ 'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required','idUsuario'=>'required']);
+        
         if ($validoImagen && $validoApellido && $validoNombre){
             if (Persona::create($request->all())){ // Si crea una persona, obtenemos su id para llenar el resto de las tablas
                 $objPersona = new Persona(); // Creamos el obj persona
@@ -264,10 +264,20 @@ class PersonaController extends Controller
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
             'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
-            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.'
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.',
+            'nombrePersona.required' => 'El nombre es obligatorio.',
+            'apellidoPersona.required' => 'El apellido es obligatorio.',
+            'nombrePersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'apellidoPersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'dniPersona.required' => 'El dni es obligatorio.',
+            'telefonoPersona.required' => 'El telefono es obligatorio.',
+            'idLocalidad.required' => 'La localidad es obligatoria.',
+            'idProvincia.required' => 'La provincia es obligatoria.',
+            'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
         ] ;
 
         $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
+        
         $controller= new Controller;
         $nombre=$request->nombrePersona;
         $apellido=$request->apellidoPersona;
@@ -359,7 +369,6 @@ class PersonaController extends Controller
                         'success'   => true,
                         'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
                         ], 200);
-                    //return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
             } else {
                 $respuesta = ['success'=>false];
@@ -373,7 +382,6 @@ class PersonaController extends Controller
                     'success'   => false,
                     'errors'   => ['valido' => [0 => $errores ]] //Se recibe en la seccion "success", data.message
                     ], 422);
-                //return redirect()->route('inicioasdasd  ')->with('error','Error');
             }
         }
      
