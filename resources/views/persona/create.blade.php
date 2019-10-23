@@ -187,7 +187,25 @@
 				</div>
 			</div>
 		</form>
-
+		
+		<!-- Modal -->
+<div id="loading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Procesando datos...</h5>
+			{{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button> --}}
+			</div>
+			<div class="modal-body justify-content-center" style="margin:auto">
+					<div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+			</div>
+			<div class="content" id="mensaje">
+			</div>
+		  </div>
+		</div>
+	  </div>
 		<script type="text/javascript">
         
 			$(document).ready(function (e){
@@ -214,9 +232,23 @@
 						contentType: false,
 						cache: false,
 						processData: false,
+						beforeSend: function() {
+							$('#loading').modal('show');
+						},
 						success: function(data){
-							alert(data.message);
-							window.location = data.url;
+							
+							$('.lds-ring').remove();
+							$('.modal-title').empty();
+							$('.modal-title').append('<p>Datos actualizados exitosamente<p>');
+							$('#mensaje').append('<h5 style="margin-left:5%">La pagina se redireccionara en 3 segundos...</h5><br><br>');
+							setTimeout(function(){
+								$('#loading').modal('hide');
+								window.location = data.url
+							},3000);
+							
+							 
+							
+							//window.location = data.url;
 						},
 						error: function(msg){
 							var errors = $.parseJSON(msg.responseText);
