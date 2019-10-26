@@ -42,8 +42,8 @@ Route::resource('preferenciapersona', 'PreferenciaPersonaController');
 
 
 
-Route::get('postularme/{id}','TrabajoaspirantesController@index')->name('postularme')->middleware('auth','controlperfil');
-Route::post('store','TrabajoaspirantesController@store')->name('trabajoaspirantes.store')->middleware('auth','controlperfil');
+Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
+Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
 Route::prefix('usuario')->group(function(){
     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','Mailvalidado');

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Trabajoaspirantes;
+use App\Trabajoaspirante;
 use App\Persona;
 use App\Trabajo;
 use Auth;
 
-class TrabajoaspirantesController extends Controller
+class TrabajoaspiranteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,7 +22,6 @@ class TrabajoaspirantesController extends Controller
         $persona = Persona::where('idUsuario','=',$idUsuario)->get()[0];
         //Buscamos el trabajo que se quiere postular
         $trabajo = Trabajo::find($id);
-
         return view('trabajoaspirante.index',['persona'=>$persona, 'trabajo'=>$trabajo]);
     }
 
@@ -45,13 +44,13 @@ class TrabajoaspirantesController extends Controller
      */
     public function store(Request $request)
     {   
-        $existe = Trabajoaspirantes::where('idPersona','=',$request['idPersona'])->where('idTrabajo','=',$request['idTrabajo'])->get();
         $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        $existe = Trabajoaspirante::where('idPersona','=',$request['idPersona'])->where('idTrabajo','=',$request['idTrabajo'])->get();
         $success = false;
         if(!count($existe)){
             $success = true;
-            Trabajoaspirantes::create($request->all()); //Creamos el elemento nuevo
-        }
+            Trabajoaspirante::create($request->all()); //Creamos el elemento nuevo
+        } 
         return view('trabajoaspirante.show',compact('success'));
     }
 
@@ -63,8 +62,8 @@ class TrabajoaspirantesController extends Controller
      */
     public function edit($id)
     {
-        $trabajoaspirantes=Trabajoaspirantes::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('trabajoaspirante.edit',compact('trabajoaspirantes'));
+        $trabajoaspirante=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('trabajoaspirante.edit',compact('trabajoaspirante'));
     }
 
 

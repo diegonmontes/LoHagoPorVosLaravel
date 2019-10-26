@@ -4,7 +4,7 @@
     @if( $success)
     <div class="card">
         <div class="card-body">
-          <h5 class="card-title">Feliciaciones</h5>
+          <h5 class="card-title">Felicitaciones</h5>
           <p class="card-text">Ya se encuentra en la lista de los aspirantes para realizar el trabajo.</p>
           <p class="card-text">Revisa el mail o en las notificaciones para saber si sos el elegido.</p>
 

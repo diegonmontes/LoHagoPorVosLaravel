@@ -14,6 +14,8 @@
                 
                 <div class="card-body">
                     <p class="card-text">{{$trabajo->descripcion}}</p>
+                    <p class="card-text">${{$trabajo->monto}}</p>
+                    
                 </div>
             </div>
         </div>
@@ -34,11 +36,10 @@
     </div>
     <br>
     <div class="row col-md-6 offset-md-3">
-        <form method="POST" action="{{ route('trabajoaspirantes.store') }}"  role="form">
+        <form method="POST" action="{{ route('trabajoaspirante.store') }}"  role="form">
             {{ csrf_field() }}
             <input type="hidden" value="{{$trabajo->idTrabajo}}" name="idTrabajo">
             <input type="hidden" value="{{$persona->idPersona}}" name="idPersona">
-            
             <button type="submit" class="btn btn-primary btn-block">Confirmar y postularme</button>
         </form>
     </div>

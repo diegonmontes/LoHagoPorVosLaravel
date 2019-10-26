@@ -24,12 +24,17 @@
                 <li class="list-group-item">{{$trabajo->titulo}}</li>
                 <li class="list-group-item">${{$trabajo->monto}}</li>
                 @php
-                    $laravel=true;
+                    if (!$pagado){ // Si ya se pago este anuncio
+                        $link = json_decode($link); // Decodificamos el link recibido para obtener el smart checkout
+                        # Return the HTML code for button
+                        echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
+                    }
                     
-                    $link = json_decode($link);
-                    # Return the HTML code for button
-                    
-                    echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
+                    if (!$tienePostulacion){ // Si ya se postulo no mostramos boton postularse
+                @endphp
+                        <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
+                @php    
+                    } 
 
                 @endphp
 
@@ -39,7 +44,6 @@
                 </script>
                 
                 
-                {{-- <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li> --}}
             </ul>
         </div>
     </div>

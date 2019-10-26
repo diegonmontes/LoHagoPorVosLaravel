@@ -7,6 +7,8 @@ use App\Trabajo;
 use Illuminate\Http\Request;
 use Auth;
 use App\Persona;
+use App\TrabajoAspirante;
+use App\Pagorecibido;
 use App\Http\Controllers\MercadoPagoController;
 use App\Localidad;
 use App\Provincia;
@@ -184,9 +186,27 @@ class TrabajoController extends Controller
     /*
     * Buscamos el anuncio segun el id y lo mostramos en ver el anuncio
     */
-    public function veranuncio($id){
-        //Buscamosel trabajo por el id para mistrar
-        $trabajo =  Trabajo::find($id);
+    public function veranuncio($idTrabajo){
+        //Buscamos el trabajo por el id para mistrar
+        $trabajo =  Trabajo::find($idTrabajo);
+        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+        $idPersona=$persona[0]->idPersona;
+        // Verificamos si ya se postulo a este trabajo. Si se postulo,no mostramos el mensaje de postularse nuevamente
+        $busquedaPostulacion = Trabajoaspirante::where('idPersona','=',$idPersona)->where('idTrabajo','=',$idTrabajo)->get();
+        $busquedaPago = Pagorecibido::where('idTrabajo','=',$idTrabajo)->get();
+        
+        if (count($busquedaPostulacion)>0){ // Sigifnica que ya se postulo anteriormente
+            $tienePostulacion = true;
+        } else { // No se postulo
+            $tienePostulacion = false;
+        }
+
+        if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
+            $pagado = true;
+        } else { // Todavia no se paga
+            $pagado = false;
+        }
 
         if($trabajo->imagenTrabajo == null){
             $objetoCategoriaTrabajo = new CategoriaTrabajo;
@@ -207,7 +227,7 @@ class TrabajoController extends Controller
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link]);
+            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'tienePostulacion'=>$tienePostulacion,'pagado'=>$pagado]);
         }else{
             return abort(404);
         }
