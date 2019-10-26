@@ -31,9 +31,16 @@ class Trabajo extends Model
         return $this->hasMany('App\Valoracion', 'idTrabajo', 'idTrabajo');
     }
 
-    public function Trabajoaspirantes() {
-        return $this->hasMany('App\Trabajoaspirantes', 'idTrabajo', 'idTrabajo');
+    public function Trabajoaspirante() {
+        return $this->hasMany('App\Trabajoaspirante', 'idTrabajo', 'idTrabajo');
     }
+
+    public function ConversacionChat() {
+        return $this->hasMany('App\ConversacionChat', 'idTrabajo', 'idTrabajo');
+    }
+
+
+
 
     
 

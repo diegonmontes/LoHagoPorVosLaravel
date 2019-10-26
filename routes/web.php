@@ -39,6 +39,10 @@ Route::resource('habilidadpersona', 'HabilidadPersonaController');
 
 Route::resource('preferenciapersona', 'PreferenciaPersonaController');
 
+Route::resource('conversacionchat', 'ConversacionChatController');
+
+Route::resource('mensajechat', 'MensajeChatController');
+
 
 
 

@@ -70,10 +70,14 @@
                         </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 9
+                        <a href="{{ route('conversacionchat.index') }}">
+                            Lista de Conversaciones
+                        </a>
                     </li>
                     <li class="list-group-item">
-                        Opción 10
+                        <a href="{{ route('mensajechat.index') }}">
+                            Lista de Mensajes
+                        </a>
                     </li>
                 </ul>
             </div>

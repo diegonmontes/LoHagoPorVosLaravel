@@ -31,8 +31,8 @@ class Persona extends Model
         return $this->hasMany('App\Valoracion', 'idValoracion', 'idValoracion');
     }
 
-    public function Trabajoaspirantes() {
-        return $this->hasMany('App\Trabajoaspirantes', 'idPersona', 'idPersona');
+    public function Trabajoaspirante() {
+        return $this->hasMany('App\Trabajoaspirante', 'idPersona', 'idPersona');
     }
 
     public function PreferenciaPersona() {
@@ -41,6 +41,14 @@ class Persona extends Model
 
     public function HabilidadPersona() {
         return $this->hasMany('App\HabilidadPersona', 'idPersona', 'idPersona');
+    }
+
+    public function ConversacionChat() {
+        return $this->hasMany('App\ConversacionChat', 'idPersona', 'idPersona1');
+    }
+
+    public function MensajeChat() {
+        return $this->hasMany('App\MensajeChat', 'idPersona', 'idPersona');
     }
 
 
