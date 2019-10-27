@@ -23,21 +23,32 @@ class Trabajo extends Model
         return $this->belongTo('App\Localidad', 'idLocalidad', 'idLocalidad');
     }
 
-    public function Estado() {
-        return $this->belongTo('App\Estado', 'idEstado', 'idEstado');
-    }
-
-    public function Valoracion() {
-        return $this->hasMany('App\Valoracion', 'idTrabajo', 'idTrabajo');
+    public function Pagorecibido() {
+        return $this->belongTo('App\Pagorecibido', 'idTrabajo', 'idTrabajo');
     }
 
     public function Trabajoaspirante() {
         return $this->hasMany('App\Trabajoaspirante', 'idTrabajo', 'idTrabajo');
     }
 
+    public function Trabajoasignado() {
+        return $this->hasMany('App\Trabajoasignado', 'idTrabajo', 'idTrabajo');
+    }
+
     public function ConversacionChat() {
         return $this->hasMany('App\ConversacionChat', 'idTrabajo', 'idTrabajo');
     }
+
+    public function Estadotrabajo()
+    {
+        return $this->hasMany('App\Estadotrabajo', 'idEstadoTrabajo', 'idEstadoTrabajo');
+    }
+
+    public function Valoracion()
+    {
+        return $this->hasMany('App\Valoracion', 'idValoracion', 'idValoracion');
+    }
+    
 
 
 

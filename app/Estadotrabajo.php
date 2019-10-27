@@ -6,16 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estadotrabajo extends Model
 {
-    //
     protected $table='estadotrabajo';
-    protected $primaryKey='idEstadotrabajo';
-    protected $fillable = ['idEstadotrabajo', 'idTrabajo', 'idEstado','eliminado'];
+    protected $primaryKey='idEstadoTrabajo';
+    protected $fillable = ['idEstadoTrabajo', 'idTrabajo', 'idEstado','eliminado'];
 
     public function Trabajo() {
-        return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');
+        return $this->hasOne('App\Trabajo', 'idTrabajo', 'idTrabajo');
     }
 
     public function Estado() {
-        return $this->belongTo('App\Estado', 'idEstado', 'idEstado');
+        return $this->hasOne('App\Estado', 'idEstado', 'idEstado');
     }
 }

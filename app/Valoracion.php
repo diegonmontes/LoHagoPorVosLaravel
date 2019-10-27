@@ -12,10 +12,10 @@ class Valoracion extends Model
     protected $fillable = ['idValoracion', 'valor', 'idTrabajo', 'idPersona','eliminado'];
 
     public function Trabajo() {
-        return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');
+        return $this->hasOne('App\Trabajo', 'idTrabajo', 'idTrabajo');
     }
 
     public function Persona() {
-        return $this->belongTo('App\Trabajo', 'idPersona', 'idPersona');
+        return $this->hasOne('App\Persona', 'idPersona', 'idPersona');
     }
 }

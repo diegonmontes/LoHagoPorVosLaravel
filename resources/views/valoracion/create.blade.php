@@ -22,29 +22,35 @@
 
 			<div class="card">
 					<div class="card-header">
-						<h3>Nueva Categoria</h3>
+						<h3>Nueva Valoracion</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('categoriatrabajo.store') }}"  role="form">
+						<form method="POST" action="{{ route('valoracion.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
+									<div class="form-group">
+										<label>Persona:</label>
+										<input type="text" name="idPersona" id="idPersona" class="form-control input-sm">
+									</div>
+								</div>
+							<div class="row">
 								<div class="form-group">
-									<label>Nombre:</label>
-									<input type="text" name="nombreCategoriaTrabajo" id="nombreCategoriaTrabajo" class="form-control input-sm">
+									<label>Trabajo:</label>
+									<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm">
 								</div>
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label>Descripcion:</label>
-									<input type="text" name="descripcionCategoriaTrabajo" id="descripcionCategoriaTrabajo" class="form-control input-sm">
+									<label>Valor:</label>
+									<input type="text" name="valor" id="valor" class="form-control input-sm">
 								</div>
 							</div>
 
 							<br>
 							<div class="row">
-								<input type="submit"  value="Guardar" class="btn btn-success btn-block">
-								<a href="{{ route('categoriatrabajo.index') }}" class="btn btn-info btn-block" >Atrás</a>
+									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
+									<a href="{{ route('valoracion.index') }}" class="btn btn-info btn-block" >Atrás</a>
 							</div>
 						</form>
 					</div>

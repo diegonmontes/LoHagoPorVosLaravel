@@ -5,7 +5,7 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                            <h3>Lista de estado</h3>
+                            <h3>Lista de estados</h3>
                     </td>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                         <a href="{{ route('estado.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir un estado</a>

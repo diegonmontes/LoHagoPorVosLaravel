@@ -8,11 +8,12 @@ class Pagorecibido extends Model
 {
     //
     protected $table='pagorecibido';
-    protected $primaryKey = 'idPagorecibido';
-    protected $fillable = ['idPagorecibido', 'idTrabajo','idPago','monto','metodo','tarjeta','fechapago','fechaaprobado','eliminado'];
+    protected $primaryKey = 'idPagoRecibido';
+    protected $fillable = ['idPagoRecibido', 'idTrabajo','idPago','monto','metodo','tarjeta','fechapago','fechaaprobado','eliminado'];
 
-    public function Trabajo() {
-        return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');
+    public function Trabajo()
+    {
+        return $this->hasOne('App\Trabajo', 'idTrabajo', 'idTrabajo');
     }
 
 }

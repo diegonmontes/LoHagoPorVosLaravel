@@ -41,7 +41,8 @@ class CategoriaTrabajoController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
+       
+        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required','descripcionCategoriaTrabajo'=>'required']);
         CategoriaTrabajo::create($request->all());
         return redirect()->route('categoriatrabajo.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -83,7 +84,7 @@ class CategoriaTrabajoController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required']);
+        $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required','descripcionCategoriaTrabajo'=>'required']);
         CategoriaTrabajo::find($id)->update($request->all());
         return redirect()->route('categoriatrabajo.index')->with('success','Registro actualizado satisfactoriamente');
     }

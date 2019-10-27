@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Valoracion;
 class ValoracionController extends Controller
 {
     //
@@ -37,8 +37,6 @@ class ValoracionController extends Controller
      */
     public function store(Request $request)
     {
-        //Buscamos el usuario
-        $idUsuario = Auth::user()->idUsuario;
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
         //Creamos el elemento nuevo
@@ -82,7 +80,6 @@ class ValoracionController extends Controller
     public function update(Request $request, $id)
     {
         //Buscamos el usuario
-        $idUsuario = Auth::user()->idUsuario;
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
         Valoracion::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos

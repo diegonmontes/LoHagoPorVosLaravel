@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Trabajoasignado;
 
 class TrabajoasignadoController extends Controller
 {
@@ -14,8 +14,8 @@ class TrabajoasignadoController extends Controller
      */
     public function index()
     {
-        $trabajoasignado=Trabajoasignado::orderBy('idTrabajoAsignado','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-        return view('trabajoasignado.index',compact('trabajoasignado'));
+        $trabajosAsignados=Trabajoasignado::orderBy('idTrabajoAsignado','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('trabajoasignado.index',compact('trabajosAsignados'));
     }
 
     /**
@@ -62,8 +62,8 @@ class TrabajoasignadoController extends Controller
      */
     public function edit($id)
     {
-        $rol=Trabajoasignado::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('trabajoasignado.edit',compact('rol'));
+        $trabajoAsignado=Trabajoasignado::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('trabajoasignado.edit',compact('trabajoAsignado'));
     }
 
 

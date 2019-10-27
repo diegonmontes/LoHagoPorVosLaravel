@@ -8,15 +8,15 @@ class Trabajoasignado extends Model
 {
     //
     protected $table='trabajoasignado';
-    protected $primaryKey='idTrabajoasignado';
-    protected $fillable = ['idTrabajoaspirante', 'idTrabajo', 'idPersona','eliminado'];
+    protected $primaryKey='idTrabajoAsignado';
+    protected $fillable = ['idTrabajoAsignado', 'idTrabajo', 'idPersona','eliminado'];
 
 
     public function Trabajo() {
-        return $this->belongTo('App\Trabajo', 'idTrabajo', 'idTrabajo');
+        return $this->hasOne('App\Trabajo', 'idTrabajo', 'idTrabajo');
     }
 
     public function Persona() {
-        return $this->belongTo('App\Persona', 'idPersona', 'idPersona');
+        return $this->hasOne('App\Persona', 'idPersona', 'idPersona');
     }
 }

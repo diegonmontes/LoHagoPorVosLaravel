@@ -79,6 +79,39 @@
                             Lista de Mensajes
                         </a>
                     </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('estadotrabajo.index') }}">
+                            Estados Trabajos
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('pagorecibido.index') }}">
+                            Pago Recibido
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('trabajoaspirante.index') }}">
+                            Trabajo Aspirante
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('trabajoasignado.index') }}">
+                            Trabajo asignado
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('valoracion.index') }}">
+                            Valoracion
+                        </a>
+                    </li>
+
+
+
                 </ul>
             </div>
         </div>

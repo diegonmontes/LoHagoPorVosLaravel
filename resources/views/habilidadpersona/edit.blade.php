@@ -23,27 +23,27 @@
  
 			<div class="card">
 				<div class="card-header">
-					<h3>Editar Rol</h3>
+					<h3>Editar Habilidad Persona</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('rol.update',$rol->idRol) }}"  role="form">
+					<form method="POST" action="{{ route('habilidadpersona.update',$habilidadPersona->idHabilidadPersona) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
 							<div class="form-group">
-								<label>Nombre:</label><br>
-								<input type="text" name="nombreRol" id="nombreRol" class="form-control input-sm" value="{{$rol->nombreRol}}">
+								<label>Id Habilidad:</label><br>
+								<input type="text" name="idHabilidad" id="idHabilidad" class="form-control input-sm" value="{{$habilidadPersona->idHabilidad}}">
 							</div>
 						</div>
 						<div class="row">
 							<div class="form-group">
-								<label>Descripcion:</label><br>
-								<input type="text" name="descripcionRol" id="descripcionRol" class="form-control input-sm" value="{{$rol->descripcionRol}}">
+								<label>Id Persona:</label><br>
+								<input type="text" name="idPersona" id="idPersona" class="form-control input-sm" value="{{$habilidadPersona->idPersona}}">
 							</div>
 						</div>
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
-							<a href="{{ route('rol.index') }}" class="btn btn-info btn-block" >Atrás</a>
+							<a href="{{ route('habilidadpersona.index') }}" class="btn btn-info btn-block" >Atrás</a>
 						</div>
 					</form>
 				</div>

@@ -16,8 +16,8 @@ class PagorecibidoController extends Controller
      */
     public function index()
     {
-        $pagorecibidos=Pagorecibido::orderBy('idPagoRecibido','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-        return view('pagorecibido.index',compact('pagorecibidos'));
+        $pagoRecibidos=Pagorecibido::orderBy('idPagoRecibido','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('pagorecibido.index',compact('pagoRecibidos'));
     }
 
     /**
@@ -64,8 +64,8 @@ class PagorecibidoController extends Controller
      */
     public function edit($id)
     {
-        $rol=Pagorecibido::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('pagorecibido.edit',compact('rol'));
+        $pagoRecibido=Pagorecibido::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('pagorecibido.edit',compact('pagoRecibido'));
     }
 
 

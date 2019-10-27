@@ -12,8 +12,8 @@
                     </td>
                 </tr>
                     <tr>
-                        <th>id Persona</th>
-                        <th>id Categoria Trabajo</th>
+                        <th>Persona</th>
+                        <th>Categoria Trabajo</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
@@ -22,8 +22,8 @@
             @if($preferenciasPersona->count())
                 @foreach($preferenciasPersona as $preferenciaPersona)
                     <tr>
-                        <td>{{$preferenciaPersona->persona->idPersona}}</td>
-                        <td>{{$preferenciaPersona->categoriaTrabajo->idCategoriaTrabajo}}</td>
+                        <td>{{$preferenciaPersona->persona->idPersona." - ".$preferenciaPersona->persona->nombrePersona." ".$preferenciaPersona->persona->apellidoPersona}}</td>
+                        <td>{{$preferenciaPersona->categoriaTrabajo->idCategoriaTrabajo." - ".$preferenciaPersona->categoriaTrabajo->nombreCategoriaTrabajo}}</td>
                         <td><a class="btn btn-primary btn-sm" href="{{action('PreferenciaPersonaController@edit', $preferenciaPersona->idPreferenciaPersona)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
                             <form action="{{action('PreferenciaPersonaController@destroy', $preferenciaPersona->idPreferenciaPersona)}}" method="post">

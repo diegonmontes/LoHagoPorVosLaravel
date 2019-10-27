@@ -10,9 +10,9 @@ class Habilidad extends Model
     protected $primaryKey = 'idHabilidad';
     protected $fillable = ['idHabilidad', 'nombreHabilidad','descripcionHabilidad','eliminado'];
 
-    public function Localidad()
+    public function HabilidadPersona()
     {
-        return $this->hasMany('App\HabilidadPersona', 'idHabilidadPersona', 'idHabilidad');
+        return $this->hasMany('App\HabilidadPersona', 'idHabilidad', 'idHabilidad');
     }
 
 }

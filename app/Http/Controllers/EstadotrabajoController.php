@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
+use App\Estadotrabajo;
+
 
 class EstadotrabajoController extends Controller
 {
@@ -62,8 +63,9 @@ class EstadotrabajoController extends Controller
      */
     public function edit($id)
     {
-        $estadotrabajo=Estadotrabajo::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('estadotrabajo.edit',compact('estadotrabajo'));
+        
+        $estadoTrabajo=Estadotrabajo::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('estadotrabajo.edit',compact('estadoTrabajo'));
     }
 
 
@@ -77,7 +79,6 @@ class EstadotrabajoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
         $this->validate($request,[ 'idTrabajo'=>'required' ,'idEstado'=>'required']); //Validamos los datos antes de actualizar
         Estadotrabajo::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('estadotrabajo.index')->with('success','Registro actualizado satisfactoriamente');

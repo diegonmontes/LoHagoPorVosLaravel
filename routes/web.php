@@ -43,6 +43,16 @@ Route::resource('conversacionchat', 'ConversacionChatController');
 
 Route::resource('mensajechat', 'MensajeChatController');
 
+Route::resource('estadotrabajo', 'EstadotrabajoController');
+
+Route::resource('pagorecibido', 'PagorecibidoController');
+
+Route::resource('trabajoasignado', 'TrabajoasignadoController');
+
+Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
+
+Route::resource('valoracion', 'ValoracionController');
+
 
 
 

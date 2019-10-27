@@ -5,28 +5,30 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista habilidades persona</h3>
+                        <h3>Lista Trabajos asignados</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                            <a href="{{ route('habilidadpersona.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Habilidad a persona</a>
+                            <a href="{{ route('trabajoasignado.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Trabajo Asignado</a>
                     </td>
                 </tr>
                     <tr>
+                        <th>Id Trabajo Asignado</th>
+                        <th>Trabajo</th>
                         <th>Persona</th>
-                        <th>Habilidad</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
             </thead>
             <tbody>
-            @if($habilidadesPersona->count())
-                @foreach($habilidadesPersona as $habilidadPersona)
+            @if($trabajosAsignados->count())
+                @foreach($trabajosAsignados as $trabajoAsignado)
                     <tr>
-                        <td>{{$habilidadPersona->persona->idPersona." - ".$habilidadPersona->persona->nombrePersona." ".$habilidadPersona->apellidoPersona}}</td>
-                        <td>{{$habilidadPersona->habilidad->idHabilidad." - ".$habilidadPersona->habilidad->nombreHabilidad}}</td>
-                        <td><a class="btn btn-primary btn-sm" href="{{action('HabilidadPersonaController@edit', $habilidadPersona->idHabilidadPersona)}}" ><i class="fas fa-edit"></i></a></td>
+                        <td>{{$trabajoAsignado->idTrabajoAsignado}}</td>
+                        <td>{{$trabajoAsignado->persona->idPersona." - ".$trabajoAsignado->persona->nombrePersona." ".$trabajoAsignado->persona->apellidoPersona}}</td>
+                        <td>{{$trabajoAsignado->trabajo->idTrabajo." - ".$trabajoAsignado->trabajo->titulo}}</td>
+                        <td><a class="btn btn-primary btn-sm" href="{{action('TrabajoasignadoController@edit', $trabajoAsignado->idTrabajoAsignado)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
-                            <form action="{{action('HabilidadPersonaController@destroy', $habilidadPersona->idHabilidadPersona)}}" method="post">
+                            <form action="{{action('TrabajoasignadoController@destroy', $trabajoAsignado->idTrabajoAsignado)}}" method="post">
                                 {{ csrf_field() }}
                                 <input name="_method" type="hidden" value="DELETE">
                                 <button class="btn btn-danger btn-sm" type="submit"><i class="far fa-trash-alt"></i></button>
@@ -41,7 +43,7 @@
             @endif
             </tbody>
         </table>
-            {{ $habilidadesPersona->links() }}
+            {{ $trabajosAsignados->links() }}
 </section>
 
 @endsection

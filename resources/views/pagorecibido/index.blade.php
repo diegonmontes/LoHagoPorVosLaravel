@@ -8,28 +8,37 @@
                         <h3>Lista de categorias</h3>
                 </td>
                 <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                    <a href="{{ route('categoriatrabajo.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir una categoria</a>
+                    <a href="{{ route('pagorecibido.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir una categoria</a>
                 </td>
                 </tr>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Descripcion</th>
-                        <th>Imagen</th>
+                        <th>Id Pago Recibido</th>
+                        <th>Trabajo</th>
+                        <th>Id Pago</th>
+                        <th>monto</th>
+                        <th>metodo</th>
+                        <th>tarjeta</th>
+                        <th>fechaaprobado</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
             </thead>
             <tbody>
-            @if($categoriasTrabajo->count())
-                @foreach($categoriasTrabajo as $categoriaTrabajo)
+            @if($pagoRecibidos->count())
+                @foreach($pagoRecibidos as $pagoRecibido)
                     <tr>
-                        <td>{{$categoriaTrabajo->nombreCategoriaTrabajo}}</td>
-                        <td>{{$categoriaTrabajo->descripcionCategoriaTrabajo}}</td>
-                        <td>{{$categoriaTrabajo->imagenCategoriaTrabajo}}</td>
+                        <td>{{$pagoRecibido->idPagoRecibido}}</td>
+                        <td>{{$pagoRecibido->trabajo->idTrabajo}}</td>
+                        <td>{{$pagoRecibido->idPago}}</td>
+                        <td>{{$pagoRecibido->monto}}</td>
+                        <td>{{$pagoRecibido->metodo}}</td>
+                        <td>{{$pagoRecibido->tarjeta}}</td>
+                        <td>{{$pagoRecibido->fechaaprobado}}</td>
                         
-                        <td><a class="btn btn-primary btn-sm" href="{{action('CategoriaTrabajoController@edit', $categoriaTrabajo->idCategoriaTrabajo)}}" ><i class="fas fa-edit"></i></a></td>
+                        
+                        <td><a class="btn btn-primary btn-sm" href="{{action('PagorecibidoController@edit', $pagoRecibido->idPagoRecibido)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
-                            <form action="{{action('CategoriaTrabajoController@destroy', $categoriaTrabajo->idCategoriaTrabajo)}}" method="post">
+                            <form action="{{action('PagorecibidoController@destroy', $pagoRecibido->idPagoRecibido)}}" method="post">
                                 {{ csrf_field() }}
                                 <input name="_method" type="hidden" value="DELETE">
                                 <button class="btn btn-danger btn-sm" type="submit"><i class="far fa-trash-alt"></i></button>
@@ -44,7 +53,7 @@
             @endif
             </tbody>
         </table>
-            {{ $categoriasTrabajo->links() }}
+            {{ $pagoRecibidos->links() }}
 </section>
 
 @endsection
