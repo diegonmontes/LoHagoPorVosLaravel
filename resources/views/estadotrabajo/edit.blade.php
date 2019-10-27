@@ -29,18 +29,38 @@
 					<form method="POST" action="{{ route('estadotrabajo.update',$estadoTrabajo->idEstadoTrabajo) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
+						
 						<div class="row">
-							<div class="form-group">
-								<label>Trabajo:</label><br>
-								<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm" value="{{$estadoTrabajo->trabajo->idTrabajo}}">
-							</div>
+							<label for="idTrabajo">Trabajo:</label>
+							<select class="form-control" name="idTrabajo" id="idTrabajo">
+								@foreach($listaTrabajos as $trabajo)
+									<option value="{{$trabajo->idTrabajo}}"
+										@if($estadoTrabajo->trabajo->idTrabajo == $trabajo->idTrabajo){
+											selected
+											}
+										@endif>
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
+									</option>
+								@endforeach
+							</select>
 						</div>
+
+
 						<div class="row">
-							<div class="form-group">
-								<label>Estado</label><br>
-								<input type="text" name="idEstado" id="idEstado" class="form-control input-sm" value="{{$estadoTrabajo->estado->idEstado}}">
-							</div>
+							<label for="idEstado">Estado:</label>
+							<select class="form-control" name="idEstado" id="idEstado">
+								@foreach($listaEstados as $estado)
+									<option value="{{$estado->idEstado}}"
+										@if($estadoTrabajo->estado->idEstado == $estado->idEstado){
+											selected
+											}
+										@endif>
+										{{$estado->idEstado." - ".$estado->nombreEstado}}
+									</option>
+								@endforeach
+							</select>
 						</div>
+
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
 							<a href="{{ route('estadotrabajo.index') }}" class="btn btn-info btn-block" >Atrás</a>

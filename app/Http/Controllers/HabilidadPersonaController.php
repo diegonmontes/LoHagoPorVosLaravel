@@ -17,10 +17,7 @@ class HabilidadPersonaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-    //    $listaPersonas = Persona::all();
-    //    $listaHabilidades = Habilidad::all();
-    //    return view('habilidadpersona.index',['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]);
+    {   
     $habilidadesPersona=HabilidadPersona::orderBy('idHabilidadPersona','DESC')->paginate(15);
     return view('habilidadpersona.index',compact('habilidadesPersona'));
     }
@@ -32,7 +29,9 @@ class HabilidadPersonaController extends Controller
      */
     public function create()
     {
-        return view('habilidadpersona.create'); //Vista para crear el elemento nuevo
+        $listaPersonas = Persona::all();
+        $listaHabilidades = Habilidad::all();
+        return view('habilidadpersona.create',['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]); //Vista para crear el elemento nuevo
 
     }
 
@@ -69,8 +68,10 @@ class HabilidadPersonaController extends Controller
      */
     public function edit($id)
     {
+        $listaPersonas = Persona::all();
+        $listaHabilidades = Habilidad::all();
         $habilidadPersona=HabilidadPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('habilidadpersona.edit',compact('habilidadPersona'));
+        return view('habilidadpersona.edit',compact('habilidadPersona'),['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]);
     }
 
     /**

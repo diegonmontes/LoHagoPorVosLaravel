@@ -5,10 +5,10 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="1" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista de categorias</h3>
+                        <h3>Pagos recibidos</h3>
                 </td>
                 <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                    <a href="{{ route('pagorecibido.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir una categoria</a>
+                    <a href="{{ route('pagorecibido.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir un pago</a>
                 </td>
                 </tr>
                     <tr>
@@ -28,7 +28,7 @@
                 @foreach($pagoRecibidos as $pagoRecibido)
                     <tr>
                         <td>{{$pagoRecibido->idPagoRecibido}}</td>
-                        <td>{{$pagoRecibido->trabajo->idTrabajo}}</td>
+                        <td>{{$pagoRecibido->trabajo->idTrabajo." - ".$pagoRecibido->trabajo->titulo}}</td>
                         <td>{{$pagoRecibido->idPago}}</td>
                         <td>{{$pagoRecibido->monto}}</td>
                         <td>{{$pagoRecibido->metodo}}</td>

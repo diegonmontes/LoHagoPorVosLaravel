@@ -28,16 +28,24 @@
 						<form method="POST" action="{{ route('mensajechat.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>Id Conversacion:</label>
-										<input type="text" name="idConversacionChat" id="idConversacionChat" class="form-control input-sm">
-									</div>
-								</div>
+								<label for="idConversacionChat">Conversacion:</label>
+								<select class="form-control" name="idConversacionChat" id="idConversacionChat">
+									@foreach($listaConversaciones as $conversacion)
+										<option value="{{$conversacion->idConversacionChat}}">
+										{{$conversacion->idConversacionChat}}</option>
+									@endforeach
+								</select>
+							</div>
+
 							<div class="row">
-								<div class="form-group">
-									<label>Persona:</label>
-									<input type="text" name="idPersona" id="idPersona" class="form-control input-sm">
-								</div>
+								<label for="idPersona">Persona:</label>
+								<select class="form-control" name="idPersona" id="idPersona">
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
+
 							</div>
 
 							<div class="row">

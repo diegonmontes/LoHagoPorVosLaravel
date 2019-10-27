@@ -28,10 +28,13 @@
 						<form method="POST" action="{{ route('pagorecibido.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-								<div class="form-group">
-									<label>Trabajo:</label>
-									<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm">
-								</div>
+							<label for="idTrabajo">Trabajo:</label>
+								<select class="form-control" name="idTrabajo" id="idTrabajo">
+									@foreach($listaTrabajos as $trabajo)
+										<option value="{{$trabajo->idTrabajo}}">
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
+									@endforeach
+								</select>
 							</div>
 
 							<div class="row">

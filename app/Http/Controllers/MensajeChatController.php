@@ -32,7 +32,9 @@ class MensajeChatController extends Controller
      */
     public function create()
     {
-        return view('mensajechat.create'); //Vista para crear el elemento nuevo
+        $listaConversaciones=ConversacionChat::all();
+        $listaPersonas=Persona::all();
+        return view('mensajechat.create',['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -57,8 +59,8 @@ class MensajeChatController extends Controller
      */
     public function show($id)
     {
-        $mensajes=MensajeChat::find($id); //Buscamos el elemento para mostrarlo
-        return  view('mensajechat.show',compact('mensajes'));
+        $mensajee=MensajeChat::find($id); //Buscamos el elemento para mostrarlo
+        return  view('mensajechat.show',compact('mensaje'));
     }
 
     /**
@@ -69,8 +71,10 @@ class MensajeChatController extends Controller
      */
     public function edit($id)
     {
+        $listaConversaciones=ConversacionChat::all();
+        $listaPersonas=Persona::all();
         $mensaje=MensajeChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('mensajechat.edit',compact('mensaje'));
+        return view('mensajechat.edit',compact('mensaje'),['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]);
     }
 
 

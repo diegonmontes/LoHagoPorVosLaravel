@@ -28,16 +28,22 @@
 						<form method="POST" action="{{ route('valoracion.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>Persona:</label>
-										<input type="text" name="idPersona" id="idPersona" class="form-control input-sm">
-									</div>
-								</div>
+								<label for="idPersona">Persona:</label>
+								<select class="form-control" name="idPersona" id="idPersona">
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
+							</div>
 							<div class="row">
-								<div class="form-group">
-									<label>Trabajo:</label>
-									<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm">
-								</div>
+								<label for="idTrabajo">Trabajo:</label>
+								<select class="form-control" name="idTrabajo" id="idTrabajo">
+									@foreach($listaTrabajos as $trabajo)
+										<option value="{{$trabajo->idTrabajo}}">
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
+									@endforeach
+								</select>		
 							</div>
 
 							<div class="row">

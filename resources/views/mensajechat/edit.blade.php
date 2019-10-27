@@ -32,17 +32,33 @@
 						
 
 						<div class="row">
-							<div class="form-group">
-								<label>Id Conversacion:</label><br>
-								<input type="text" name="idConversacionChat" id="idConversacionChat" class="form-control input-sm" value="{{$mensaje->ConversacionChat->idConversacionChat}}">
-							</div>
+							<label for="idConversacionChat">ID Conversacion Chat:</label>
+							<select class="form-control" name="idConversacionChat" id="idConversacionChat">
+								@foreach($listaConversaciones as $conversacion)
+									<option value="{{$conversacion->idConversacionChat}}"
+										@if($mensaje->conversacionChat->idConversacionChat == $conversacion->idConversacion){
+											selected
+											}
+										@endif>
+										{{$conversacion->idConversacionChat}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">
-							<div class="form-group">
-								<label>Id Persona:</label><br>
-								<input type="text" name="idPersona" id="idPersona" class="form-control input-sm" value="{{$mensaje->persona->idPersona}}">
-							</div>
+							<label for="idPersona">Persona:</label>
+							<select class="form-control" name="idPersona" id="idPersona">
+								@foreach($listaPersonas as $persona)
+									<option value="{{$persona->idPersona}}"
+										@if($mensaje->persona->idPersona == $persona->idPersona){
+											selected
+											}
+										@endif>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">

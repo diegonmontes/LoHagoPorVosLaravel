@@ -28,23 +28,32 @@
 						<form method="POST" action="{{ route('conversacionchat.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>idTrabajo:</label>
-										<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm">
-									</div>
-								</div>
+								<label for="idTrabajo">Trabajo:</label>
+								<select class="form-control" name="idTrabajo" id="idTrabajo">
+									@foreach($listaTrabajos as $trabajo)
+										<option value="{{$trabajo->idTrabajo}}">
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
+									@endforeach
+								</select>		
+							</div>
 							<div class="row">
-								<div class="form-group">
-									<label>idPersona1:</label>
-									<input type="text" name="idPersona1" id="idPersona1" class="form-control input-sm">
-								</div>
+								<label for="idPersona1">Persona 1:</label>
+								<select class="form-control" name="idPersona1" id="idPersona1">
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
 							</div>
 
 							<div class="row">
-								<div class="form-group">
-									<label>idPersona2:</label>
-									<input type="text" name="idPersona2" id="idPersona2" class="form-control input-sm">
-								</div>
+								<label for="idPersona2">Persona 2:</label>
+									<select class="form-control" name="idPersona2" id="idPersona2">
+										@foreach($listaPersonas as $persona)
+											<option value="{{$persona->idPersona}}">
+											{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+										@endforeach
+									</select>
 							</div>
 
 							

@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Estadotrabajo;
-
+use App\Trabajo;
+use App\Estado;
 
 class EstadotrabajoController extends Controller
 {
@@ -26,7 +27,9 @@ class EstadotrabajoController extends Controller
      */
     public function create()
     {
-        return view('estadotrabajo.create'); //Vista para crear el elemento nuevo
+        $listaTrabajos = Trabajo::all();
+        $listaEstados = Estado::all();
+        return view('estadotrabajo.create',['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -63,9 +66,10 @@ class EstadotrabajoController extends Controller
      */
     public function edit($id)
     {
-        
+        $listaTrabajos = Trabajo::all();
+        $listaEstados = Estado::all();   
         $estadoTrabajo=Estadotrabajo::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('estadotrabajo.edit',compact('estadoTrabajo'));
+        return view('estadotrabajo.edit',compact('estadoTrabajo'),['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]);
     }
 
 

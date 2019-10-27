@@ -27,7 +27,7 @@
                 @foreach($conversaciones as $conversacion)
                     <tr>
                         <td>{{$conversacion->idConversacionChat}}</td>
-                        <td>{{$conversacion->trabajo->idTrabajo}}</td>
+                        <td>{{$conversacion->trabajo->idTrabajo." - ".$conversacion->trabajo->titulo}}</td>
                         <td>{{$conversacion->persona1->idPersona. " - ". $conversacion->persona1->nombrePersona. " ".$conversacion->persona1->apellidoPersona}}</td>
                         <td>{{$conversacion->persona2->idPersona. " - ". $conversacion->persona2->nombrePersona. " ".$conversacion->persona2->apellidoPersona}}</td>
 

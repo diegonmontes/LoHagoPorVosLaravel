@@ -32,17 +32,48 @@
 						<input type="hidden" name="idTrabajo" id="idTrabajo"value="{{$conversacion->trabajo->idTrabajo}}">
 
 						<div class="row">
-							<div class="form-group">
-								<label>Persona 1:</label><br>
-								<input type="text" name="idPersona1" id="idPersona1" class="form-control input-sm" value="{{$conversacion->persona1->idPersona1}}">
-							</div>
+							<label for="idTrabajo">Trabajo:</label>
+							<select class="form-control" name="idTrabajo" id="idTrabajo">
+								@foreach($listaTrabajos as $trabajo)
+									<option value="{{$trabajo->idTrabajo}}"
+										@if($conversacion->trabajo->idTrabajo == $trabajo->idTrabajo){
+											selected
+											}
+										@endif>
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">
-							<div class="form-group">
-								<label>Persona 2:</label><br>
-								<input type="text" name="idPersona2" id="idPersona2" class="form-control input-sm" value="{{$conversacion->persona2->idPersona2}}">
-							</div>
+							<label for="idPersona1">Persona 1:</label>
+							<select class="form-control" name="idPersona1" id="idPersona1">
+								@foreach($listaPersonas as $persona)
+									<option value="{{$persona->idPersona}}"
+										@if($conversacion->persona1->idPersona == $persona->idPersona){
+											selected
+											}
+										@endif>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="row">
+							<label for="idPersona2">Persona 2:</label>
+							<select class="form-control" name="idPersona2" id="idPersona2">
+								@foreach($listaPersonas as $persona)
+									<option value="{{$persona->idPersona}}"
+										@if($conversacion->persona2->idPersona == $persona->idPersona){
+											selected
+											}
+										@endif>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">

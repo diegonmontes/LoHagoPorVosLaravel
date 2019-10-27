@@ -31,7 +31,9 @@ class ConversacionChatController extends Controller
      */
     public function create()
     {
-        return view('conversacionchat.create'); //Vista para crear el elemento nuevo
+        $listaTrabajos = Trabajo::all();
+        $listaPersonas = Persona::all();
+        return view('conversacionchat.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -69,7 +71,9 @@ class ConversacionChatController extends Controller
     public function edit($id)
     {
         $conversacion=ConversacionChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('conversacionchat.edit',compact('conversacion'));
+        $listaPersonas = Persona::all();
+        $listaTrabajos = Trabajo::all();
+        return view('conversacionchat.edit',compact('conversacion'),['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]);
     }
 
 

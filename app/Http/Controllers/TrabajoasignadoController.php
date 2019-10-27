@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Trabajoasignado;
+use App\Persona;
+use App\Trabajo;
+
 
 class TrabajoasignadoController extends Controller
 {
@@ -25,7 +28,9 @@ class TrabajoasignadoController extends Controller
      */
     public function create()
     {
-        return view('trabajoasignado.create'); //Vista para crear el elemento nuevo
+        $listaPersonas = Persona::all();
+        $listaTrabajos = Trabajo::all();
+        return view('trabajoasignado.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -62,8 +67,10 @@ class TrabajoasignadoController extends Controller
      */
     public function edit($id)
     {
+        $listaPersonas = Persona::all();
+        $listaTrabajos = Trabajo::all();
         $trabajoAsignado=Trabajoasignado::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('trabajoasignado.edit',compact('trabajoAsignado'));
+        return view('trabajoasignado.edit',compact('trabajoAsignado'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
 
 

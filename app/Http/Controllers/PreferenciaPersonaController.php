@@ -29,7 +29,9 @@ class PreferenciaPersonaController extends Controller
      */
     public function create()
     {
-        return view('preferenciapersona.create'); //Vista para crear el elemento nuevo
+        $listaPersonas=Persona::all();
+        $listaCategorias=CategoriaTrabajo::all();
+        return view('preferenciapersona.create',['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -65,8 +67,10 @@ class PreferenciaPersonaController extends Controller
      */
     public function edit($id)
     {
+        $listaPersonas=Persona::all();
+        $listaCategorias=CategoriaTrabajo::all();
         $preferenciaPersona=PreferenciaPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('preferenciapersona.edit',compact('preferenciaPersona'));
+        return view('preferenciapersona.edit',compact('preferenciaPersona'),['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]);
     }
 
     /**

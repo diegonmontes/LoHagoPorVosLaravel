@@ -32,7 +32,9 @@ class TrabajoaspiranteController extends Controller
      */
     public function create()
     {
-        return view('trabajoaspirante.create'); //Vista para crear el elemento nuevo
+        $listaPersonas = Persona::all();
+        $listaTrabajos = Trabajo::all();
+        return view('trabajoaspirante.create',['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -62,8 +64,10 @@ class TrabajoaspiranteController extends Controller
      */
     public function edit($id)
     {
+        $listaPersonas = Persona::all();
+        $listaTrabajos = Trabajo::all();
         $trabajoaspirante=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('trabajoaspirante.edit',compact('trabajoaspirante'));
+        return view('trabajoaspirante.edit',compact('trabajoaspirante'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
 
 

@@ -12,6 +12,7 @@
                     </td>
                 </tr>
                     <tr>
+                        <th>Id Preferencia Persona </th>
                         <th>Persona</th>
                         <th>Categoria Trabajo</th>
                         <th colspan="1">Editar</th>
@@ -22,6 +23,7 @@
             @if($preferenciasPersona->count())
                 @foreach($preferenciasPersona as $preferenciaPersona)
                     <tr>
+                        <td>{{$preferenciaPersona->idPreferenciaPersona}}
                         <td>{{$preferenciaPersona->persona->idPersona." - ".$preferenciaPersona->persona->nombrePersona." ".$preferenciaPersona->persona->apellidoPersona}}</td>
                         <td>{{$preferenciaPersona->categoriaTrabajo->idCategoriaTrabajo." - ".$preferenciaPersona->categoriaTrabajo->nombreCategoriaTrabajo}}</td>
                         <td><a class="btn btn-primary btn-sm" href="{{action('PreferenciaPersonaController@edit', $preferenciaPersona->idPreferenciaPersona)}}" ><i class="fas fa-edit"></i></a></td>

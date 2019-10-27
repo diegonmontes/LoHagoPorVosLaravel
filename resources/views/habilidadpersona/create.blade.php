@@ -28,16 +28,23 @@
 						<form method="POST" action="{{ route('habilidadpersona.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>id Habilidad:</label>
-										<input type="text" name="idHabilidad" id="idHabilidad" class="form-control input-sm">
-									</div>
-								</div>
+							<label for="idHabilidad">Habilidad:</label>
+								<select class="form-control" name="idHabilidad" id="idHabilidad">
+									@foreach($listaHabilidades as $habilidad)
+										<option value="{{$habilidad->idHabilidad}}">
+										{{$habilidad->idHabilidad." - ".$habilidad->nombreHabilidad}}</option>
+									@endforeach
+								</select>		
+							</div>
+
 							<div class="row">
-								<div class="form-group">
-									<label>Id Persona:</label>
-									<input type="text" name="idPersona" id="idPersona" class="form-control input-sm">
-								</div>
+								<label for="idPersona">Persona:</label>
+								<select class="form-control" name="idPersona" id="idPersona">
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
 							</div>
 							<br>
 							<div class="row">

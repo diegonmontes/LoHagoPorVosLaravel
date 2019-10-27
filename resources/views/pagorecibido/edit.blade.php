@@ -29,11 +29,20 @@
 					<form method="POST" action="{{ route('pagorecibido.update',$pagoRecibido->idPagoRecibido) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
+						
 						<div class="row">
-							<div class="form-group">
-								<label>Trabajo:</label><br>
-								<input type="text" name="idTrabajo" id="idTrabajo" class="form-control input-sm" value="{{$pagoRecibido->trabajo->idTrabajo}}">
-							</div>
+							<label for="idTrabajo">Trabajo:</label>
+							<select class="form-control" name="idTrabajo" id="idTrabajo">
+								@foreach($listaTrabajos as $trabajo)
+									<option value="{{$trabajo->idTrabajo}}"
+										@if($pagoRecibido->trabajo->idTrabajo == $trabajo->idTrabajo){
+											selected
+											}
+										@endif>
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">

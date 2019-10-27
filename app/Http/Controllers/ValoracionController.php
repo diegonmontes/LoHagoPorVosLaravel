@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Valoracion;
+use App\Trabajo;
+use App\Persona;
+
+
 class ValoracionController extends Controller
 {
     //
@@ -25,7 +29,9 @@ class ValoracionController extends Controller
      */
     public function create()
     {
-        return view('valoracion.create'); //Vista para crear el elemento nuevo
+        $listaTrabajos=Trabajo::all();
+        $listaPersonas=Persona::all();
+        return view('valoracion.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -64,8 +70,10 @@ class ValoracionController extends Controller
      */
     public function edit($id)
     {
+        $listaTrabajos=Trabajo::all();
+        $listaPersonas=Persona::all();
         $valoracion=Valoracion::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('valoracion.edit',compact('valoracion'));
+        return view('valoracion.edit',compact('valoracion'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
 
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pagorecibido;
-
+use App\Trabajo;
 
 class PagorecibidoController extends Controller
 {
@@ -27,7 +27,8 @@ class PagorecibidoController extends Controller
      */
     public function create()
     {
-        return view('pagorecibido.create'); //Vista para crear el elemento nuevo
+        $listaTrabajos=Trabajo::all();
+        return view('pagorecibido.create',['listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
     /**
@@ -52,8 +53,8 @@ class PagorecibidoController extends Controller
      */
     public function show($id)
     {
-        $pagorecibidos=Pagorecibido::find($id); //Buscamos el elemento para mostrarlo
-        return  view('pagorecibido.show',compact('pagorecibidos'));
+        $pagorecibido=Pagorecibido::find($id); //Buscamos el elemento para mostrarlo
+        return  view('pagorecibido.show',compact('pagorecibido'));
     }
 
     /**
@@ -64,8 +65,9 @@ class PagorecibidoController extends Controller
      */
     public function edit($id)
     {
+        $listaTrabajos=Trabajo::all();
         $pagoRecibido=Pagorecibido::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        return view('pagorecibido.edit',compact('pagoRecibido'));
+        return view('pagorecibido.edit',compact('pagoRecibido'),['listaTrabajos'=>$listaTrabajos]);
     }
 
 

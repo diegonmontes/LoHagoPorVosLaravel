@@ -29,18 +29,38 @@
 					<form method="POST" action="{{ route('habilidadpersona.update',$habilidadPersona->idHabilidadPersona) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
+						
 						<div class="row">
-							<div class="form-group">
-								<label>Id Habilidad:</label><br>
-								<input type="text" name="idHabilidad" id="idHabilidad" class="form-control input-sm" value="{{$habilidadPersona->idHabilidad}}">
-							</div>
+							<label for="idHabilidad">Habilidad:</label>
+							<select class="form-control" name="idHabilidad" id="idHabilidad">
+								@foreach($listaHabilidades as $habilidad)
+									<option value="{{$habilidad->idHabilidad}}"
+										@if($habilidadPersona->habilidad->idHabilidad == $habilidad->idHabilidad){
+											selected
+											}
+										@endif>
+										{{$habilidad->idHabilidad." - ".$habilidad->nombreHabilidad}}
+									</option>
+								@endforeach
+							</select>
 						</div>
+
 						<div class="row">
-							<div class="form-group">
-								<label>Id Persona:</label><br>
-								<input type="text" name="idPersona" id="idPersona" class="form-control input-sm" value="{{$habilidadPersona->idPersona}}">
-							</div>
+							<label for="idPersona">Persona:</label>
+							<select class="form-control" name="idPersona" id="idPersona">
+								@foreach($listaPersonas as $persona)
+									<option value="{{$persona->idPersona}}"
+										@if($habilidadPersona->persona->idPersona == $persona->idPersona){
+											selected
+											}
+										@endif>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}
+									</option>
+								@endforeach
+							</select>
 						</div>
+
+
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
 							<a href="{{ route('habilidadpersona.index') }}" class="btn btn-info btn-block" >Atrás</a>

@@ -30,17 +30,34 @@
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
-							<div class="form-group">
-								<label>Persona:</label><br>
-								<input type="text" name="idPersona" id="idPersona" class="form-control input-sm" value="{{$preferenciaPersona->persona->idPersona}}">
-							</div>
+							<label for="idPersona">Persona:</label>
+							<select class="form-control" name="idPersona" id="idPersona">
+								@foreach($listaPersonas as $persona)
+									<option value="{{$persona->idPersona}}"
+										@if($preferenciaPersona->persona->idPersona == $persona->idPersona){
+											selected
+											}
+										@endif>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 						<div class="row">
-							<div class="form-group">
-								<label>Categoria</label><br>
-								<input type="text" name="idCategoriaTrabajo" id="idCategoriaTrabajo" class="form-control input-sm" value="{{$preferenciaPersona->categoriaTrabajo->idCategoriaTrabajo}}">
-							</div>
+							<label for="idCategoriaTrabajo">Categoria Trabajo:</label>
+							<select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
+								@foreach($listaCategorias as $categoria)
+									<option value="{{$categoria->idCategoriaTrabajo}}"
+										@if($preferenciaPersona->categoriaTrabajo->idCategoriaTrabajo == $categoria->idCategoriaTrabajo){
+											selected
+											}
+										@endif>
+										{{$categoria->idCategoriaTrabajo." - ".$categoria->nombreCategoriaTrabajo}}
+									</option>
+								@endforeach
+							</select>
 						</div>
+						<br/>
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
 							<a href="{{ route('preferenciapersona.index') }}" class="btn btn-info btn-block" >Atrás</a>
