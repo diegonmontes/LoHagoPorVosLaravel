@@ -49,11 +49,23 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $mensajesErrores =[
+            'nombreUsuario.max' => 'Limite de caracteres sobrepasado.',
+            'nombreUsuario.required' => 'El nombre de usuario es obligatorio.',
+            'mailUsuario.unique' => 'El mail ya se encuentra registrado.',
+            'mailUsuario.email' => 'Ingrese un mail valido.',
+            'mailUsuario.required' => 'El mail es obligatorio.',
+            'mailUsuario.max' => 'Limite de caracteres sobrepasado.',
+            'claveUsuario.min' => 'La contraseña debe contener como minimo 8 caracteres.',
+            'claveUsuario.required' => 'La contraseña es obligatoria',
+            'claveUsuario.confirmed' => 'Las contraseñas no coinciden.'
+        ] ;
         return Validator::make($data, [
             'nombreUsuario' => ['required', 'string', 'max:255'],
             'mailUsuario' => ['required', 'string', 'email', 'max:255', 'unique:usuario'],
             'claveUsuario' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ],$mensajesErrores);
+        
     }
 
     /**
@@ -64,16 +76,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+       
+        
         $usuario =  User::create([
             'nombreUsuario' => $data['nombreUsuario'],
             'mailUsuario' => $data['mailUsuario'],
             'claveUsuario' => bcrypt($data['claveUsuario']),
             'auth_key' => str_random(150),
-            'idRol' => 2,
+            'idRol' => 2
         ]);
 
         $mail = new EmailController;
         $mail->validarmail($usuario);
         return $usuario;
+    
     }
 }

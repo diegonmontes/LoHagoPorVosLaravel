@@ -129,16 +129,16 @@ class TrabajoController extends Controller
         if ($validoDescripcion && $validoTitulo && $validoImagen){
             $mensajesErrores =[             
                 'titulo.required' => 'El titulo es obligatorio.',
-                'titulo.max' => 'Maximo de palabras sobrepasado.',
-                'descripcion.required' => 'La descripcion es obligatorio.',
-                'descripcion.max' => 'Maximo de palabras sobrepasado.',
+                'titulo.max' => 'Maximo de letras sobrepasado.',
+                'descripcion.required' => 'La descripcion es obligatoria.',
+                'descripcion.max' => 'Maximo de letras sobrepasado.',
                 'monto.required' => 'El monto es obligatorio.',
                 'monto.numeric' => 'Solamente se puede ingresar numeros.',
                 'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio'
             ] ;
 
             //Validaciones del trabajo
-            $this->validate($request,[ 'titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
+            $this->validate($request,[ 'titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required|date','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
             $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
                 if ($usandoFlutter){
@@ -147,9 +147,8 @@ class TrabajoController extends Controller
                     return response()->json([
                         'url' => route('inicio'),
                         'success'   => true,
-                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        'message'   => 'Los datos se han guardado correctamente.' 
                         ], 200);
-                    //return redirect()->route('inicio')->with('success','Registro creado satisfactoriamente');
                 }
             } else {
                 $respuesta = ['success'=>false];
@@ -159,11 +158,22 @@ class TrabajoController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
+                $errores = array();
+                if (!($validoTitulo)){
+                    $errores["titulo"] = [0 => "Titulo con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoDescripcion)){
+                    $errores["descripcion"] = [0=>"Descripcion con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoImagen)){
+                    $errores["imagen"] = [0=>"Imagen con contenido indebido. Por favor cambielo."];
+                }
                 return response()->json([
                     'success'   => false,
-                    'errors'   => ['valido' => [0 => $errores ]] //Se recibe en la seccion "success", data.message
+                    'errors'   =>  $errores[0] 
                     ], 422);
-                //return redirect()->route('trabajo.index')->with('success',$errores);
             }
         }
 

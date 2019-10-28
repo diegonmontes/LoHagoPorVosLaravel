@@ -83,10 +83,12 @@ class PersonaController extends Controller
             'idLocalidad.required' => 'La localidad es obligatoria.',
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
-
+            'dniPersona.min' => 'Ingrese un DNI valido.',
+            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
+            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
 
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -191,11 +193,23 @@ class PersonaController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
+
+                $errores = array();
+                if (!($validoNombre)){
+                    $errores["nombrePersona"] = [0 => "Nombre con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoApellido)){
+                    $errores["apellidoPersona"] = [0 => "Apellido con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoImagen)){
+                    $errores["imagenPersona"] = [0 => "Imagen con contenido indebido. Por favor cambielo."];
+                }
                 return response()->json([
                     'success'   => false,
-                    'errors'   => ['valido' => [0 => $errores ]] 
+                    'errors'   => $errores[0] 
                     ], 422);
-                //return redirect()->route('persona.create')->with('success',$errores);
             }
         }
         return response()->json($respuesta);
@@ -267,16 +281,19 @@ class PersonaController extends Controller
             'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.',
             'nombrePersona.required' => 'El nombre es obligatorio.',
             'apellidoPersona.required' => 'El apellido es obligatorio.',
-            'nombrePersona.max' => 'Sobrepasado el limite maximo de palabras.',
-            'apellidoPersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'nombrePersona.max' => 'Sobrepasado el limite maximo de letas.',
+            'apellidoPersona.max' => 'Sobrepasado el limite maximo de letras.',
             'dniPersona.required' => 'El dni es obligatorio.',
             'telefonoPersona.required' => 'El telefono es obligatorio.',
             'idLocalidad.required' => 'La localidad es obligatoria.',
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
+            'dniPersona.min' => 'Ingrese un DNI valido.',
+            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
+            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required','apellidoPersona'=>'required','dniPersona'=>'required','telefonoPersona'=>'required','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
         
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -367,7 +384,7 @@ class PersonaController extends Controller
                     return response()->json([
                         'url' => route('inicio'),
                         'success'   => true,
-                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        'message'   => 'Los datos se han guardado correctamente.'
                         ], 200);
                 }
             } else {
@@ -378,29 +395,26 @@ class PersonaController extends Controller
             if ($usandoFlutter){
                 $respuesta = ['success'=>false, 'error'=>$errores];
             } else {
+                $errores = array();
+                if (!($validoNombre)){
+                    $errores["nombrePersona"] = [0 => "Nombre con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoApellido)){
+                    $errores["apellidoPersona"] = [0 => "Apellido con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoImagen)){
+                    $errores["imagenPersona"] = [0 => "Imagen con contenido indebido. Por favor cambielo."];
+                }
+
                 return response()->json([
                     'success'   => false,
-                    'errors'   => ['valido' => [0 => $errores ]] //Se recibe en la seccion "success", data.message
+                    'errors'   =>  $errores
                     ], 422);
             }
         }
      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         $idPersona = $request['idPersona'];
         Persona::find($idPersona)->update($request->all());
         $file = $request['archivo'];
@@ -408,7 +422,11 @@ class PersonaController extends Controller
             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             Storage::disk('local')->put('fotoperfil'.$idPersona, $file);
         }
-        return redirect()->route('inicio')->with('success','Registro actualizado satisfactoriamente');
+        return response()->json([
+                        'url' => route('inicio'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.'
+                        ], 200);
 
     }
 

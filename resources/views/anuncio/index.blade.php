@@ -19,11 +19,6 @@
                             </div>
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <span id="msgvalido" class="text-danger"></span>
-                                    </div>
-                                </div>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
@@ -37,12 +32,14 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <label>INGRESE UNA IMAGEN(opcional)</label>
                                             <div class="drag-drop-imagenTrabajo imagenTrabajo">
-                                                <input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
+                                                <input class="inputImagenTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenTrabajo" />
                                                 <output id="thumbnil" class="preview-imagenTrabajo">
                                                         <img class="preview-imagenTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
 
                                                 </output>
                                             </div>
+                                            <span id="msgimagen" class="text-danger">{{ $errors->first('imagen') }}</span>
+
                                         </div>
                                     </div>
                                     <div class="row">
@@ -56,9 +53,9 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 ">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 inputSelect">
                                             <label for="idCategoriaTrabajo">CATEGORIA*</label>
-                                            <select class="form-control inputSelect" name="idCategoriaTrabajo" id="idCategoriaTrabajo" required>
+                                            <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo" required>
                                                 <option value="" disabled selected>Seleccione una categoria</option>
                                                 @foreach($listaCategoriaTrabajo as $unaCategoria)
                                                 <option value="{{$unaCategoria->idCategoriaTrabajo}}">
@@ -74,13 +71,13 @@
                                             <div class="form-group">
                                                 <label>MONTO*</label>
                                                 <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+" required>
-                                                <span id="msgMonto" class="text-danger">{{ $errors->first('monto') }}</span>
+                                                <span id="msgmonto" class="text-danger">{{ $errors->first('monto') }}</span>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
                                                 <label>ESPERAR POSTULANTES HASTA*</label>
-                                                <input type="text"  id="datepicker"  class="form-control inputBordes" placeholder="¿Hasta cuando se pueden postular?" required>
+                                                <input type="text"  id="datepicker"  class="form-control inputBordes" style="background-color: #fff;" placeholder="¿Hasta cuando se pueden postular?" readonly required>
                                                 <input type="text" id="datepickerAlt" name="tiempoExpiracion" class="datepicker-picker" >
                                                 <span id="msgtiempoExpiracion" class="text-danger">{{ $errors->first('tiempoExpiracion') }}</span>
                                             </div>
@@ -89,9 +86,9 @@
 
                                                                     
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-6">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
                                             <label for="idProvincia">PROVINCIA*</label>
-                                            <select class="form-control inputSelect" name="idProvincia" id="idProvincia" >
+                                            <select class="form-control" name="idProvincia" id="idProvincia" >
                                                 @foreach ($provincias as $unaProvincia)
                                                     <option value="{{$unaProvincia->idProvincia}}">
                                                         {{$unaProvincia->nombreProvincia}}</option>
@@ -99,7 +96,7 @@
                                             </select>
                                             <span id="msgProvincia" class="text-danger">{{ $errors->first('idProvincia') }}</span>
                                         </div>
-                                        <div class="col-xs-12 col-sm-12 col-md-6">
+                                        <div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
                                             <label for="idLocalidad" class="control-label">LOCALIDAD*</label>
                                             <select name="idLocalidad" id="idLocalidad" class="form-control inputSelect">
                                                 <option value="">Seleccione una opcion</option>
@@ -119,12 +116,106 @@
                 </form>
             </div>
         </div>
+        
+        <!-- Modal -->
+		<div id="loadingAnuncio" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title tituloModal" id="exampleModalLabel">
+                            
+                        </h5>
+                    </div>
+                    <div class="content align-content-center align-self-center" id="cargando">
+
+                    </div>
+                    <div class="content" id="mensaje">
+
+                    </div>
+                    <div class="modal-footer botonCerrar">
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <script type="text/javascript">
-        
+        //Funciones que controla el ingreso del titulo
+        $('#titulo').on('keyup',function(){
+            controlTitulo();
+        })
+
+        $('#titulo').on('click',function(){
+            controlTitulo();
+        })
+
+        function controlTitulo(){
+            var titulo = $("#titulo").val();
+            if(titulo.length>255){
+                $('#msgtitulo').empty();
+                $('#msgtitulo').append('Maximo de letras sobrepasado.')
+            }else if(titulo.length == 0){
+                $('#msgtitulo').empty();
+                $('#msgtitulo').append('El titulo es obligatorio.')
+            }else{
+                $('#msgtitulo').empty();
+            }
+        }
+
+        //Funciones que controla el ingreso de la Descripcion
+        $('#descripcion').on('keyup',function(){
+            controlDescripcion();
+        })
+
+        $('#descripcion').on('click',function(){
+            controlDescripcion();
+        })
+
+        function controlDescripcion(){
+            var descripcion = $("#descripcion").val();
+            if(descripcion.length>511){
+                $('#msgdescripcion').empty();
+                $('#msgdescripcion').append('Maximo de letras sobrepasado.')
+            }else if(descripcion.length == 0){
+                $('#msgdescripcion').empty();
+                $('#msgdescripcion').append('La descripcion es obligatoria.')
+            }else{
+                $('#msgdescripcion').empty();
+            }
+        }
+
+        //Funciones que controla el ingreso del monto
+        $('#monto').on('keyup',function(){
+            controlMonto();
+        })
+
+        $('#monto').on('click',function(){
+            controlMonto();
+        })
+
+        function controlMonto(){
+            var monto = $("#monto").val();
+            var patron = /^[0-9]+$/;
+            if (!patron.test(monto)){
+                $('#msgmonto').empty();
+                $('#msgmonto').append('Solamente se puede ingresar numeros.')
+            }else if(monto.length == 0){
+                $('#msgmonto').empty();
+                $('#msgmonto').append('El monto es obligatorio.')
+            }else{
+                $('#msgmonto').empty();
+            }
+        }
+
+        //Funcion que controla el mensaje de imagen
+        $('#files').on('change',function(){
+            $('#msgimagen').empty();
+        })
+
         $(document).ready(function (e){
             $("#formCrearAnuncio").on('submit',(function(e){
                 e.preventDefault();
+                //Seteamos las variables ingresadas
                 var titulo = $("#titulo").val();
                 var descripcion = $("#descripcion").val();
                 var idCategoriaTrabajo = $("#idCategoriaTrabajo").val(); 
@@ -145,15 +236,52 @@
                     contentType: false,
                     cache: false,
                     processData: false,
+                    beforeSend: function() {
+                        //Quitamos el boton cerrar
+                        $('.botonCerrar').empty();
+                        //Quitamos el mensaje
+                        $('#mensaje').empty();
+                        //Quitamos el titulo y agregamos uno nuevo
+                        $('.tituloModal').empty();
+                        $('.tituloModal').append('Cargando datos ...')
+                        //Agregamos el icono de carga
+                        $('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
+                        //Abrimos el modal
+						$('#loadingAnuncio').modal('show');
+					},
                     success: function(data){
-                        alert(data.message);
-                        window.location = data.url;
+                        //Quitamos el boton cerrar
+                        $('.botonCerrar').empty();
+                        //Quitamos el icono de carga
+                        $('#cargando').empty();
+                        //Quitamos el titulo y agregamos uno nuevo
+						$('.tituloModal').empty();
+						$('.tituloModal').append('<p>Anuncio creado exitosamente.<p>');
+                        //Quitamos el mensaje y agremaos uno nuevo
+                        $('#mensaje').empty();
+						$('#mensaje').append('<br><h5 style="margin-left: 3%">La pagina se redireccionara en 3 segundos...</h5><br>');
+                        //Dejamos el modal abierto 3 segundos
+						setTimeout(function(){
+							$('#loadingAnuncio').modal('hide');
+							window.location = data.url
+						},3000);
                     },
                     error: function(msg){
+                        //Quitamos el titulo y agregamos uno nuevo
+                        $('.tituloModal').empty();
+						$('.tituloModal').append('Error al crear el anuncio');
+                        //Quitamso el icono de carga
+                        $('#cargando').empty();
+                        //Agregamos un mensaje
+                        $('#mensaje').append('<br><h5 style="margin-left: 3%">Por favor revise todos los campos del formulario.</h5><br>');
+                        //Agregamos el boton cerrar
+                        $('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+                        //Mostramos el mensaje de error
                         var errors = $.parseJSON(msg.responseText);
                         $.each(errors.errors, function (key, val) {
                             $("#msg" + key).text(val[0]);
                         });
+                       
                     }                      
                 });
             }));
