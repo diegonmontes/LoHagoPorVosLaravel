@@ -16,7 +16,7 @@ class Trabajo extends Model
     }
 
     public function Persona() {
-        return $this->belongTo('App\Persona', 'idPersona', 'idPersona');
+        return $this->hasOne('App\Persona', 'idPersona', 'idPersona');
     }
 
     public function Localidad() {

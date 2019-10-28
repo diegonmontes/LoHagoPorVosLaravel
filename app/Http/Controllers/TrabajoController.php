@@ -10,6 +10,7 @@ use App\Persona;
 use App\TrabajoAspirante;
 use App\Pagorecibido;
 use App\Http\Controllers\MercadoPagoController;
+use App\Http\Controllers\PagorecibidoController;
 use App\Localidad;
 use App\Provincia;
 use Illuminate\Support\Facades\File;
@@ -191,20 +192,23 @@ class TrabajoController extends Controller
     * Buscamos el anuncio segun el id y lo mostramos en ver el anuncio
     */
     public function veranuncio($idTrabajo){
-        //Buscamos el trabajo por el id para mistrar
+        //Buscamos el trabajo por el id para mostrar
         $trabajo =  Trabajo::find($idTrabajo);
         $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
         $persona = Persona::where('idUsuario','=',$idUsuario)->get();
         $idPersona=$persona[0]->idPersona;
         // Verificamos si ya se postulo a este trabajo. Si se postulo,no mostramos el mensaje de postularse nuevamente
         $busquedaPostulacion = Trabajoaspirante::where('idPersona','=',$idPersona)->where('idTrabajo','=',$idTrabajo)->get();
-        $busquedaPago = Pagorecibido::where('idTrabajo','=',$idTrabajo)->get();
+        $pagoRecibidoController = new PagorecibidoController();
+        $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
+        $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
         
-        if (count($busquedaPostulacion)>0){ // Sigifnica que ya se postulo anteriormente
+        if (count($busquedaPostulacion)>0 || $idPersona==$trabajo->persona->idPersona){ // Significa que ya se postulo anteriormente o es su propio anuncio
             $tienePostulacion = true;
         } else { // No se postulo
             $tienePostulacion = false;
         }
+        
 
         if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
             $pagado = true;
