@@ -10,6 +10,11 @@
                                     {{Session::get('error')}}
                                 </div>
                                 @endif
+                                @if(Session::has('success'))
+                                <div class="alert alert-info col-md-3" style="position: absolute;z-index: 2;top: 30px;">
+                                    {{Session::get('success')}}
+                                </div>
+                            @endif
                         </div>
             <div class="col-md-4">
                 <form class="form-signin" method="POST" action="{{ route('login') }}">
@@ -56,22 +61,24 @@
                                 
 
                             
-                            <div class="row justify-content-center align-items-center">
-                                
+                            <div class="col-xs-12 col-sm-12 col-md-12">
                                 <button class=" btn btn-light btn-block redondearInput botonIngresar" type="submit">
                                     {{ __('INGRESAR') }}
                                 </button>
-                                <br>
-                                @if (Route::has('register'))
-                                    <a class="btn btn-link enlacesLogin" href="{{ route('register') }}">{{ __('REGISTRARME') }}</a>
-                                @endif
-                                <span class="enlacesLogin">|</span>
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link enlacesLogin" href="{{ route('password.request') }}">
-                                        {{ __('OLVIDE MI CONTRASEÑA') }}
-                                    </a>
-                                @endif
                             </div>
+                                <div class="row justify-content-center align-items-center">
+
+                                    @if (Route::has('register'))
+                                        <a class="btn btn-link enlacesLogin" href="{{ route('register') }}">{{ __('REGISTRARME') }}</a>
+                                    @endif
+                                    <span class="enlacesLogin">|</span>
+                                    @if (Route::has('password.request'))
+                                        <a class="btn btn-link enlacesLogin" href="{{ route('password.request') }}">
+                                            {{ __('OLVIDE MI CONTRASEÑA') }}
+                                        </a>
+                                    @endif
+
+                                </div>
                         </div>
                     </div>
                 </form>

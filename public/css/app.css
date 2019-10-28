@@ -16529,18 +16529,11 @@ readers do not read off random characters that represent icons */
   color: #FFFFFF;
 }
 
-/* Estilo del área del input[file] */
-.drag-drop{
-  height: 8em;
-  width: 8em;
-  border-radius: 4em;
-  text-align: center;
-  color: white;
-  position: relative;
-  margin: 0 auto 1em;
-  background-color: #FFFFFF;
-  
-}
+/*
+* Imgagen en anuncio
+* Estilo del área del input[file] 
+*/
+
 
 .imagenTrabajo{
   opacity: 1 !important;
@@ -16550,14 +16543,14 @@ readers do not read off random characters that represent icons */
   appearance:none;
 }
 
-.drag-drop span.desc{
+.drag-drop-imagenTrabajo span.desc{
   display: block;
   font-size: .7em;
   padding: 0 .5em;
   color: #000;
 }
 
-input[type="file"]{
+.inputImagenTrabajo input[type="file"]{
       height: 10em;
       opacity: 0;
       position: absolute;
@@ -16567,69 +16560,117 @@ input[type="file"]{
       z-index: 3;
 }
 
-.preview{
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%; 
-  z-index: 4;
- 
-}
+/* Estilo del área del input[file] con :hover Trabajo */
 
-.preview{
-  display: block;
-  font-size: .7em;
-}
-
-.preview{
-  border-radius: 50%;
-  text-align: center;
-  color: white;
-}
-
-output .preview-imagenPersona, input[name='imagenPersona']{
-  width: 150% !important;
-  margin: auto;
-  border-radius: 50%;
-  border: 1px #ced4da solid;
-}
-
-/* input[name='imagenPersona']{
-  width: 35% !important;
-  border-radius: 50% !important;
-  border: 1px black solid !important;
-} */
-
-.drag-drop-imagenPersona{
-  height: 8em;
-  width: 8em;
-  border-radius: 4em;
-  text-align: center;
-  color: white;
-  position: relative;
-  margin: 0 auto 1em;
-  background-color: #FFFFFF;
-  
-}
-
-/* Estilo del área del input[file] con :hover */
-
-.drag-drop:hover, input[type="file"]:hover {
+.drag-drop-inputImagenTrabajo:hover, .inputImagenTrabajo input[type="file"]:hover {
   background-color: #3276b1;
   cursor: pointer;
 
 }
 
-.drag-drop:hover span.desc {
+.drag-drop-inputImagenTrabajo:hover span.desc {
   color: #fff;
 } 
 
-.drag-drop:hover .pulsating {
+.drag-drop-inputImagenTrabajo:hover .pulsating {
   animation: pulse1 1s linear infinite;
   animation-direction: alternate ;
   -webkit-animation: pulse1 1s linear infinite;
   -webkit-animation-direction: alternate ;
 }
+
+
+/*
+* Imgagen de perfil
+* Estilo del área del input[file] 
+*/
+.inputImagenPersona input[type="file"]{
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+  margin-left: 2%;
+}
+
+.inputImagenPersona{
+  border: 1px #ced4da solid;
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+}
+
+.preview-imagenPersona .preview-imagenTrabajo{
+  border: none;
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+}
+
+.preview-imagenPersona .preview-imagenPersona{
+  border: none;
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+}
+
+/* Estilo del área del input[file] con :hover Perfil */
+
+.drag-drop-imagenPersona:hover, .inputImagenPersona input[type="file"]:hover {
+  background-color: #3276b1;
+  cursor: pointer;
+  border: none;
+}
+
+.drag-drop-imagenPersona:hover span.desc {
+  color: #fff;
+  border: none;
+} 
+
+.drag-drop-imagenPersona:hover .pulsating {
+  animation: pulse1 1s linear infinite;
+  animation-direction: alternate ;
+  -webkit-animation: pulse1 1s linear infinite;
+  -webkit-animation-direction: alternate ;
+  border: none;
+}
+
+@media (max-width: 576px) { 
+  .margenImagenPerfil{
+    margin-left: 8%;
+  }
+ }
+
+@media (min-width: 576px) { 
+  .margenImagenPerfil{
+    margin-left: 3%;
+  }
+ }
+
+@media (min-width: 768px) { 
+  .margenImagenPerfil{
+    margin-left: 27%;
+  }
+ }
+
+@media (min-width: 992px) { 
+  .margenImagenPerfil{
+    margin-left: 33%;
+  }
+ }
+
+@media (min-width: 1200px) { 
+  .margenImagenPerfil{
+    margin-left: 33%;
+  }
+ }
+
+/*
+Date picker
+*/
 
 .datepicker {
   position: relative;
@@ -16643,12 +16684,10 @@ output .preview-imagenPersona, input[name='imagenPersona']{
 /*
 * Select personalizado
 */
-select{
-  width: 268px;
+.inputSelect select{
   padding: 5px;
   font-size: 16px;
   line-height: 1;
-  border: 0;
   border-radius: 5px;
   height: 34px;
   background: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgZGF0YS1uYW1lPSJMYXllciAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0Ljk1IDEwIj48ZGVmcz48c3R5bGU+LmNscy0xe2ZpbGw6I2ZmZjt9LmNscy0ye2ZpbGw6IzQ0NDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPmFycm93czwvdGl0bGU+PHJlY3QgY2xhc3M9ImNscy0xIiB3aWR0aD0iNC45NSIgaGVpZ2h0PSIxMCIvPjxwb2x5Z29uIGNsYXNzPSJjbHMtMiIgcG9pbnRzPSIxLjQxIDQuNjcgMi40OCAzLjE4IDMuNTQgNC42NyAxLjQxIDQuNjciLz48cG9seWdvbiBjbGFzcz0iY2xzLTIiIHBvaW50cz0iMy41NCA1LjMzIDIuNDggNi44MiAxLjQxIDUuMzMgMy41NCA1LjMzIi8+PC9zdmc+) no-repeat;
@@ -16656,7 +16695,7 @@ select{
   background-position-x: 100%;
 }
 
-select {
+.inputSelect select {
   -moz-appearance:none; /* Firefox */
   -webkit-appearance:none; /* Safari and Chrome */
   appearance:none;
@@ -16670,7 +16709,9 @@ select {
   margin-top: 1%
 }
 
-
+/*
+* Spinner de carga
+*/
 .lds-ring {
   display: inline-block;
   position: relative;

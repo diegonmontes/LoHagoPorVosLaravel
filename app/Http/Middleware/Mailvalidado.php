@@ -20,7 +20,7 @@ class Mailvalidado
             $mailValidado = Auth::user()->email_verified_at;
             if($mailValidado == null){
                 Auth::logout();
-                return redirect('login')->with('success','Revise su correo para validar su mail');
+                return redirect('login')->with('success','Revise su correo para validar su mail.');
             }
         }
         return $next($request);
