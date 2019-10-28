@@ -28,8 +28,12 @@ class TrabajoasignadoController extends Controller
      */
     public function create()
     {
-        $listaPersonas = Persona::all();
-        $listaTrabajos = Trabajo::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('trabajoasignado.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
@@ -67,8 +71,12 @@ class TrabajoasignadoController extends Controller
      */
     public function edit($id)
     {
-        $listaPersonas = Persona::all();
-        $listaTrabajos = Trabajo::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $trabajoAsignado=Trabajoasignado::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('trabajoasignado.edit',compact('trabajoAsignado'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
@@ -100,5 +108,29 @@ class TrabajoasignadoController extends Controller
     {
         Trabajoasignado::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajoasignado.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Permite buscar todas las asignaciones a un trabajo
+    public function buscar($param){      
+        $query = Trabajoasignado::OrderBy('idTrabajoAsignado','ASC'); // Ordenamos las asignaciones por este medio
+
+            if (isset($param['idTrabajoAsignado'])){
+                $query->where("trabajoasignado.idTrabajoAsignado",$param['idTrabajoAsignado']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("trabajoasignado.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("trabajoasignado.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("trabajoasignado.eliminado",$param['eliminado']);
+            }
+
+            $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaTrabajoAsignado;
     }
 }

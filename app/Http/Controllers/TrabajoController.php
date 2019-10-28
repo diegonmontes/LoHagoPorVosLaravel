@@ -29,8 +29,12 @@ class TrabajoController extends Controller
         /**
          * Show the form for creating a new resource.
          */
-        $listaCategoriaTrabajo=CategoriaTrabajo::all();
-        $listaProvincias=Provincia::all();  
+        $arregloBuscarCategorias=null;
+        $arregloBuscarProvincias=null;
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $provinciaController = new ProvinciaController();
+        $listaCategoriaTrabajo=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaProvincias=$provinciaController->buscar($arregloBuscarProvincias);
         return view('anuncio.index',['provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
     }
 
@@ -241,6 +245,66 @@ class TrabajoController extends Controller
     public function buscarTrabajoParam(Request $request){
         $trabajo= Trabajo::where('idTrabajo','=',$request->idTrabajo)->get();
         return json_encode($trabajo);
+    }
+
+    // Esta funcion busca los trabajos con parametros que le enviemos
+    public function buscar($param){      
+        $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
+
+            if (isset($param['idTrabajo'])){
+                $query->where("trabajo.idTrabajo",$param['idTrabajo']);
+            }
+            
+            if (isset($param['idEstado'])){
+                $query->where("trabajo.idEstado",$param['idEstado']);
+            }
+
+            if (isset($param['idCategoriaTrabajo'])){
+                $query->where("trabajo.idCategoriaTrabajo",$param['idCategoriaTrabajo']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("trabajo.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['idLocalidad'])){
+                $query->where("trabajo.idLocalidad",$param['idLocalidad']);
+            }
+
+            if (isset($param['titulo'])){
+                $query->where("trabajo.titulo",$param['titulo']);
+            }
+
+            if (isset($param['descripcion'])){
+                $query->where("trabajo.descripcion",$param['descripcion']);
+            }
+
+            if (isset($param['monto'])){
+                $query->where("trabajo.monto",$param['monto']);
+            }
+
+            if (isset($param['imagenTrabajo'])){
+                $query->where("trabajo.imagenTrabajo",$param['imagenTrabajo']);
+            }
+
+            if (isset($param['tiempoExpiracion'])){
+                $query->where("trabajo.tiempoExpiracion",$param['tiempoExpiracion']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("trabajo.eliminado",$param['eliminado']);
+            }
+
+
+    //        foreach ($param as $key => $value) { // Hacemos un foreach de todo lo que recibimos en el param
+    //            $query->where("trabajo.".$key,$value);
+    //        }
+    //        if (isset($param['idCategoriaTrabajo'])){
+    //            $query->join('categoriatrabajo', 'categoriatrabajo.idCategoriaTrabajo', '=', 'trabajo.idCategoriaTrabajo');
+    //        }
+
+            $listaTrabajos= $query->get();   // Hacemos el get y seteamos en lista
+            return $listaTrabajos;
     }
 }
 

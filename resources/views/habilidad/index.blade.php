@@ -25,7 +25,7 @@
                     <tr>
                         <td>{{$habilidad->nombreHabilidad}}</td>
                         <td>{{$habilidad->descripcionHabilidad}}</td>
-                        <td>{{$habilidad->imagenHabilidad}}</td>
+                        <td><img src="storage/trabajos/{{$habilidad->imagenHabilidad}}"width="100px;" height=></td>
                         
                         <td><a class="btn btn-primary btn-sm" href="{{action('HabilidadController@edit', $habilidad->idHabilidad)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>

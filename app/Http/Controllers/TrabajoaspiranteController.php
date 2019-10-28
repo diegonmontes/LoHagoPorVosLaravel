@@ -32,8 +32,12 @@ class TrabajoaspiranteController extends Controller
      */
     public function create()
     {
-        $listaPersonas = Persona::all();
-        $listaTrabajos = Trabajo::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('trabajoaspirante.create',['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
@@ -64,8 +68,12 @@ class TrabajoaspiranteController extends Controller
      */
     public function edit($id)
     {
-        $listaPersonas = Persona::all();
-        $listaTrabajos = Trabajo::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $trabajoaspirante=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('trabajoaspirante.edit',compact('trabajoaspirante'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
@@ -97,5 +105,29 @@ class TrabajoaspiranteController extends Controller
     {
         Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajoaspirante.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Permite buscar todas las postulaciones a un trabajo
+    public function buscar($param){      
+        $query = Trabajoaspirante::OrderBy('idTrabajoAspirante','ASC'); // Ordenamos las postulaciones por este medio
+
+            if (isset($param['idTrabajoAspirante'])){
+                $query->where("trabajoaspirante.idTrabajoAspirante",$param['idTrabajoAspirante']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("trabajoaspirante.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("trabajoaspirante.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("trabajoaspirante.eliminado",$param['eliminado']);
+            }
+
+            $listaTrabajoAspirantes=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaTrabajoAspirantes;
     }
 }

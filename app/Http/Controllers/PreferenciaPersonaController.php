@@ -29,8 +29,12 @@ class PreferenciaPersonaController extends Controller
      */
     public function create()
     {
-        $listaPersonas=Persona::all();
-        $listaCategorias=CategoriaTrabajo::all();
+        $arregloBuscarCategorias=null;
+        $arregloBuscarPersonas=null;
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $personaController = new PersonaController();
+        $listaCategorias=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('preferenciapersona.create',['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]); //Vista para crear el elemento nuevo
     }
 
@@ -67,8 +71,12 @@ class PreferenciaPersonaController extends Controller
      */
     public function edit($id)
     {
-        $listaPersonas=Persona::all();
-        $listaCategorias=CategoriaTrabajo::all();
+        $arregloBuscarCategorias=null;
+        $arregloBuscarPersonas=null;
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $personaController = new PersonaController();
+        $listaCategorias=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $preferenciaPersona=PreferenciaPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('preferenciapersona.edit',compact('preferenciaPersona'),['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]);
     }
@@ -98,5 +106,29 @@ class PreferenciaPersonaController extends Controller
     {
         PreferenciaPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('preferenciapersona.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Permite buscar todas las preferencias
+    public function buscar($param){      
+        $query = PreferenciaPersona::OrderBy('idMensajeChat','ASC'); // Ordenamos las preferencias por este medio
+
+            if (isset($param['idPreferenciaPersona'])){
+                $query->where("preferenciapersona.idPreferenciaPersona",$param['idPreferenciaPersona']);
+            }
+
+            if (isset($param['idCategoriaTrabajo'])){
+                $query->where("preferenciapersona.idCategoriaTrabajo",$param['idCategoriaTrabajo']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("preferenciapersona.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("preferenciapersona.eliminado",$param['eliminado']);
+            }
+
+            $listaPreferenciaPersona=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaPreferenciaPersona;
     }
 }

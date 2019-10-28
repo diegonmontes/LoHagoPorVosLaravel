@@ -98,4 +98,33 @@ class HabilidadController extends Controller
         $listaHabilidades = $objHabilidad->get();
         return json_encode($listaHabilidades);
     }
+
+    // Esta funcion busca todas las habilidades con parametros que le enviemos
+    public function buscar($param){      
+        $query = Habilidad::OrderBy('idHabilidad','ASC'); // Ordenamos las habilidades por este medio
+
+            if (isset($param['nombreHabilidad'])){
+                $query->where("habilidad.nombreHabilidad",$param['nombreHabilidad']);
+            }
+
+            if (isset($param['descripcionHabilidad'])){
+                $query->where("habilidad.descripcionHabilidad",$param['descripcionHabilidad']);
+            }
+
+            if (isset($param['imagenHabilidad'])){
+                $query->where("habilidad.imagenHabilidad",$param['imagenHabilidad']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("habilidad.eliminado",$param['eliminado']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("habilidad.eliminado",$param['eliminado']);
+            }
+
+            $listaHabilidades= $query->get();   // Hacemos el get y seteamos en lista
+            return $listaHabilidades;
+    }
+
 }

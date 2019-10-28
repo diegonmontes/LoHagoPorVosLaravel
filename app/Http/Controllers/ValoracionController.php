@@ -29,8 +29,12 @@ class ValoracionController extends Controller
      */
     public function create()
     {
-        $listaTrabajos=Trabajo::all();
-        $listaPersonas=Persona::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('valoracion.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
@@ -70,8 +74,12 @@ class ValoracionController extends Controller
      */
     public function edit($id)
     {
-        $listaTrabajos=Trabajo::all();
-        $listaPersonas=Persona::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $valoracion=Valoracion::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('valoracion.edit',compact('valoracion'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
@@ -105,4 +113,33 @@ class ValoracionController extends Controller
         Valoracion::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('valoracion.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    // Permite buscar todas las valoraciones de un trabajo
+    public function buscar($param){      
+        $query = Valoracion::OrderBy('idValoracion','ASC'); // Ordenamos las valoraciones por este medio
+
+            if (isset($param['idValoracion'])){
+                $query->where("valoracion.idValoracion",$param['idValoracion']);
+            }
+
+            if (isset($param['valor'])){
+                $query->where("valoracion.valor",$param['valor']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("valoracion.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("valoracion.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("valoracion.eliminado",$param['eliminado']);
+            }
+
+            $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaTrabajoAsignado;
+    }
+
 }

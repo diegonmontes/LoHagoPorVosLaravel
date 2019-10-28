@@ -31,8 +31,12 @@ class ConversacionChatController extends Controller
      */
     public function create()
     {
-        $listaTrabajos = Trabajo::all();
-        $listaPersonas = Persona::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('conversacionchat.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
@@ -71,8 +75,12 @@ class ConversacionChatController extends Controller
     public function edit($id)
     {
         $conversacion=ConversacionChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        $listaPersonas = Persona::all();
-        $listaTrabajos = Trabajo::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarPersonas=null;
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('conversacionchat.edit',compact('conversacion'),['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]);
     }
 
@@ -103,6 +111,34 @@ class ConversacionChatController extends Controller
     {
         ConversacionChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('conversacionchat.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Esta funcion busca todas las conversaciones con parametros que le enviemos
+    public function buscar($param){      
+        $query = ConversacionChat::OrderBy('idConversacionChat','ASC'); // Ordenamos las conversaciones por este medio
+
+            if (isset($param['idConversacionChat'])){
+                $query->where("conversacionchat.idConversacionChat",$param['idConversacionChat']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("conversacionchat.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idPersona1'])){
+                $query->where("conversacionchat.idPersona1",$param['idPersona1']);
+            }
+
+            if (isset($param['idPersona2'])){
+                $query->where("conversacionchat.idPersona2",$param['idPersona2']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("conversacionchat.eliminado",$param['eliminado']);
+            }
+
+            $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaConversacionChat;
     }
 
 }

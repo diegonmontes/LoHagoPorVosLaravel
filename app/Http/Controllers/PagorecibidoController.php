@@ -27,7 +27,9 @@ class PagorecibidoController extends Controller
      */
     public function create()
     {
-        $listaTrabajos=Trabajo::all();
+        $trabajoController = new TrabajoController();
+        $arregloBuscarTrabajos = null;
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         return view('pagorecibido.create',['listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
@@ -65,7 +67,9 @@ class PagorecibidoController extends Controller
      */
     public function edit($id)
     {
-        $listaTrabajos=Trabajo::all();
+        $trabajoController = new TrabajoController();
+        $arregloBuscarTrabajos = null;
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $pagoRecibido=Pagorecibido::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('pagorecibido.edit',compact('pagoRecibido'),['listaTrabajos'=>$listaTrabajos]);
     }
@@ -97,5 +101,49 @@ class PagorecibidoController extends Controller
     {
         Pagorecibido::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('pagorecibido.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Esta funcion busca todas los pagos recibidos con parametros que le enviemos
+    public function buscar($param){      
+        $query = Pagorecibido::OrderBy('idPagoRecibido','ASC'); // Ordenamos los pagos por este medio
+
+            if (isset($param['idPagoRecibido'])){
+                $query->where("pagorecibido.idPagoRecibido",$param['idPagoRecibido']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("pagorecibido.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idPago'])){
+                $query->where("pagorecibido.idPago",$param['idPago']);
+            }
+
+            if (isset($param['monto'])){
+                $query->where("pagorecibido.monto",$param['monto']);
+            }
+
+            if (isset($param['metodo'])){
+                $query->where("pagorecibido.metodo",$param['metodo']);
+            }
+
+            if (isset($param['tarjeta'])){
+                $query->where("pagorecibido.tarjeta",$param['tarjeta']);
+            }
+
+            if (isset($param['fechapago'])){
+                $query->where("pagorecibido.fechapago",$param['fechapago']);
+            }
+
+            if (isset($param['fechaaprobado'])){
+                $query->where("pagorecibido.fechaaprobado",$param['fechaaprobado']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("pagorecibido.eliminado",$param['eliminado']);
+            }
+
+            $listaPagos= $query->get();   // Hacemos el get y seteamos en lista
+            return $listaPagos;
     }
 }

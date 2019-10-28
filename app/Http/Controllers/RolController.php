@@ -96,4 +96,28 @@ class RolController extends Controller
         Rol::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('rol.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    // Esta funcion busca todos los roles con parametros que le enviemos
+   public function buscar($param){      
+        $query = Rol::OrderBy('idRol','ASC'); // Ordenamos los roles por este medio
+
+        if (isset($param['idRol'])){
+            $query->where("rol.idRol",$param['idRol']);
+        }
+
+        if (isset($param['nombreRol'])){
+            $query->where("rol.nombreRol",$param['nombreRol']);
+        }
+
+        if (isset($param['descripcionRol'])){
+            $query->where("rol.descripcionRol",$param['descripcionRol']);
+        }
+
+        if (isset($param['eliminado'])){
+            $query->where("rol.eliminado",$param['eliminado']);
+        }
+
+        $listaRoles= $query->get();   // Hacemos el get y seteamos en lista
+        return $listaRoles;
+}
 }

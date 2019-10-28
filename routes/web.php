@@ -12,9 +12,13 @@
 */
 
 use App\Trabajo;
+use App\Http\Controllers\TrabajoController;
+
 
 Route::get('/', function () {
-    $listaTrabajos = Trabajo::all();
+    $param=['idEstado'=>1,'eliminado'=>0];
+    $trabajoController = new TrabajoController();
+    $listaTrabajos =$trabajoController->buscar($param);
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 })->name('inicio');
 

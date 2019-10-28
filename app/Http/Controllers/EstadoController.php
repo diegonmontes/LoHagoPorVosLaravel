@@ -100,4 +100,30 @@ class EstadoController extends Controller
        Estado::find($id)->delete(); 
        return redirect()->route('estado.index')->with('success','Registro eliminado satisfactoriamente');
    }
+
+   // Esta funcion busca todas los estados con parametros que le enviemos
+   public function buscar($param){      
+        $query = Estado::OrderBy('idEstado','ASC'); // Ordenamos los estados por este medio
+
+        if (isset($param['idEstado'])){
+            $query->where("estado.idEstado",$param['idEstado']);
+        }
+
+        if (isset($param['nombreEstado'])){
+            $query->where("estado.nombreEstado",$param['nombreEstado']);
+        }
+
+        if (isset($param['descripcionEstado'])){
+            $query->where("estado.descripcionEstado",$param['descripcionEstado']);
+        }
+
+        if (isset($param['eliminado'])){
+            $query->where("estado.eliminado",$param['eliminado']);
+        }
+
+        $listaEstados= $query->get();   // Hacemos el get y seteamos en lista
+        return $listaEstados;
+    }
+
+
 }

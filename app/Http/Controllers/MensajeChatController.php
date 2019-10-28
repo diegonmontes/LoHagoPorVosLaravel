@@ -32,8 +32,12 @@ class MensajeChatController extends Controller
      */
     public function create()
     {
-        $listaConversaciones=ConversacionChat::all();
-        $listaPersonas=Persona::all();
+        $arregloBuscarConversaciones=null;
+        $arregloBuscarPersonas=null;
+        $conversacionChatController = new ConversacionChatController();
+        $personaController = new PersonaController();
+        $listaConversaciones=$conversacionChatController->buscar($arregloBuscarConversaciones);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('mensajechat.create',['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]); //Vista para crear el elemento nuevo
     }
 
@@ -71,8 +75,12 @@ class MensajeChatController extends Controller
      */
     public function edit($id)
     {
-        $listaConversaciones=ConversacionChat::all();
-        $listaPersonas=Persona::all();
+        $arregloBuscarConversaciones=null;
+        $arregloBuscarPersonas=null;
+        $conversacionChatController = new ConversacionChatController();
+        $personaController = new PersonaController();
+        $listaConversaciones=$conversacionChatController->buscar($arregloBuscarConversaciones);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $mensaje=MensajeChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('mensajechat.edit',compact('mensaje'),['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]);
     }
@@ -104,6 +112,34 @@ class MensajeChatController extends Controller
     {
         MensajeChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('mensajechat.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Permite buscar todas los mensajes
+    public function buscar($param){      
+        $query = MensajeChat::OrderBy('idMensajeChat','ASC'); // Ordenamos los mensajes este medio
+
+            if (isset($param['idMensajeChat'])){
+                $query->where("mensajechat.idMensajeChat",$param['idMensajeChat']);
+            }
+
+            if (isset($param['idConversacionChat'])){
+                $query->where("mensajechat.idConversacionChat",$param['idConversacionChat']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("mensajechat.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['mensaje'])){
+                $query->where("mensajechat.mensaje",$param['mensaje']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("mensajechat.eliminado",$param['eliminado']);
+            }
+
+            $listaMensajeChat=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaMensajeChat;
     }
 
 }

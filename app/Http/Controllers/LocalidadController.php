@@ -121,4 +121,28 @@ class LocalidadController extends Controller
         $listaLocalidades = $objLocalidad->where('idProvincia','=',$idProvincia)->get();
         return json_encode($listaLocalidades);
     }
+
+    // Esta funcion busca todas las localidades con parametros que le enviemos
+    public function buscarNuevo($param){      
+        $query = Localidad::OrderBy('idLocalidad','ASC'); // Ordenamos las localidades por este medio
+
+            if (isset($param['idLocalidad'])){
+                $query->where("localidad.idLocalidad",$param['idLocalidad']);
+            }
+
+            if (isset($param['nombreLocalidad'])){
+                $query->where("localidad.nombreLocalidad",$param['nombreLocalidad']);
+            }
+
+            if (isset($param['idProvincia'])){
+                $query->where("localidad.idProvincia",$param['idProvincia']);
+            }
+
+            if (isset($param['codigoPostal'])){
+                $query->where("localidad.codigoPostal",$param['codigoPostal']);
+            }
+
+            $listaLocalidades= $query->get();   // Hacemos el get y seteamos en lista
+            return $listaLocalidades;
+    }
 }

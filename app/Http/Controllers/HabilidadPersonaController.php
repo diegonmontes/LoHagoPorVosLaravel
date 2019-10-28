@@ -29,8 +29,12 @@ class HabilidadPersonaController extends Controller
      */
     public function create()
     {
-        $listaPersonas = Persona::all();
-        $listaHabilidades = Habilidad::all();
+        $arregloBuscarHabilidades=null;
+        $arregloBuscarPersonas=null;
+        $habilidadController = new HabilidadController();
+        $personaController = new PersonaController();
+        $listaHabilidades=$habilidadController->buscar($arregloBuscarHabilidades);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         return view('habilidadpersona.create',['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]); //Vista para crear el elemento nuevo
 
     }
@@ -68,8 +72,12 @@ class HabilidadPersonaController extends Controller
      */
     public function edit($id)
     {
-        $listaPersonas = Persona::all();
-        $listaHabilidades = Habilidad::all();
+        $arregloBuscarHabilidades=null;
+        $arregloBuscarPersonas=null;
+        $habilidadController = new HabilidadController();
+        $personaController = new PersonaController();
+        $listaHabilidades=$habilidadController->buscar($arregloBuscarHabilidades);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
         $habilidadPersona=HabilidadPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('habilidadpersona.edit',compact('habilidadPersona'),['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]);
     }
@@ -99,4 +107,30 @@ class HabilidadPersonaController extends Controller
         HabilidadPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('habilidadpersona.index')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    // Permite buscar todas las habilidades de las personas
+    public function buscar($param){      
+        $query = HabilidadPersona::OrderBy('idHabilidadPersona','ASC'); // Ordenamos las habilidades de las personas por este medio
+
+            if (isset($param['idHabilidadPersona'])){
+                $query->where("habilidadpersona.idHabilidadPersona",$param['idHabilidadPersona']);
+            }
+
+            if (isset($param['idHabilidad'])){
+                $query->where("habilidadpersona.idHabilidad",$param['idHabilidad']);
+            }
+
+            if (isset($param['idPersona'])){
+                $query->where("habilidadpersona.idPersona",$param['idPersona']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("habilidadpersona.eliminado",$param['eliminado']);
+            }
+
+            $listaHabilidadPersona=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaHabilidadPersona;
+    }
+
+
 }

@@ -27,8 +27,12 @@ class EstadotrabajoController extends Controller
      */
     public function create()
     {
-        $listaTrabajos = Trabajo::all();
-        $listaEstados = Estado::all();
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarEstados=null;
+        $trabajoController = new TrabajoController();
+        $estadoController = new EstadoController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaEstados=$estadoController->buscar($arregloBuscarEstados);
         return view('estadotrabajo.create',['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]); //Vista para crear el elemento nuevo
     }
 
@@ -66,8 +70,12 @@ class EstadotrabajoController extends Controller
      */
     public function edit($id)
     {
-        $listaTrabajos = Trabajo::all();
-        $listaEstados = Estado::all();   
+        $arregloBuscarTrabajos=null;
+        $arregloBuscarEstados=null;
+        $trabajoController = new TrabajoController();
+        $estadoController = new EstadoController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaEstados=$estadoController->buscar($arregloBuscarEstados);  
         $estadoTrabajo=Estadotrabajo::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('estadotrabajo.edit',compact('estadoTrabajo'),['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]);
     }
@@ -98,5 +106,29 @@ class EstadotrabajoController extends Controller
     {
         Estadotrabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('estadotrabajo.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    // Esta funcion busca todas los estados del trabajo con parametros que le enviemos
+    public function buscar($param){      
+        $query = EstadoTrabajo::OrderBy('idEstadoTrabajo','ASC'); // Ordenamos los estados del trabajo por este medio
+
+            if (isset($param['idEstadoTrabajo'])){
+                $query->where("estadotrabajo.idEstadoTrabajo",$param['idEstadoTrabajo']);
+            }
+
+            if (isset($param['idTrabajo'])){
+                $query->where("estadotrabajo.idTrabajo",$param['idTrabajo']);
+            }
+
+            if (isset($param['idEstado'])){
+                $query->where("estadotrabajo.idEstado",$param['idEstado']);
+            }
+
+            if (isset($param['eliminado'])){
+                $query->where("estadotrabajo.eliminado",$param['eliminado']);
+            }
+
+            $listaEstadoTrabajo=$query->get();   // Hacemos el get y seteamos en lista
+            return $listaEstadoTrabajo;
     }
 }
