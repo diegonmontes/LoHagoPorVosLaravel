@@ -118,7 +118,7 @@
         </div>
         
         <!-- Modal -->
-		<div id="loading" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div id="loadingAnuncio" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -247,7 +247,7 @@
                         //Agregamos el icono de carga
                         $('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
                         //Abrimos el modal
-						$('#loading').modal('show');
+						$('#loadingAnuncio').modal('show');
 					},
                     success: function(data){
                         //Quitamos el boton cerrar
@@ -262,7 +262,7 @@
 						$('#mensaje').append('<br><h5 style="margin-left: 3%">La pagina se redireccionara en 3 segundos...</h5><br>');
                         //Dejamos el modal abierto 3 segundos
 						setTimeout(function(){
-							$('#loading').modal('hide');
+							$('#loadingAnuncio').modal('hide');
 							window.location = data.url
 						},3000);
                     },
