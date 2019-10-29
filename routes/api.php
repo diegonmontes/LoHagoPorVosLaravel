@@ -42,6 +42,7 @@ Route::post('actualizarPerfil', 'PersonaController@actualizarPerfil');
 Route::post('storeTrabajo','TrabajoController@store');
 Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
+Route::post('historialTrabajos','TrabajoController@buscar');
 
 /** APIs de Categoria trabajo */
 Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
@@ -58,3 +59,10 @@ Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
 Route::get('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('datosMP', 'MercadoPagoController@crearPago');
+
+
+/** CHAT */
+Route::get('listarMensajes','MensajeChatController@buscarMensajes');
+
+/** POSTULACIONES */
+Route::post('postularme','TrabajoaspiranteController@store');

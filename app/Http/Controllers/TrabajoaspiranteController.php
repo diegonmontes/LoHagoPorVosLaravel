@@ -38,6 +38,7 @@ class TrabajoaspiranteController extends Controller
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+
         return view('trabajoaspirante.create',['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
@@ -57,6 +58,12 @@ class TrabajoaspiranteController extends Controller
             $success = true;
             Trabajoaspirante::create($request->all()); //Creamos el elemento nuevo
         } 
+        if(isset($request['flutter'])&& $success){
+            return $respuesta = ['success'=>true];
+        }elseif(isset($request['flutter']) && !$success){
+            return $respuesta = ['success'=>false,
+            'error'=>'Ha ocurrido un error'];
+        }
         return view('trabajoaspirante.show',compact('success'));
     }
 
