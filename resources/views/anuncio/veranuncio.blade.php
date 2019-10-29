@@ -48,7 +48,8 @@
         </div>
     </div>
 </div>
-
+@include('comentario.list', ['comentarios' => $trabajo->Comentarios])            
+@include('comentario.form')
 {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">
         <div class="carousel-inner">
             @php $cant = 0 @endphp

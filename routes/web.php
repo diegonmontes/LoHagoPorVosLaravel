@@ -72,7 +72,8 @@ Route::prefix('usuario')->group(function(){
 
 Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
-Route::get('veranuncio/{id}', 'TrabajoController@veranuncio')->name('veranuncio');
+Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
+Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
 
 Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 

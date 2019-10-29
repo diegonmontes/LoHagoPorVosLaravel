@@ -50,7 +50,10 @@ class Trabajo extends Model
     }
     
 
-
+    public function Comentarios() 
+    {
+        return $this->hasMany('App\Comentario', 'idTrabajo')->whereNull('idComentarioPadre');
+    }
 
 
     
