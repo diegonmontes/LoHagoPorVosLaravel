@@ -110,7 +110,8 @@ class UserController extends Controller
         $idUsuario = auth::user()->idUsuario;
 //        $persona = Persona::where('idUsuario','=',$request['idUsuario'])->get();
         $personaController = new PersonaController();
-        $persona = $personaController->buscar($idUsuario);
+        $usuario=['idUsuario'=>$idUsuario];
+        $persona = $personaController->buscar($usuario);
       //  echo $user['email_verified_at'];
         if ($user['email_verified_at']!=null){
             $mailValidado=true;
@@ -123,7 +124,7 @@ class UserController extends Controller
                 'success' => true,
                 'token' => Str::random(60),
                 'user' => $user,
-                'idPersona'=>$persona['idPersona'],
+                'idPersona'=>$persona[0]['idPersona'],
             ]);
         } else {
             return response()->json([

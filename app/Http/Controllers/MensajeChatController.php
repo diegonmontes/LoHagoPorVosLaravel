@@ -113,6 +113,11 @@ class MensajeChatController extends Controller
         MensajeChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('mensajechat.index')->with('success','Registro eliminado satisfactoriamente');
     }
+    public function buscarMensajes(){
+        $objMensaje= new MensajeChat();
+        $listaMensajes = $objMensaje->get();
+        return json_encode($listaMensajes);
+    }
 
     // Permite buscar todas los mensajes
     public function buscar($param){      

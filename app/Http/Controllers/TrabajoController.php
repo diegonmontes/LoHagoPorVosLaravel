@@ -252,7 +252,8 @@ class TrabajoController extends Controller
     }
 
     // Esta funcion busca los trabajos con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){     
+        //print_r($param); 
         $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
 
             if (isset($param['idTrabajo'])){
@@ -308,7 +309,11 @@ class TrabajoController extends Controller
     //        }
 
             $listaTrabajos= $query->get();   // Hacemos el get y seteamos en lista
-            return $listaTrabajos;
+            if(isset($param['flutter'])){
+                return json_encode($listaTrabajos);
+            }else{
+                return $listaTrabajos;
+            }
     }
 }
 
