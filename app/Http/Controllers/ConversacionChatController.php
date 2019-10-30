@@ -125,7 +125,7 @@ class ConversacionChatController extends Controller
     // Esta funcion busca todas las conversaciones con parametros que le enviemos
     public function buscar(Request $param){      
         $query = ConversacionChat::OrderBy('idConversacionChat','ASC'); // Ordenamos las conversaciones por este medio
-
+           
             if (isset($param->idConversacionChat)){
                 $query->where("conversacionchat.idConversacionChat",$param->idConversacionChat);
             }
@@ -147,7 +147,7 @@ class ConversacionChatController extends Controller
             }
 
             $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaConversacionChat;
+            return json_encode($listaConversacionChat);
     }
 
 }

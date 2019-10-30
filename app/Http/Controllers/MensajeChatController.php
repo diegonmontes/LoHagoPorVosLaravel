@@ -32,12 +32,16 @@ class MensajeChatController extends Controller
      */
     public function create()
     {
-        $arregloBuscarConversaciones=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarConversaciones=['eliminado'=>0];
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarConversaciones = new Request($arregloBuscarConversaciones);
+        $arregloBuscarPersonas=new Request($arregloBuscarPersonas);
         $conversacionChatController = new ConversacionChatController();
         $personaController = new PersonaController();
         $listaConversaciones=$conversacionChatController->buscar($arregloBuscarConversaciones);
+        $listaConversaciones = json_decode($listaConversaciones);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
         return view('mensajechat.create',['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]); //Vista para crear el elemento nuevo
     }
 
@@ -75,12 +79,16 @@ class MensajeChatController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarConversaciones=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarConversaciones=['eliminado'=>0];
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarConversaciones = new Request($arregloBuscarConversaciones);
+        $arregloBuscarPersonas=new Request($arregloBuscarPersonas);
         $conversacionChatController = new ConversacionChatController();
         $personaController = new PersonaController();
         $listaConversaciones=$conversacionChatController->buscar($arregloBuscarConversaciones);
+        $listaConversaciones = json_decode($listaConversaciones);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
         $mensaje=MensajeChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('mensajechat.edit',compact('mensaje'),['listaPersonas'=>$listaPersonas,'listaConversaciones'=>$listaConversaciones]);
     }

@@ -27,12 +27,17 @@ class EstadotrabajoController extends Controller
      */
     public function create()
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarEstados=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarEstados=['eliminado'=>0];
+        $arregloBuscarEstados = new Request($arregloBuscarEstados);
         $trabajoController = new TrabajoController();
         $estadoController = new EstadoController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaTrabajos = json_decode($listaTrabajos);
         $listaEstados=$estadoController->buscar($arregloBuscarEstados);
+        $listaEstados = json_decode($listaEstados);
+
         return view('estadotrabajo.create',['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]); //Vista para crear el elemento nuevo
     }
 
@@ -70,12 +75,16 @@ class EstadotrabajoController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarEstados=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarEstados=['eliminado'=>0];
+        $arregloBuscarEstados = new Request($arregloBuscarEstados);
         $trabajoController = new TrabajoController();
         $estadoController = new EstadoController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
-        $listaEstados=$estadoController->buscar($arregloBuscarEstados);  
+        $listaTrabajos = json_decode($listaTrabajos);
+        $listaEstados=$estadoController->buscar($arregloBuscarEstados);
+        $listaEstados = json_decode($listaEstados);
         $estadoTrabajo=Estadotrabajo::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('estadotrabajo.edit',compact('estadoTrabajo'),['listaTrabajos'=>$listaTrabajos,'listaEstados'=>$listaEstados]);
     }

@@ -25,7 +25,7 @@
 						<h3>Nuevo Mensaje</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('mensajechat.store') }}"  role="form">
+						<form method="POST" id="formMensajeChat" name="formMensajeChat" action="{{ route('mensajechat.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<label for="idConversacionChat">Conversacion:</label>
@@ -67,6 +67,42 @@
 
 			</div>
 		</div>
+		<script>
+		
+			$("#formMensajeChat").validate({
+					rules: {
+						idConversacion: {
+							required: true,
+							digits: true,
+						},
+						mensaje: {
+							required: true,
+							minlength: 1,
+							maxlength: 511,
+						},
+						idPersona:{
+							required:true,
+							digits: true,
+						}
+					},
+					messages: {
+						idConversacion: {
+							required: "Por favor seleccione una conversacion",
+							digits: "La conversacion seleccionada es incorrecta",
+						},
+						mensaje: {
+							required: "Por favor ingrese un mensaje",
+							minlength: "El m&iacute;nimo de letras que debe ingresar es 1",
+							maxlength: "M&aacute;ximo de letras sobrepasado",
+						},
+						idPersona: {
+							required: "Por favor seleccione una persona",
+							digits: "La persona seleccionada es incorrecta",
+						},
+					}
+				});
+		</script>
+				
 	</section>
 	@endsection
 

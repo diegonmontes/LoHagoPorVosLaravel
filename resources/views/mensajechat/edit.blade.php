@@ -26,7 +26,7 @@
 					<h3>Editar Mensaje</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('mensajechat.update',$mensaje->idMensajeChat) }}"  role="form">
+					<form method="POST" id="formMensajeChat" name="formMensajeChat" action="{{ route('mensajechat.update',$mensaje->idMensajeChat) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						
@@ -36,7 +36,7 @@
 							<select class="form-control" name="idConversacionChat" id="idConversacionChat">
 								@foreach($listaConversaciones as $conversacion)
 									<option value="{{$conversacion->idConversacionChat}}"
-										@if($mensaje->conversacionChat->idConversacionChat == $conversacion->idConversacion){
+										@if($mensaje->conversacionChat->idConversacionChat == $conversacion->idConversacionChat){
 											selected
 											}
 										@endif>
@@ -75,5 +75,39 @@
 					</form>
 				</div>
 			</div>
+			<script>
+			$("#formMensajeChat").validate({
+					rules: {
+						idConversacion: {
+							required: true,
+							digits: true,
+						},
+						mensaje: {
+							required: true,
+							minlength: 1,
+							maxlength: 511,
+						},
+						idPersona:{
+							required:true,
+							digits: true,
+						}
+					},
+					messages: {
+						idConversacion: {
+							required: "Por favor seleccione una conversacion",
+							digits: "La conversacion seleccionada es incorrecta",
+						},
+						mensaje: {
+							required: "Por favor ingrese un mensaje",
+							minlength: "El m&iacute;nimo de letras que debe ingresar es 1",
+							maxlength: "M&aacute;ximo de letras sobrepasado",
+						},
+						idPersona: {
+							required: "Por favor seleccione una persona",
+							digits: "La persona seleccionada es incorrecta",
+						},
+					}
+				});
+			</script>
 	</section>
 	@endsection

@@ -29,12 +29,16 @@ class HabilidadPersonaController extends Controller
      */
     public function create()
     {
-        $arregloBuscarHabilidades=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarHabilidades=['eliminado'=>0];
+        $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas= new Request($arregloBuscarPersonas);
         $habilidadController = new HabilidadController();
         $personaController = new PersonaController();
         $listaHabilidades=$habilidadController->buscar($arregloBuscarHabilidades);
+        $listaHabilidades = json_decode($listaHabilidades);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
         return view('habilidadpersona.create',['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]); //Vista para crear el elemento nuevo
 
     }
@@ -72,12 +76,16 @@ class HabilidadPersonaController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarHabilidades=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarHabilidades=['eliminado'=>0];
+        $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas= new Request($arregloBuscarPersonas);
         $habilidadController = new HabilidadController();
         $personaController = new PersonaController();
         $listaHabilidades=$habilidadController->buscar($arregloBuscarHabilidades);
+        $listaHabilidades = json_decode($listaHabilidades);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
         $habilidadPersona=HabilidadPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('habilidadpersona.edit',compact('habilidadPersona'),['listaPersonas'=>$listaPersonas,'listaHabilidades'=>$listaHabilidades]);
     }
