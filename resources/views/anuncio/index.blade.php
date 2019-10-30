@@ -1,4 +1,12 @@
 @extends('layouts.layout')
+
+@section('jsHead')
+
+	<script src="{{asset('js/buscarLocalidades.js')}}"></script>
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+
+@endsection
+
 @section('content')
     <section class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
@@ -138,158 +146,173 @@
                 </div>
             </div>
         </div>
-
-        <script type="text/javascript">
-        //Funciones que controla el ingreso del titulo
-        $('#titulo').on('keyup',function(){
-            controlTitulo();
-        })
-
-        $('#titulo').on('click',function(){
-            controlTitulo();
-        })
-
-        function controlTitulo(){
-            var titulo = $("#titulo").val();
-            if(titulo.length>255){
-                $('#msgtitulo').empty();
-                $('#msgtitulo').append('Maximo de letras sobrepasado.')
-            }else if(titulo.length == 0){
-                $('#msgtitulo').empty();
-                $('#msgtitulo').append('El titulo es obligatorio.')
-            }else{
-                $('#msgtitulo').empty();
-            }
-        }
-
-        //Funciones que controla el ingreso de la Descripcion
-        $('#descripcion').on('keyup',function(){
-            controlDescripcion();
-        })
-
-        $('#descripcion').on('click',function(){
-            controlDescripcion();
-        })
-
-        function controlDescripcion(){
-            var descripcion = $("#descripcion").val();
-            if(descripcion.length>511){
-                $('#msgdescripcion').empty();
-                $('#msgdescripcion').append('Maximo de letras sobrepasado.')
-            }else if(descripcion.length == 0){
-                $('#msgdescripcion').empty();
-                $('#msgdescripcion').append('La descripcion es obligatoria.')
-            }else{
-                $('#msgdescripcion').empty();
-            }
-        }
-
-        //Funciones que controla el ingreso del monto
-        $('#monto').on('keyup',function(){
-            controlMonto();
-        })
-
-        $('#monto').on('click',function(){
-            controlMonto();
-        })
-
-        function controlMonto(){
-            var monto = $("#monto").val();
-            var patron = /^[0-9]+$/;
-            if (!patron.test(monto)){
-                $('#msgmonto').empty();
-                $('#msgmonto').append('Solamente se puede ingresar numeros.')
-            }else if(monto.length == 0){
-                $('#msgmonto').empty();
-                $('#msgmonto').append('El monto es obligatorio.')
-            }else{
-                $('#msgmonto').empty();
-            }
-        }
-
-        //Funcion que controla el mensaje de imagen
-        $('#files').on('change',function(){
-            $('#msgimagen').empty();
-        })
-
-        $(document).ready(function (e){
-            $("#formCrearAnuncio").on('submit',(function(e){
-                e.preventDefault();
-                //Seteamos las variables ingresadas
-                var titulo = $("#titulo").val();
-                var descripcion = $("#descripcion").val();
-                var idCategoriaTrabajo = $("#idCategoriaTrabajo").val(); 
-                var monto = $("#monto").val();
-                var tiempoExpiracion = $("#datepickerAlt").val();
-                var idProvincia = $('#idProvincia').val();
-                var idLocalidad = $('#idLocalidad').val();
-                var imagenTrabajo = $('#files').val();
-                var data={titulo:titulo,descripcion:descripcion,idCategoriaTrabajo:idCategoriaTrabajo,monto:monto,tiempoExpiracion:tiempoExpiracion,idProvincia:idProvincia,idLocalidad:idLocalidad,imagenTrabajo:imagenTrabajo};
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                    },
-                    url: "{{ route('trabajo.store') }}",
-                    method: "POST",
-                    data:new FormData(this),
-                    dataType:'JSON',
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    beforeSend: function() {
-                        //Quitamos el boton cerrar
-                        $('.botonCerrar').empty();
-                        //Quitamos el mensaje
-                        $('#mensaje').empty();
-                        //Quitamos el titulo y agregamos uno nuevo
-                        $('.tituloModal').empty();
-                        $('.tituloModal').append('Cargando datos ...')
-                        //Agregamos el icono de carga
-                        $('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
-                        //Abrimos el modal
-						$('#loadingAnuncio').modal('show');
-					},
-                    success: function(data){
-                        //Quitamos el boton cerrar
-                        $('.botonCerrar').empty();
-                        //Quitamos el icono de carga
-                        $('#cargando').empty();
-                        //Quitamos el titulo y agregamos uno nuevo
-						$('.tituloModal').empty();
-						$('.tituloModal').append('<p>Anuncio creado exitosamente.<p>');
-                        //Quitamos el mensaje y agremaos uno nuevo
-                        $('#mensaje').empty();
-						$('#mensaje').append('<br><h5 style="margin-left: 3%">La pagina se redireccionara en 3 segundos...</h5><br>');
-                        //Dejamos el modal abierto 3 segundos
-						setTimeout(function(){
-							$('#loadingAnuncio').modal('hide');
-							window.location = data.url
-						},3000);
-                    },
-                    error: function(msg){
-                        //Quitamos el titulo y agregamos uno nuevo
-                        $('.tituloModal').empty();
-						$('.tituloModal').append('Error al crear el anuncio');
-                        //Quitamso el icono de carga
-                        $('#cargando').empty();
-                        //Agregamos un mensaje
-                        $('#mensaje').append('<br><h5 style="margin-left: 3%">Por favor revise todos los campos del formulario.</h5><br>');
-                        //Agregamos el boton cerrar
-                        $('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
-                        //Mostramos el mensaje de error
-                        var errors = $.parseJSON(msg.responseText);
-                        $.each(errors.errors, function (key, val) {
-                            $("#msg" + key).text(val[0]);
-                        });
-                       
-                    }                      
-                });
-            }));
-        });
-        </script>
-
-
     </section>
+@endsection
+
+@section('js')
+
+<script type="text/javascript">
+    $('#datepicker').datetimepicker({
+        altField: "#datepickerAlt",
+        altFieldTimeOnly: false,
+        altFormat: "yy-mm-dd",
+        controlType: 'select',
+        oneLine: true,
+        altTimeFormat: "H:m",
+        dateFormat: "dd/mm/yy",
+        timeFormat: "HH:mm",
+        minDate: 0
+    });   
+</script>
+
+<script type="text/javascript">
+    //Funciones que controla el ingreso del titulo
+    $('#titulo').on('keyup',function(){
+        controlTitulo();
+    })
+
+    $('#titulo').on('click',function(){
+        controlTitulo();
+    })
+
+    function controlTitulo(){
+        var titulo = $("#titulo").val();
+        if(titulo.length>255){
+            $('#msgtitulo').empty();
+            $('#msgtitulo').append('Maximo de letras sobrepasado.')
+        }else if(titulo.length == 0){
+            $('#msgtitulo').empty();
+            $('#msgtitulo').append('El titulo es obligatorio.')
+        }else{
+            $('#msgtitulo').empty();
+        }
+    }
+
+    //Funciones que controla el ingreso de la Descripcion
+    $('#descripcion').on('keyup',function(){
+        controlDescripcion();
+    })
+
+    $('#descripcion').on('click',function(){
+        controlDescripcion();
+    })
+
+    function controlDescripcion(){
+        var descripcion = $("#descripcion").val();
+        if(descripcion.length>511){
+            $('#msgdescripcion').empty();
+            $('#msgdescripcion').append('Maximo de letras sobrepasado.')
+        }else if(descripcion.length == 0){
+            $('#msgdescripcion').empty();
+            $('#msgdescripcion').append('La descripcion es obligatoria.')
+        }else{
+            $('#msgdescripcion').empty();
+        }
+    }
+
+    //Funciones que controla el ingreso del monto
+    $('#monto').on('keyup',function(){
+        controlMonto();
+    })
+
+    $('#monto').on('click',function(){
+        controlMonto();
+    })
+
+    function controlMonto(){
+        var monto = $("#monto").val();
+        var patron = /^[0-9]+$/;
+        if (!patron.test(monto)){
+            $('#msgmonto').empty();
+            $('#msgmonto').append('Solamente se puede ingresar numeros.')
+        }else if(monto.length == 0){
+            $('#msgmonto').empty();
+            $('#msgmonto').append('El monto es obligatorio.')
+        }else{
+            $('#msgmonto').empty();
+        }
+    }
+
+    //Funcion que controla el mensaje de imagen
+    $('#files').on('change',function(){
+        $('#msgimagen').empty();
+    })
+
+    $(document).ready(function (e){
+        $("#formCrearAnuncio").on('submit',(function(e){
+            e.preventDefault();
+            //Seteamos las variables ingresadas
+            var titulo = $("#titulo").val();
+            var descripcion = $("#descripcion").val();
+            var idCategoriaTrabajo = $("#idCategoriaTrabajo").val(); 
+            var monto = $("#monto").val();
+            var tiempoExpiracion = $("#datepickerAlt").val();
+            var idProvincia = $('#idProvincia').val();
+            var idLocalidad = $('#idLocalidad').val();
+            var imagenTrabajo = $('#files').val();
+            var data={titulo:titulo,descripcion:descripcion,idCategoriaTrabajo:idCategoriaTrabajo,monto:monto,tiempoExpiracion:tiempoExpiracion,idProvincia:idProvincia,idLocalidad:idLocalidad,imagenTrabajo:imagenTrabajo};
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                url: "{{ route('trabajo.store') }}",
+                method: "POST",
+                data:new FormData(this),
+                dataType:'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                beforeSend: function() {
+                    //Quitamos el boton cerrar
+                    $('.botonCerrar').empty();
+                    //Quitamos el mensaje
+                    $('#mensaje').empty();
+                    //Quitamos el titulo y agregamos uno nuevo
+                    $('.tituloModal').empty();
+                    $('.tituloModal').append('Cargando datos ...')
+                    //Agregamos el icono de carga
+                    $('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
+                    //Abrimos el modal
+                    $('#loadingAnuncio').modal('show');
+                },
+                success: function(data){
+                    //Quitamos el boton cerrar
+                    $('.botonCerrar').empty();
+                    //Quitamos el icono de carga
+                    $('#cargando').empty();
+                    //Quitamos el titulo y agregamos uno nuevo
+                    $('.tituloModal').empty();
+                    $('.tituloModal').append('<p>Anuncio creado exitosamente.<p>');
+                    //Quitamos el mensaje y agremaos uno nuevo
+                    $('#mensaje').empty();
+                    $('#mensaje').append('<br><h5 style="margin-left: 3%">La pagina se redireccionara en 3 segundos...</h5><br>');
+                    //Dejamos el modal abierto 3 segundos
+                    setTimeout(function(){
+                        $('#loadingAnuncio').modal('hide');
+                        window.location = data.url
+                    },3000);
+                },
+                error: function(msg){
+                    //Quitamos el titulo y agregamos uno nuevo
+                    $('.tituloModal').empty();
+                    $('.tituloModal').append('Error al crear el anuncio');
+                    //Quitamso el icono de carga
+                    $('#cargando').empty();
+                    //Agregamos un mensaje
+                    $('#mensaje').append('<br><h5 style="margin-left: 3%">Por favor revise todos los campos del formulario.</h5><br>');
+                    //Agregamos el boton cerrar
+                    $('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+                    //Mostramos el mensaje de error
+                    var errors = $.parseJSON(msg.responseText);
+                    $.each(errors.errors, function (key, val) {
+                        $("#msg" + key).text(val[0]);
+                    });
+                    
+                }                      
+            });
+        }));
+    });
+</script>
 @endsection
 
 

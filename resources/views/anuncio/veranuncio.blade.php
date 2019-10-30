@@ -29,14 +29,12 @@
                         # Return the HTML code for button
                         echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
                     }
-                    
-                    if (!$tienePostulacion){ // Si ya se postulo no mostramos boton postularse
                 @endphp
-                        <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
-                @php    
-                    } 
 
-                @endphp
+                {{-- Si ya se postulo no mostramos boton postularse --}}
+                @if(!$tienePostulacion) 
+                <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
+                @endif    
 
 
                 <script type="text/javascriptMP">
