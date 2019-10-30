@@ -33,14 +33,14 @@ class ConversacionChatController extends Controller
     {
         $arregloBuscarTrabajos=['eliminado'=>0];
         $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
-        $arregloBuscarPersonas=['eliminado'=>1];
+        $arregloBuscarPersonas=['eliminado'=>0];
         $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $listaTrabajos=json_decode($listaTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
-        $listaPersonasjson_decode($listaPersonas);
+        $listaPersonas=json_decode($listaPersonas);
         return view('conversacionchat.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
@@ -79,12 +79,17 @@ class ConversacionChatController extends Controller
     public function edit($id)
     {
         $conversacion=ConversacionChat::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaTrabajos=json_decode($listaTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas=json_decode($listaPersonas);
+
         return view('conversacionchat.edit',compact('conversacion'),['listaPersonas'=>$listaPersonas,'listaTrabajos'=>$listaTrabajos]);
     }
 
