@@ -26,7 +26,7 @@
 					<h3>Editar Trabajo Asignado</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('trabajoasignado.update',$trabajoAsignado->idTrabajoAsignado) }}"  role="form">
+					<form method="POST" id="formTrabajoAsignado" name="formTrabajoAsignado" action="{{ route('trabajoasignado.update',$trabajoAsignado->idTrabajoAsignado) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
@@ -66,5 +66,28 @@
 					</form>
 				</div>
 			</div>
+			<script>
+			$("#formTrabajoAsignado").validate({
+				rules: {
+					idTrabajo: {
+						required: true,
+						digits: true
+					},
+					idPersona: {
+						required: true,
+						digits: true,
+						distintasPersonas: true,
+					},
+				},
+				messages: {
+					idTrabajo: {
+						required: "Por favor ingrese el nombre del estado",
+					},
+					idPersona: {
+						required: "Por favor ingrese una persona",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection

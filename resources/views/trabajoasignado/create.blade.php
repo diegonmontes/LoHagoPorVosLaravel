@@ -25,7 +25,7 @@
 						<h3>Nuevo Trabajo Asignado</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('trabajoasignado.store') }}"  role="form">
+						<form method="POST" id="formTrabajoAsignado" name="formTrabajoAsignado" action="{{ route('trabajoasignado.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<label for="idPersona">Persona:</label>
@@ -56,6 +56,29 @@
 
 			</div>
 		</div>
+		<script>
+			$("#formTrabajoAsignado").validate({
+				rules: {
+					idTrabajo: {
+						required: true,
+						digits: true
+					},
+					idPersona: {
+						required: true,
+						digits: true,
+						distintasPersonas: true,
+					},
+				},
+				messages: {
+					idTrabajo: {
+						required: "Por favor ingrese el nombre del estado",
+					},
+					idPersona: {
+						required: "Por favor ingrese una persona",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 

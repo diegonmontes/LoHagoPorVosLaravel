@@ -28,12 +28,16 @@ class TrabajoasignadoController extends Controller
      */
     public function create()
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaTrabajos=json_decode($listaTrabajos);
+        $listaPersonas=json_decode($listaPersonas);
         return view('trabajoasignado.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 
@@ -75,12 +79,16 @@ class TrabajoasignadoController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaTrabajos=json_decode($listaTrabajos);
+        $listaPersonas=json_decode($listaPersonas);
         $trabajoAsignado=Trabajoasignado::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('trabajoasignado.edit',compact('trabajoAsignado'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
