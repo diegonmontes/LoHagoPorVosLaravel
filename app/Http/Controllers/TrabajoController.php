@@ -35,6 +35,8 @@ class TrabajoController extends Controller
         $arregloBuscarProvincias=null;
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $provinciaController = new ProvinciaController();
+        $arregloBuscarCategorias = new Request([$arregloBuscarCategorias]);
+        $arregloBuscarProvincias = new Request([$arregloBuscarProvincias]);
         $listaCategoriaTrabajo=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
         $listaProvincias=$provinciaController->buscar($arregloBuscarProvincias);
         return view('anuncio.index',['provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
