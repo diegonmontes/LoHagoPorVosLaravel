@@ -115,26 +115,42 @@ class TrabajoaspiranteController extends Controller
     }
 
     // Permite buscar todas las postulaciones a un trabajo
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Trabajoaspirante::OrderBy('idTrabajoAspirante','ASC'); // Ordenamos las postulaciones por este medio
 
-            if (isset($param['idTrabajoAspirante'])){
-                $query->where("trabajoaspirante.idTrabajoAspirante",$param['idTrabajoAspirante']);
+            if (isset($param->idTrabajoAspirante)){
+                $query->where("trabajoaspirante.idTrabajoAspirante",$param->idTrabajoAspirante);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("trabajoaspirante.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("trabajoaspirante.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idPersona'])){
-                $query->where("trabajoaspirante.idPersona",$param['idPersona']);
+            if (isset($param->idPersona)){
+                $query->where("trabajoaspirante.idPersona",$param->idPersona);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("trabajoaspirante.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("trabajoaspirante.eliminado",$param->eliminado);
             }
 
             $listaTrabajoAspirantes=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaTrabajoAspirantes;
+            return json_encode($listaTrabajoAspirantes);
+    }
+
+    public function buscarTrabajoAspirante(Request $param){
+        $query = Trabajoaspirante::OrderBy('idTrabajoAspirante','ASC'); // Ordenamos las postulaciones por este medio
+        $query->where("trabajoaspirante.idTrabajo",$param->idTrabajo);
+        $listaTrabajoAspirantes=$query->get();
+        $listaAspirantes=array();
+        $personaController= new PersonaController;
+        foreach($listaTrabajoAspirantes as $aspirante){
+            $request=['idPersona'=>$aspirante->idPersona];
+            $persona=new Request($request);
+            $unAspirante=$personaController->buscar($persona);
+            $unAspirante=\json_decode($unAspirante);
+            array_push($listaAspirantes,$unAspirante);
+        }
+        return \json_encode($listaAspirantes);   
     }
 }

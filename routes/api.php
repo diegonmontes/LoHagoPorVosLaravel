@@ -34,6 +34,7 @@ Route::post('actualizarClave', 'UserController@actualizarClave');
 Route::post('crearPerfil', 'PersonaController@store');
 Route::post('perfil', 'PersonaController@getCurrentPerfil');
 Route::post('actualizarPerfil', 'PersonaController@actualizarPerfil');
+Route::post('datosPersona', 'PersonaController@buscar');
 
 
 //API actualizar perfil y usuario */actualizarPerfil
@@ -43,6 +44,12 @@ Route::post('storeTrabajo','TrabajoController@store');
 Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
+
+/** Trabajo Aspirantes */
+Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');
+
+/** Trabajo Asignado */
+Route::post('elegirAspirante','TrabajoasignadoController@store');
 
 /** APIs de Categoria trabajo */
 Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
@@ -56,6 +63,7 @@ Route::get('listarHabilidades','HabilidadController@buscarHabilidades');
 
 /** APIs de Localidad */
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
+Route::post('datosLocalidad','LocalidadController@buscarNuevo');
 Route::get('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('datosMP', 'MercadoPagoController@crearPago');

@@ -489,47 +489,47 @@ class PersonaController extends Controller
     }
 
     // Esta funcion busca todas las personas con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Persona::OrderBy('idPersona','ASC'); // Ordenamos las personas por este medio
 
-            if (isset($param['idPersona'])){
-                $query->where("persona.idPersona",$param['idPersona']);
+            if (isset($param->idPersona)){
+                $query->where("persona.idPersona",$param->idPersona);
             }
 
-            if (isset($param['nombrePersona'])){
-                $query->where("persona.nombrePersona",$param['nombrePersona']);
+            if (isset($param->nombrePersona)){
+                $query->where("persona.nombrePersona",$param->nombrePersona);
             }
 
-            if (isset($param['apellidoPersona'])){
-                $query->where("persona.apellidoPersona",$param['apellidoPersona']);
+            if (isset($param->apellidoPersona)){
+                $query->where("persona.apellidoPersona",$param->apellidoPersona);
             }
 
-            if (isset($param['dniPersona'])){
-                $query->where("persona.dniPersona",$param['dniPersona']);
+            if (isset($param->dniPersona)){
+                $query->where("persona.dniPersona",$param->dniPersona);
             }
 
-            if (isset($param['telefonoPersona'])){
-                $query->where("persona.telefonoPersona",$param['telefonoPersona']);
+            if (isset($param->telefonoPersona)){
+                $query->where("persona.telefonoPersona",$param->telefonoPersona);
             }
 
-            if (isset($param['imagenPersona'])){
-                $query->where("persona.imagenPersona",$param['imagenPersona']);
+            if (isset($param->imagenPersona)){
+                $query->where("persona.imagenPersona",$param->imagenPersona);
             }
 
-            if (isset($param['idUsuario'])){
-                $query->where("persona.idUsuario",$param['idUsuario']);
+            if (isset($param->idUsuario)){
+                $query->where("persona.idUsuario",$param->idUsuario);
             }
 
-            if (isset($param['idLocalidad'])){
-                $query->where("persona.idLocalidad",$param['idLocalidad']);
+            if (isset($param->idLocalidad)){
+                $query->where("persona.idLocalidad",$param->idLocalidad);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("persona.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("persona.eliminado",$param->eliminado);
             }
 
             $listaPersonas= $query->get();   // Hacemos el get y seteamos en lista
-            return $listaPersonas;
+            return json_encode($listaPersonas);
     }
 
     

@@ -48,7 +48,11 @@ class TrabajoasignadoController extends Controller
     {
         $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Trabajoasignado::create($request->all()); //Creamos el elemento nuevo
+        if(isset($request->flutter)){
+            return $respuesta = ['success'=>true];
+        }else{
         return redirect()->route('trabajoasignado.index')->with('success','Registro creado satisfactoriamente');
+        }
     }
 
     /**
