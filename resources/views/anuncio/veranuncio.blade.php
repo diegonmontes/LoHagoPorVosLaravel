@@ -46,6 +46,11 @@
         </div>
     </div>
 </div>
+
+@include('anuncio.postulantes',['listaPostulantes'=>$listaPostulantes])
+
+
+
 @include('comentario.list', ['comentarios' => $trabajo->Comentarios])            
 @include('comentario.form')
 {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">

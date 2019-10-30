@@ -21,10 +21,12 @@
                         {{Auth::user()->nombreUsuario}}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/LoHagoPorVosLaravel/public/usuario/perfil"><i class="fas fa-user"></i>Mi Perfil</a>
+                        <a class="dropdown-item" href="{{route('persona.create')}}"><i class="fas fa-user"></i> Mi Perfil</a>
+                        <a class="dropdown-item" href="{{route('historial')}}"><i class="fas fa-list"></i> Mis anuncios</a>
+
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
+                                                        document.getElementById('logout-form').submit();"><i class="fas fa-power-off"></i>
                             {{ __('Cerrar sesion') }}
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
