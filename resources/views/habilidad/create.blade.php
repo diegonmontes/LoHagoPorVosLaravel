@@ -25,7 +25,7 @@
 						<h3>Nueva Habilidad</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('habilidad.store') }}"  role="form">
+						<form method="POST" id="formHabilidad" name="formHabilidad" action="{{ route('habilidad.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 									<div class="form-group">
@@ -50,6 +50,39 @@
 
 			</div>
 		</div>
+		<script>
+			jQuery.validator.addMethod("lettersonly", function(value, element) {
+				return this.optional(element) || /^[a-z]+$/i.test(value);
+				}, "Solo puede ingresar letras");
+			$("#formHabilidad").validate({
+				rules: {
+					nombreHabilidad: {
+						required: true,
+						minlength: 4,
+						maxlength: 80,
+						lettersonly: true,
+					},
+					descripcionHabilidad: {
+						required: true,
+						minlength: 4,
+						maxlength: 255,
+						lettersonly: true,
+					}
+				},
+				messages: {
+					nombreHabilidad: {
+						required: "Por favor ingrese el nombre de la habilidad",
+						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+						maxlength: "M&aacute;ximo de letras sobrepasado",
+					},
+					descripcionHabilidad: {
+						required: "Por favor ingrese una descripci&oacute;n de la habilidad",
+						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+						maxlength: "M&aacute;ximo de letras sobrepasado"
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 

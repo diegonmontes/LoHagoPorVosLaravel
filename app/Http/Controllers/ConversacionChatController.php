@@ -31,12 +31,16 @@ class ConversacionChatController extends Controller
      */
     public function create()
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>1];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaTrabajos=json_decode($listaTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonasjson_decode($listaPersonas);
         return view('conversacionchat.create',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
     }
 

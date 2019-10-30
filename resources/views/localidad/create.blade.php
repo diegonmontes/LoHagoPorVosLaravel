@@ -25,7 +25,7 @@
 					<h3>Nueva Localidad</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('localidad.store') }}"  role="form">
+					<form method="POST" id="formLocalidad" name="formLocalidad" action="{{ route('localidad.store') }}"  role="form">
 						{{ csrf_field() }}
 						<div class="row">
 							<div class="form-group">
@@ -56,6 +56,48 @@
 					</form>
 				</div>
 			</div>
+			<script>
+				jQuery.validator.addMethod("lettersonly", function(value, element) {
+					return this.optional(element) || /^[a-z]+$/i.test(value);
+					}, "Solo puede ingresar letras");
+				$("#formLocalidad").validate({
+					rules: {
+						nombreLocalidad: {
+							required: true,
+							minlength: 4,
+							maxlength: 50,
+							lettersonly: true,
+						},
+						codigoPostal: {
+							required: true,
+							minlength: 4,
+							maxlength: 255,
+							digits: true,
+						},
+						idProvincia:{
+							required:true,
+							digits: true,
+						}
+					},
+					messages: {
+						nombreLocalidad: {
+							required: "Por favor ingrese el nombre de la localidad",
+							minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+							maxlength: "M&aacute;ximo de letras sobrepasado",
+						},
+						codigoPostal: {
+							required: "Por favor ingrese el c&oacute;digo postal de la localidad",
+							minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+							maxlength: "M&aacute;ximo de letras sobrepasado",
+							number: "Solo debe ingresar n&uacute;meros",
+						},
+						idProvincia: {
+							required: "Por favor seleccione una provincia",
+							digits: "La provincia seleccionada es incorrecta",
+						},
+					}
+				});
+			</script>
 		</section>
 	</div>
 @endsection
