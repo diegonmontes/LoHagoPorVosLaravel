@@ -529,6 +529,7 @@ class PersonaController extends Controller
             }
 
             $listaPersonas= $query->get();   // Hacemos el get y seteamos en lista
+            
             return json_encode($listaPersonas);
     }
 
