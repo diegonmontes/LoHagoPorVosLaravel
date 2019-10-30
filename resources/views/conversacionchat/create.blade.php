@@ -25,7 +25,7 @@
 						<h3>Nueva Conversacion</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('conversacionchat.store') }}"  role="form">
+						<form method="POST" id="formConversacionChat" name="formConversacionChat" action="{{ route('conversacionchat.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<label for="idTrabajo">Trabajo:</label>
@@ -70,6 +70,41 @@
 
 			</div>
 		</div>
+		<script>
+			$.validator.addMethod("distintasPersonas", function(value, element) {
+				return $('#idPersona1').val() != $('#idPersona2').val()
+				}, "Debe seleccionar otra persona. No pueden coincidir");
+
+			$("#formConversacionChat").validate({
+				rules: {
+					idTrabajo: {
+						required: true,
+						digits: true
+					},
+					idPersona1: {
+						required: true,
+						digits: true,
+						distintasPersonas: true,
+					},
+					idPersona2: {
+						required: true,
+						digits: true,
+						distintasPersonas: true,				
+					},
+				},
+				messages: {
+					idTrabajo: {
+						required: "Por favor ingrese el nombre del estado",
+					},
+					idPersona1: {
+						required: "Por favor ingrese una persona",
+					},
+					idPersona2: {
+						required: "Por favor ingrese una persona",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 
