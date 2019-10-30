@@ -115,27 +115,27 @@ class ValoracionController extends Controller
     }
 
     // Permite buscar todas las valoraciones de un trabajo
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Valoracion::OrderBy('idValoracion','ASC'); // Ordenamos las valoraciones por este medio
 
-            if (isset($param['idValoracion'])){
-                $query->where("valoracion.idValoracion",$param['idValoracion']);
+            if (isset($param->idValoracion)){
+                $query->where("valoracion.idValoracion",$param->idValoracion);
             }
 
-            if (isset($param['valor'])){
-                $query->where("valoracion.valor",$param['valor']);
+            if (isset($param->valor)){
+                $query->where("valoracion.valor",$param->valor);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("valoracion.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("valoracion.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idPersona'])){
-                $query->where("valoracion.idPersona",$param['idPersona']);
+            if (isset($param->idPersona)){
+                $query->where("valoracion.idPersona",$param->idPersona);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("valoracion.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("valoracion.eliminado",$param->eliminado);
             }
 
             $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista

@@ -108,27 +108,27 @@ class CategoriaTrabajoController extends Controller
     }
 
     // Esta funcion busca todas las categorias de trabajo con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = CategoriaTrabajo::OrderBy('idCategoriaTrabajo','ASC'); // Ordenamos las categorias por este medio
 
-            if (isset($param['idCategoriaTrabajo'])){
-                $query->where("categoriatrabajo.idCategoriaTrabajo",$param['idCategoriaTrabajo']);
+            if (isset($param->idCategoriaTrabajo)){
+                $query->where("categoriatrabajo.idCategoriaTrabajo",$param->idCategoriaTrabajo);
             }
 
-            if (isset($param['nombreCategoriaTrabajo'])){
-                $query->where("categoriatrabajo.nombreCategoriaTrabajo",$param['nombreCategoriaTrabajo']);
+            if (isset($param->nombreCategoriaTrabajo)){
+                $query->where("categoriatrabajo.nombreCategoriaTrabajo",$param->nombreCategoriaTrabajo);
             }
 
-            if (isset($param['descripcionCategoriaTrabajo'])){
-                $query->where("categoriatrabajo.descripcionCategoriaTrabajo",$param['descripcionCategoriaTrabajo']);
+            if (isset($param->descripcionCategoriaTrabajo)){
+                $query->where("categoriatrabajo.descripcionCategoriaTrabajo",$param->descripcionCategoriaTrabajo);
             }
 
-            if (isset($param['imagenCategoriaTrabajo'])){
-                $query->where("categoriatrabajo.imagenCategoriaTrabajo",$param['imagenCategoriaTrabajo']);
+            if (isset($param->imagenCategoriaTrabajo)){
+                $query->where("categoriatrabajo.imagenCategoriaTrabajo",$param->imagenCategoriaTrabajo);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("categoriatrabajo.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("categoriatrabajo.eliminado",$param->eliminado);
             }
 
             $listaCategorias= $query->get();   // Hacemos el get y seteamos en lista

@@ -104,43 +104,43 @@ class PagorecibidoController extends Controller
     }
 
     // Esta funcion busca todas los pagos recibidos con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Pagorecibido::OrderBy('idPagoRecibido','ASC'); // Ordenamos los pagos por este medio
 
-            if (isset($param['idPagoRecibido'])){
-                $query->where("pagorecibido.idPagoRecibido",$param['idPagoRecibido']);
+            if (isset($param->idPagoRecibido)){
+                $query->where("pagorecibido.idPagoRecibido",$param->idPagoRecibido);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("pagorecibido.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("pagorecibido.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idPago'])){
-                $query->where("pagorecibido.idPago",$param['idPago']);
+            if (isset($param->idPago)){
+                $query->where("pagorecibido.idPago",$param->idPago);
             }
 
-            if (isset($param['monto'])){
-                $query->where("pagorecibido.monto",$param['monto']);
+            if (isset($param->monto)){
+                $query->where("pagorecibido.monto",$param->monto);
             }
 
-            if (isset($param['metodo'])){
-                $query->where("pagorecibido.metodo",$param['metodo']);
+            if (isset($param->metodo)){
+                $query->where("pagorecibido.metodo",$param->metodo);
             }
 
-            if (isset($param['tarjeta'])){
-                $query->where("pagorecibido.tarjeta",$param['tarjeta']);
+            if (isset($param->tarjeta)){
+                $query->where("pagorecibido.tarjeta",$param->tarjeta);
             }
 
-            if (isset($param['fechapago'])){
-                $query->where("pagorecibido.fechapago",$param['fechapago']);
+            if (isset($param->fechapago)){
+                $query->where("pagorecibido.fechapago",$param->fechapago);
             }
 
-            if (isset($param['fechaaprobado'])){
-                $query->where("pagorecibido.fechaaprobado",$param['fechaaprobado']);
+            if (isset($param->fechaaprobado)){
+                $query->where("pagorecibido.fechaaprobado",$param->fechaaprobado);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("pagorecibido.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("pagorecibido.eliminado",$param->eliminado);
             }
 
             $listaPagos= $query->get();   // Hacemos el get y seteamos en lista

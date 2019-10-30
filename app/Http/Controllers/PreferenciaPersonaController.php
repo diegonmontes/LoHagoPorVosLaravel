@@ -109,23 +109,23 @@ class PreferenciaPersonaController extends Controller
     }
 
     // Permite buscar todas las preferencias
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = PreferenciaPersona::OrderBy('idMensajeChat','ASC'); // Ordenamos las preferencias por este medio
 
-            if (isset($param['idPreferenciaPersona'])){
-                $query->where("preferenciapersona.idPreferenciaPersona",$param['idPreferenciaPersona']);
+            if (isset($param->idPreferenciaPersona)){
+                $query->where("preferenciapersona.idPreferenciaPersona",$param->idPreferenciaPersona);
             }
 
-            if (isset($param['idCategoriaTrabajo'])){
-                $query->where("preferenciapersona.idCategoriaTrabajo",$param['idCategoriaTrabajo']);
+            if (isset($param->idCategoriaTrabajo)){
+                $query->where("preferenciapersona.idCategoriaTrabajo",$param->idCategoriaTrabajo);
             }
 
-            if (isset($param['idPersona'])){
-                $query->where("preferenciapersona.idPersona",$param['idPersona']);
+            if (isset($param->idPersona)){
+                $query->where("preferenciapersona.idPersona",$param->idPersona);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("preferenciapersona.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("preferenciapersona.eliminado",$param->eliminado);
             }
 
             $listaPreferenciaPersona=$query->get();   // Hacemos el get y seteamos en lista

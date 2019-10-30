@@ -114,27 +114,27 @@ class ConversacionChatController extends Controller
     }
 
     // Esta funcion busca todas las conversaciones con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = ConversacionChat::OrderBy('idConversacionChat','ASC'); // Ordenamos las conversaciones por este medio
 
-            if (isset($param['idConversacionChat'])){
-                $query->where("conversacionchat.idConversacionChat",$param['idConversacionChat']);
+            if (isset($param->idConversacionChat)){
+                $query->where("conversacionchat.idConversacionChat",$param->idConversacionChat);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("conversacionchat.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("conversacionchat.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idPersona1'])){
-                $query->where("conversacionchat.idPersona1",$param['idPersona1']);
+            if (isset($param->idPersona)){
+                $query->where("conversacionchat.idPersona1",$param->idPersona);
             }
 
-            if (isset($param['idPersona2'])){
-                $query->where("conversacionchat.idPersona2",$param['idPersona2']);
+            if (isset($param->idPersona2)){
+                $query->where("conversacionchat.idPersona2",$param->idPersona2);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("conversacionchat.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("conversacionchat.eliminado",$param->eliminado);
             }
 
             $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista

@@ -109,23 +109,23 @@ class EstadotrabajoController extends Controller
     }
 
     // Esta funcion busca todas los estados del trabajo con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = EstadoTrabajo::OrderBy('idEstadoTrabajo','ASC'); // Ordenamos los estados del trabajo por este medio
 
-            if (isset($param['idEstadoTrabajo'])){
-                $query->where("estadotrabajo.idEstadoTrabajo",$param['idEstadoTrabajo']);
+            if (isset($param->idEstadoTrabajo)){
+                $query->where("estadotrabajo.idEstadoTrabajo",$param->idEstadoTrabajo);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("estadotrabajo.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("estadotrabajo.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idEstado'])){
-                $query->where("estadotrabajo.idEstado",$param['idEstado']);
+            if (isset($param->idEstado)){
+                $query->where("estadotrabajo.idEstado",$param->idEstado);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("estadotrabajo.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("estadotrabajo.eliminado",$param->eliminado);
             }
 
             $listaEstadoTrabajo=$query->get();   // Hacemos el get y seteamos en lista

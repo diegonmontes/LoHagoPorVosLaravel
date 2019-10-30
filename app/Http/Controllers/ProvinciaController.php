@@ -105,19 +105,19 @@ class ProvinciaController extends Controller
     }
 
     // Esta funcion busca todas las provincias con parametros que le enviemos
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Provincia::OrderBy('idProvincia','ASC'); // Ordenamos las provincias por este medio
 
-            if (isset($param['idProvincia'])){
-                $query->where("provincia.idProvincia",$param['idProvincia']);
+            if (isset($param->idProvincia)){
+                $query->where("provincia.idProvincia",$param->idProvincia);
             }
 
-            if (isset($param['nombreProvincia'])){
-                $query->where("provincia.nombreProvincia",$param['nombreProvincia']);
+            if (isset($param->nombreProvincia)){
+                $query->where("provincia.nombreProvincia",$param->nombreProvincia);
             }
 
-            if (isset($param['codigoIso31662'])){
-                $query->where("provincia.codigoIso31662",$param['codigoIso31662']);
+            if (isset($param->codigoIso31662)){
+                $query->where("provincia.codigoIso31662",$param->codigoIso31662);
             }
 
             $listaProvincias= $query->get();   // Hacemos el get y seteamos en lista
