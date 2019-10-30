@@ -25,7 +25,7 @@
 						<h3>Nueva Categoria</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('categoriatrabajo.store') }}"  role="form">
+						<form method="POST" action="{{ route('categoriatrabajo.store') }}" id="formCategoriaTrabajo" name="formCategoriaTrabajo" role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="form-group">
@@ -52,6 +52,39 @@
 
 			</div>
 		</div>
+		<script>
+			jQuery.validator.addMethod("lettersonly", function(value, element) {
+				return this.optional(element) || /^[a-z]+$/i.test(value);
+				}, "Solo puede ingresar letras");
+			$("#formCategoriaTrabajo").validate({
+				rules: {
+					nombreCategoriaTrabajo: {
+						required: true,
+						minlength: 4,
+						maxlength: 80,
+						lettersonly: true,
+					},
+					descripcionCategoriaTrabajo: {
+						required: true,
+						minlength: 4,
+						maxlength: 80,
+						lettersonly: true,
+					}
+				},
+				messages: {
+					nombreCategoriaTrabajo: {
+						required: "Por favor ingrese el nombre de la categor&iacute;a",
+						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+						maxlength: "M&aacute;ximo de letras sobrepasado",
+					},
+					descripcionCategoriaTrabajo: {
+						required: "Por favor ingrese una descripci&oacute;n de la categor&iacute;a",
+						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
+						maxlength: "M&aacute;ximo de letras sobrepasado"
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 
