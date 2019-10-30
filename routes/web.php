@@ -12,13 +12,30 @@
 */
 
 use App\Trabajo;
+use Illuminate\Http\Request;
+
 use App\Http\Controllers\TrabajoController;
+use App\Http\Controllers\PersonaController;
+
 
 
 Route::get('/', function () {
-    $param=['idEstado'=>1,'eliminado'=>0];
-    $trabajoController = new TrabajoController();
-    $listaTrabajos =$trabajoController->buscar($param);
+    if (Auth::check()){
+        $controlPersona = new PersonaController;
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $controlPersona->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+        $listaTrabajos = Trabajo::where('idPersona','!=',$idPersona)->get();
+    }else{
+        $param=['idEstado'=>1,'eliminado'=>0];
+        $trabajoController = new TrabajoController();
+        $param = new Request($param);
+        $listaTrabajos =$trabajoController->buscar($param);
+        $listaTrabajos = json_decode($listaTrabajos);
+    }
     return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 })->name('inicio');
 
