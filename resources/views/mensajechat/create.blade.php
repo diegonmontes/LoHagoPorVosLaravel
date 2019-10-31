@@ -68,7 +68,6 @@
 			</div>
 		</div>
 		<script>
-		
 			$("#formMensajeChat").validate({
 					rules: {
 						idConversacion: {

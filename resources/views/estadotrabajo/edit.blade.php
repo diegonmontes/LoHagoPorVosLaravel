@@ -26,7 +26,7 @@
 					<h3>Editar Estado Trabajo</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('estadotrabajo.update',$estadoTrabajo->idEstadoTrabajo) }}"  role="form">
+					<form method="POST" id="formEstadoTrabajo" name="formEstadoTrabajo" action="{{ route('estadotrabajo.update',$estadoTrabajo->idEstadoTrabajo) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						
@@ -68,5 +68,29 @@
 					</form>
 				</div>
 			</div>
+			<script>
+			$("#formEstadoTrabajo").validate({
+				rules: {
+					idTrabajo: {
+						required: true,
+						digits: true
+					},
+					idEstado: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idTrabajo: {
+						required: "Por favor seleccione un trabajo",
+						digits: "El trabajo seleccionado es incorrecto",
+					},
+					idEstado: {
+						required: "Por favor seleccione un estado",
+						digits: "El estado seleccionado es incorrecto",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection

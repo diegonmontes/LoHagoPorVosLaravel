@@ -25,7 +25,7 @@
 						<h3>Nueva Habilidad Persona</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('habilidadpersona.store') }}"  role="form">
+						<form method="POST" name="formHabilidadPersona" id="formHabilidadPersona" action="{{ route('habilidadpersona.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 							<label for="idHabilidad">Habilidad:</label>
@@ -57,6 +57,30 @@
 
 			</div>
 		</div>
+		<script>
+			$("#formHabilidadPersona").validate({
+				rules: {
+					idHabilidad: {
+						required: true,
+						digits: true
+					},
+					idEstado: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idHabilidad: {
+						required: "Por favor seleccione una habilidad",
+						digits: "La habilidad seleccionada es incorrecta",
+					},
+					idPersona: {
+						required: "Por favor seleccione una persona",
+						digits: "La persona seleccionada es incorrecta",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 

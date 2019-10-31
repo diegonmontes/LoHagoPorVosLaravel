@@ -28,8 +28,10 @@ class PagorecibidoController extends Controller
     public function create()
     {
         $trabajoController = new TrabajoController();
-        $arregloBuscarTrabajos = null;
+        $arregloBuscarTrabajos = ['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request ($arregloBuscarTrabajos);
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaTrabajos = json_decode($listaTrabajos);
         return view('pagorecibido.create',['listaTrabajos'=>$listaTrabajos]); //Vista para crear el elemento nuevo
     }
 
@@ -68,8 +70,10 @@ class PagorecibidoController extends Controller
     public function edit($id)
     {
         $trabajoController = new TrabajoController();
-        $arregloBuscarTrabajos = null;
+        $arregloBuscarTrabajos = ['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request ($arregloBuscarTrabajos);
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaTrabajos = json_decode($listaTrabajos);
         $pagoRecibido=Pagorecibido::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('pagorecibido.edit',compact('pagoRecibido'),['listaTrabajos'=>$listaTrabajos]);
     }

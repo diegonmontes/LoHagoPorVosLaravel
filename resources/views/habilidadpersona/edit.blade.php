@@ -26,7 +26,7 @@
 					<h3>Editar Habilidad Persona</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('habilidadpersona.update',$habilidadPersona->idHabilidadPersona) }}"  role="form">
+					<form method="POST" id="formHabilidadPersona" name="formHabilidadPersona" action="{{ route('habilidadpersona.update',$habilidadPersona->idHabilidadPersona) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						
@@ -68,5 +68,29 @@
 					</form>
 				</div>
 			</div>
+			<script>
+			$("#formHabilidadPersona").validate({
+				rules: {
+					idHabilidad: {
+						required: true,
+						digits: true
+					},
+					idEstado: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idHabilidad: {
+						required: "Por favor seleccione una habilidad",
+						digits: "La habilidad seleccionada es incorrecta",
+					},
+					idPersona: {
+						required: "Por favor seleccione una persona",
+						digits: "La persona seleccionada es incorrecta",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection

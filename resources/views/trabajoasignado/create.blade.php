@@ -66,7 +66,6 @@
 					idPersona: {
 						required: true,
 						digits: true,
-						distintasPersonas: true,
 					},
 				},
 				messages: {
