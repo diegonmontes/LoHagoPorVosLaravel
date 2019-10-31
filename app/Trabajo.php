@@ -12,7 +12,7 @@ class Trabajo extends Model
     protected $fillable = ['idTrabajo', 'idEstado', 'idCategoriaTrabajo', 'idPersona', 'idLocalidad','titulo','descripcion','monto', 'imagenTrabajo', 'tiempoExpiracion','eliminado'];
 
     public function CategoriaTrabajo() {
-        return $this->belongTo('App\CategoriaTrabajo', 'idCategoriaTrabajo', 'idCategoriaTrabajo');
+        return $this->belongsTo('App\CategoriaTrabajo', 'idCategoriaTrabajo', 'idCategoriaTrabajo');
     }
 
     public function Persona() {
@@ -20,11 +20,11 @@ class Trabajo extends Model
     }
 
     public function Localidad() {
-        return $this->belongTo('App\Localidad', 'idLocalidad', 'idLocalidad');
+        return $this->belongsTo('App\Localidad', 'idLocalidad', 'idLocalidad');
     }
 
     public function Pagorecibido() {
-        return $this->belongTo('App\Pagorecibido', 'idTrabajo', 'idTrabajo');
+        return $this->belongsTo('App\Pagorecibido', 'idTrabajo', 'idTrabajo');
     }
 
     public function Trabajoaspirante() {

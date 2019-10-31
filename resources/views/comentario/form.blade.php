@@ -9,8 +9,8 @@
 	<input type="hidden" name="idUsuario" value="{{\auth()->id()}}">
  	
  	<div class="form-group">
-		<label for="content">Content:</label>
+		<label for="content">Preguntar, responder u opinar...</label>
 		<textarea class="form-control" name="contenido" id="contenido"></textarea>
 	</div>
-  	<button type="submit" class="btn btn-primary">Send</button>
+  	<button type="submit" class="btn btn-primary">Enviar</button>
 </form>
