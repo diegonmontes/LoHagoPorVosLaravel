@@ -9,13 +9,13 @@
     @foreach($listaPostulantes as $postulante)
     @php $persona = $postulante->Persona[0] @endphp
 
-    <form action="{{route('trabajoasignado.store')}}" method="POST">
+    <form class="col-xs-12 col-sm-12 col-md-12" style="min-width: 100%;min-height: 100%;" action="{{route('trabajoasignado.store')}}" method="POST">
             {{ csrf_field() }}
 
             <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}">
         
             <input type="hidden" name="idPersona" value="{{$persona->idPersona}}">
-            <button type="submit" style="border: none;-moz-appearance: inherit;-o-appearance: inherit;-ms-appearance: inherit;appearance: inherit;-webkit-appearance: inherit;">
+            <button class="col-xs-12 col-sm-12 col-md-12" type="submit" style="border: none;-moz-appearance: inherit;-o-appearance: inherit;-ms-appearance: inherit;appearance: inherit;-webkit-appearance: inherit;">
 
     <div class="row col-md-12" style="margin-bottom: 1%;">
         <div class="card" style="min-width: 100%;min-height: 100%;">
