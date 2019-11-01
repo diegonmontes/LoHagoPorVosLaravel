@@ -565,7 +565,7 @@ class PersonaController extends Controller
         $listaCategorias = $categoriaTrabajoController->buscar($arregloBuscarHabilidades);
         $categoriasTrabajo = json_decode($listaCategorias);
 
-        $arregloBuscarUsuarios = [null];
+        $arregloBuscarUsuarios = ['usuarioSinPersona'=>true];
         $arregloBuscarUsuarios = new Request($arregloBuscarUsuarios);
         $listaUsuarios = $usuarioController->buscar($arregloBuscarUsuarios);
         $usuarios = json_decode($listaUsuarios);
@@ -577,7 +577,6 @@ class PersonaController extends Controller
     public function editpanel($id)
     {
         $idPersona=$id;
-
         $provinciaController = new ProvinciaController();
         $localidadController = new LocalidadController();
         $habilidadController = new HabilidadController();
@@ -619,7 +618,7 @@ class PersonaController extends Controller
 
         $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->get();
         $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->get();
-        $arregloBuscarPersona = ['idTrabajo'=>$idPersona];
+        $arregloBuscarPersona = ['idPersona'=>$idPersona];
         $arregloBuscarPersona = new Request($arregloBuscarPersona);
         $listaPersonas=$this->buscar($arregloBuscarPersona);
         $listaPersonas=json_decode($listaPersonas);
@@ -629,10 +628,7 @@ class PersonaController extends Controller
     }
 
     public function storepanel(Request $request)
-    {
-
-   
-       
+    {    
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
                 $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
@@ -681,4 +677,93 @@ class PersonaController extends Controller
         ], 200);
    
     ;}
-}
+
+    public function updatepanel(Request $request)
+    {   
+        $habilidadPersonaController = new HabilidadPersonaController();
+        $preferenciaPersonaController = new PreferenciaPersonaController();
+        $mensajesErrores =[
+            'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres habilidades que desea ver primero.',
+            'nombrePersona.required' => 'El nombre es obligatorio.',
+            'apellidoPersona.required' => 'El apellido es obligatorio.',
+            'nombrePersona.max' => 'Sobrepasado el limite maximo de letas.',
+            'apellidoPersona.max' => 'Sobrepasado el limite maximo de letras.',
+            'dniPersona.required' => 'El dni es obligatorio.',
+            'telefonoPersona.required' => 'El telefono es obligatorio.',
+            'idLocalidad.required' => 'La localidad es obligatoria.',
+            'idProvincia.required' => 'La provincia es obligatoria.',
+            'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
+            'dniPersona.min' => 'Ingrese un DNI valido.',
+            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
+            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
+        ] ;
+
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        
+        
+        if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
+                $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $usuario = Persona::find($request->idPersona);
+                $idUsuario = $usuario->idUsuario;
+                $nombreImagen = $idUsuario.'fotoPerfil'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenPersona'); // Guardamos todo el obj sin la clave imagen persona
+                $request['imagenPersona']=$nombreImagen; // Asignamos de nuevo a imagenPersona, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                 $imagen = File::get($imagen);
+                 Storage::disk('perfil')->put($nombreImagen, $imagen);       
+        } 
+            $idPersona=$request->idPersona;
+            
+            if (Persona::find($idPersona)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
+                $arregloBuscarHabilidadPersona = ['idPersona'=>$idPersona];
+                $arregloBuscarHabilidadPersona = new Request($arregloBuscarHabilidadPersona);
+                // Creamos el arreglo para que busque todas las habilidades que ya posea este usuario
+                $listaHabilidadesPersona = $habilidadPersonaController->buscar($arregloBuscarHabilidadPersona);
+                $listaHabilidadesPersona = json_decode($listaHabilidadesPersona);
+                // Hacemos la busqueda y obtenemos la inda
+                foreach ($listaHabilidadesPersona as $objHabilidadPersona){ // obtenemos cada uno de los id y lo eliminamos
+                    $idHabilidadPersona = $objHabilidadPersona->idHabilidadPersona;
+                    HabilidadPersona::destroy($idHabilidadPersona);
+                };
+                $listaHabilidades = $request->habilidades; // Obtenemos la lista de habilidades
+                
+                foreach ($listaHabilidades as $key => $valor){
+                    $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloHabilidadPersona);
+                    $habilidadPersonaController = new HabilidadPersonaController();
+                    $habilidadPersonaController->store($requestHabilidadPersona);
+                }
+
+                $arregloBuscarPreferenciaPersona = ['idPersona'=>$idPersona];
+                $arregloBuscarPreferenciaPersona = new Request($arregloBuscarPreferenciaPersona);
+                // Creamos el arreglo para que busque todas las habilidades que ya posea este usuario
+                $listaPreferenciasPersona = $preferenciaPersonaController->buscar($arregloBuscarPreferenciaPersona);
+                $listaPreferenciasPersona = json_decode($listaPreferenciasPersona);
+                foreach ($listaPreferenciasPersona as $objPreferenciadPersona){ // obtenemos cada uno de los id y lo eliminamos
+                    $idPreferenciaPersona = $objPreferenciadPersona->idPreferenciaPersona;
+                    PreferenciaPersona::destroy($idPreferenciaPersona);
+                };
+
+                // Cargamos las preferencias 
+                $listaPreferencias = $request->preferenciaPersona; // Obtenemos la lista de habilidades
+
+                foreach ($listaPreferencias as $key => $valor){
+                    $arregloPreferenciaPersona = ['idPersona'=>$idPersona,'idCategoriaTrabajo'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloPreferenciaPersona);
+                    $PreferenciaPersonaController = new PreferenciaPersonaController();
+                    $PreferenciaPersonaController->store($requestHabilidadPersona);
+                }
+            }
+
+                    return response()->json([
+                        'url' => route('persona.index'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.'
+                        ], 200);
+                }
+            }

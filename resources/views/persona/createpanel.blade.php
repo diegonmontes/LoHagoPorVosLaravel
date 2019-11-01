@@ -58,7 +58,6 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="row">
 								<label for="idUsuario">Usuario:</label>
 								<select class="form-control" name="idUsuario" id="idUsuario">

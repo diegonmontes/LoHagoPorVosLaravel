@@ -111,6 +111,10 @@ Route::get('persona/createpanel','PersonaController@createpanel')->name('persona
 
 Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.storepanel');
 
+Route::post('persona/updatepanel','PersonaController@updatepanel')->name('persona.updatepanel');
+
+
+
 Route::resource('persona', 'PersonaController');
 
 
