@@ -12,6 +12,13 @@
 */
 
 use App\Trabajo;
+use App\Persona;
+use App\Provincia;
+use App\Habilidad;
+use App\CategoriaTrabajo;
+
+
+
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\TrabajoController;
@@ -19,33 +26,50 @@ use App\Http\Controllers\PersonaController;
 
 
 
-if (Auth::check()){
-    Route::get('/', function () {
-        $controlPersona = new PersonaController;
+//Si esta logeado mostramos todos los anuncios que no sean de la persona logeada
+Route::get('/', function () {
+    if (Auth::check()){
+        //Buscamos la persona logeada, para ello primero seteamos el id del usuario logeado
         $idUsuario = Auth::user()->idUsuario;
+        //Con el idUsuario buscamos la persona
+        $controlPersona = new PersonaController;
         $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
         $param = new Request($param);
         $persona = $controlPersona->buscar($param);
         $persona = json_decode($persona);
+        //Si tiene la persona creada descartamos sus anuncios, en caso contrario lo mandamos a crear el perfil
+        if(count($persona)<1){
+            //Seteamos las variables para mostrar la pagina de crear el perfil
+            $persona = new Persona;
+            $existePersona = false;
+            $listaHabilidadesSeleccionadas = null;
+            $listaPreferenciasSeleccionadas = null;
+            $provincias=Provincia::all();
+            $habilidades=Habilidad::all();
+            $categoriasTrabajo=CategoriaTrabajo::all();
+            $pagina = view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
+        }else{
+            //Si tiene el perfil creado buscamos los anuncios para mostrar
+            $idPersona = $persona[0]->idPersona;
+            $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0];
+            $trabajoController = new TrabajoController();
+            $param = new Request($param);
+            $listaTrabajos =$trabajoController->buscar($param);
+            $listaTrabajos = json_decode($listaTrabajos);
+            $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 
-        $idPersona = $persona[0]->idPersona;
-        $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0];
-        $trabajoController = new TrabajoController();
-        $param = new Request($param);
-        $listaTrabajos =$trabajoController->buscar($param);
-        $listaTrabajos = json_decode($listaTrabajos);
-        return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
-    })->name('inicio')->middleware('auth','controlperfil','Mailvalidado');
-}else{
-    Route::get('/', function () {
+        }
+    }else{
+        //El el caso que no esta autenticado mostramos todos los anuncios
         $param=['idEstado'=>'1','eliminado'=>0];
         $trabajoController = new TrabajoController();
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);
         $listaTrabajos = json_decode($listaTrabajos);
-        return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
-    })->name('inicio');
-}
+        $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
+    }
+    return $pagina;
+})->name('inicio');
     
 
 Auth::routes();
@@ -89,8 +113,7 @@ Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.
 
 Route::resource('persona', 'PersonaController');
 
-Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
-Route::get('postulantes/{id}','TrabajoController@postulantes')->name('postulantes')->middleware('auth','controlperfil');
+
 
 Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
@@ -104,10 +127,14 @@ Route::prefix('usuario')->group(function(){
 });
 
 Route::get('localidad/buscarporid/{id}', 'LocalidadController@buscarporid');
+Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','Mailvalidado','controlperfil');
+
 
 Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
+
 Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
-Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
+Route::get('postulantes/{id}','TrabajoController@postulantes')->name('anuncio.postulante')->middleware('auth','controlperfil');
 
 
 Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');

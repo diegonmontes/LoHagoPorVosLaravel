@@ -187,19 +187,7 @@ class TrabajoController extends Controller
  
     }
 
-    public function postulantes($idTrabajo){
-        $trabajo =  Trabajo::find($idTrabajo);
-        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $listaPostulantes = array();
-        if($trabajo->idPersona == $persona[0]->idPersona){
-            $listaPostulantes = Trabajoaspirante::where('idTrabajo','=',$idTrabajo)->where('eliminado','=',0)->get();
-        }
-
-        return view('anuncio.postulantes',['trabajo'=>$trabajo,'listaPostulantes'=>$listaPostulantes]);
-
-    }
-
+    
 
     /*
     * Funcion que lista todos los trabajos y codifica en json para mostrarlo en la aplicacion mobile
@@ -224,8 +212,8 @@ class TrabajoController extends Controller
         //Buscamos el trabajo por el id para mostrar
         $trabajo =  Trabajo::find($idTrabajo);
         $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $idPersona=$persona[0]->idPersona;
+        $persona = Persona::where('idUsuario','=',$idUsuario)->get(); //Obtenemos el objeto Persona
+        $idPersona=$persona[0]->idPersona; //Obtenemos el id de la persona
         // Verificamos si ya se postulo a este trabajo. Si se postulo,no mostramos el mensaje de postularse nuevamente
         $busquedaPostulacion = Trabajoaspirante::where('idPersona','=',$idPersona)->where('idTrabajo','=',$idTrabajo)->get();
         
@@ -269,6 +257,9 @@ class TrabajoController extends Controller
         }
 
         $link = '#';
+
+
+
         if(false){
             $monto = $trabajo['monto'];
             $titulo = $trabajo['titulo'];
@@ -288,6 +279,23 @@ class TrabajoController extends Controller
         }
        
     }
+
+
+    public function postulantes($idTrabajo){
+        $trabajo =  Trabajo::find($idTrabajo);
+        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+        $listaPostulantes = array();
+        if($trabajo->idPersona == $persona[0]->idPersona){
+            $listaPostulantes = Trabajoaspirante::where('idTrabajo','=',$idTrabajo)->where('eliminado','=',0)->get();
+        }
+
+        return view('anuncio.postulantes',['trabajo'=>$trabajo,'listaPostulantes'=>$listaPostulantes]);
+
+    }
+
+
+
 
     public function procesarPago(){
         return view('anuncio.procesarpago');

@@ -24,7 +24,7 @@
             <div class="row" style="margin:3%">
                 <div class="col-xs-8 col-sm-8 col-md-8">
                 <h2>{{$persona->apellidoPersona}} {{$persona->nombrePersona}}</h2>
-                    <p><strong>Usuario: </strong> {{$persona->User->nombreUsuario}} </p>
+                    <p><strong>Usuario: </strong> {{$persona->Usuario->nombreUsuario}} </p>
                     <p><strong>Localidad: </strong> {{$persona->Localidad->nombreLocalidad}} </p>
                     <p><strong>Habilidades: </strong>
                         @foreach($persona->HabilidadPersona as $unaHabilidadPersona)

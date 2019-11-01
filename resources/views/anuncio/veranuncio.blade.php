@@ -31,7 +31,7 @@
                 <ul class="list-group list-group-flush" style="width:15rem">
                     <li class="list-group-item">{{$trabajo->titulo}}</li>
                     <li class="list-group-item">${{$trabajo->monto}}</li>
-                    
+                    @if($tienePostulacion) 
                         @if(count($personaAsignada)>0)
                             @php
                             if (!$pagado){ // Si ya se pago este anuncio
@@ -42,13 +42,13 @@
                             @endphp
                         @else
 
-                            <a class='btn btn-success btn-sm' href="{{route('postulantes',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
+                        <a class='btn btn-success' href="{{route('anuncio.postulante',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
                         @endif
-                   
+                    @else
 
                     {{-- Si ya se postulo no mostramos boton postularse --}}
-                    @if(!$tienePostulacion) 
-                    <li class="list-group-item"><a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success btn-sm">Postularme</a></li>
+                    
+                    <a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success">Postularme</a>
                     @endif    
 
 
@@ -59,33 +59,7 @@
             </div>
         </div>
     </div>
-
-
-      <div id="modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Lista de postulantes</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-
-                @include('anuncio.postulantes',['listaPostulantes'=>$listaPostulantes])
-
-            </div>
-           
-          </div>
-        </div>
-      </div>
 </section>
-<script >
-
-function mostrarModal(){
-    $('#modal').show();
-}
-    </script>
 
 {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">
         <div class="carousel-inner">
