@@ -13,10 +13,10 @@ class Persona extends Model
 
     public function Localidad()
     {
-        return $this->belongsTo('App\Localidad', 'idLocalidad', 'idLocalidad');
+        return $this->hasOne('App\Localidad', 'idLocalidad', 'idLocalidad');
     }
 
-    public function User()
+    public function Usuario()
     {
         return $this->hasOne('App\User', 'idUsuario', 'idUsuario');
     }

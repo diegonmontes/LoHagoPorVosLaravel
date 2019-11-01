@@ -26,7 +26,7 @@
 					<h3>Editar Preferencia Persona</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" action="{{ route('preferenciapersona.update',$preferenciaPersona->idPreferenciaPersona) }}"  role="form">
+					<form method="POST" id="formPreferenciaPersona" name="formPreferenciaPersona" action="{{ route('preferenciapersona.update',$preferenciaPersona->idPreferenciaPersona) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
@@ -65,5 +65,29 @@
 					</form>
 				</div>
 			</div>
+			<script>
+			$("#formPreferenciaPersona").validate({
+				rules: {
+					idCategoriaTrabajo: {
+						required: true,
+						digits: true
+					},
+					idPersona: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idCategoriaTrabajo: {
+						required: "Por favor seleccione una categoria",
+						digits: "La categoria seleccionada es incorrecta",
+					},
+					idPersona: {
+						required: "Por favor seleccione una persona",
+						digits: "La persona seleccionada es incorrecta",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection

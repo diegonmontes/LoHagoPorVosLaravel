@@ -25,7 +25,7 @@
 						<h3>Nueva Preferencia Persona</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('preferenciapersona.store') }}"  role="form">
+						<form method="POST" id="formPreferenciaPersona" name="formPreferenciaPersona" action="{{ route('preferenciapersona.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<label for="idPersona">Persona:</label>
@@ -56,6 +56,30 @@
 
 			</div>
 		</div>
+		<script>
+			$("#formPreferenciaPersona").validate({
+				rules: {
+					idCategoriaTrabajo: {
+						required: true,
+						digits: true
+					},
+					idPersona: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idCategoriaTrabajo: {
+						required: "Por favor seleccione una categoria",
+						digits: "La categoria seleccionada es incorrecta",
+					},
+					idPersona: {
+						required: "Por favor seleccione una persona",
+						digits: "La persona seleccionada es incorrecta",
+					},
+				}
+			});
+		</script>
 	</section>
 	@endsection
 

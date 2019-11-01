@@ -83,7 +83,13 @@ Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
 
 Route::resource('valoracion', 'ValoracionController');
 
+Route::resource('usuario', 'UserController');
 
+Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
+
+Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.storepanel');
+
+Route::resource('persona', 'PersonaController');
 
 
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
@@ -100,7 +106,7 @@ Route::prefix('usuario')->group(function(){
     Route::post('update','PersonaController@update')->name('persona.update');
 });
 
-Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
+Route::get('localidad/buscarporid/{id}', 'LocalidadController@buscarporid');
 
 Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
 Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
@@ -109,11 +115,10 @@ Route::get('historial', 'TrabajoController@historial')->name('historial')->middl
 
 Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 
-
-
 Route::prefix('anuncio')->group(function(){
     Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','Mailvalidado');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
-    Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago');
-    
+    Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago'); 
 });
+
+Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('persona.editpanel');
