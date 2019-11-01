@@ -9,7 +9,7 @@ class Comentario extends Model
     protected $table='comentario';
     protected $primaryKey = 'idComentario';
     protected $fillable = [
-        'comentario', 'idComentarioPadre', 'idTrabajo', 'idUsuario','idComentario'
+        'comentario', 'idComentarioPadre', 'idTrabajo', 'idPersona','idComentario'
     ];
  
     public function Trabajo() 
@@ -17,9 +17,9 @@ class Comentario extends Model
         return $this->belongsTo('App\Trabajo', 'idTrabajo');
     }
  
-    public function Usuario() 
+    public function Persona() 
     {
-        return $this->belongsTo('App\User', 'idUsuario');
+        return $this->belongsTo('App\Persona', 'idPersona');
     }
  
     public function Parent() 
@@ -31,4 +31,11 @@ class Comentario extends Model
     {
         return $this->hasMany('App\Comentario', 'idComentarioPadre');
     }
+
+    
+    public function User() 
+    {
+        return $this->belongsTo('App\User', 'idPersona');
+    }
+
 }

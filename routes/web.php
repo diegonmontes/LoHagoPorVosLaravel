@@ -19,25 +19,34 @@ use App\Http\Controllers\PersonaController;
 
 
 
-Route::get('/', function () {
-    if (Auth::check()){
+if (Auth::check()){
+    Route::get('/', function () {
         $controlPersona = new PersonaController;
         $idUsuario = Auth::user()->idUsuario;
         $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
         $param = new Request($param);
         $persona = $controlPersona->buscar($param);
         $persona = json_decode($persona);
+
         $idPersona = $persona[0]->idPersona;
-        $listaTrabajos = Trabajo::where('idPersona','!=',$idPersona)->get();
-    }else{
-        $param=['idEstado'=>1,'eliminado'=>0];
+        $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0];
         $trabajoController = new TrabajoController();
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);
         $listaTrabajos = json_decode($listaTrabajos);
-    }
-    return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
-})->name('inicio');
+        return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
+    })->name('inicio')->middleware('auth','controlperfil','Mailvalidado');
+}else{
+    Route::get('/', function () {
+        $param=['idEstado'=>'1','eliminado'=>0];
+        $trabajoController = new TrabajoController();
+        $param = new Request($param);
+        $listaTrabajos =$trabajoController->buscar($param);
+        $listaTrabajos = json_decode($listaTrabajos);
+        return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
+    })->name('inicio');
+}
+    
 
 Auth::routes();
 
@@ -80,6 +89,10 @@ Route::resource('valoracion', 'ValoracionController');
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
 Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
+Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','Mailvalidado','controlperfil');
+
+
+
 Route::prefix('usuario')->group(function(){
     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','Mailvalidado');
     Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth','controlperfil');
@@ -91,13 +104,15 @@ Route::get('localidad/buscar/{id}', 'LocalidadController@buscar');
 
 Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
 Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','Mailvalidado','controlperfil');
+
 
 Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 
 
 
 Route::prefix('anuncio')->group(function(){
-    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','controlperfil');
+    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','Mailvalidado');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
     Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago');
     

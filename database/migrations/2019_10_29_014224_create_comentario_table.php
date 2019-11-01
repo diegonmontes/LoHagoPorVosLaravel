@@ -18,12 +18,12 @@ class CreateComentarioTable extends Migration
             $table->text('contenido');
             $table->integer('idComentarioPadre')->unsigned()->nullable();
             $table->integer('idTrabajo')->unsigned();
-            $table->integer('idUsuario')->unsigned();
+            $table->integer('idPersona')->unsigned();
             $table->timestamps();
  
             $table->foreign('idComentarioPadre')->references('idComentario')->on('comentario');
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
-            $table->foreign('idUsuario')->references('idUsuario')->on('usuario');
+            $table->foreign('idPersona')->references('idPersona')->on('persona');
         });
     }
 

@@ -55,7 +55,7 @@ class TrabajoasignadoController extends Controller
         if(isset($request->flutter)){
             return $respuesta = ['success'=>true];
         }else{
-        return redirect()->route('trabajoasignado.index')->with('success','Registro creado satisfactoriamente');
+            return redirect()->route('veranuncio',$request->idTrabajo)->with('success','Registro actualizado satisfactoriamente');
         }
     }
 
@@ -145,4 +145,6 @@ class TrabajoasignadoController extends Controller
             $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
             return $listaTrabajoAsignado;
     }
+
+  
 }
