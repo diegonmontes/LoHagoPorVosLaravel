@@ -87,6 +87,8 @@ Route::resource('valoracion', 'ValoracionController');
 
 
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
+Route::get('postulantes/{id}','TrabajoController@postulantes')->name('postulantes')->middleware('auth','controlperfil');
+
 Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
 Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','Mailvalidado','controlperfil');

@@ -112,23 +112,23 @@ class CategoriaTrabajoController extends Controller
         $query = CategoriaTrabajo::OrderBy('idCategoriaTrabajo','ASC'); // Ordenamos las categorias por este medio
 
             if (isset($param->idCategoriaTrabajo)){
-                $query->where("categoriatrabajo.idCategoriaTrabajo",$param->idCategoriaTrabajo);
+                $query->where("categoriaTrabajo.idCategoriaTrabajo",$param->idCategoriaTrabajo);
             }
 
             if (isset($param->nombreCategoriaTrabajo)){
-                $query->where("categoriatrabajo.nombreCategoriaTrabajo",$param->nombreCategoriaTrabajo);
+                $query->where("categoriaTrabajo.nombreCategoriaTrabajo",$param->nombreCategoriaTrabajo);
             }
 
             if (isset($param->descripcionCategoriaTrabajo)){
-                $query->where("categoriatrabajo.descripcionCategoriaTrabajo",$param->descripcionCategoriaTrabajo);
+                $query->where("categoriaTrabajo.descripcionCategoriaTrabajo",$param->descripcionCategoriaTrabajo);
             }
 
             if (isset($param->imagenCategoriaTrabajo)){
-                $query->where("categoriatrabajo.imagenCategoriaTrabajo",$param->imagenCategoriaTrabajo);
+                $query->where("categoriaTrabajo.imagenCategoriaTrabajo",$param->imagenCategoriaTrabajo);
             }
 
             if (isset($param->eliminado)){
-                $query->where("categoriatrabajo.eliminado",$param->eliminado);
+                $query->where("categoriaTrabajo.eliminado",$param->eliminado);
             }
 
             $listaCategorias= $query->get();   // Hacemos el get y seteamos en lista

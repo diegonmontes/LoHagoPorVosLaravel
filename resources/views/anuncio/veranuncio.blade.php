@@ -42,7 +42,7 @@
                             @endphp
                         @else
 
-                            <button class='btn btn-success btn-sm' onClick="mostrarModal()" > Elegir un postulante </button>
+                            <a class='btn btn-success btn-sm' href="{{route('postulantes',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
                         @endif
                    
 
