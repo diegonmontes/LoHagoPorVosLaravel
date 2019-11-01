@@ -396,6 +396,13 @@ class UserController extends Controller
                 $query->where("usuario.eliminado",$param->eliminado);
             }
 
+            if (isset($param->usuarioSinPersona)){
+                $query->select('usuario.*')
+                ->leftJoin('persona', function ($join){
+                    $join->on('persona.idUsuario', '=', 'usuario.idUsuario');
+                })->whereNull('persona.idUsuario');
+            }
+
             $listaUsuarios= $query->get();   // Hacemos el get y seteamos en lista
             
             return json_encode($listaUsuarios);

@@ -16,7 +16,7 @@
 				</div>
 			@endif
 			<div class="col-xs-6 col-sm-6 col-md-8">
-		<form id="formPersona" method="post" enctype="multipart/form-data" action="{{ route('persona.update') }}"  role="form">
+		<form id="formPersona" method="post" enctype="multipart/form-data" action="{{ route('persona.updatepanel') }}"  role="form">
 			{{ csrf_field() }}
 			
 				<div class="card">
@@ -425,7 +425,7 @@
 				headers: {
 					'X-CSRF-TOKEN': "{{ csrf_token() }}"
 				},
-				url: "{{ route('persona.update') }}",
+				url: "{{ route('persona.updatepanel') }}",
 				method: "POST",
 				data:new FormData(this),
 				dataType:'json',
