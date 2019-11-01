@@ -20,7 +20,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'idUsuario', 'nombreUsuario', 'mailUsuario', 'claveUsuario', 'auth_key','idRol','eliminado','remember_token'
+        'idUsuario', 'nombreUsuario', 'mailUsuario', 'claveUsuario', 'auth_key','idRol','eliminado'
     ];
 
     /**
@@ -40,12 +40,11 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-/*
+
     public function rol()
     {
         return $this->belongsToMany(Rol::class)->withTimestamps();
     }
-*/
 
     public function getJWTIdentifier()
     {
@@ -73,8 +72,6 @@ class User extends Authenticatable implements JWTSubject
         return $this->claveUsuario;
     }
 
-    public function Rol() {
-        return $this->hasOne('App\Rol', 'idRol', 'idRol');
-    }
+    
 
 }

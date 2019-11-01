@@ -26,7 +26,7 @@
 					<h3>Editar Valoracion</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" id="formValoracion" name="formValoracion" action="{{ route('valoracion.update',$valoracion->idValoracion) }}"  role="form">
+					<form method="POST" action="{{ route('valoracion.update',$valoracion->idValoracion) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 
@@ -73,40 +73,5 @@
 					</form>
 				</div>
 			</div>
-			<script>
-				$("#formValoracion").validate({
-					rules: {
-						idTrabajo: {
-							required: true,
-							digits: true,
-						},
-						valor: {
-							required: true,
-							maxlength: 1,
-							max:5,
-							min:1,
-						},
-						idPersona:{
-							required:true,
-							digits: true,
-						}
-					},
-					messages: {
-						idTrabajo: {
-							required: "Por favor seleccione un trabajo",
-							digits: "El trabajo seleccionado es incorrecto",
-						},
-						valor: {
-							required: "Por favor ingrese un valor",
-							min: "El valor m&iacute;nimo que puede ingresar es 1",
-							max: "El valor m&aacute;ximo que puede ingresar es 5",
-						},
-						idPersona: {
-							required: "Por favor seleccione una persona",
-							digits: "La persona seleccionada es incorrecta",
-						},
-					}
-				});
-			</script>
 	</section>
 	@endsection

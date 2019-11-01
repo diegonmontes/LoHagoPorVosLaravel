@@ -110,7 +110,7 @@ class PreferenciaPersonaController extends Controller
 
     // Permite buscar todas las preferencias
     public function buscar(Request $param){      
-        $query = PreferenciaPersona::OrderBy('idPreferenciaPersona','ASC'); // Ordenamos las preferencias por este medio
+        $query = PreferenciaPersona::OrderBy('idMensajeChat','ASC'); // Ordenamos las preferencias por este medio
 
             if (isset($param->idPreferenciaPersona)){
                 $query->where("preferenciapersona.idPreferenciaPersona",$param->idPreferenciaPersona);

@@ -25,7 +25,7 @@
 						<h3>Nuevo Rol</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" id="formRol" name="formRol" action="{{ route('rol.store') }}"  role="form">
+						<form method="POST" action="{{ route('rol.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 									<div class="form-group">
@@ -50,39 +50,6 @@
 
 			</div>
 		</div>
-		<script>
-			jQuery.validator.addMethod("lettersonly", function(value, element) {
-				return this.optional(element) || /^[a-z]+$/i.test(value);
-				}, "Solo puede ingresar letras");
-			$("#formRol").validate({
-				rules: {
-					nombreRol: {
-						required: true,
-						minlength: 4,
-						maxlength: 80,
-						lettersonly: true,
-					},
-					descripcionRol: {
-						required: true,
-						minlength: 4,
-						maxlength: 80,
-						lettersonly: true,
-					}
-				},
-				messages: {
-					nombreRol: {
-						required: "Por favor ingrese el nombre del rol",
-						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
-						maxlength: "M&aacute;ximo de letras sobrepasado",
-					},
-					descripcionRol: {
-						required: "Por favor ingrese una descripci&oacute;n del rol",
-						minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
-						maxlength: "M&aacute;ximo de letras sobrepasado"
-					},
-				}
-			});
-		</script>
 	</section>
 	@endsection
 
