@@ -208,6 +208,35 @@ CREATE TABLE `pagorecibido`(
   FOREIGN KEY (`idTrabajo`) REFERENCES `trabajo`(`idTrabajo`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `conversacionchat`(
+  `idConversacionChat` int NOT NULL AUTO_INCREMENT,
+  `idTrabajo` INT NOT NULL,
+  `idPersona1` INT NOT NULL,
+  `idPersona2` INT NOT NULL,
+  `eliminado` TINYINT(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idConversacionChat`),
+  FOREIGN KEY (`idTrabajo`) REFERENCES `trabajo`(`idTrabajo`),
+  FOREIGN KEY (`idPersona1`) REFERENCES `persona`(`idPersona`),
+  FOREIGN KEY (`idPersona2`) REFERENCES `persona`(`idPersona`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `mensajechat`(
+  `idMensajeChat` int NOT NULL AUTO_INCREMENT,
+  `idConversacionChat` INT NOT NULL,
+  `idPersona` INT NOT NULL,
+  `mensaje` varchar(511),
+  `eliminado` TINYINT(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idMensajeChat`),
+  FOREIGN KEY (`idConversacionChat`) REFERENCES `conversacionchat`(`idConversacionChat`),
+  FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 
 CREATE TABLE `comentario`(
