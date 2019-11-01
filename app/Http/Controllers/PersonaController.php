@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Faker\Provider\Person;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Auth;
 use App\Persona;
 use App\Localidad;
@@ -224,8 +225,8 @@ class PersonaController extends Controller
     public function show($id)
     {
         //
-        $personas=Persona::find($id);
-        return  view('persona.show',compact('personas'));
+        $persona=Persona::find($id);
+        return  view('persona.show',compact('persona'));
     }
 
     /**
@@ -533,5 +534,151 @@ class PersonaController extends Controller
             return json_encode($listaPersonas);
     }
 
+    // Funciones para mostrar la vista del panel de administrador de persona
+
+    public function createpanel(){
+
+      
+        $provinciaController = new ProvinciaController();
+        $localidadController = new LocalidadController();
+        $habilidadController = new HabilidadController();
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $usuarioController = new UserController();
+
+        $arregloBuscarProvincia = ['null'=>null];
+        $arregloBuscarProvincia = new Request($arregloBuscarProvincia);
+        $listaProvincias = $provinciaController->buscar($arregloBuscarProvincia);
+        $provincias = json_decode($listaProvincias);
+
+        $arregloBuscarLocalidad = [null];
+        $arregloBuscarLocalidad = new Request($arregloBuscarLocalidad);
+        $listaLocalidades = $localidadController->buscar($arregloBuscarLocalidad);
+        $localidades = json_decode($listaLocalidades);
+
+        $arregloBuscarHabilidades = [null];
+        $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
+        $listaHabilidades = $habilidadController->buscar($arregloBuscarHabilidades);
+        $habilidades = json_decode($listaHabilidades);
+
+        $arregloBuscarCategorias = [null];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategorias = $categoriaTrabajoController->buscar($arregloBuscarHabilidades);
+        $categoriasTrabajo = json_decode($listaCategorias);
+
+        $arregloBuscarUsuarios = [null];
+        $arregloBuscarUsuarios = new Request($arregloBuscarUsuarios);
+        $listaUsuarios = $usuarioController->buscar($arregloBuscarUsuarios);
+        $usuarios = json_decode($listaUsuarios);
+        
+        return view('persona.createpanel',compact('persona'),['usuarios'=>$usuarios,'localidad'=>$localidades,'provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades]);
+ 
+    }
+
+    public function editpanel($id)
+    {
+        $idPersona=$id;
+
+        $provinciaController = new ProvinciaController();
+        $localidadController = new LocalidadController();
+        $habilidadController = new HabilidadController();
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $habilidadPersonaController = new HabilidadPersonaController();
+        $preferenciaPersonaController = new PreferenciaPersonaController();
+
+
+        $arregloBuscarProvincia = ['null'=>null];
+        $arregloBuscarProvincia = new Request($arregloBuscarProvincia);
+        $listaProvincias = $provinciaController->buscar($arregloBuscarProvincia);
+        $provincias = json_decode($listaProvincias);
+
+        $arregloBuscarLocalidad = [null];
+        $arregloBuscarLocalidad = new Request($arregloBuscarLocalidad);
+        $listaLocalidades = $localidadController->buscar($arregloBuscarLocalidad);
+        $localidades = json_decode($listaLocalidades);
+
+        $arregloBuscarHabilidades = [null];
+        $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
+        $listaHabilidades = $habilidadController->buscar($arregloBuscarHabilidades);
+        $listaHabilidades = json_decode($listaHabilidades);
+
+        $arregloBuscarCategorias = [null];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $categoriasTrabajo = $categoriaTrabajoController->buscar($arregloBuscarHabilidades);
+        $categoriasTrabajo = json_decode($categoriasTrabajo);
+
+        $arregloBuscarHabilidadPersona = ['idPersona'=>$idPersona];
+        $arregloBuscarHabilidadPersona = new Request($arregloBuscarHabilidadPersona);
+        $listaHabilidadesSeleccionadas = $habilidadPersonaController->buscar($arregloBuscarHabilidadPersona);
+        $listaHabilidadesSeleccionadas = json_decode($listaHabilidadesSeleccionadas);
     
+        $arregloBuscarPreferencias = ['idPersona'=>$idPersona];
+        $arregloBuscarPreferencias = new Request($arregloBuscarPreferencias);
+        $listaPreferenciasSeleccionadas = $preferenciaPersonaController->buscar($arregloBuscarPreferencias);
+        $listaPreferenciasSeleccionadas = json_decode($listaPreferenciasSeleccionadas);
+
+
+        $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->get();
+        $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->get();
+        $arregloBuscarPersona = ['idTrabajo'=>$idPersona];
+        $arregloBuscarPersona = new Request($arregloBuscarPersona);
+        $listaPersonas=$this->buscar($arregloBuscarPersona);
+        $listaPersonas=json_decode($listaPersonas);
+        $persona = $listaPersonas[0];
+
+        return view('persona.editpanel',compact('persona'),['persona'=>$persona,'localidad'=>$localidades,'provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$listaHabilidades,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
+    }
+
+    public function storepanel(Request $request)
+    {
+
+   
+       
+        if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
+                $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = $request['idUsuario'].'fotoPerfil'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenPersona'); // Guardamos todo el obj sin la clave imagen persona
+                $request['imagenPersona']=$nombreImagen; // Asignamos de nuevo a imagenPersona, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                $imagen = File::get($imagen);
+                Storage::disk('perfil')->put($nombreImagen, $imagen);       
+            }
+
+            if (Persona::create($request->all())){ // Si crea una persona, obtenemos su id para llenar el resto de las tablas
+                $objPersona = new Persona(); // Creamos el obj persona
+                $persona = $objPersona->where('idUsuario','=',$request['idUsuario'])->get(); //Buscamos el obj persona que tenga ese idusuario
+                $persona = $persona[0]; // Obtenemos obj persona creado recientemente
+                $idPersona = $persona['idPersona']; // Obtenemos id persona
+
+                $listaHabilidades = $request->habilidades;
+                $listaPreferencias = $request->preferenciaPersona;
+
+                // Cargamos las habilidades que tenga
+
+                foreach ($listaHabilidades as $key => $valor){
+                    $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloHabilidadPersona);
+                    $habilidadPersonaController = new HabilidadPersonaController();
+                    $habilidadPersonaController->store($requestHabilidadPersona);
+                }
+
+                // Cargamos las preferencias 
+
+                foreach ($listaPreferencias as $key => $valor){
+                    $arregloPreferenciaPersona = ['idPersona'=>$idPersona,'idCategoriaTrabajo'=>$valor];
+                    $requestHabilidadPersona = new Request($arregloPreferenciaPersona);
+                    $PreferenciaPersonaController = new PreferenciaPersonaController();
+                    $PreferenciaPersonaController->store($requestHabilidadPersona);
+                };
+
+        };
+                
+    return response()->json([
+        'url' => route('persona.index'),
+        'success'   => true,
+        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+        ], 200);
+   
+    ;}
 }

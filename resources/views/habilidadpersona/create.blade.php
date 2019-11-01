@@ -57,6 +57,7 @@
 
 			</div>
 		</div>
+
 		<script>
 			$("#formHabilidadPersona").validate({
 				rules: {
@@ -64,7 +65,8 @@
 						required: true,
 						digits: true
 					},
-					idEstado: {
+
+					idPersona: {
 						required: true,
 						digits: true,
 					},
