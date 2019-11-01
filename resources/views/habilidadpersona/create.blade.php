@@ -57,6 +57,33 @@
 
 			</div>
 		</div>
+<<<<<<< Updated upstream
+=======
+		<script>
+			$("#formHabilidadPersona").validate({
+				rules: {
+					idHabilidad: {
+						required: true,
+						digits: true
+					},
+					idPersona: {
+						required: true,
+						digits: true,
+					},
+				},
+				messages: {
+					idHabilidad: {
+						required: "Por favor seleccione una habilidad",
+						digits: "La habilidad seleccionada es incorrecta",
+					},
+					idPersona: {
+						required: "Por favor seleccione una persona",
+						digits: "La persona seleccionada es incorrecta",
+					},
+				}
+			});
+		</script>
+>>>>>>> Stashed changes
 	</section>
 	@endsection
 

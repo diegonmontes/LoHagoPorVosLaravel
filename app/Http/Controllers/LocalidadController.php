@@ -104,8 +104,11 @@ class LocalidadController extends Controller
     }
 
     //Busca todas las localidad segun el id de la provincia
-    public function buscar($id){
-        return Localidad::where('idProvincia','=',$id)->get();
+    public function buscarporid($id){
+        $arregloBuscarLocalidades = ['idProvincia'=>$id];
+        $arregloBuscarLocalidades = new Request($arregloBuscarLocalidades);
+        $listaLocalidades=$this->buscar($arregloBuscarLocalidades);
+        return json_decode($listaLocalidades);
     }
 
     /**
@@ -123,7 +126,7 @@ class LocalidadController extends Controller
     }
 
     // Esta funcion busca todas las localidades con parametros que le enviemos
-    public function buscarNuevo(Request $param){      
+    public function buscar(Request $param){      
         $query = Localidad::OrderBy('idLocalidad','ASC'); // Ordenamos las localidades por este medio
 
             if (isset($param->idLocalidad)){

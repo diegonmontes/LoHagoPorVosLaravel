@@ -18,6 +18,13 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script> 
     <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/additional-methods.js"></script>
+<<<<<<< Updated upstream
+=======
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+@yield('jsHead');
+>>>>>>> Stashed changes
 
 </head>
 <body>
@@ -113,6 +120,12 @@
                         </a>
                     </li>
 
+                    <li class="list-group-item">
+                        <a href="{{ route('usuario.index') }}">
+                            Lista usuarios
+                        </a>
+                    </li>
+
 
 
                 </ul>
@@ -131,6 +144,6 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/navbar.js') }}"></script>
 
-
+@yield('js')
 </body>
 </html>

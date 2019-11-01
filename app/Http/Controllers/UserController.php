@@ -186,7 +186,7 @@ class UserController extends Controller
         return $user;
     }
 
-
+/*
     public function update(Request $request){
         $user=$this->getCurrentUser($request);
         if(!$user){
@@ -207,7 +207,7 @@ class UserController extends Controller
             'user' =>$user
         ]);
     }
-
+*/
 
     public function actualizarMail(Request $request){
         $idUsuario = $request->idUsuario;
@@ -288,6 +288,120 @@ class UserController extends Controller
 
         }
     }
+    //
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index()
+    {
+        $usuarios=User::orderBy('idUsuario','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('usuario.index',compact('usuarios'));
+    }
+
+    public function show($id)
+    {
+        $usuarios=User::find($id); //Buscamos el elemento para mostrarlo
+        return  view('usuario.show',compact('usuarios'));
+    }
+
+    public function destroy($id)
+    {
+        User::find($id)->delete(); //Buscamos y eliminamos el elemento
+        return redirect()->route('usuario.index')->with('success','Registro eliminado satisfactoriamente');
+    }
+
+    public function create()
+    {
+        $arregloBuscarRoles=['eliminado'=>0];
+        $arregloBuscarRoles = new Request($arregloBuscarRoles);
+        $rolController = new RolController();
+        $listaRoles=$rolController->buscar($arregloBuscarRoles);
+        $listaRoles = json_decode($listaRoles);
+        return view('usuario.create',['listaRoles'=>$listaRoles]); //Vista para crear el elemento nuevo
+    }
+
+    public function store(Request $request)
+    {
+       
+        //Validamos los datos antes de guardar el elemento nuevo
+        $this->validate($request,['idRol'=>'required', 'nombreUsuario'=>'required','mailUsuario'=>'required','claveUsuario'=>'required']);
+        //Creamos el elemento nuevo
+        User::create($request->all());
+        return redirect()->route('usuario.index')->with('success','Registro creado satisfactoriamente');
+    }
+
+    public function edit($id)
+    {
+        $arregloBuscarRoles=['eliminado'=>0];
+        $arregloBuscarRoles = new Request($arregloBuscarRoles);
+        $rolController = new RolController();
+        $listaRoles=$rolController->buscar($arregloBuscarRoles);
+        $listaRoles = json_decode($listaRoles);
+        $usuario=User::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('usuario.edit',compact('usuario'),['listaRoles'=>$listaRoles]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        //Buscamos el usuario
+        //Validamos los datos antes de guardar el elemento nuevo
+        $this->validate($request,['idRol'=>'required', 'nombreUsuario'=>'required','mailUsuario'=>'required','claveUsuario'=>'required']);
+        User::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
+        return redirect()->route('usuario.index')->with('success','Registro actualizado satisfactoriamente');
+    }
+
+    // Esta funcion busca todas los usuarios con parametros que le enviemos
+    public function buscar(Request $param){      
+        $query = User::OrderBy('idUsuario','ASC'); // Ordenamos los usuarios por este medio
+
+            if (isset($param->idUsuario)){
+                $query->where("usuario.idUsuario",$param->idUsuario);
+            }
+
+            if (isset($param->nombreUsuario)){
+                $query->where("usuario.nombreUsuario",$param->nombreUsuario);
+            }
+
+            if (isset($param->mailUsuario)){
+                $query->where("usuario.mailUsuario",$param->mailUsuario);
+            }
+
+            if (isset($param->auth_key)){
+                $query->where("usuario.auth_key",$param->auth_key);
+            }
+
+            if (isset($param->claveUsuario)){
+                $query->where("usuario.claveUsuario",$param->claveUsuario);
+            }
+
+            if (isset($param->email_verified_at)){
+                $query->where("usuario.email_verified_at",$param->email_verified_at);
+            }
+
+            if (isset($param->idUsuario)){
+                $query->where("usuariol.idUsuario",$param->idUsuario);
+            }
+
+            if (isset($param->idRol)){
+                $query->where("usuario.idRol",$param->idRol);
+            }
+
+            if (isset($param->remember_token)){
+                $query->where("usuario.remember_token",$param->remember_token);
+            }
+
+            if (isset($param->eliminado)){
+                $query->where("usuario.eliminado",$param->eliminado);
+            }
+
+            $listaUsuarios= $query->get();   // Hacemos el get y seteamos en lista
+            
+            return json_encode($listaUsuarios);
+    }
+    
+    
 
 }
 
