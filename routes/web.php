@@ -83,21 +83,16 @@ Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
 
 Route::resource('valoracion', 'ValoracionController');
 
-Route::resource('usuario', 'UserController');
-
 Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
 
 Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.storepanel');
 
 Route::resource('persona', 'PersonaController');
 
-
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
 Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
 Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','Mailvalidado','controlperfil');
-
-
 
 Route::prefix('usuario')->group(function(){
     Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','Mailvalidado');
@@ -122,3 +117,6 @@ Route::prefix('anuncio')->group(function(){
 });
 
 Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('persona.editpanel');
+
+Route::resource('usuario', 'UserController');
+
