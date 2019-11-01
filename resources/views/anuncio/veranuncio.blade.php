@@ -20,7 +20,6 @@
 
             </div>
 
-            @include('anuncio.postulantes',['listaPostulantes'=>$listaPostulantes])
 
 
             @include('comentario.list', ['comentarios' => $trabajo->Comentarios])            
@@ -32,13 +31,20 @@
                 <ul class="list-group list-group-flush" style="width:15rem">
                     <li class="list-group-item">{{$trabajo->titulo}}</li>
                     <li class="list-group-item">${{$trabajo->monto}}</li>
-                    @php
-                        if (!$pagado){ // Si ya se pago este anuncio
-                            $link = json_decode($link); // Decodificamos el link recibido para obtener el smart checkout
-                            # Return the HTML code for button
-                            echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
-                        }
-                    @endphp
+                    
+                        @if(count($personaAsignada)>0)
+                            @php
+                            if (!$pagado){ // Si ya se pago este anuncio
+                                $link = json_decode($link); // Decodificamos el link recibido para obtener el smart checkout
+                                # Return the HTML code for button
+                                echo "<a class='btn btn-success btn-sm' href=$link> Pagar </a>";
+                            }
+                            @endphp
+                        @else
+
+                            <button class='btn btn-success btn-sm' onClick="mostrarModal()" > Elegir un postulante </button>
+                        @endif
+                   
 
                     {{-- Si ya se postulo no mostramos boton postularse --}}
                     @if(!$tienePostulacion) 
@@ -46,17 +52,40 @@
                     @endif    
 
 
-                    <script type="text/javascriptMP">
-                        window.Mercadopago.setPublishableKey(ENV_PUBLIC_KEY);
-                    </script>
+                    
                     
                     
                 </ul>
             </div>
         </div>
     </div>
-</section>
 
+
+      <div id="modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Lista de postulantes</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                @include('anuncio.postulantes',['listaPostulantes'=>$listaPostulantes])
+
+            </div>
+           
+          </div>
+        </div>
+      </div>
+</section>
+<script >
+
+function mostrarModal(){
+    $('#modal').show();
+}
+    </script>
 
 {{-- <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin: auto;">
         <div class="carousel-inner">

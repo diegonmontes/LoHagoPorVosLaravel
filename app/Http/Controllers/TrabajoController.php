@@ -33,8 +33,8 @@ class TrabajoController extends Controller
         /**
          * Show the form for creating a new resource.
          */
-        $arregloBuscarCategorias=['eliminado'=>0];
-        $arregloBuscarProvincias=['eliminado'=>0];
+        $arregloBuscarCategorias=['eliminado' => 0];
+        $arregloBuscarProvincias=['eliminado' => 0];
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $provinciaController = new ProvinciaController();
         $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
@@ -221,6 +221,14 @@ class TrabajoController extends Controller
         }
 
 
+        $trabajoAsignadoControl = new TrabajoasignadoController;
+        $paramTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
+        $paramTrabajoAsignado = new Request($paramTrabajoAsignado);
+        $personaAsignada = $trabajoAsignadoControl->buscar($paramTrabajoAsignado);
+        $personaAsignada = json_decode($personaAsignada);
+     
+
+
         $pagoRecibidoController = new PagorecibidoController();
         $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
         $arregloBuscarPago = new Request($arregloBuscarPago);
@@ -246,19 +254,21 @@ class TrabajoController extends Controller
             $trabajo['imagenCategoria'] = $categoriaTrabajo->imagenCategoriaTrabajo;
         }
 
-        $monto = $trabajo['monto'];
-        $titulo = $trabajo['titulo'];
-        $idTrabajo = $trabajo['idTrabajo'];
-        $arregloTrabajo = ['monto'=>$monto,'titulo'=>$titulo,'idTrabajo'=>$idTrabajo];
-        $requestTrabajo = new Request($arregloTrabajo);
-        $MPController = new MercadoPagoController();
-        $link = $MPController->crearPago($requestTrabajo);
-
+        $link = '#';
+        if(false){
+            $monto = $trabajo['monto'];
+            $titulo = $trabajo['titulo'];
+            $idTrabajo = $trabajo['idTrabajo'];
+            $arregloTrabajo = ['monto'=>$monto,'titulo'=>$titulo,'idTrabajo'=>$idTrabajo];
+            $requestTrabajo = new Request($arregloTrabajo);
+            $MPController = new MercadoPagoController();
+            $link = $MPController->crearPago($requestTrabajo);
+        }
         //Listamos los trabajos para mostrar en un carousel
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'tienePostulacion'=>$tienePostulacion,'pagado'=>$pagado,'listaPostulantes'=>$listaPostulantes]);
+            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'tienePostulacion'=>$tienePostulacion,'pagado'=>$pagado,'listaPostulantes'=>$listaPostulantes,'personaAsignada'=>$personaAsignada]);
         }else{
             return abort(404);
         }
@@ -320,6 +330,11 @@ class TrabajoController extends Controller
 
             if (isset($param->eliminado)){
                 $query->where("trabajo.eliminado",$param->eliminado);
+            }
+
+            if (isset($param->idPersonaDistinto)){
+                $query->where("trabajo.idPersona",'<>',$param->idPersonaDistinto);
+
             }
 
             $listaTrabajos= $query->get();   // Hacemos el get y seteamos en lista
