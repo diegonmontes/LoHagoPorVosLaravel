@@ -23,7 +23,7 @@ class Persona extends Model
 
     public function Trabajo()
     {
-        return $this->hasMany('App\Trabajo', 'idPersona', 'idPersona');
+        return $this->belongsTo('App\Persona', 'idPersona', 'idPersona');
     }
 
     public function Valoracion()

@@ -12,7 +12,7 @@ class Trabajo extends Model
     protected $fillable = ['idTrabajo', 'idEstado', 'idCategoriaTrabajo', 'idPersona', 'idLocalidad','titulo','descripcion','monto', 'imagenTrabajo', 'tiempoExpiracion','eliminado'];
 
     public function CategoriaTrabajo() {
-        return $this->belongsTo('App\CategoriaTrabajo', 'idCategoriaTrabajo', 'idCategoriaTrabajo');
+        return $this->hasOne('App\CategoriaTrabajo', 'idCategoriaTrabajo', 'idCategoriaTrabajo');
     }
 
     public function Persona() {
@@ -20,11 +20,15 @@ class Trabajo extends Model
     }
 
     public function Localidad() {
-        return $this->belongsTo('App\Localidad', 'idLocalidad', 'idLocalidad');
+        return $this->hasOne('App\Localidad', 'idLocalidad', 'idLocalidad');
+    }
+
+    public function Estado() {
+        return $this->hasOne('App\Estado', 'idEstado', 'idEstado');
     }
 
     public function Pagorecibido() {
-        return $this->belongsTo('App\Pagorecibido', 'idTrabajo', 'idTrabajo');
+        return $this->hasOne('App\Pagorecibido', 'idTrabajo', 'idTrabajo');
     }
 
     public function Trabajoaspirante() {
@@ -39,24 +43,14 @@ class Trabajo extends Model
         return $this->hasMany('App\ConversacionChat', 'idTrabajo', 'idTrabajo');
     }
 
-    public function Estadotrabajo()
-    {
-        return $this->hasMany('App\Estadotrabajo', 'idEstadoTrabajo', 'idEstadoTrabajo');
-    }
-
     public function Valoracion()
     {
         return $this->hasMany('App\Valoracion', 'idValoracion', 'idValoracion');
     }
     
-
     public function Comentarios() 
     {
         return $this->hasMany('App\Comentario', 'idTrabajo')->whereNull('idComentarioPadre');
     }
-
-
-    
-
 }
 

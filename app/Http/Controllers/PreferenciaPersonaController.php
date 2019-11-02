@@ -29,12 +29,18 @@ class PreferenciaPersonaController extends Controller
      */
     public function create()
     {
-        $arregloBuscarCategorias=null;
-        $arregloBuscarPersonas=null;
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $personaController = new PersonaController();
-        $listaCategorias=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
-        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+
+        $arregloBuscarCategorias=['eliminado'=>0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategorias = $categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaCategorias = json_decode($listaCategorias);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $listaPersonas = $personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
+
         return view('preferenciapersona.create',['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]); //Vista para crear el elemento nuevo
     }
 
@@ -71,12 +77,18 @@ class PreferenciaPersonaController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarCategorias=null;
-        $arregloBuscarPersonas=null;
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $personaController = new PersonaController();
-        $listaCategorias=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
-        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+
+        $arregloBuscarCategorias=['eliminado'=>0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategorias = $categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaCategorias = json_decode($listaCategorias);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $listaPersonas = $personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
+
         $preferenciaPersona=PreferenciaPersona::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('preferenciapersona.edit',compact('preferenciaPersona'),['listaPersonas'=>$listaPersonas,'listaCategorias'=>$listaCategorias]);
     }

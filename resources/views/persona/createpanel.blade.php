@@ -1,10 +1,8 @@
-@extends('layouts.layout')
+@extends('admin')
 
 @section('jsHead')
-
 	<script src="{{asset('js/buscarLocalidades.js')}}"></script>
 	<script src="{{asset('js/previaImagen.js')}}"></script>
-
 @endsection
 
 @section('content')
