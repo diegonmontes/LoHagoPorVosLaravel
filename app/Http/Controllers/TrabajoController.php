@@ -40,7 +40,9 @@ class TrabajoController extends Controller
         $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
         $arregloBuscarProvincias = new Request($arregloBuscarProvincias);
         $listaCategoriaTrabajo=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaCategoriaTrabajo = json_decode($listaCategoriaTrabajo);
         $listaProvincias=$provinciaController->buscar($arregloBuscarProvincias);
+        $listaProvincias = json_decode($listaProvincias);
         return view('anuncio.index',['provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
     }
 
@@ -52,8 +54,6 @@ class TrabajoController extends Controller
      */
     public function store(Request $request)
     {
-        //Seteamo como 'esperando postulaciones'
-        $request['idTipoTrabajo'] = 1;
         $titulo=$request->titulo;
         $descripcion=$request->descripcion;
         $controller= new Controller;
@@ -184,7 +184,6 @@ class TrabajoController extends Controller
 
         return response()->json($respuesta);
 
- 
     }
 
     
@@ -364,6 +363,13 @@ class TrabajoController extends Controller
    
     }
 
+    public function show($id)
+    {
+        //
+        $trabajo=Trabajo::find($id);
+        return  view('trabajo.show',compact('trabajo'));
+    }
+
 
     public function historial(){
         $controlPersona = new PersonaController;
@@ -376,10 +382,128 @@ class TrabajoController extends Controller
         $paramTrabajos = new Request(['idPersona'=>$idPersona]);
         $listaTrabajos = $this->buscar($paramTrabajos);
         $listaTrabajos = json_decode($listaTrabajos);
-        
-
         return view('anuncio.historial',compact('listaTrabajos'));
-
     }
+
+    // Funciones para mostrar la vista del panel de administrador de trabajo
+
+    public function indexpanel()
+    {
+        //
+        $trabajos=Trabajo::orderBy('idTrabajo','DESC')->paginate(15);
+        return view('trabajo.indexpanel',compact('trabajos'));
+    }
+
+    public function createpanel(){
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $provinciaController = new ProvinciaController();
+        $personaController = new PersonaController();
+        $estadoController = new EstadoController();
+
+        $arregloBuscarCategorias=['eliminado' => 0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategoriaTrabajo=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaCategoriaTrabajo = json_decode($listaCategoriaTrabajo);
+
+        $arregloBuscarProvincias=['eliminado' => 0];
+        $arregloBuscarProvincias = new Request($arregloBuscarProvincias);
+        $listaProvincias=$provinciaController->buscar($arregloBuscarProvincias);
+        $listaProvincias = json_decode($listaProvincias);
+
+        $arregloBuscarPersonas = ['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
+
+        $arregloBuscarEstados = ['eliminado'=>0];
+        $arregloBuscarEstados = new Request($arregloBuscarEstados);
+        $listaEstados=$estadoController->buscar($arregloBuscarEstados);
+        $listaEstados = json_decode($listaEstados);
+
+        return view('trabajo.createpanel',['listaPersonas'=>$listaPersonas,'listaEstados'=>$listaEstados,'provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
+    }
+
+    public function editpanel($id)
+    {   
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $provinciaController = new ProvinciaController();
+        $personaController = new PersonaController();
+        $estadoController = new EstadoController();
+
+        $arregloBuscarCategorias=['eliminado' => 0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategorias=$categoriaTrabajoController->buscar($arregloBuscarCategorias);
+        $listaCategorias = json_decode($listaCategorias);
+
+        $arregloBuscarProvincias=['eliminado' => 0];
+        $arregloBuscarProvincias = new Request($arregloBuscarProvincias);
+        $listaProvincias=$provinciaController->buscar($arregloBuscarProvincias);
+        $listaProvincias = json_decode($listaProvincias);
+
+        $arregloBuscarPersonas = ['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaPersonas = json_decode($listaPersonas);
+
+        $arregloBuscarEstados = ['eliminado'=>0];
+        $arregloBuscarEstados = new Request($arregloBuscarEstados);
+        $listaEstados=$estadoController->buscar($arregloBuscarEstados);
+        $listaEstados = json_decode($listaEstados);
+
+        $arregloBuscarTrabajo = ['idTrabajo'=>$id];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $listaTrabajos = $this->buscar($arregloBuscarTrabajo);
+        $listaTrabajos = json_decode($listaTrabajos);
+        $trabajo = $listaTrabajos[0];
+
+        return view('trabajo.editpanel',compact('trabajo'),['listaPersonas'=>$listaPersonas,'listaEstados'=>$listaEstados,'listaProvincias'=>$listaProvincias,'listaCategorias'=>$listaCategorias]);
+    }
+
+    public function storepanel(Request $request)
+    {    
+        //Seteamo como 'esperando postulaciones'       
+
+        if(isset($request['imagenTrabajo']) && $request['imagenTrabajo']!=null){
+                $imagen=$request->file('imagenTrabajo'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = $request['idPersona'].'fotoTrabajo'.date("YmdHms").'.'. $extension;
+                $request = $request->except('imagenTrabajo'); // Guardamos todo el obj sin la clave imagen trabajo
+                $request['imagenTrabajo']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                $imagen = File::get($imagen);
+                Storage::disk('trabajo')->put($nombreImagen, $imagen);        
+            }
+
+            $mensajesErrores =[             
+                'titulo.required' => 'El titulo es obligatorio.',
+                'titulo.max' => 'Maximo de letras sobrepasado.',
+                'descripcion.required' => 'La descripcion es obligatoria.',
+                'descripcion.max' => 'Maximo de letras sobrepasado.',
+                'monto.required' => 'El monto es obligatorio.',
+                'monto.numeric' => 'Solamente se puede ingresar numeros.',
+                'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio'
+            ] ;
+
+            //Validaciones del trabajo
+            $this->validate($request,[ 'titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required|date','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
+            $request['idEstado'] = 1;
+            if (Trabajo::create($request->all())){
+                return response()->json([
+                    'url' => route('inicio'),
+                    'success'   => true,
+                    'message'   => 'Los datos se han guardado correctamente.' 
+                    ], 200);
+            }
+        
+    }
+
+    public function updatepanel(Request $request)
+    {
+        
+    }   
+       
+                    
+
 }
 

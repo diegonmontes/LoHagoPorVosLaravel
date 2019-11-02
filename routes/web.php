@@ -113,9 +113,18 @@ Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.
 
 Route::post('persona/updatepanel','PersonaController@updatepanel')->name('persona.updatepanel');
 
-
-
 Route::resource('persona', 'PersonaController');
+
+Route::get('trabajo/indexpanel','TrabajoController@indexpanel')->name('trabajo.indexpanel');
+
+Route::get('trabajo/createpanel','TrabajoController@createpanel')->name('trabajo.createpanel');
+
+Route::post('trabajo/storepanel','TrabajoController@storepanel')->name('trabajo.storepanel');
+
+Route::post('trabajo/updatepanel','TrabajoController@updatepanel')->name('trabajo.updatepanel');
+
+Route::resource('trabajo', 'TrabajoController');
+
 
 
 
@@ -150,6 +159,8 @@ Route::prefix('anuncio')->group(function(){
 });
 
 Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('persona.editpanel');
+Route::get('trabajo/{id}/editpanel','TrabajoController@editpanel')->name('trabajo.editpanel');
+
 
 Route::resource('usuario', 'UserController');
 

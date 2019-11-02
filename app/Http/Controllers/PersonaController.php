@@ -40,10 +40,23 @@ class PersonaController extends Controller
      */
     public function create()
     {
+        $habilidadPersonaController = new HabilidadPersonaController();
+        $preferenciaPersonaController = new PreferenciaPersonaController();
+        $provinciaController = new ProvinciaController();
+        $categoriaTrabajoController = new CategoriaTrabajoController();
+        $habilidadController = new HabilidadController();
+
         $idUsuario = Auth::user()->idUsuario;
         $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $listaHabilidadesSeleccionadas = null;
-        $listaPreferenciasSeleccionadas = null;
+        $arregloBuscarHabilidadesSeleccionadas = ['eliminado'=>0];
+        $arregloBuscarHabilidadesSeleccionadas = new Request($arregloBuscarHabilidadesSeleccionadas);
+        $listaHabilidadesSeleccionadas = $habilidadPersonaController->buscar($arregloBuscarHabilidadesSeleccionadas);
+        $listaHabilidadesSeleccionadas = json_decode($listaHabilidadesSeleccionadas);
+        $arregloBuscarPreferenciasSeleccionadas = ['eliminado'=>0];
+        $arregloBuscarPreferenciasSeleccionadas = new Request($arregloBuscarPreferenciasSeleccionadas);
+        $listaPreferenciasSeleccionadas = $preferenciaPersonaController->buscar($arregloBuscarPreferenciasSeleccionadas);
+        $listaPreferenciasSeleccionadas = json_decode($listaPreferenciasSeleccionadas);
+
         if(count($laPersona)){
             $persona = $laPersona[0];
             $existePersona = true;
@@ -54,9 +67,22 @@ class PersonaController extends Controller
             $persona = new Persona;
             $existePersona = false;
         }
-        $provincias=Provincia::all();
-        $habilidades=Habilidad::all();
-        $categoriasTrabajo=CategoriaTrabajo::all();
+
+        $arregloBuscarProvincias = [null];
+        $arregloBuscarProvincias = new Request($arregloBuscarProvincias);
+        $provincias = $provinciaController->buscar($arregloBuscarProvincias);
+        $provincias = json_decode($provincias);
+
+        $arregloBuscarHabilidades = ['eliminado'=>0];
+        $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
+        $habilidades = $habilidadController->buscar($arregloBuscarHabilidades);
+        $habilidades = json_decode($habilidades);
+
+        $arregloBuscarCategorias = ['eliminado'=>0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $categoriasTrabajo = $categoriaTrabajoController ->buscar($arregloBuscarCategorias);
+        $categoriasTrabajo = json_decode($categoriasTrabajo);
+
         return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
     }
 
@@ -275,6 +301,8 @@ class PersonaController extends Controller
      */
     public function update(Request $request)
     {   
+        $habilidadPersonaController = new HabilidadPersonaController();
+        $preferenciaPersonaController = new PreferenciaPersonaController();
         $mensajesErrores =[
             'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
             'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
@@ -352,10 +380,18 @@ class PersonaController extends Controller
             $idPersona=$request->idPersona;
             if (Persona::find($idPersona)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
                     
-                $listaHabilidades = $request->habilidades; // Obtenemos la lista de habilidades
-                foreach ($listaHabilidades as $idHabilidad){ // obtenemos cada uno de los id y lo eliminamos
-                    HabilidadPersona::destroy($idHabilidad);
+                $arregloBuscarHabilidadPersona = ['idPersona'=>$idPersona];
+                $arregloBuscarHabilidadPersona = new Request($arregloBuscarHabilidadPersona);
+                // Creamos el arreglo para que busque todas las habilidades que ya posea este usuario
+                $listaHabilidadesPersona = $habilidadPersonaController->buscar($arregloBuscarHabilidadPersona);
+                $listaHabilidadesPersona = json_decode($listaHabilidadesPersona);
+                // Hacemos la busqueda y obtenemos la lista
+                foreach ($listaHabilidadesPersona as $objHabilidadPersona){ // obtenemos cada uno de los id y lo eliminamos
+                    $idHabilidadPersona = $objHabilidadPersona->idHabilidadPersona;
+                    HabilidadPersona::destroy($idHabilidadPersona);
                 };
+                $listaHabilidades = $request->habilidades; // Obtenemos la lista de habilidades
+                
                 foreach ($listaHabilidades as $key => $valor){
                     $arregloHabilidadPersona = ['idPersona'=>$idPersona,'idHabilidad'=>$valor];
                     $requestHabilidadPersona = new Request($arregloHabilidadPersona);
@@ -363,12 +399,18 @@ class PersonaController extends Controller
                     $habilidadPersonaController->store($requestHabilidadPersona);
                 }
 
-                $listaPreferencias = $request->preferenciaPersona; // Obtenemos la lista de habilidades
-                foreach ($listaPreferencias as $idPreferenciaPersona){ // obtenemos cada uno de los id y lo eliminamos
+                $arregloBuscarPreferenciaPersona = ['idPersona'=>$idPersona];
+                $arregloBuscarPreferenciaPersona = new Request($arregloBuscarPreferenciaPersona);
+                // Creamos el arreglo para que busque todas las habilidades que ya posea este usuario
+                $listaPreferenciasPersona = $preferenciaPersonaController->buscar($arregloBuscarPreferenciaPersona);
+                $listaPreferenciasPersona = json_decode($listaPreferenciasPersona);
+                foreach ($listaPreferenciasPersona as $objPreferenciadPersona){ // obtenemos cada uno de los id y lo eliminamos
+                    $idPreferenciaPersona = $objPreferenciadPersona->idPreferenciaPersona;
                     PreferenciaPersona::destroy($idPreferenciaPersona);
                 };
 
                 // Cargamos las preferencias 
+                $listaPreferencias = $request->preferenciaPersona; // Obtenemos la lista de habilidades
 
                 foreach ($listaPreferencias as $key => $valor){
                     $arregloPreferenciaPersona = ['idPersona'=>$idPersona,'idCategoriaTrabajo'=>$valor];
@@ -376,7 +418,6 @@ class PersonaController extends Controller
                     $PreferenciaPersonaController = new PreferenciaPersonaController();
                     $PreferenciaPersonaController->store($requestHabilidadPersona);
                 }
-
 
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true,'idPersona'=>$idPersona];
@@ -725,7 +766,7 @@ class PersonaController extends Controller
                 // Creamos el arreglo para que busque todas las habilidades que ya posea este usuario
                 $listaHabilidadesPersona = $habilidadPersonaController->buscar($arregloBuscarHabilidadPersona);
                 $listaHabilidadesPersona = json_decode($listaHabilidadesPersona);
-                // Hacemos la busqueda y obtenemos la inda
+                // Hacemos la busqueda y obtenemos la lista
                 foreach ($listaHabilidadesPersona as $objHabilidadPersona){ // obtenemos cada uno de los id y lo eliminamos
                     $idHabilidadPersona = $objHabilidadPersona->idHabilidadPersona;
                     HabilidadPersona::destroy($idHabilidadPersona);
@@ -766,4 +807,4 @@ class PersonaController extends Controller
                         'message'   => 'Los datos se han guardado correctamente.'
                         ], 200);
                 }
-            }
+    }

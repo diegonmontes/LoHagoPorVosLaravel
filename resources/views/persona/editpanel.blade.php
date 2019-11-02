@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('admin')
 
 @section('jsHead')
 
@@ -245,21 +245,21 @@
 
 @section('js')
 
-
 <script type="text/javascript">
     $(document).ready(function(){
-        var valorInicial = $('select#idProvincia').val();
-        cargarLocalidades(valorInicial);
+		var valorInicial = $('select#idProvincia').val();
+		var localidadActual = $('#localidadActual').val();
+        cargarLocalidades(valorInicial,localidadActual);
         
         $("#idProvincia").change(function(){
             var idProvincia = $(this).val();
-            cargarLocalidades(idProvincia);
+            cargarLocalidades(idProvincia,null);
         });
         
         $('#borrarCampos').click(function() {
             $('input[type="text"]').val('');
             $('select[name="idProvincia"]').val('20');
-            cargarLocalidades(20);
+            cargarLocalidades(20,localidadActual);
             $('input[type=checkbox]').prop('checked',false);
         });
     });

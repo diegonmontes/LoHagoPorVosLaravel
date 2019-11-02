@@ -22,7 +22,8 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
-
+    @yield('css')
+    @yield('jsHead')
 
 </head>
 <body>
@@ -124,6 +125,17 @@
                         </a>
                     </li>
 
+                    <li class="list-group-item">
+                        <a href="{{ route('persona.index') }}">
+                            Lista personas
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('trabajo.indexpanel') }}">
+                            Lista trabajos
+                        </a>
+                    </li>
 
 
                 </ul>

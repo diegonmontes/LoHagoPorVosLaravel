@@ -35,7 +35,7 @@
 										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
 									@endforeach
 								</select>
-								</div>
+							</div>
 							<div class="row">
 							<label for="idCategoriaTrabajo">Categoria Trabajo:</label>
 								<select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">

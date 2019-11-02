@@ -88,12 +88,15 @@
 
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
+							@if($existePersona)
+								<input type="hidden" id="localidadActual" name="localidadActual" value={{$persona->localidad->idLocalidad}}>
+							@endif
 								<label for="idProvincia">PROVINCIA</label>
 									<select class="form-control" name="idProvincia" id="idProvincia" style="color: #1e1e27" required>
 									@foreach ($provincias as $unaProvincia)
 										<option value="{{$unaProvincia->idProvincia}}"
 												@if($existePersona)
-													@if($unaProvincia->idProvincia == $persona->idLocalidad)
+													@if($unaProvincia->idProvincia == $persona->localidad->idProvincia)
 														selected
 													@endif
 												@else
@@ -211,13 +214,13 @@
 					<br>
 					<div class="row">
 						<div class="col-xs-12 col-sm-12 col-md-12">
-							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
+							<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
 						</div>
 					</div>
 					<br>
 					<div class="row">
 						<div class="col-xs-6 col-sm-12 col-md-12">
-							<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
+							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
 						</div>
 					</div>
 				</form>
@@ -251,21 +254,26 @@
 
 @section('js')
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
-        var valorInicial = $('select#idProvincia').val();
-        cargarLocalidades(valorInicial);
+		var valorInicial = $('select#idProvincia').val();
+		var localidadActual = $('#localidadActual').val();
+		if (localidadActual!=null){
+			cargarLocalidades(valorInicial,localidadActual);
+		} else {
+			cargarLocalidades(valorInicial,null);
+		}
         
         $("#idProvincia").change(function(){
             var idProvincia = $(this).val();
-            cargarLocalidades(idProvincia);
+            cargarLocalidades(idProvincia,null);
         });
         
         $('#borrarCampos').click(function() {
             $('input[type="text"]').val('');
             $('select[name="idProvincia"]').val('20');
-            cargarLocalidades(20);
+            cargarLocalidades(20,null);
             $('input[type=checkbox]').prop('checked',false);
         });
     });
