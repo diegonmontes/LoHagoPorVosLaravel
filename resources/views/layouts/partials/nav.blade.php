@@ -22,7 +22,8 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{route('persona.create')}}"><i class="fas fa-user"></i> Mi Perfil</a>
-                        <a class="dropdown-item" href="{{route('historial')}}"><i class="fas fa-list"></i> Mis anuncios</a>
+                        <a class="dropdown-item" href="{{route('historial')}}"><i class="fas fa-list"></i> Mis Anuncios</a>
+                        <a class="dropdown-item" href="{{route('mispostulaciones')}}"><i class="fas fa-hands-helping"></i> Mis Postulaciones</a>
 
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();

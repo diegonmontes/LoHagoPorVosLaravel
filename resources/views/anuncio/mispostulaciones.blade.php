@@ -2,31 +2,33 @@
 @extends('layouts.layout')
 @section('content')
 
-@if(count($listaTrabajosTerminados)>0)
-<!-- Anuncios activos -->
-<h2>Mis anuncios esperando confirmacion de finalizacion</h2>
+<!-- Anuncios -->
+
+<!-- Trabajos asignados-->
+<h2>Mis postulaciones asignadas</h2>
+
 <div class="row" style="margin: auto">
-    @foreach($listaTrabajosTerminados as $trabajo)
+    @foreach($listaTrabajosAsignados as $trabajoAsignado)
+    @php $trabajo = $trabajoAsignado->Trabajo @endphp
         <div class="card margenCardInicio">
             <div class="card-body">
                 <h5 class="card-title">{{$trabajo->titulo}}</h5>
                 <p class="card-text">{{$trabajo->descripcion}}</p>
             </div>
             <div class="card-footer">
-                <a href="{{route('trabajo.valor')}}" class="btn btn-sm btn-primary">Valorar el trabajo</a>
+                <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-sm btn-primary">Termine el trabajo</a>
                 <label class="product_price float-right">${{$trabajo->monto}}</label>
             </div>
         </div>
     @endforeach
 </div>
-@endif
 
+<!-- Trabajos aspirantes-->
+<h2>Mis postulaciones pendientes</h2>
 
-@if(count($listaTrabajos)>0)
-<!-- Anuncios activos -->
-<h2>Mis anuncios activos</h2>
 <div class="row" style="margin: auto">
-    @foreach($listaTrabajos as $trabajo)
+    @foreach($listaTrabajosAspirante as $trabajoAspirante)
+    @php $trabajo = $trabajoAspirante->Trabajo @endphp
         <div class="card margenCardInicio">
             <div class="card-body">
                 <h5 class="card-title">{{$trabajo->titulo}}</h5>
@@ -39,6 +41,5 @@
         </div>
     @endforeach
 </div>
-@endif
 
 @endsection

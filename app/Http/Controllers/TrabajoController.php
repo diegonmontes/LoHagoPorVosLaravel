@@ -2,20 +2,25 @@
 
 namespace App\Http\Controllers;
 
+//Autenticacion
+use Auth;
+//Modelos
 use App\CategoriaTrabajo;
 use App\Trabajo;
-use Illuminate\Http\Request;
-use Auth;
 use App\Persona;
 use App\Trabajoaspirante;
+use App\Trabajoasignado;
 use App\Pagorecibido;
-use App\Http\Controllers\MercadoPagoController;
-use App\Http\Controllers\PagorecibidoController;
-use App\Http\Controllers\TrabajoaspiranteController;
-
 use App\Localidad;
 use App\Provincia;
 use App\Comentario;
+//Controladores
+use App\Http\Controllers\MercadoPagoController;
+use App\Http\Controllers\PagorecibidoController;
+use App\Http\Controllers\TrabajoaspiranteController;
+use App\Http\Controllers\TrabajoasignadoController;
+//Vendor
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -231,10 +236,7 @@ class TrabajoController extends Controller
      
 
 
-        $pagoRecibidoController = new PagorecibidoController();
-        $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
-        $arregloBuscarPago = new Request($arregloBuscarPago);
-        $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
+        
         
         if (count($busquedaPostulacion)>0 || $idPersona==$trabajo->persona->idPersona){ // Significa que ya se postulo anteriormente o es su propio anuncio
             $tienePostulacion = true;
@@ -242,6 +244,11 @@ class TrabajoController extends Controller
             $tienePostulacion = false;
         }
         
+
+        $pagoRecibidoController = new PagorecibidoController();
+        $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
+        $arregloBuscarPago = new Request($arregloBuscarPago);
+        $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
 
         if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
             $pagado = true;
@@ -260,7 +267,7 @@ class TrabajoController extends Controller
 
 
 
-        if(false){
+        if(!$pagado){
             $monto = $trabajo['monto'];
             $titulo = $trabajo['titulo'];
             $idTrabajo = $trabajo['idTrabajo'];
@@ -373,13 +380,68 @@ class TrabajoController extends Controller
         $persona = $controlPersona->buscar($param);
         $persona = json_decode($persona);
         $idPersona = $persona[0]->idPersona;
-        $paramTrabajos = new Request(['idPersona'=>$idPersona]);
+        //Buscamos todos los trabajos que anuncio la persona que estan esperando postulaciones
+        $paramTrabajos = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>1]);
         $listaTrabajos = $this->buscar($paramTrabajos);
         $listaTrabajos = json_decode($listaTrabajos);
+        //Buscamos todos los trabajos que anuncio la persona que estan esperando la confirmacion
+        $paramTrabajosTerminados = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>4]);
+        $listaTrabajosTerminados = $this->buscar($paramTrabajosTerminados);
+        $listaTrabajosTerminados = json_decode($listaTrabajosTerminados);
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados]);
+
+    }
+
+
+    public function mispostulaciones(){
+        //Creamos el objeto control persona para poder buscar a la persona que esta logeada
+        $controlPersona = new PersonaController;
+        //Para ello primero vemos quien esta logeado y tomamos su idUsuario
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $controlPersona->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+        //Con el idPersona buscamos los trabajos asignados
+        $listaTrabajosAsignados = Trabajoasignado::select('trabajoasignado.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
+                                                    ->where('trabajoasignado.idPersona','=',$idPersona)
+                                                    ->where('trabajoasignado.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','=',3)
+                                                    ->get();
+      
+        //Con el idPersona buscamos los trabajos que se postulo
+        $listaTrabajosAspirante = Trabajoaspirante::select('trabajoaspirante.idTrabajo')
+                                                    ->join('trabajoasignado','trabajoasignado.idTrabajo','!=','trabajoaspirante.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoaspirante.idTrabajo')
+                                                    ->where('trabajoaspirante.idPersona','=',$idPersona)
+                                                    ->where('trabajoaspirante.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','=',1)
+                                                    ->get();
+           
+        return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante]);
+
+    }
+
+    
+    public function trabajorealizado($idTrabajo){
+        return view('anuncio.trabajorealizado',['idTrabajo'=>$idTrabajo]);
+    }
+
+    public function terminado(Request $request){
+        $idTrabajo = $request->idTrabajo;
+        $trabajo = new Trabajo;
         
+        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>4]);
+        
+        return redirect()->route('inicio')->with('success','Gracias por el trabajo realizado');
 
-        return view('anuncio.historial',compact('listaTrabajos'));
+    }
 
+
+    public function  valor(){
+        return view('anuncio.valoracion');
     }
 }
 

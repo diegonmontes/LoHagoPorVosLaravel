@@ -51,7 +51,7 @@ Route::get('/', function () {
         }else{
             //Si tiene el perfil creado buscamos los anuncios para mostrar
             $idPersona = $persona[0]->idPersona;
-            $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0];
+            $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0,'idEstado'=>1];
             $trabajoController = new TrabajoController();
             $param = new Request($param);
             $listaTrabajos =$trabajoController->buscar($param);
@@ -131,10 +131,17 @@ Route::prefix('usuario')->group(function(){
 });
 
 Route::get('localidad/buscarporid/{id}', 'LocalidadController@buscarporid');
+Route::get('mispostulaciones', 'TrabajoController@mispostulaciones')->name('mispostulaciones')->middleware('auth','Mailvalidado','controlperfil');
+
 Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','Mailvalidado','controlperfil');
 
 
 Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('trabajorealizado/{idTrabajo}', 'TrabajoController@trabajorealizado')->name('trabajorealizado')->middleware('auth','Mailvalidado','controlperfil');
+Route::post('terminado', 'TrabajoController@terminado')->name('trabajo.terminado')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('valor', 'TrabajoController@valor')->name('trabajo.valor')->middleware('auth','Mailvalidado','controlperfil');
+
+
 
 Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');

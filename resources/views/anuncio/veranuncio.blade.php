@@ -1,5 +1,9 @@
 
 @extends('layouts.layout')
+
+
+
+
 @section('content')
 <section class="container h-100">
     <div class="row h-100 justify-content-center ">

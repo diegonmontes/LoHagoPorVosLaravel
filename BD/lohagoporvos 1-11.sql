@@ -290,22 +290,24 @@ INSERT INTO `rol`(`idRol`, `nombreRol`, `descripcionRol`) VALUES (2,'Usuario','U
 INSERT INTO `rol`(`idRol`, `nombreRol`, `descripcionRol`) VALUES (3,'Gestor','Usuario');
 
 
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (1,'Publicado','El anuncio esta publicado');
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (2,'Esperando Postulaciones','El anuncio espera postulaciones');
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (3,'Evaluando Postulaciones','El anunciante esta evaluando las postulaciones');
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Asignado','El anunciante asigno un postulante');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (1,'Esperando Postulaciones','El anuncio esta publicado y esperando las postulaciones');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (2,'Evaluando Postulaciones','El anunciante esta evaluando las postulaciones');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (3,'Asignado','El anunciante asigno un postulante');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Esperando confirmacion','Asignado realizo el trabajo, el anunciante debe confirmar el trabajo realizado');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (5,'Finalizado','Anuncio finalizado');
 
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (3,'Pago de servicios','Pago de servicios',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (4,'Turnos','Turnos',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (5,'Tramites','Tramites',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (7,'Jardin','Jardin',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (8,'Mantenimiento','Mantenimiento',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (9,'Tecnico','Tecnico',NULL);
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (10,'Otro','Otro',NULL);
+
+
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas','categoriaMascota.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto','categoriaAuto.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (3,'Pago de servicios','Pago de servicios','categoriaServicios.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (4,'Turnos','Turnos','categoriaTurnos.png');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (5,'Tramites','Tramites','categoriaTramite.png');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa','categoriaCasa.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (7,'Jardin','Jardin','categoriaJardin.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (8,'Mantenimiento','Mantenimiento','categoriaMantenimiento.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (9,'Tecnico','Tecnico','categoriaTecnico.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (10,'Otro','Otro','categoriaOtro.png');
 
 
 
