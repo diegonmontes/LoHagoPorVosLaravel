@@ -150,4 +150,31 @@ class ValoracionController extends Controller
             return $listaTrabajoAsignado;
     }
 
+    public function valorarpersona(Request $request){
+        $idTrabajo = $request->idTrabajo;
+        //Buscamos la persona asignada que termino el trabajo
+        $controlTrabajoAsignado = new TrabajoasignadoController;
+        //Creamos el arreglo $param que lo utilizaremos para crear el Request y buscar el trabajo asignado
+        $paramTrabajoAsignado = new Request(['idTrabajo'=>$idTrabajo,'eliminado'=>0]);
+        $trabajoAsignado = $controlTrabajoAsignado->buscar($paramTrabajoAsignado);
+        $trabajoAsignado = json_decode($trabajoAsignado);
+        //Ahora obtenemos el idPersona
+        $idPersona = $trabajoAsignado[0]->idPersona;
+        //Y buscamos la persona
+        $controlPersona = new PersonaController;
+        $paramControlPersona = new Request(['idPersona'=>$idPersona, 'eliminado'=>0]);
+        $persona = $controlPersona->buscar($paramControlPersona);
+        $persona = json_decode($persona);
+        $persona = $persona[0];
+        //valoracion
+        $stars = $request->stars;
+        $valoracion = new Valoracion;
+        $paramValoracion = ['idTrabajo'=>$idTrabajo,'idPersona'=>$idPersona,'valor'=>$stars];
+        $valoracion::create($paramValoracion);
+        //Actualizamos el estado del trabajo a finalizado
+        $trabajo = new Trabajo;
+        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>5]);
+        return redirect()->route('inicio')->with('success','Gracias por valorar');
+
+    }
 }

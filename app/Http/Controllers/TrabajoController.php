@@ -438,7 +438,6 @@ class TrabajoController extends Controller
     public function terminado(Request $request){
         $idTrabajo = $request->idTrabajo;
         $trabajo = new Trabajo;
-        
         $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>4]);
         
         return redirect()->route('inicio')->with('success','Gracias por el trabajo realizado');
@@ -446,10 +445,28 @@ class TrabajoController extends Controller
     }
 
 
-    public function  valor(){
-        return view('anuncio.valoracion');
-        return view('anuncio.historial',compact('listaTrabajos'));
+    public function  valor($idTrabajo){
+        //buscamos el trabajo que la persona lo termino y espera que lo valoren
+        $trabajo=Trabajo::where('idTrabajo','=', $idTrabajo)->where(['idEstado'=>4])->where(['eliminado'=>0])->get()[0];
+        //Buscamos la persona asignada que termino el trabajo
+        $controlTrabajoAsignado = new TrabajoasignadoController;
+        //Creamos el arreglo $param que lo utilizaremos para crear el Request y buscar el trabajo asignado
+        $paramTrabajoAsignado = new Request(['idTrabajo'=>$idTrabajo,'eliminado'=>0]);
+        $trabajoAsignado = $controlTrabajoAsignado->buscar($paramTrabajoAsignado);
+        $trabajoAsignado = json_decode($trabajoAsignado);
+        //Ahora obtenemos el idPersona
+        $idPersona = $trabajoAsignado[0]->idPersona;
+        //Y buscamos la persona
+        $controlPersona = new PersonaController;
+        $paramControlPersona = new Request(['idPersona'=>$idPersona, 'eliminado'=>0]);
+        $persona = $controlPersona->buscar($paramControlPersona);
+        $persona = json_decode($persona);
+        $persona = $persona[0];
+        //Enviamos los datos a la vista para mostrar la informacion
+        return view('anuncio.valoracion',['trabajo'=>$trabajo,'persona'=>$persona]);
     }
+
+    
 
     // Funciones para mostrar la vista del panel de administrador de trabajo
 

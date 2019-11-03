@@ -75,7 +75,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('Mailvalidado');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('mailvalidado');
 
 Route::resource('provincia', 'ProvinciaController');
 
@@ -130,29 +130,30 @@ Route::resource('trabajo', 'TrabajoController');
 
 Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
-Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','Mailvalidado','controlperfil');
+Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','mailvalidado','controlperfil');
 
 Route::prefix('usuario')->group(function(){
-    Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','Mailvalidado');
+    Route::get('perfil','PersonaController@create')->name('persona.create')->middleware('auth','mailvalidado');
     Route::get('editar','PersonaController@edit')->name('persona.edit')->middleware('auth','controlperfil');
     Route::post('store','PersonaController@store')->name('persona.store');
     Route::post('update','PersonaController@update')->name('persona.update');
 });
 
 Route::get('localidad/buscarporid/{id}', 'LocalidadController@buscarporid');
-Route::get('mispostulaciones', 'TrabajoController@mispostulaciones')->name('mispostulaciones')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('mispostulaciones', 'TrabajoController@mispostulaciones')->name('mispostulaciones')->middleware('auth','mailvalidado','controlperfil');
 
-Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','Mailvalidado','controlperfil');
-
-
-Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
-Route::get('trabajorealizado/{idTrabajo}', 'TrabajoController@trabajorealizado')->name('trabajorealizado')->middleware('auth','Mailvalidado','controlperfil');
-Route::post('terminado', 'TrabajoController@terminado')->name('trabajo.terminado')->middleware('auth','Mailvalidado','controlperfil');
-Route::get('valor', 'TrabajoController@valor')->name('trabajo.valor')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('historial', 'TrabajoController@historial')->name('historial')->middleware('auth','mailvalidado','controlperfil');
 
 
+Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','mailvalidado','controlperfil');
+Route::get('trabajorealizado/{idTrabajo}', 'TrabajoController@trabajorealizado')->name('trabajorealizado')->middleware('auth','mailvalidado','controlperfil');
+Route::post('terminado', 'TrabajoController@terminado')->name('trabajo.terminado')->middleware('auth','mailvalidado','controlperfil');
+Route::get('valorar/{idTrabajo}', 'TrabajoController@valor')->name('trabajo.valor')->middleware('auth','mailvalidado','controlperfil');
+Route::post('valorarpersona', 'ValoracionController@valorarpersona')->name('trabajo.valorarpersona')->middleware('auth','mailvalidado','controlperfil');
 
-Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
+
+
+Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','mailvalidado','controlperfil');
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
 Route::get('postulantes/{id}','TrabajoController@postulantes')->name('anuncio.postulante')->middleware('auth','controlperfil');
 
@@ -160,7 +161,7 @@ Route::get('postulantes/{id}','TrabajoController@postulantes')->name('anuncio.po
 Route::get('validarMail/{auth}/{id}','UserController@validarMail')->name('validarmail');
 
 Route::prefix('anuncio')->group(function(){
-    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','Mailvalidado');
+    Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','mailvalidado');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
     Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago'); 
 });

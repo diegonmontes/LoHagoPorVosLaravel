@@ -13,7 +13,7 @@
                 <p class="card-text">{{$trabajo->descripcion}}</p>
             </div>
             <div class="card-footer">
-                <a href="{{route('trabajo.valor')}}" class="btn btn-sm btn-primary">Valorar el trabajo</a>
+                <a href="{{route('trabajo.valor',$trabajo->idTrabajo)}}" class="btn btn-sm btn-primary">Valorar el trabajo</a>
                 <label class="product_price float-right">${{$trabajo->monto}}</label>
             </div>
         </div>
