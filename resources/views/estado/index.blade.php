@@ -5,13 +5,14 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                            <h3>Lista de estados</h3>
+                            <h3>Estados</h3>
                     </td>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                         <a href="{{ route('estado.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir un estado</a>
                     </td>
                 </tr>
                     <tr>
+                        <th>ID Estado </th>
                         <th>Estado</th>
                         <th>Descripcion</th>
                         <th colspan="1">Editar</th>
@@ -22,6 +23,7 @@
             @if($estados->count())
                 @foreach($estados as $estado)
                     <tr>
+                        <td>{{$estado->idEstado}}</td>
                         <td>{{$estado->nombreEstado}}</td>
                         <td>{{$estado->descripcionEstado}}</td>
                         <td><a class="btn btn-primary btn-sm" href="{{action('EstadoController@edit', $estado->idEstado)}}" ><i class="fas fa-edit"></i></a></td>

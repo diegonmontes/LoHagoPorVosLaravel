@@ -10,7 +10,6 @@
     <link rel="shortcut icon" href="images/lohagoporvos.ico">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
-
     <!-- Styles -->
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/app.css') }}">
@@ -30,7 +29,7 @@
 @include('layouts.partials.nav')
 <div class="container-fluid">
     <div class="row" style="margin: 0px !important;">
-        <h1>Administrador</h1>
+        <h1>Panel de Administraci&oacute;n</h1>
     </div>
     <div class="row">
         <div class="col-md-3">
@@ -39,104 +38,119 @@
                 <ul class="list-group">
 
                     <li class="list-group-item">
-                        <a href="{{ route('rol.index') }}">
-                        Roles
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('provincia.index') }}">
-                        Provincias
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('localidad.index') }}">
-                            Localidades
-                        </a>
-                    </li>
-                    <li class="list-group-item">
                         <a href="{{ route('categoriatrabajo.index') }}">
-                            Categorias de trabajo
+                            Categor&iacute;as de trabajo
                         </a>
                     </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('estado.index') }}">
-                            Lista de estados
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('habilidad.index') }}">
-                            Lista de habilidades
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('habilidadpersona.index') }}">
-                            Lista de habilidades persona
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('preferenciapersona.index') }}">
-                            Lista de Preferencias persona
-                        </a>
-                    </li>
-                    <li class="list-group-item">
-                        <a href="{{ route('conversacionchat.index') }}">
-                            Lista de Conversaciones
-                        </a>
-                    </li>
+
                     <li class="list-group-item">
                         <a href="{{ route('mensajechat.index') }}">
-                            Lista de Mensajes
+                            Comentarios (FALTA)
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('conversacionchat.index') }}">
+                            Conversaciones
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('estado.index') }}">
+                            Estados
                         </a>
                     </li>
 
                     <li class="list-group-item">
                         <a href="{{ route('estadotrabajo.index') }}">
-                            Estados Trabajos
+                            Historial de estados de los trabajos
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('habilidad.index') }}">
+                            Habilidades
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('habilidadpersona.index') }}">
+                            Habilidades de las personas
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('localidad.index') }}">
+                            Localidades
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('mensajechat.index') }}">
+                            Mensajes
                         </a>
                     </li>
 
                     <li class="list-group-item">
                         <a href="{{ route('pagorecibido.index') }}">
-                            Pago Recibido
+                            Pagos recibidos
                         </a>
                     </li>
 
                     <li class="list-group-item">
-                        <a href="{{ route('trabajoaspirante.index') }}">
-                            Trabajo Aspirante
+                        <a href="{{ route('persona.index') }}">
+                            Personas
                         </a>
                     </li>
 
+                    <li class="list-group-item">
+                        <a href="{{ route('preferenciapersona.index') }}">
+                            Preferencias de las personas
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('provincia.index') }}">
+                            Provincias
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('rol.index') }}">
+                        Roles
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('trabajo.indexpanel') }}">
+                            Trabajos 
+                        </a>
+                    </li>
+                    
                     <li class="list-group-item">
                         <a href="{{ route('trabajoasignado.index') }}">
-                            Trabajo asignado
+                            Trabajo Asignado
                         </a>
                     </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('trabajoaspirante.indexpanel') }}">
+                            Trabajos Aspirantes
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('usuario.index') }}">
+                            Usuarios
+                        </a>
+                    </li>
+                    
 
                     <li class="list-group-item">
                         <a href="{{ route('valoracion.index') }}">
                             Valoracion
                         </a>
                     </li>
-
-                    <li class="list-group-item">
-                        <a href="{{ route('usuario.index') }}">
-                            Lista usuarios
-                        </a>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="{{ route('persona.index') }}">
-                            Lista personas
-                        </a>
-                    </li>
-
-                    <li class="list-group-item">
-                        <a href="{{ route('trabajo.indexpanel') }}">
-                            Lista trabajos
-                        </a>
-                    </li>
-
 
                 </ul>
             </div>

@@ -6,7 +6,7 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Trabajos</h3>
+                        <h3>Trabajos</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{route('trabajo.createpanel')}}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Trabajo</a>

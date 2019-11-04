@@ -30,8 +30,25 @@
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
+							<label for="idTrabajo">Trabajo:</label>
+							<select class="form-control" name="idTrabajo" id="idTrabajo">
+							<option value="" selected disabled>Seleccione un trabajo </option>
+								@foreach($listaTrabajos as $trabajo)
+									<option value="{{$trabajo->idTrabajo}}"
+										@if($trabajoAsignado->trabajo->idTrabajo == $trabajo->idTrabajo){
+											selected
+											}
+										@endif>
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="row">
 							<label for="idPersona">Persona:</label>
 							<select class="form-control" name="idPersona" id="idPersona">
+								<option value="" selected disabled>Seleccione una persona </option>
 								@foreach($listaPersonas as $persona)
 									<option value="{{$persona->idPersona}}"
 										@if($trabajoAsignado->persona->idPersona == $persona->idPersona){
@@ -44,20 +61,6 @@
 							</select>
 						</div>
 
-						<div class="row">
-							<label for="idTrabajo">Trabajo:</label>
-							<select class="form-control" name="idTrabajo" id="idTrabajo">
-								@foreach($listaTrabajos as $trabajo)
-									<option value="{{$trabajo->idTrabajo}}"
-										@if($trabajoAsignado->trabajo->idTrabajo == $trabajo->idTrabajo){
-											selected
-											}
-										@endif>
-										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
-									</option>
-								@endforeach
-							</select>
-						</div>
 						<br/>
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
@@ -81,10 +84,10 @@
 				},
 				messages: {
 					idTrabajo: {
-						required: "Por favor ingrese el nombre del estado",
+						required: "Por favor seleccione un trabajo",
 					},
 					idPersona: {
-						required: "Por favor ingrese una persona",
+						required: "Por favor seleccione una persona",
 					},
 				}
 			});

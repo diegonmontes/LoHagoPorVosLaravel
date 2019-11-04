@@ -103,7 +103,7 @@ class EstadoController extends Controller
 
    // Esta funcion busca todas los estados con parametros que le enviemos
    public function buscar(Request $param){      
-        $query = Estado::OrderBy('idEstado','ASC'); // Ordenamos los estados por este medio
+        $query = Estado::OrderBy('idEstado','DESC'); // Ordenamos los estados por este medio
 
         if (isset($param->idEstado)){
             $query->where("estado.idEstado",$param->idEstado);

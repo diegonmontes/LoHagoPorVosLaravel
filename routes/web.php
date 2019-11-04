@@ -103,8 +103,6 @@ Route::resource('pagorecibido', 'PagorecibidoController');
 
 Route::resource('trabajoasignado', 'TrabajoasignadoController');
 
-Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
-
 Route::resource('valoracion', 'ValoracionController');
 
 Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
@@ -124,6 +122,18 @@ Route::post('trabajo/storepanel','TrabajoController@storepanel')->name('trabajo.
 Route::post('trabajo/updatepanel','TrabajoController@updatepanel')->name('trabajo.updatepanel');
 
 Route::resource('trabajo', 'TrabajoController');
+
+Route::get('trabajoaspirante/indexpanel','TrabajoaspiranteController@indexpanel')->name('trabajoaspirante.indexpanel');
+
+Route::get('trabajoaspirante/createpanel','TrabajoaspiranteController@createpanel')->name('trabajoaspirante.createpanel');
+
+Route::post('trabajoaspirante/storepanel','TrabajoaspiranteController@storepanel')->name('trabajoaspirante.storepanel');
+
+Route::post('trabajoaspirante/updatepanel','TrabajoaspiranteController@updatepanel')->name('trabajoaspirante.updatepanel');
+
+Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
+
+
 
 
 
@@ -167,6 +177,8 @@ Route::prefix('anuncio')->group(function(){
 
 Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('persona.editpanel');
 Route::get('trabajo/{id}/editpanel','TrabajoController@editpanel')->name('trabajo.editpanel');
+Route::get('trabajoaspirante/{id}/editpanel','TrabajoaspiranteController@editpanel')->name('trabajoaspirante.editpanel');
+
 
 
 Route::resource('usuario', 'UserController');

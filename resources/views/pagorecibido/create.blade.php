@@ -30,6 +30,7 @@
 							<div class="row">
 							<label for="idTrabajo">Trabajo:</label>
 								<select class="form-control" name="idTrabajo" id="idTrabajo">
+									<option value="" selected disabled>Seleccione un trabajo </option>
 									@foreach($listaTrabajos as $trabajo)
 										<option value="{{$trabajo->idTrabajo}}">
 										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
@@ -181,7 +182,7 @@
 							number: "Por favor, ingrese solo numeros y separados por un punto(.)",
 						},
 						metodo: {
-							required: "Por favor ingrese un metodo",
+							required: "Por favor ingrese un m%eacute;todo",
 							maxlength: "M&aacute;ximo de letras sobrepasado",
 						},
 						tarjeta: {

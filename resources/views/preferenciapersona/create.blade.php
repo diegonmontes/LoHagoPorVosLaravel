@@ -30,6 +30,7 @@
 							<div class="row">
 								<label for="idPersona">Persona:</label>
 								<select class="form-control" name="idPersona" id="idPersona">
+								<option value="" selected disabled>Seleccione una persona </option>
 									@foreach($listaPersonas as $persona)
 										<option value="{{$persona->idPersona}}">
 										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
@@ -39,6 +40,7 @@
 							<div class="row">
 							<label for="idCategoriaTrabajo">Categoria Trabajo:</label>
 								<select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
+								<option value="" selected disabled>Seleccione una categor&iacute;a </option>
 									@foreach($listaCategorias as $categoria)
 										<option value="{{$categoria->idCategoriaTrabajo}}">
 										{{$categoria->idCategoriaTrabajo." - ".$categoria->nombreCategoriaTrabajo}}</option>
@@ -70,7 +72,7 @@
 				},
 				messages: {
 					idCategoriaTrabajo: {
-						required: "Por favor seleccione una categoria",
+						required: "Por favor seleccione una categor&iacute;a",
 						digits: "La categoria seleccionada es incorrecta",
 					},
 					idPersona: {

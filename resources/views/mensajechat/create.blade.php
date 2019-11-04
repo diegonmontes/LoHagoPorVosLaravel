@@ -30,6 +30,7 @@
 							<div class="row">
 								<label for="idConversacionChat">Conversacion:</label>
 								<select class="form-control" name="idConversacionChat" id="idConversacionChat">
+								<option value="" selected disabled>Seleccione una conversaci&oacute;n </option>
 									@foreach($listaConversaciones as $conversacion)
 										<option value="{{$conversacion->idConversacionChat}}">
 										{{$conversacion->idConversacionChat}}</option>
@@ -40,6 +41,8 @@
 							<div class="row">
 								<label for="idPersona">Persona:</label>
 								<select class="form-control" name="idPersona" id="idPersona">
+								<option value="" selected disabled>Seleccione una persona </option>
+
 									@foreach($listaPersonas as $persona)
 										<option value="{{$persona->idPersona}}">
 										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
@@ -70,7 +73,7 @@
 		<script>
 			$("#formMensajeChat").validate({
 					rules: {
-						idConversacion: {
+						idConversacionChat: {
 							required: true,
 							digits: true,
 						},
@@ -85,8 +88,8 @@
 						}
 					},
 					messages: {
-						idConversacion: {
-							required: "Por favor seleccione una conversacion",
+						idConversacionChat: {
+							required: "Por favor seleccione una conversaci&oacute;n",
 							digits: "La conversacion seleccionada es incorrecta",
 						},
 						mensaje: {

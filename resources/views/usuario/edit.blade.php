@@ -29,22 +29,6 @@
 					<form method="POST" id="formUsuario" name="formUsuario" action="{{ route('usuario.update',$usuario->idUsuario) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
-						
-
-						<div class="row">
-							<label for="idRol">ID Rol:</label>
-							<select class="form-control" name="idRol" id="idRol">
-								@foreach($listaRoles as $rol)
-									<option value="{{$rol->idRol}}"
-										@if($usuario->rol->idRol == $rol->idRol){
-											selected
-											}
-										@endif>
-										{{$rol->idRol."- ".$rol->nombreRol}}
-									</option>
-								@endforeach
-							</select>
-						</div>
 
 						
 						<div class="row">
@@ -66,6 +50,22 @@
 								<label>Clave:</label><br>
 								<input type="text" name="claveUsuario" id="claveUsuario" class="form-control input-sm" value="{{$usuario->claveUsuario}}">
 							</div>
+						</div>
+
+						<div class="row">
+							<label for="idRol">ID Rol:</label>
+							<select class="form-control" name="idRol" id="idRol">
+							<option value="" selected disabled>Seleccione un rol</option>
+								@foreach($listaRoles as $rol)
+									<option value="{{$rol->idRol}}"
+										@if($usuario->rol->idRol == $rol->idRol){
+											selected
+											}
+										@endif>
+										{{$rol->idRol."- ".$rol->nombreRol}}
+									</option>
+								@endforeach
+							</select>
 						</div>
 
 						<div class="row">

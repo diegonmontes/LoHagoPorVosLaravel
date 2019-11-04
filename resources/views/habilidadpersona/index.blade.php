@@ -5,7 +5,7 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista habilidades persona</h3>
+                        <h3>Habilidades de las personas</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('habilidadpersona.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Habilidad a persona</a>

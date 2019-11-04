@@ -43,6 +43,7 @@
 					<div class="row">
 						<label for="idProvincia">Provincia:</label>
 						<select class="form-control" name="idProvincia" id="idProvincia">
+						<option value="" selected disabled>Seleccione una provincia </option>
 							@foreach($provincias as $unaProvincia)
 								<option value="{{$unaProvincia->idProvincia}}"
 									@if($localidad->provincia->idProvincia == $unaProvincia->idProvincia){

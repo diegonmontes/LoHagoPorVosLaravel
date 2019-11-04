@@ -30,10 +30,10 @@
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<input type="hidden" name="idTrabajo" id="idTrabajo"value="{{$conversacion->trabajo->idTrabajo}}">
-
 						<div class="row">
 							<label for="idTrabajo">Trabajo:</label>
 							<select class="form-control" name="idTrabajo" id="idTrabajo">
+							<option value="" selected disabled>Seleccione un trabajo</option>
 								@foreach($listaTrabajos as $trabajo)
 									<option value="{{$trabajo->idTrabajo}}"
 										@if($conversacion->trabajo->idTrabajo == $trabajo->idTrabajo){
@@ -49,6 +49,7 @@
 						<div class="row">
 							<label for="idPersona1">Persona 1:</label>
 							<select class="form-control" name="idPersona1" id="idPersona1">
+							<option value="" selected disabled>Seleccione una persona</option>
 								@foreach($listaPersonas as $persona)
 									<option value="{{$persona->idPersona}}"
 										@if($conversacion->persona1->idPersona == $persona->idPersona){
@@ -64,6 +65,8 @@
 						<div class="row">
 							<label for="idPersona2">Persona 2:</label>
 							<select class="form-control" name="idPersona2" id="idPersona2">
+							<option value="" selected disabled>Seleccione una persona</option>
+
 								@foreach($listaPersonas as $persona)
 									<option value="{{$persona->idPersona}}"
 										@if($conversacion->persona2->idPersona == $persona->idPersona){
@@ -75,6 +78,7 @@
 								@endforeach
 							</select>
 						</div>
+						<br/>
 
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
@@ -86,7 +90,7 @@
 			<script>
 			$.validator.addMethod("distintasPersonas", function(value, element) {
 				return $('#idPersona1').val() != $('#idPersona2').val()
-				}, "Debe seleccionar otra persona. No pueden coincidir");
+				}, "Debe seleccionar otra persona. No pueden ser las mismas.");
 
 			$("#formConversacionChat").validate({
 				rules: {
@@ -107,13 +111,13 @@
 				},
 				messages: {
 					idTrabajo: {
-						required: "Por favor ingrese el nombre del estado",
+						required: "Por favor seleccione un trabajo",
 					},
 					idPersona1: {
-						required: "Por favor ingrese una persona",
+						required: "Por favor seleccione una persona",
 					},
 					idPersona2: {
-						required: "Por favor ingrese una persona",
+						required: "Por favor seleccione una persona",
 					},
 				}
 			});

@@ -20,7 +20,7 @@ class ConversacionChatController extends Controller
      */
     public function index()
     {
-        $conversaciones=ConversacionChat::orderBy('idConversacionChat','ASC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $conversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('conversacionchat.index',compact('conversaciones'));
     }
 
@@ -124,7 +124,7 @@ class ConversacionChatController extends Controller
 
     // Esta funcion busca todas las conversaciones con parametros que le enviemos
     public function buscar(Request $param){      
-        $query = ConversacionChat::OrderBy('idConversacionChat','ASC'); // Ordenamos las conversaciones por este medio
+        $query = ConversacionChat::OrderBy('idConversacionChat','DESC'); // Ordenamos las conversaciones por este medio
            
             if (isset($param->idConversacionChat)){
                 $query->where("conversacionchat.idConversacionChat",$param->idConversacionChat);

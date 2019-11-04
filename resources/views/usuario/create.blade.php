@@ -30,6 +30,7 @@
 							<div class="row">
 								<label for="idRol">Rol:</label>
 								<select class="form-control" name="idRol" id="idRol">
+								<option value="" selected disabled>Seleccione un rol</option>
 									@foreach($listaRoles as $rol)
 										<option value="{{$rol->idRol}}">
 										{{$rol->idRol." - ".$rol->nombreRol}}</option>

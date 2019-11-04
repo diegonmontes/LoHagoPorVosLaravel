@@ -5,7 +5,7 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Usuarios</h3>
+                        <h3>Usuarios</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('usuario.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Usuario</a>
@@ -15,12 +15,8 @@
                         <th>Id Usuario</th>
                         <th>Nombre Usuario</th>
                         <th>Mail Usuario</th>
-                        <th>Auth Key</th>
-                        <th>Clave Usuario</th>
                         <th>Rol</th>
-                        <th>Mail Verificado</th>
-                        <th>Remember token</th>
-                        
+                        <th>Mail Verificado</th>                        
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
@@ -33,13 +29,8 @@
                         <td>{{$usuario->idUsuario}}</td>
                         <td>{{$usuario->nombreUsuario}}</td>
                         <td>{{$usuario->mailUsuario}}</td>
-                        <td>{{$usuario->auth_key}}</td>
-                        <td>{{$usuario->claveUsuario}}</td>
                         <td>{{$usuario->rol->idRol.' - '.$usuario->rol->nombreRol}}</td>
                         <td>{{$usuario->email_verified_at}}</td>
-                        <td>{{$usuario->remember_token}}</td>
-                        
-
 
                         <td><a class="btn btn-primary btn-sm" href="{{action('UserController@edit', $usuario->idUsuario)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>

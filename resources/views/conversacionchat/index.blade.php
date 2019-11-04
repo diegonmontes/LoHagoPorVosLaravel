@@ -5,22 +5,21 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Conversaciones</h3>
+                        <h3>Conversaciones</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('conversacionchat.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Conversacion</a>
                     </td>
                 </tr>
-                    <tr>
-                        <th>IdConversacion</th>
-                        <th>Trabajo </th>
-                        <th>Persona 1</th>
-                        <th>Persona 2</th>
-                        
-    
-                        <th colspan="1">Editar</th>
-                        <th colspan="1">Eliminar</th>
-                    </tr>
+                <tr>
+                    <th>IdConversacion</th>
+                    <th>Trabajo </th>
+                    <th>Persona 1</th>
+                    <th>Persona 2</th>
+                    <th colspan="1">Editar</th>
+                    <th colspan="1">Eliminar</th>
+                </tr>
+                    
             </thead>
             <tbody>
             @if($conversaciones->count())

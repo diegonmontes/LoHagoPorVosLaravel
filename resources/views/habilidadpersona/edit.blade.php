@@ -31,23 +31,9 @@
 						<input name="_method" type="hidden" value="PATCH">
 						
 						<div class="row">
-							<label for="idHabilidad">Habilidad:</label>
-							<select class="form-control" name="idHabilidad" id="idHabilidad">
-								@foreach($listaHabilidades as $habilidad)
-									<option value="{{$habilidad->idHabilidad}}"
-										@if($habilidadPersona->habilidad->idHabilidad == $habilidad->idHabilidad){
-											selected
-											}
-										@endif>
-										{{$habilidad->idHabilidad." - ".$habilidad->nombreHabilidad}}
-									</option>
-								@endforeach
-							</select>
-						</div>
-
-						<div class="row">
 							<label for="idPersona">Persona:</label>
 							<select class="form-control" name="idPersona" id="idPersona">
+							<option value="" selected disabled>Seleccione una persona </option>
 								@foreach($listaPersonas as $persona)
 									<option value="{{$persona->idPersona}}"
 										@if($habilidadPersona->persona->idPersona == $persona->idPersona){
@@ -60,6 +46,23 @@
 							</select>
 						</div>
 
+						<div class="row">
+							<label for="idHabilidad">Habilidad:</label>
+							<select class="form-control" name="idHabilidad" id="idHabilidad">
+							<option value="" selected disabled>Seleccione una habilidad </option>
+								@foreach($listaHabilidades as $habilidad)
+									<option value="{{$habilidad->idHabilidad}}"
+										@if($habilidadPersona->habilidad->idHabilidad == $habilidad->idHabilidad){
+											selected
+											}
+										@endif>
+										{{$habilidad->idHabilidad." - ".$habilidad->nombreHabilidad}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+						
+						<br/>
 
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">

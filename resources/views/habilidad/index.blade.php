@@ -5,13 +5,14 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista habilidades</h3>
+                        <h3>Habilidades</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('habilidad.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Habilidad</a>
                     </td>
                 </tr>
                     <tr>
+                        <th>ID Habilidad</th>
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Imagen</th>
@@ -23,6 +24,7 @@
             @if($habilidades->count())
                 @foreach($habilidades as $habilidad)
                     <tr>
+                        <td>{{$habilidad->idHabilidad}}</td>
                         <td>{{$habilidad->nombreHabilidad}}</td>
                         <td>{{$habilidad->descripcionHabilidad}}</td>
                         <td><img src="storage/trabajos/{{$habilidad->imagenHabilidad}}"width="100px;" height=></td>

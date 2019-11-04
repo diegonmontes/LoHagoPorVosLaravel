@@ -5,13 +5,14 @@
       <thead class="thead-dark">
           <tr>
               <td colspan="3" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                  <h3>Lista de localidades</h3>
+                  <h3>Localidad</h3>
               </td>
               <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                     <a href="{{ route('localidad.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Localidad</a>
               </td>
           </tr>
           <tr>
+              <th>ID Localidad</th>
               <th>Localidad</th>
               <th>Codigo Postal</th>
               <th>Provincia</th>
@@ -23,6 +24,7 @@
               @if($localidades->count())  
               @foreach($localidades as $localidad)
               <tr>
+                <td>{{$localidad->idLocalidad}}</td>
                 <td>{{$localidad->nombreLocalidad}}</td>
                 <td>{{$localidad->codigoPostal}}</td>
                 <td>{{$localidad->provincia->nombreProvincia}}</td>

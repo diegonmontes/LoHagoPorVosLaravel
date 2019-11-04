@@ -16,7 +16,7 @@ class HabilidadController extends Controller
      */
     public function index()
     {
-        $habilidades=Habilidad::orderBy('idHabilidad','ASC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $habilidades=Habilidad::orderBy('idHabilidad','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('habilidad.index',compact('habilidades'));
     }
 

@@ -5,32 +5,30 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Valoraciones</h3>
+                        <h3>Trabajos aspirantes</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                            <a href="{{ route('valoracion.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Valoracion</a>
-                    </td>
+                            <a href="{{ route('trabajoaspirante.createpanel') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Asignar un trabajo</a>
+                      </td>
                 </tr>
                     <tr>
-                        <th>Id Valoracion</th>
-                        <th>valor</th>
-                        <th>Persona</th>
+                        <th>Id Trabajo Aspirante</th>
                         <th>Trabajo</th>
+                        <th>Persona</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
             </thead>
             <tbody>
-            @if($valoraciones->count())
-                @foreach($valoraciones as $valoracion)
+            @if($trabajosAspirantes->count())
+                @foreach($trabajosAspirantes as $trabajoAspirante)
                     <tr>
-                        <td>{{$valoracion->idValoracion}}</td>
-                        <td>{{$valoracion->valor}}</td>
-                        <td>{{$valoracion->persona->idPersona." - ".$valoracion->persona->nombrePersona." ".$valoracion->persona->apellidoPersona}}</td>
-                        <td>{{$valoracion->trabajo->idTrabajo." - ".$valoracion->trabajo->titulo}}</td>
-                        <td><a class="btn btn-primary btn-sm" href="{{action('ValoracionController@edit', $valoracion->idValoracion)}}" ><i class="fas fa-edit"></i></a></td>
+                        <td>{{$trabajoAspirante->idTrabajoAspirante}}</td>
+                        <td>{{$trabajoAspirante->persona->idPersona." - ".$trabajoAspirante->persona->nombrePersona." ".$trabajoAspirante->persona->apellidoPersona}}</td>
+                        <td>{{$trabajoAspirante->trabajo->idTrabajo." - ".$trabajoAspirante->trabajo->titulo}}</td>
+                        <td><a class="btn btn-primary btn-sm" href="{{action('TrabajoaspiranteController@editpanel', $trabajoAspirante->idTrabajoAspirante)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
-                            <form action="{{action('ValoracionController@destroy', $valoracion->idValoracion)}}" method="post">
+                            <form action="{{action('TrabajoaspiranteController@destroy', $trabajoAspirante->idTrabajoAspirante)}}" method="post">
                                 {{ csrf_field() }}
                                 <input name="_method" type="hidden" value="DELETE">
                                 <button class="btn btn-danger btn-sm" type="submit"><i class="far fa-trash-alt"></i></button>
@@ -45,7 +43,7 @@
             @endif
             </tbody>
         </table>
-            {{ $valoraciones->links() }}
+            {{ $trabajosAspirantes->links() }}
 </section>
 
 @endsection
