@@ -215,58 +215,72 @@ class TrabajoController extends Controller
     public function veranuncio($idTrabajo){
         //Buscamos el trabajo por el id para mostrar
         $trabajo =  Trabajo::find($idTrabajo);
-        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get(); //Obtenemos el objeto Persona
-        $idPersona=$persona[0]->idPersona; //Obtenemos el id de la persona
-        // Verificamos si ya se postulo a este trabajo. Si se postulo,no mostramos el mensaje de postularse nuevamente
-        $busquedaPostulacion = Trabajoaspirante::where('idPersona','=',$idPersona)->where('idTrabajo','=',$idTrabajo)->get();
-        
-        $listaPostulantes = array();
-        if($trabajo->idPersona == $persona[0]->idPersona){
-            $listaPostulantes = Trabajoaspirante::where('idTrabajo','=',$idTrabajo)->where('eliminado','=',0)->get();
-        }
-        
+        // Obtenemos el id usuario para obtener el id persona
+        $idUsuario = Auth::user()->idUsuario;
+        //Obtenemos el objeto Persona
+        $persona = Persona::where('idUsuario','=',$idUsuario)->where('eliminado',0)->get();
+        //Obtenemos el id de la persona que esta logeada
+        $idPersona=$persona[0]->idPersona; 
 
-        $trabajoAsignadoControl = new TrabajoasignadoController;
-        $paramTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
-        $paramTrabajoAsignado = new Request($paramTrabajoAsignado);
-        $personaAsignada = $trabajoAsignadoControl->buscar($paramTrabajoAsignado);
-        $personaAsignada = json_decode($personaAsignada);
+
+        //Control del boton para elegir un postulante
+
+        //Fecha actual
+        $fechaActual = date("Y-m-d H:i:00",time());
+        //Fecha que se eligio para que se postulen
+        $fechaExpiracion = $trabajo->tiempoExpiracion; 
+
+        if($fechaActual > $fechaExpiracion){
+            //Si se vencio la fecha de expiracion se puedo mostrar el boton de elegir postulantes
+            $puedoElegirPostulante = true;
+            //Ahora probamos si tiene un persona asignada
+            $trabajoAsignadoControl = new TrabajoasignadoController;
+            $paramTrabajoAsignado = ['idTrabajo'=>$idTrabajo,'eliminado'=>0];
+            $paramTrabajoAsignado = new Request($paramTrabajoAsignado);
+            $personaAsignada = $trabajoAsignadoControl->buscar($paramTrabajoAsignado);
+            $personaAsignada = json_decode($personaAsignada);
+            if(count($personaAsignada)){
+                //Si tiene una persona asignada mostramos el boton para pagar 
+                $asignarPersona = true;
+            }else{
+                //En caso contrario le mostramos el boton para asignar una persona
+                $asignarPersona = false;
+            }
+        }else{
+            //En caso contrario se oculta
+            $puedoElegirPostulante = false;
+        }
      
-
-
-        
-        
-        if (count($busquedaPostulacion)>0 || $idPersona==$trabajo->persona->idPersona){ // Significa que ya se postulo anteriormente o es su propio anuncio
-            $tienePostulacion = true;
-        } else { // No se postulo
-            $tienePostulacion = false;
+        // Control para mostrar el boton de postularse
+        $controlTrabajoAspirante = new TrabajoaspiranteController;
+        $paramTrabajoAspirante = new Request(['idPersona'=>$idPersona,'eliminado'=>0]);
+        $miTrabajoAsignado = $controlTrabajoAspirante->buscar($paramTrabajoAspirante);
+        $miTrabajoAsignado = json_decode($miTrabajoAsignado);
+        if (count($miTrabajoAsignado)>0 || $idPersona == $trabajo->idPersona){
+            //Si ya me postule o es mi anuncio no vamos a mostrar el boton de postularse
+            $mostrarBotonPostularse = false;
+        } else { 
+            //En caso contrario se lo mostramos
+            $mostrarBotonPostularse = true;
         }
         
-
+        //Control pago
         $pagoRecibidoController = new PagorecibidoController();
         $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
         $arregloBuscarPago = new Request($arregloBuscarPago);
         $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
 
-        if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
+        if (count($busquedaPago)>0){
+            //Si esta pago el anuncio seteo pagado en true
             $pagado = true;
-        } else { // Todavia no se paga
+        } else { 
+            // En caso contrario en false
             $pagado = false;
         }
 
-        if($trabajo->imagenTrabajo == null){
-            $objetoCategoriaTrabajo = new CategoriaTrabajo;
-            //Buscamos el objeto de categoria trabajo
-            $categoriaTrabajo = $objetoCategoriaTrabajo->find($trabajo->idCategoriaTrabajo);
-            $trabajo['imagenCategoria'] = $categoriaTrabajo->imagenCategoriaTrabajo;
-        }
-
-        $link = '#';
-
-
-
-        if(!$pagado){
+        
+        //Si tiene una persona asignada y todavia no pago preparamos el enlace para pagar
+        if(!$pagado & $asignarPersona){
             $monto = $trabajo['monto'];
             $titulo = $trabajo['titulo'];
             $idTrabajo = $trabajo['idTrabajo'];
@@ -274,16 +288,21 @@ class TrabajoController extends Controller
             $requestTrabajo = new Request($arregloTrabajo);
             $MPController = new MercadoPagoController();
             $link = $MPController->crearPago($requestTrabajo);
+            $link = json_decode($link);
+        }else{
+            $link = '#';
         }
+
         //Listamos los trabajos para mostrar en un carousel
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            return view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'tienePostulacion'=>$tienePostulacion,'pagado'=>$pagado,'listaPostulantes'=>$listaPostulantes,'personaAsignada'=>$personaAsignada]);
+            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'puedoElegirPostulante'=>$puedoElegirPostulante,'asignarPersona'=>$asignarPersona]);
         }else{
-            return abort(404);
+            $vista = abort(404);
         }
        
+        return $vista;
     }
 
 
