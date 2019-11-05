@@ -248,6 +248,7 @@ class TrabajoController extends Controller
         $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
         $arregloBuscarPago = new Request($arregloBuscarPago);
         $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
+        $busquedaPago = json_decode($busquedaPago);
 
         if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
             $pagado = true;

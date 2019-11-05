@@ -77,68 +77,68 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('Mailvalidado');
 
-Route::resource('provincia', 'ProvinciaController');
+Route::prefix('administrador')->group(function(){
+    Route::resource('rol', 'RolController');
+    Route::resource('provincia', 'ProvinciaController');
 
-Route::resource('localidad', 'LocalidadController');
-
-Route::resource('rol', 'RolController');
-
-Route::resource('habilidad', 'HabilidadController');
-
-Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
-
-Route::resource('estado', 'EstadoController');
-
-Route::resource('habilidadpersona', 'HabilidadPersonaController');
-
-Route::resource('preferenciapersona', 'PreferenciaPersonaController');
-
-Route::resource('conversacionchat', 'ConversacionChatController');
-
-Route::resource('mensajechat', 'MensajeChatController');
-
-Route::resource('estadotrabajo', 'EstadotrabajoController');
-
-Route::post('pagorecibido/storepanel','PagorecibidoController@storepanel')->name('pagorecibido.storepanel');
-
-Route::resource('pagorecibido', 'PagorecibidoController');
-
-Route::resource('trabajoasignado', 'TrabajoasignadoController');
-
-Route::resource('valoracion', 'ValoracionController');
-
-Route::resource('comentario', 'ComentarioController');
-
-Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
-
-Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.storepanel');
-
-Route::post('persona/updatepanel','PersonaController@updatepanel')->name('persona.updatepanel');
-
-Route::resource('persona', 'PersonaController');
-
-Route::get('trabajo/indexpanel','TrabajoController@indexpanel')->name('trabajo.indexpanel');
-
-Route::get('trabajo/createpanel','TrabajoController@createpanel')->name('trabajo.createpanel');
-
-Route::post('trabajo/storepanel','TrabajoController@storepanel')->name('trabajo.storepanel');
-
-Route::post('trabajo/updatepanel','TrabajoController@updatepanel')->name('trabajo.updatepanel');
-
-Route::resource('trabajo', 'TrabajoController');
-
-Route::get('trabajoaspirante/indexpanel','TrabajoaspiranteController@indexpanel')->name('trabajoaspirante.indexpanel');
-
-Route::get('trabajoaspirante/createpanel','TrabajoaspiranteController@createpanel')->name('trabajoaspirante.createpanel');
-
-Route::post('trabajoaspirante/storepanel','TrabajoaspiranteController@storepanel')->name('trabajoaspirante.storepanel');
-
-Route::post('trabajoaspirante/updatepanel','TrabajoaspiranteController@updatepanel')->name('trabajoaspirante.updatepanel');
-
-Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
-
-
-
+    Route::resource('localidad', 'LocalidadController');
+    
+    
+    Route::resource('habilidad', 'HabilidadController');
+    
+    Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
+    
+    Route::resource('estado', 'EstadoController');
+    
+    Route::resource('habilidadpersona', 'HabilidadPersonaController');
+    
+    Route::resource('preferenciapersona', 'PreferenciaPersonaController');
+    
+    Route::resource('conversacionchat', 'ConversacionChatController');
+    
+    Route::resource('mensajechat', 'MensajeChatController');
+    
+    Route::resource('estadotrabajo', 'EstadotrabajoController');
+    
+    Route::post('pagorecibido/storepanel','PagorecibidoController@storepanel')->name('pagorecibido.storepanel');
+    
+    Route::resource('pagorecibido', 'PagorecibidoController');
+    
+    Route::resource('trabajoasignado', 'TrabajoasignadoController');
+    
+    Route::resource('valoracion', 'ValoracionController');
+    
+    Route::resource('comentario', 'ComentarioController');
+    
+    Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
+    
+    Route::post('persona/storepanel','PersonaController@storepanel')->name('persona.storepanel');
+    
+    Route::post('persona/updatepanel','PersonaController@updatepanel')->name('persona.updatepanel');
+    
+    Route::resource('persona', 'PersonaController');
+    
+    Route::get('trabajo/indexpanel','TrabajoController@indexpanel')->name('trabajo.indexpanel');
+    
+    Route::get('trabajo/createpanel','TrabajoController@createpanel')->name('trabajo.createpanel');
+    
+    Route::post('trabajo/storepanel','TrabajoController@storepanel')->name('trabajo.storepanel');
+    
+    Route::post('trabajo/updatepanel','TrabajoController@updatepanel')->name('trabajo.updatepanel');
+    
+    Route::resource('trabajo', 'TrabajoController');
+    
+    Route::get('trabajoaspirante/indexpanel','TrabajoaspiranteController@indexpanel')->name('trabajoaspirante.indexpanel');
+    
+    Route::get('trabajoaspirante/createpanel','TrabajoaspiranteController@createpanel')->name('trabajoaspirante.createpanel');
+    
+    Route::post('trabajoaspirante/storepanel','TrabajoaspiranteController@storepanel')->name('trabajoaspirante.storepanel');
+    
+    Route::post('trabajoaspirante/updatepanel','TrabajoaspiranteController@updatepanel')->name('trabajoaspirante.updatepanel');
+    
+    Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
+    
+});
 
 
 
