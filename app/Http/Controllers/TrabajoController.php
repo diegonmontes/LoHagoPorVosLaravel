@@ -14,6 +14,7 @@ use App\Pagorecibido;
 use App\Localidad;
 use App\Provincia;
 use App\Comentario;
+use App\Estadotrabajo;
 //Controladores
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
@@ -154,6 +155,18 @@ class TrabajoController extends Controller
                 if ($usandoFlutter){
                     $respuesta = ['success'=>true];
                 } else { // Significa que esta en laravel y debe redireccionar a inicio
+                    //Buscamos el trabajo creado para crear un dato en estadotrabajo
+                    $paramBuscarTrabajoRecienCreado = $request;
+                    $trabajoControl = new TrabajoController;
+                    $trabajo = $trabajoControl->buscar($paramBuscarTrabajoRecienCreado);
+                    $trabajo = json_decode($trabajo);
+                    $trabajo = $trabajo[0];
+                    $idTrabajo = $trabajo->idTrabajo;
+                    //Creamos estadotrabajo con el estado en 1
+                    $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>1];
+                    $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+                    Estadotrabajo::create($requesEstadoTrabajo->all());
+
                     return response()->json([
                         'url' => route('inicio'),
                         'success'   => true,
@@ -232,7 +245,7 @@ class TrabajoController extends Controller
 
         if($fechaActual > $fechaExpiracion){
             //Si se vencio la fecha de expiracion se puedo mostrar el boton de elegir postulantes
-            $puedoElegirPostulante = true;
+            $anuncioExpirado = true;
             //Ahora probamos si tiene un persona asignada
             $trabajoAsignadoControl = new TrabajoasignadoController;
             $paramTrabajoAsignado = ['idTrabajo'=>$idTrabajo,'eliminado'=>0];
@@ -248,28 +261,37 @@ class TrabajoController extends Controller
             }
         }else{
             //En caso contrario se oculta
-            $puedoElegirPostulante = false;
+            $anuncioExpirado = false;
+            //Tambien se oculta el boton de asignar persona
+            $asignarPersona = false;
         }
      
         // Control para mostrar el boton de postularse
         $controlTrabajoAspirante = new TrabajoaspiranteController;
-        $paramTrabajoAspirante = new Request(['idPersona'=>$idPersona,'eliminado'=>0]);
-        $miTrabajoAsignado = $controlTrabajoAspirante->buscar($paramTrabajoAspirante);
-        $miTrabajoAsignado = json_decode($miTrabajoAsignado);
-        if (count($miTrabajoAsignado)>0 || $idPersona == $trabajo->idPersona){
-            //Si ya me postule o es mi anuncio no vamos a mostrar el boton de postularse
+        $paramTrabajoAspirante = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idTrabajo'=>$idTrabajo]);
+        $miTrabajoAspirante = $controlTrabajoAspirante->buscar($paramTrabajoAspirante);
+        $miTrabajoAspirante = json_decode($miTrabajoAspirante);
+        if (count($miTrabajoAspirante)>0){
+            //Si ya me postule no muestro el boton
             $mostrarBotonPostularse = false;
         } else { 
             //En caso contrario se lo mostramos
             $mostrarBotonPostularse = true;
         }
+
+        //Control si es mi anuncio
+        if($idPersona == $trabajo->idPersona){
+            $esMiAnuncio = true;
+        }else{
+            $esMiAnuncio = false;
+        }
         
         //Control pago
         $pagoRecibidoController = new PagorecibidoController();
-        $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
+        $arregloBuscarPago=['idTrabajo'=>$idTrabajo, 'eliminado'=>0];
         $arregloBuscarPago = new Request($arregloBuscarPago);
         $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
-
+        
         if (count($busquedaPago)>0){
             //Si esta pago el anuncio seteo pagado en true
             $pagado = true;
@@ -297,7 +319,7 @@ class TrabajoController extends Controller
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'puedoElegirPostulante'=>$puedoElegirPostulante,'asignarPersona'=>$asignarPersona]);
+            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'anuncioExpirado'=>$anuncioExpirado,'esMiAnuncio'=>$esMiAnuncio,'asignarPersona'=>$asignarPersona]);
         }else{
             $vista = abort(404);
         }
@@ -409,11 +431,15 @@ class TrabajoController extends Controller
         $paramTrabajos = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>1]);
         $listaTrabajos = $this->buscar($paramTrabajos);
         $listaTrabajos = json_decode($listaTrabajos);
+        //Buscamos todos los trabajos que anuncio la persona que ya se puede evaluar las postulaciones
+        $paramTrabajosEvaluar = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>2]);
+        $listaTrabajosEvaluar = $this->buscar($paramTrabajosEvaluar);
+        $listaTrabajosEvaluar = json_decode($listaTrabajosEvaluar);
         //Buscamos todos los trabajos que anuncio la persona que estan esperando la confirmacion
         $paramTrabajosTerminados = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>4]);
         $listaTrabajosTerminados = $this->buscar($paramTrabajosTerminados);
         $listaTrabajosTerminados = json_decode($listaTrabajosTerminados);
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados]);
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar]);
 
     }
 
@@ -431,18 +457,20 @@ class TrabajoController extends Controller
         //Con el idPersona buscamos los trabajos asignados
         $listaTrabajosAsignados = Trabajoasignado::select('trabajoasignado.idTrabajo')
                                                     ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
+                                                    ->join('pagorecibido','trabajo.idTrabajo','=','pagorecibido.idTrabajo')
                                                     ->where('trabajoasignado.idPersona','=',$idPersona)
                                                     ->where('trabajoasignado.eliminado','=',0)
                                                     ->where('trabajo.idEstado','=',3)
                                                     ->get();
       
         //Con el idPersona buscamos los trabajos que se postulo
-        $listaTrabajosAspirante = Trabajoaspirante::select('trabajoaspirante.idTrabajo')
-                                                    ->join('trabajoasignado','trabajoasignado.idTrabajo','!=','trabajoaspirante.idTrabajo')
+        $listaTrabajosAspirante = Trabajoaspirante::select('trabajo.idTrabajo')
                                                     ->join('trabajo','trabajo.idTrabajo','=','trabajoaspirante.idTrabajo')
                                                     ->where('trabajoaspirante.idPersona','=',$idPersona)
                                                     ->where('trabajoaspirante.eliminado','=',0)
-                                                    ->where('trabajo.idEstado','=',1)
+                                                    ->where('trabajo.idEstado','!=',4)
+                                                    ->where('trabajo.idEstado','!=',5)
+
                                                     ->get();
            
         return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante]);
@@ -456,8 +484,14 @@ class TrabajoController extends Controller
 
     public function terminado(Request $request){
         $idTrabajo = $request->idTrabajo;
+        //Actualizamos el estado del trabajo
         $trabajo = new Trabajo;
         $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>4]);
+        //Y la tabla estadotrabajo tambien actualizamos
+        $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>4];
+        $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+        Estadotrabajo::create($requesEstadoTrabajo->all());
+
         
         return redirect()->route('inicio')->with('success','Gracias por el trabajo realizado');
 

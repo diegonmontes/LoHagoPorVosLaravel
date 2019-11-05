@@ -174,6 +174,10 @@ class ValoracionController extends Controller
         //Actualizamos el estado del trabajo a finalizado
         $trabajo = new Trabajo;
         $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>5]);
+        //Creamos estadotrabajo con el estado en 1
+        $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>5];
+        $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+        Estadotrabajo::create($requesEstadoTrabajo->all());
         return redirect()->route('inicio')->with('success','Gracias por valorar');
 
     }

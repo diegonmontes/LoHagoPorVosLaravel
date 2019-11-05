@@ -6,6 +6,7 @@ use App\Trabajoasignado;
 use App\Persona;
 use App\Trabajo;
 use App\Trabajoaspirante;
+use App\Estadotrabajo;
 
 class TrabajoasignadoController extends Controller
 {
@@ -53,10 +54,7 @@ class TrabajoasignadoController extends Controller
         $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Trabajoasignado::create($request->all()); //Creamos el elemento nuevo
 
-        //Al trabajo asignado lo actualizamos en 'eliminado=>1' para que no vuelva a aparecer
-        $trabajoAspirante = new Trabajoaspirante;
-        $trabajoAspirante->where('idTrabajo',$request->idTrabajo)->update(['eliminado'=>1]);
-
+    
         if(isset($request->flutter)){
             return $respuesta = ['success'=>true];
         }else{

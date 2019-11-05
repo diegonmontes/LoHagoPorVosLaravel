@@ -21,6 +21,23 @@
 </div>
 @endif
 
+@if(count($listaTrabajosEvaluar))
+    <h2>Mis anuncios para asignar una persona</h2>
+    <div class="row" style="margin: auto">
+        @foreach($listaTrabajosEvaluar as $trabajo)
+            <div class="card margenCardInicio">
+                <div class="card-body">
+                    <h5 class="card-title">{{$trabajo->titulo}}</h5>
+                    <p class="card-text">{{$trabajo->descripcion}}</p>
+                </div>
+                <div class="card-footer">
+                    <a class='btn btn-sm btn-primary' href="{{route('anuncio.postulante',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
+                    <label class="product_price float-right">${{$trabajo->monto}}</label>
+                </div>
+            </div>
+        @endforeach
+    </div>
+@endif
 
 @if(count($listaTrabajos)>0)
 <!-- Anuncios activos -->
