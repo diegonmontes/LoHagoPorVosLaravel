@@ -470,10 +470,18 @@ class TrabajoController extends Controller
 
     // Funciones para mostrar la vista del panel de administrador de trabajo
 
+    public function destroy($id)
+    {
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Trabajo::where('idTrabajo',$id)->update(['eliminado'=>1]);
+        //Trabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
+        return redirect()->route('trabajo.indexpanel')->with('success','Registro eliminado satisfactoriamente');
+    }
+
     public function indexpanel()
     {
         //
-        $trabajos=Trabajo::orderBy('idTrabajo','DESC')->paginate(15);
+        $trabajos=Trabajo::orderBy('idTrabajo','DESC')->where('eliminado','0')->paginate(15);
         return view('trabajo.indexpanel',compact('trabajos'));
     }
 

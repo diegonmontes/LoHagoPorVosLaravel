@@ -14,7 +14,7 @@ class EstadoController extends Controller
    public function index()
    {
        //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-       $estados=Estado::orderBy('idEstado','ASC')->paginate(15);
+       $estados=Estado::orderBy('idEstado','ASC')->where('eliminado','0')->paginate(15);
        return view('estado.index',compact('estados'));
    }
 
@@ -96,8 +96,10 @@ class EstadoController extends Controller
     */
    public function destroy($id)
    {
+       // Actualizamos eliminado a 1 (Borrado lógico)
+       Estado::where('idEstado',$id)->update(['eliminado'=>1]);
        //Buscamos y eliminamos el elemento
-       Estado::find($id)->delete(); 
+       //Estado::find($id)->delete(); 
        return redirect()->route('estado.index')->with('success','Registro eliminado satisfactoriamente');
    }
 
@@ -122,7 +124,7 @@ class EstadoController extends Controller
         }
 
         $listaEstados= $query->get();   // Hacemos el get y seteamos en lista
-        return $listaEstados;
+        return json_encode($listaEstados);
     }
 
 

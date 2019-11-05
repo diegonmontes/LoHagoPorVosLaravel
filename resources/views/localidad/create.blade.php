@@ -59,7 +59,7 @@
 			</div>
 			<script>
 				jQuery.validator.addMethod("lettersonly", function(value, element) {
-					return this.optional(element) || /^[a-z]+$/i.test(value);
+					return this.optional(element) || /^[a-z ]+$/i.test(value);
 					}, "Solo puede ingresar letras");
 				$("#formLocalidad").validate({
 					rules: {
@@ -72,7 +72,7 @@
 						codigoPostal: {
 							required: true,
 							minlength: 4,
-							maxlength: 255,
+							maxlength: 6,
 							digits: true,
 						},
 						idProvincia:{
@@ -89,7 +89,7 @@
 						codigoPostal: {
 							required: "Por favor ingrese el c&oacute;digo postal de la localidad",
 							minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
-							maxlength: "M&aacute;ximo de letras sobrepasado",
+							maxlength: "M&aacute;ximo de letras sobrepasado(6)",
 							number: "Solo debe ingresar n&uacute;meros",
 						},
 						idProvincia: {

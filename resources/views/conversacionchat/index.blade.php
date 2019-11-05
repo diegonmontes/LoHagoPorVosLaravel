@@ -12,7 +12,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>IdConversacion</th>
+                    <th>ID Conversaci&oacute;n</th>
                     <th>Trabajo </th>
                     <th>Persona 1</th>
                     <th>Persona 2</th>

@@ -99,11 +99,15 @@ Route::resource('mensajechat', 'MensajeChatController');
 
 Route::resource('estadotrabajo', 'EstadotrabajoController');
 
+Route::post('pagorecibido/storepanel','PagorecibidoController@storepanel')->name('pagorecibido.storepanel');
+
 Route::resource('pagorecibido', 'PagorecibidoController');
 
 Route::resource('trabajoasignado', 'TrabajoasignadoController');
 
 Route::resource('valoracion', 'ValoracionController');
+
+Route::resource('comentario', 'ComentarioController');
 
 Route::get('persona/createpanel','PersonaController@createpanel')->name('persona.createpanel');
 
@@ -132,6 +136,7 @@ Route::post('trabajoaspirante/storepanel','TrabajoaspiranteController@storepanel
 Route::post('trabajoaspirante/updatepanel','TrabajoaspiranteController@updatepanel')->name('trabajoaspirante.updatepanel');
 
 Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
+
 
 
 

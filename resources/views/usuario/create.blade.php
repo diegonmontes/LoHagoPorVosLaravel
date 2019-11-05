@@ -100,7 +100,7 @@
 				altFormat: "yy-mm-dd",
 				controlType: 'select',
 				oneLine: true,
-				altTimeFormat: "H:m",
+				altTimeFormat: "H:m:s",
 				dateFormat: "yy-mm-dd",
 				timeFormat: "HH:mm:ss",
 				minDate: 0
@@ -108,7 +108,7 @@
 		</script>
 		<script>
 		jQuery.validator.addMethod("lettersonly", function(value, element) {
-				return this.optional(element) || /^[a-z]+$/i.test(value);
+				return this.optional(element) || /^[a-z ]+$/i.test(value);
 			}, "Solo puede ingresar letras");
 			
 			$("#formUsuario").validate({

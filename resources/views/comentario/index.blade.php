@@ -5,35 +5,37 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Mensajes</h3>
+                        <h3>Comentarios</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                            <a href="{{ route('mensajechat.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Mensaje</a>
+                            <a href="{{ route('comentario.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Comentario</a>
                     </td>
                 </tr>
                     <tr>
-                        <th>ID Mensaje</th>
-                        <th>ID Conversacion</th>
-                        <th>Persona</th>
-                        <th>Mensaje</th>
+                        <th>ID Comentario</th>
+                        <th>contenido</th>
+                        <th>ID Trabajo</th>
+                        <th>ID Persona</th>
+                        <th>ID Padre</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
             </thead>
             <tbody>
-            @if($mensajeschats->count())
-                @foreach($mensajeschats as $mensaje)
+            @if($comentarios->count())
+                @foreach($comentarios as $comentario)
                     <tr>
                        
-                        <td>{{$mensaje->idMensajeChat}}</td>
-                        <td>{{$mensaje->ConversacionChat->idConversacionChat}}</td>
-                        <td>{{$mensaje->persona->idPersona.' - '.$mensaje->persona->nombrePersona.' '.$mensaje->persona->apellidoPersona}}</td>
-                        <td>{{$mensaje->mensaje}}</td>
+                        <td>{{$comentario->idComentario}}</td>
+                        <td>{{$comentario->contenido}}</td>
+                        <td>{{$comentario->trabajo->idTrabajo.' - '.$comentario->trabajo->titulo}}</td>
+                        <td>{{$comentario->persona->idPersona.' - '.$comentario->persona->nombrePersona.' '.$comentario->persona->apellidoPersona}}</td>
+                        <td>{{$comentario->idComentarioPadre}}</td>
 
 
-                        <td><a class="btn btn-primary btn-sm" href="{{action('MensajeChatController@edit', $mensaje->idMensajeChat)}}" ><i class="fas fa-edit"></i></a></td>
+                        <td><a class="btn btn-primary btn-sm" href="{{action('ComentarioController@edit', $comentario->idComentario)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
-                            <form action="{{action('MensajeChatController@destroy', $mensaje->idMensajeChat)}}" method="post">
+                            <form action="{{action('ComentarioController@destroy', $comentario->idComentario)}}" method="post">
                                 {{ csrf_field() }}
                                 <input name="_method" type="hidden" value="DELETE">
                                 <button class="btn btn-danger btn-sm" type="submit"><i class="far fa-trash-alt"></i></button>
@@ -48,7 +50,7 @@
             @endif
             </tbody>
         </table>
-            {{ $mensajeschats->links() }}
+            {{ $comentarios->links() }}
 </section>
 
 @endsection

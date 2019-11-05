@@ -114,8 +114,10 @@ class TrabajoaspiranteController extends Controller
      */
     public function destroy($id)
     {
-        Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
-        return redirect()->route('trabajoaspirante.index')->with('success','Registro eliminado satisfactoriamente');
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Trabajoaspirante::where('idTrabajoAspirante',$id)->update(['eliminado'=>1]);
+        //Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
+        return redirect()->route('trabajoaspirante.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }
 
     // Permite buscar todas las postulaciones a un trabajo
@@ -160,7 +162,7 @@ class TrabajoaspiranteController extends Controller
 
     public function indexpanel()
     {
-        $trabajosAspirantes=Trabajoaspirante::orderBy('idTrabajoAspirante','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $trabajosAspirantes=Trabajoaspirante::orderBy('idTrabajoAspirante','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         
         return view('trabajoaspirante.indexpanel',compact('trabajosAspirantes'));
     }

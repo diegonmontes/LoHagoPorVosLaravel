@@ -12,6 +12,7 @@
                 </td>
                 </tr>
                     <tr>
+                        <th>ID Categor&iacute;a</th>
                         <th>Nombre</th>
                         <th>Descripcion</th>
                         <th>Imagen</th>
@@ -23,6 +24,7 @@
             @if($categoriasTrabajo->count())
                 @foreach($categoriasTrabajo as $categoriaTrabajo)
                     <tr>
+                        <td>{{$categoriaTrabajo->idCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->nombreCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->descripcionCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->imagenCategoriaTrabajo}}</td>

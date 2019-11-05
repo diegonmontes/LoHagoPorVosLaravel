@@ -44,8 +44,8 @@
                     </li>
 
                     <li class="list-group-item">
-                        <a href="{{ route('mensajechat.index') }}">
-                            Comentarios (FALTA)
+                        <a href="{{ route('comentario.index') }}">
+                            Comentarios
                         </a>
                     </li>
 

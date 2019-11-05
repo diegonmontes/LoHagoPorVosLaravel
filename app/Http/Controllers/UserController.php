@@ -296,7 +296,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $usuarios=User::orderBy('idUsuario','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $usuarios=User::orderBy('idUsuario','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('usuario.index',compact('usuarios'));
     }
 
@@ -308,7 +308,9 @@ class UserController extends Controller
 
     public function destroy($id)
     {
-        User::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Usuario::where('idUsuario',$id)->update(['eliminado'=>1]);
+     //   User::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('usuario.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -347,6 +349,7 @@ class UserController extends Controller
     {
         //Buscamos el usuario
         //Validamos los datos antes de guardar el elemento nuevo
+        
         $this->validate($request,['idRol'=>'required', 'nombreUsuario'=>'required','mailUsuario'=>'required','claveUsuario'=>'required']);
         User::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('usuario.index')->with('success','Registro actualizado satisfactoriamente');
@@ -395,7 +398,7 @@ class UserController extends Controller
             if (isset($param->eliminado)){
                 $query->where("usuario.eliminado",$param->eliminado);
             }
-
+            // Buscamos todos los usuarios que no tengan un perfil
             if (isset($param->usuarioSinPersona)){
                 $query->select('usuario.*')
                 ->leftJoin('persona', function ($join){

@@ -25,7 +25,7 @@
 						<h3>Nueva Pago Recibido</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" id="formPagoRecibido" name="formPagoRecibido" action="{{ route('pagorecibido.store') }}"  role="form">
+						<form method="POST" id="formPagoRecibido" name="formPagoRecibido" action="{{ route('pagorecibido.storepanel') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
 							<label for="idTrabajo">Trabajo:</label>
@@ -122,7 +122,7 @@
 
 		<script>
 			jQuery.validator.addMethod("lettersonly", function(value, element) {
-				return this.optional(element) || /^[a-z]+$/i.test(value);
+				return this.optional(element) || /^[a-z ]+$/i.test(value);
 			}, "Solo puede ingresar letras");
 				
 			jQuery.validator.addMethod("validDate", function (value, element) {
@@ -182,7 +182,7 @@
 							number: "Por favor, ingrese solo numeros y separados por un punto(.)",
 						},
 						metodo: {
-							required: "Por favor ingrese un m%eacute;todo",
+							required: "Por favor ingrese un m&eacute;todo",
 							maxlength: "M&aacute;ximo de letras sobrepasado",
 						},
 						tarjeta: {

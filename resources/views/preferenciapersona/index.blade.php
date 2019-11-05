@@ -12,9 +12,9 @@
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Preferencia Persona </th>
+                        <th>ID Preferencia Persona </th>
                         <th>Persona</th>
-                        <th>Categoria Trabajo</th>
+                        <th>Categor&iacute;a Trabajo</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>

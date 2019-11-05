@@ -12,8 +12,8 @@
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Valoracion</th>
-                        <th>valor</th>
+                        <th>ID Valoraci&oacute;n</th>
+                        <th>Valor</th>
                         <th>Persona</th>
                         <th>Trabajo</th>
                         <th colspan="1">Editar</th>

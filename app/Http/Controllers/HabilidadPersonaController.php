@@ -18,7 +18,7 @@ class HabilidadPersonaController extends Controller
      */
     public function index()
     {   
-    $habilidadesPersona=HabilidadPersona::orderBy('idHabilidadPersona','DESC')->paginate(15);
+    $habilidadesPersona=HabilidadPersona::orderBy('idHabilidadPersona','DESC')->where('eliminado','0')->paginate(15);
     return view('habilidadpersona.index',compact('habilidadesPersona'));
     }
 
@@ -112,7 +112,9 @@ class HabilidadPersonaController extends Controller
      */
     public function destroy($id)
     {
-        HabilidadPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        HabilidadPersona::where('idHabilidadPersona',$id)->update(['eliminado'=>1]);
+        //HabilidadPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('habilidadpersona.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -138,7 +140,7 @@ class HabilidadPersonaController extends Controller
             }
             $listaHabilidadPersona=$query->get();   // Hacemos el get y seteamos en lista
             
-            return $listaHabilidadPersona;
+            return json_encode($listaHabilidadPersona);
     }
 
 

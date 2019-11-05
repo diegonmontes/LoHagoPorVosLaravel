@@ -18,7 +18,7 @@ class PreferenciaPersonaController extends Controller
      */
     public function index()
     {
-        $preferenciasPersona=PreferenciaPersona::orderBy('idPreferenciaPersona','DESC')->paginate(15);
+        $preferenciasPersona=PreferenciaPersona::orderBy('idPreferenciaPersona','DESC')->where('eliminado','0')->paginate(15);
         return view('preferenciapersona.index',compact('preferenciasPersona'));
     }
 
@@ -116,7 +116,9 @@ class PreferenciaPersonaController extends Controller
      */
     public function destroy($id)
     {
-        PreferenciaPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        PreferenciaPersona::where('idPreferenciaPersona',$id)->update(['eliminado'=>1]);
+        //PreferenciaPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('preferenciapersona.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -141,6 +143,6 @@ class PreferenciaPersonaController extends Controller
             }
 
             $listaPreferenciaPersona=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaPreferenciaPersona;
+            return json_encode($listaPreferenciaPersona);
     }
 }

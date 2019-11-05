@@ -13,6 +13,6 @@ class Estado extends Model
 
     public function Trabajo()
     {
-        return $this->hasMany('App\Trabajo', 'idEstado', 'idEstado');
+        return $this->hasOne('App\Trabajo', 'idEstado', 'idEstado');
     }
 }

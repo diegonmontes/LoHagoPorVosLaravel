@@ -17,7 +17,7 @@ class TrabajoasignadoController extends Controller
      */
     public function index()
     {
-        $trabajosAsignados=Trabajoasignado::orderBy('idTrabajoAsignado','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $trabajosAsignados=Trabajoasignado::orderBy('idTrabajoAsignado','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('trabajoasignado.index',compact('trabajosAsignados'));
     }
 
@@ -123,7 +123,9 @@ class TrabajoasignadoController extends Controller
      */
     public function destroy($id)
     {
-        Trabajoasignado::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Trabajoasignado::where('idTrabajoAsignado',$id)->update(['eliminado'=>1]);
+        //Trabajoasignado::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajoasignado.index')->with('success','Registro eliminado satisfactoriamente');
     }
 

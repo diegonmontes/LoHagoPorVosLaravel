@@ -29,7 +29,7 @@ class PersonaController extends Controller
     public function index()
     {
         //
-        $personas=Persona::orderBy('idPersona','DESC')->paginate(15);
+        $personas=Persona::orderBy('idPersona','DESC')->where('eliminado','0')->paginate(15);
         return view('persona.index',compact('personas'));
     }
 
@@ -480,8 +480,9 @@ class PersonaController extends Controller
      */
     public function destroy($id)
     {
-        //
-        Persona::find($id)->delete();
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Persona::where('idPersona',$id)->update(['eliminado'=>1]);
+        //Persona::find($id)->delete();
         return redirect()->route('persona.index')->with('success','Registro eliminado satisfactoriamente');
 
     }
@@ -586,7 +587,7 @@ class PersonaController extends Controller
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $usuarioController = new UserController();
 
-        $arregloBuscarProvincia = ['null'=>null];
+        $arregloBuscarProvincia = [null];
         $arregloBuscarProvincia = new Request($arregloBuscarProvincia);
         $listaProvincias = $provinciaController->buscar($arregloBuscarProvincia);
         $provincias = json_decode($listaProvincias);
@@ -596,12 +597,12 @@ class PersonaController extends Controller
         $listaLocalidades = $localidadController->buscar($arregloBuscarLocalidad);
         $localidades = json_decode($listaLocalidades);
 
-        $arregloBuscarHabilidades = [null];
+        $arregloBuscarHabilidades = ['eliminado'=>0];
         $arregloBuscarHabilidades = new Request($arregloBuscarHabilidades);
         $listaHabilidades = $habilidadController->buscar($arregloBuscarHabilidades);
         $habilidades = json_decode($listaHabilidades);
 
-        $arregloBuscarCategorias = [null];
+        $arregloBuscarCategorias = ['eliminado'=>0];
         $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
         $listaCategorias = $categoriaTrabajoController->buscar($arregloBuscarHabilidades);
         $categoriasTrabajo = json_decode($listaCategorias);

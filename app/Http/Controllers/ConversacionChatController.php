@@ -20,7 +20,7 @@ class ConversacionChatController extends Controller
      */
     public function index()
     {
-        $conversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $conversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('conversacionchat.index',compact('conversaciones'));
     }
 
@@ -118,7 +118,9 @@ class ConversacionChatController extends Controller
      */
     public function destroy($id)
     {
-        ConversacionChat::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        ConversacionChat::where('idConversacionChat',$id)->update(['eliminado'=>1]);
+        //ConversacionChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('conversacionchat.index')->with('success','Registro eliminado satisfactoriamente');
     }
 

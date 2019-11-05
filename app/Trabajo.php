@@ -24,7 +24,7 @@ class Trabajo extends Model
     }
 
     public function Estado() {
-        return $this->hasOne('App\Estado', 'idEstado', 'idEstado');
+        return $this->belongsTo('App\Estado', 'idEstado', 'idEstado');
     }
 
     public function Pagorecibido() {

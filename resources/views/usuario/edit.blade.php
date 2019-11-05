@@ -23,7 +23,7 @@
  
 			<div class="card">
 				<div class="card-header">
-					<h3>Editar Mensaje</h3>
+					<h3>Editar Usuario</h3>
 				</div>
 				<div class="card-body">
 					<form method="POST" id="formUsuario" name="formUsuario" action="{{ route('usuario.update',$usuario->idUsuario) }}"  role="form">
@@ -62,7 +62,7 @@
 											selected
 											}
 										@endif>
-										{{$rol->idRol."- ".$rol->nombreRol}}
+										{{$rol->idRol." - ".$rol->nombreRol}}
 									</option>
 								@endforeach
 							</select>
@@ -106,7 +106,7 @@
 					altFormat: "yy-mm-dd",
 					controlType: 'select',
 					oneLine: true,
-					altTimeFormat: "H:m",
+					altTimeFormat: "H:m:s",
 					dateFormat: "yy-mm-dd",
 					timeFormat: "HH:mm:ss",
 					minDate: 0
@@ -114,7 +114,7 @@
 			</script>
 			<script>
 		jQuery.validator.addMethod("lettersonly", function(value, element) {
-				return this.optional(element) || /^[a-z]+$/i.test(value);
+				return this.optional(element) || /^[a-z ]+$/i.test(value);
 			}, "Solo puede ingresar letras");
 			
 			$("#formUsuario").validate({

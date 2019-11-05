@@ -12,7 +12,7 @@
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Trabajo Asignado</th>
+                        <th>ID Trabajo Asignado</th>
                         <th>Trabajo</th>
                         <th>Persona</th>
                         <th colspan="1">Editar</th>

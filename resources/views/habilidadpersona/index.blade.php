@@ -12,7 +12,7 @@
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Habilidad Persona</th>
+                        <th>ID Habilidad Persona</th>
                         <th>Persona</th>
                         <th>Habilidad</th>
                         <th colspan="1">Editar</th>

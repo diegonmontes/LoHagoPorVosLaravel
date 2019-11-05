@@ -14,7 +14,7 @@
                     <tr>
                         <th>ID Rol</th>
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Descripci&oacute;n</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>

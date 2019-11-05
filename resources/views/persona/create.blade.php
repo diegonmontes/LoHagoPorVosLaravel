@@ -290,7 +290,7 @@
 	})
 	function controlNombrePersona(){
 		var nombrePersona = $("#nombrePersona").val();
-		var patron = /^[a-zA-Z]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
 		if (patron.test(nombrePersona)){
 			if(nombrePersona.lenght > 80){
 				$("#msgnombrePersona").empty();
@@ -316,7 +316,7 @@
 	})
 	function controlApellidoPersona(){
 		var apellidoPersona = $("#apellidoPersona").val();
-		var patron = /^[a-zA-Z]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
 		if (patron.test(apellidoPersona)){
 			if(apellidoPersona.lenght > 80){
 				$("#msgapellidoPersona").empty();
