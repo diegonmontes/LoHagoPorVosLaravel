@@ -5,10 +5,10 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Estado trabajo</h3>
+                        <h3>Historial estados de los trabajos</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
-                            <a href="{{ route('estadotrabajo.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Estado Trabajo</a>
+                            <a href="{{ route('estadotrabajo.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir un estado a un trabajo</a>
                     </td>
                 </tr>
                     <tr>

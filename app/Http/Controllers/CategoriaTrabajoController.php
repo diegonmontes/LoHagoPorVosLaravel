@@ -15,7 +15,7 @@ class CategoriaTrabajoController extends Controller
     public function index()
     {
         //
-        $categoriasTrabajo=CategoriaTrabajo::orderBy('idCategoriaTrabajo','ASC')->paginate(6);
+        $categoriasTrabajo=CategoriaTrabajo::orderBy('idCategoriaTrabajo','ASC')->where('eliminado','0')->paginate(10);
         return view('categoriatrabajo.index',compact('categoriasTrabajo'));
     }
 
@@ -96,8 +96,10 @@ class CategoriaTrabajoController extends Controller
      */
     public function destroy($id)
     {
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        CategoriaTrabajo::where('idCategoriaTrabajo',$id)->update(['eliminado'=>1]);
         //Buscamos y eliminamos el elemento
-        CategoriaTrabajo::find($id)->delete();
+        //CategoriaTrabajo::find($id)->delete();
         return redirect()->route('categoriatrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -132,6 +134,6 @@ class CategoriaTrabajoController extends Controller
             }
 
             $listaCategorias= $query->get();   // Hacemos el get y seteamos en lista
-            return $listaCategorias;
+            return json_encode($listaCategorias);
     }
 }

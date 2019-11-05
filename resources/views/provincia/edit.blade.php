@@ -49,7 +49,7 @@
 		</div>
 		<script>
 			jQuery.validator.addMethod("lettersonly", function(value, element) {
-					return this.optional(element) || /^[a-z]+$/i.test(value);
+					return this.optional(element) || /^[a-z ]+$/i.test(value);
 					}, "Solo puede ingresar letras");
 				$("#formProvincia").validate({
 					rules: {
@@ -62,19 +62,19 @@
 						codigoIso31662: {
 							required: true,
 							minlength: 4,
-							maxlength: 255,
+							maxlength: 4,
 						}
 					},
 					messages: {
 						nombreProvincia: {
 							required: "Por favor ingrese el nombre de la provincia",
 							minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
-							maxlength: "M&aacute;ximo de letras sobrepasado",
+							maxlength: "M&aacute;ximo de letras sobrepasado(4)",
 						},
 						codigoIso31662: {
 							required: "Por favor ingrese el c&oacute;digo iso de la provincia",
 							minlength: "El m&iacute;nimo de letras que debe ingresar son 4",
-							maxlength: "M&aacute;ximo de letras sobrepasado",
+							maxlength: "M&aacute;ximo de letras sobrepasado(4)",
 						},
 					}
 				});	

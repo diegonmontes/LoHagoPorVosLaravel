@@ -23,36 +23,21 @@
  
 			<div class="card">
 				<div class="card-header">
-					<h3>Editar Valoracion</h3>
+					<h3>Editar Comentario</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" id="formValoracion" name="formValoracion" action="{{ route('valoracion.update',$valoracion->idValoracion) }}"  role="form">
+					<form method="POST" id="formComentario" name="formComentario" action="{{ route('comentario.update',$comentario->idComentario) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
-
-						<div class="row">
-							<label for="idTrabajo">Trabajo:</label>
-							<select class="form-control" name="idTrabajo" id="idTrabajo">
-							<option value="" selected disabled>Seleccione un trabajo</option>
-								@foreach($listaTrabajos as $trabajo)
-									<option value="{{$trabajo->idTrabajo}}"
-										@if($valoracion->trabajo->idTrabajo == $trabajo->idTrabajo){
-											selected
-											}
-										@endif>
-										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
-									</option>
-								@endforeach
-							</select>
-						</div>
 						
+						<input type="hidden" id="idComentario" name="idComentario" value={{$comentario->idComentario}}>
 						<div class="row">
 							<label for="idPersona">Persona:</label>
 							<select class="form-control" name="idPersona" id="idPersona">
-							<option value="" selected disabled>Seleccione una persona</option>
+								<option value="" selected disabled>Seleccione una persona </option>
 								@foreach($listaPersonas as $persona)
 									<option value="{{$persona->idPersona}}"
-										@if($valoracion->persona->idPersona == $persona->idPersona){
+										@if($comentario->persona->idPersona == $persona->idPersona){
 											selected
 											}
 										@endif>
@@ -63,30 +48,61 @@
 						</div>
 
 						<div class="row">
+							<label for="idTrabajo">Trabajo:</label>
+							<select class="form-control" name="idTrabajo" id="idTrabajo">
+							<option value="" selected disabled>Seleccione un trabajo </option>
+								@foreach($listaTrabajos as $trabajo)
+									<option value="{{$trabajo->idTrabajo}}"
+										@if($comentario->trabajo->idTrabajo == $trabajo->idTrabajo){
+											selected
+											}
+										@endif>
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="row">
+							<label for="idComentarioPadre">Comentario Padre:</label>
+							<select class="form-control" name="idComentarioPadre" id="idComentarioPadre">
+							<option value="" selected disabled>Comentario padre </option>
+								@foreach($listaComentarios as $objComentario)
+									<option value="{{$objComentario->idComentario}}"
+										@if($comentario->idComentarioPadre == $objComentario->idComentario){
+											selected
+											}
+										@endif>
+										{{$objComentario->idComentario}}
+									</option>
+								@endforeach
+							</select>
+						</div>
+
+						<div class="row">
 							<div class="form-group">
-								<label>Valor</label><br>
-								<input type="text" name="valor" id="valor" class="form-control input-sm" value="{{$valoracion->valor}}">
+								<label>Contenido:</label><br>
+								<input type="text" name="contenido" id="contenido" class="form-control input-sm" value="{{$comentario->contenido}}">
 							</div>
 						</div>
+
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
-							<a href="{{ route('valoracion.index') }}" class="btn btn-info btn-block" >Atrás</a>
+							<a href="{{ route('comentario.index') }}" class="btn btn-info btn-block" >Atrás</a>
 						</div>
 					</form>
 				</div>
 			</div>
 			<script>
-				$("#formValoracion").validate({
+			$("#formComentario").validate({
 					rules: {
 						idTrabajo: {
 							required: true,
 							digits: true,
 						},
-						valor: {
+						contenido: {
 							required: true,
-							maxlength: 1,
-							max:5,
-							min:1,
+							maxlength: 255,
 						},
 						idPersona:{
 							required:true,
@@ -98,10 +114,9 @@
 							required: "Por favor seleccione un trabajo",
 							digits: "El trabajo seleccionado es incorrecto",
 						},
-						valor: {
-							required: "Por favor ingrese un valor",
-							min: "El valor m&iacute;nimo que puede ingresar es 1",
-							max: "El valor m&aacute;ximo que puede ingresar es 5",
+						contenido: {
+							required: "Por favor ingrese un contenido",
+							maxlength: "M&aacute;ximo de letras sobrepasado",
 						},
 						idPersona: {
 							required: "Por favor seleccione una persona",

@@ -27,9 +27,22 @@
 					<div class="card-body">
 						<form method="POST" name="formHabilidadPersona" id="formHabilidadPersona" action="{{ route('habilidadpersona.store') }}"  role="form">
 							{{ csrf_field() }}
+
+							<div class="row">
+								<label for="idPersona">Persona:</label>
+								<select class="form-control" name="idPersona" id="idPersona">
+								<option value="" selected disabled>Seleccione una persona</option>
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
+							</div>
+							
 							<div class="row">
 							<label for="idHabilidad">Habilidad:</label>
 								<select class="form-control" name="idHabilidad" id="idHabilidad">
+								<option value="" selected disabled>Seleccione una habilidad </option>
 									@foreach($listaHabilidades as $habilidad)
 										<option value="{{$habilidad->idHabilidad}}">
 										{{$habilidad->idHabilidad." - ".$habilidad->nombreHabilidad}}</option>
@@ -37,15 +50,6 @@
 								</select>		
 							</div>
 
-							<div class="row">
-								<label for="idPersona">Persona:</label>
-								<select class="form-control" name="idPersona" id="idPersona">
-									@foreach($listaPersonas as $persona)
-										<option value="{{$persona->idPersona}}">
-										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
-									@endforeach
-								</select>
-							</div>
 							<br>
 							<div class="row">
 									<input type="submit"  value="Guardar" class="btn btn-success btn-block">

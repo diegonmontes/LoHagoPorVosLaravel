@@ -33,6 +33,7 @@
 						<div class="row">
 							<label for="idTrabajo">Trabajo:</label>
 							<select class="form-control" name="idTrabajo" id="idTrabajo">
+							<option value="" selected disabled>Seleccione un trabajo </option>
 								@foreach($listaTrabajos as $trabajo)
 									<option value="{{$trabajo->idTrabajo}}"
 										@if($pagoRecibido->trabajo->idTrabajo == $trabajo->idTrabajo){
@@ -126,7 +127,7 @@
 
 			<script>
 				jQuery.validator.addMethod("lettersonly", function(value, element) {
-					return this.optional(element) || /^[a-z]+$/i.test(value);
+					return this.optional(element) || /^[a-z ]+$/i.test(value);
 				}, "Solo puede ingresar letras");
 					
 				jQuery.validator.addMethod("validDate", function (value, element) {

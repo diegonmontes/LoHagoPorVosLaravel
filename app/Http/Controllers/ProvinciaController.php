@@ -121,7 +121,7 @@ class ProvinciaController extends Controller
             }
 
             $listaProvincias= $query->get();   // Hacemos el get y seteamos en lista
-            return $listaProvincias;
+            return json_encode($listaProvincias);
     }
 
 

@@ -248,6 +248,7 @@ class TrabajoController extends Controller
         $arregloBuscarPago=['idTrabajo'=>$idTrabajo];
         $arregloBuscarPago = new Request($arregloBuscarPago);
         $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
+        $busquedaPago = json_decode($busquedaPago);
 
         if (count($busquedaPago)>0){ // Significa que ya se pago este trabajo
             $pagado = true;
@@ -451,12 +452,37 @@ class TrabajoController extends Controller
         return view('anuncio.historial',compact('listaTrabajos'));
     }
 
+    public function update(Request $request)
+    {
+        $idTrabajo = $request->idTrabajo;
+        if (Trabajo::find($idTrabajo)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
+            return response()->json([
+                'url' => route('inicio'),
+                'success'   => true,
+                'message'   => 'Los datos se han guardado correctamente.'
+                ], 200);        
+        } else {
+            return response()->json([
+                'success'   => false,
+                'errors'   =>  'Ocurrio un error'
+                ], 422);
+        }
+    }
+
     // Funciones para mostrar la vista del panel de administrador de trabajo
+
+    public function destroy($id)
+    {
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Trabajo::where('idTrabajo',$id)->update(['eliminado'=>1]);
+        //Trabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
+        return redirect()->route('trabajo.indexpanel')->with('success','Registro eliminado satisfactoriamente');
+    }
 
     public function indexpanel()
     {
         //
-        $trabajos=Trabajo::orderBy('idTrabajo','DESC')->paginate(15);
+        $trabajos=Trabajo::orderBy('idTrabajo','DESC')->where('eliminado','0')->paginate(15);
         return view('trabajo.indexpanel',compact('trabajos'));
     }
 
@@ -495,6 +521,7 @@ class TrabajoController extends Controller
         $provinciaController = new ProvinciaController();
         $personaController = new PersonaController();
         $estadoController = new EstadoController();
+        $trabajoController = new TrabajoController();
 
         $arregloBuscarCategorias=['eliminado' => 0];
         $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
@@ -516,12 +543,13 @@ class TrabajoController extends Controller
         $listaEstados=$estadoController->buscar($arregloBuscarEstados);
         $listaEstados = json_decode($listaEstados);
 
-        $arregloBuscarTrabajo = ['idTrabajo'=>$id];
-        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
-        $listaTrabajos = $this->buscar($arregloBuscarTrabajo);
-        $listaTrabajos = json_decode($listaTrabajos);
-        $trabajo = $listaTrabajos[0];
-
+      //  $arregloBuscarTrabajo = ['idTrabajo'=>$id];
+      //  $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+      //   $listaTrabajos = $trabajoController->buscar($arregloBuscarTrabajo);
+      //    $listaTrabajos = json_decode($listaTrabajos);
+      //     $trabajo = $listaTrabajos[0];
+        $trabajo=Trabajo::where('idTrabajo',$id)->get();
+        $trabajo=$trabajo[0];
         return view('trabajo.editpanel',compact('trabajo'),['listaPersonas'=>$listaPersonas,'listaEstados'=>$listaEstados,'listaProvincias'=>$listaProvincias,'listaCategorias'=>$listaCategorias]);
     }
 
@@ -566,7 +594,21 @@ class TrabajoController extends Controller
 
     public function updatepanel(Request $request)
     {
-        
+        echo "llega";
+        $idTrabajo=$request->idTrabajo;
+
+        if (Trabajo::find($idTrabajo)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
+            return response()->json([
+                'url' => route('inicio'),
+                'success'   => true,
+                'message'   => 'Los datos se han guardado correctamente.'
+                ], 200);        
+        } else {
+            return response()->json([
+                'success'   => false,
+                'errors'   =>  'Ocurrio un error'
+                ], 422);
+        }
     }   
        
                     

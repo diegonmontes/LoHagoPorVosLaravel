@@ -5,14 +5,14 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Trabajos asignados</h3>
+                        <h3>Trabajos Asignados</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('trabajoasignado.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Trabajo Asignado</a>
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Trabajo Asignado</th>
+                        <th>ID Trabajo Asignado</th>
                         <th>Trabajo</th>
                         <th>Persona</th>
                         <th colspan="1">Editar</th>

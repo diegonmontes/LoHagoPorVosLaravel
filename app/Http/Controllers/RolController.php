@@ -16,7 +16,7 @@ class RolController extends Controller
      */
     public function index()
     {
-        $roles=Rol::orderBy('idRol','ASC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $roles=Rol::orderBy('idRol','ASC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('rol.index',compact('roles'));
     }
 
@@ -93,7 +93,9 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        Rol::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Rol::where('idRol',$id)->update(['eliminado'=>1]);
+        //Rol::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('rol.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -118,6 +120,6 @@ class RolController extends Controller
         }
 
         $listaRoles= $query->get();   // Hacemos el get y seteamos en lista
-        return $listaRoles;
+        return json_encode($listaRoles);
 }
 }

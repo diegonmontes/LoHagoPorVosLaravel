@@ -36,7 +36,7 @@
 
 							<div class="row">
 								<div class="form-group">
-									<label>Descripcion:</label>
+									<label>Descripci&oacute;n:</label>
 									<input type="text" name="descripcionCategoriaTrabajo" id="descripcionCategoriaTrabajo" class="form-control input-sm">
 								</div>
 							</div>
@@ -54,7 +54,7 @@
 		</div>
 		<script>
 			jQuery.validator.addMethod("lettersonly", function(value, element) {
-				return this.optional(element) || /^[a-z]+$/i.test(value);
+				return this.optional(element) || /^[a-z ]+$/i.test(value);
 				}, "Solo puede ingresar letras");
 			$("#formCategoriaTrabajo").validate({
 				rules: {

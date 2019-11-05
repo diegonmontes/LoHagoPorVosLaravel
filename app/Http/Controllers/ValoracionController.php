@@ -18,7 +18,7 @@ class ValoracionController extends Controller
      */
     public function index()
     {
-        $valoraciones=Valoracion::orderBy('idValoracion','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $valoraciones=Valoracion::orderBy('idValoracion','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('valoracion.index',compact('valoraciones'));
     }
 
@@ -118,7 +118,9 @@ class ValoracionController extends Controller
      */
     public function destroy($id)
     {
-        Valoracion::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Valoracion::where('idValoracion',$id)->update(['eliminado'=>1]);
+        //Valoracion::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('valoracion.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -146,8 +148,8 @@ class ValoracionController extends Controller
                 $query->where("valoracion.eliminado",$param->eliminado);
             }
 
-            $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaTrabajoAsignado;
+            $listaValoraciones=$query->get();   // Hacemos el get y seteamos en lista
+            return json_encode($listaValoraciones);
     }
 
 }

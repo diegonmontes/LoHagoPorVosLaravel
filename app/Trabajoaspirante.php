@@ -16,6 +16,6 @@ class Trabajoaspirante extends Model
     }
 
     public function Persona() {
-        return $this->hasMany('App\Persona', 'idPersona', 'idPersona');
+        return $this->hasOne('App\Persona', 'idPersona', 'idPersona');
     }
 }

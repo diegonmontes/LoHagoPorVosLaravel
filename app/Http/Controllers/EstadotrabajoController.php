@@ -16,7 +16,7 @@ class EstadotrabajoController extends Controller
      */
     public function index()
     {
-        $Estadotrabajos=Estadotrabajo::orderBy('idEstadoTrabajo','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $Estadotrabajos=Estadotrabajo::orderBy('idEstadoTrabajo','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('estadotrabajo.index',compact('Estadotrabajos'));
     }
 
@@ -113,7 +113,9 @@ class EstadotrabajoController extends Controller
      */
     public function destroy($id)
     {
-        Estadotrabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Estadotrabajo::where('idEstadoTrabajo',$id)->update(['eliminado'=>1]);
+        //Estadotrabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('estadotrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -138,6 +140,6 @@ class EstadotrabajoController extends Controller
             }
 
             $listaEstadoTrabajo=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaEstadoTrabajo;
+            return json_encode($listaEstadoTrabajo);
     }
 }

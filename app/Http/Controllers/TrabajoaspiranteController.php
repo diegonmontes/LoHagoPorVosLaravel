@@ -75,13 +75,17 @@ class TrabajoaspiranteController extends Controller
      */
     public function edit($id)
     {
-        $arregloBuscarTrabajos=null;
-        $arregloBuscarPersonas=null;
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
         $trabajoController = new TrabajoController();
         $personaController = new PersonaController();
         $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
         $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
-        $trabajoaspirante=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        $listaTrabajos=json_decode($listaTrabajos);
+        $listaPersonas=json_decode($listaPersonas);
+        $trabajoAsignado=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('trabajoaspirante.edit',compact('trabajoaspirante'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
     }
 
@@ -99,7 +103,7 @@ class TrabajoaspiranteController extends Controller
         //
         $this->validate($request,[ 'idTrabajo'=>'required' ,'idPersona'=>'required']); //Validamos los datos antes de actualizar
         Trabajoaspirante::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
-        return redirect()->route('trabajoaspirante.index')->with('success','Registro actualizado satisfactoriamente');
+        return redirect()->route('trabajoaspirante.indexpanel')->with('success','Registro actualizado satisfactoriamente');
     }
 
     /**
@@ -110,8 +114,10 @@ class TrabajoaspiranteController extends Controller
      */
     public function destroy($id)
     {
-        Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
-        return redirect()->route('trabajoaspirante.index')->with('success','Registro eliminado satisfactoriamente');
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Trabajoaspirante::where('idTrabajoAspirante',$id)->update(['eliminado'=>1]);
+        //Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
+        return redirect()->route('trabajoaspirante.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }
 
     // Permite buscar todas las postulaciones a un trabajo
@@ -196,4 +202,51 @@ class TrabajoaspiranteController extends Controller
         //print_r($listaAspirantes);
         return \json_encode($listaAspirantes);   
     }
+
+    public function indexpanel()
+    {
+        $trabajosAspirantes=Trabajoaspirante::orderBy('idTrabajoAspirante','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        
+        return view('trabajoaspirante.indexpanel',compact('trabajosAspirantes'));
+    }
+
+    public function createpanel()
+    {
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaTrabajos=json_decode($listaTrabajos);
+        $listaPersonas=json_decode($listaPersonas);
+        return view('trabajoaspirante.createpanel',['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]); //Vista para crear el elemento nuevo
+    }
+
+    public function storepanel(Request $request)
+    {   
+        $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        Trabajoaspirante::create($request->all()); //Creamos el elemento nuevo
+        return redirect()->route('trabajoaspirante.indexpanel',$request->idTrabajo)->with('success','Registro creado satisfactoriamente');
+    }
+
+
+    public function editpanel($id)
+    {
+        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
+        $arregloBuscarPersonas=['eliminado'=>0];
+        $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $listaTrabajos=$trabajoController->buscar($arregloBuscarTrabajos);
+        $listaPersonas=$personaController->buscar($arregloBuscarPersonas);
+        $listaTrabajos=json_decode($listaTrabajos);
+        $listaPersonas=json_decode($listaPersonas);
+        $trabajoAspirante=Trabajoaspirante::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
+        return view('trabajoaspirante.editpanel',compact('trabajoAspirante'),['listaTrabajos'=>$listaTrabajos,'listaPersonas'=>$listaPersonas]);
+    }
+   
 }

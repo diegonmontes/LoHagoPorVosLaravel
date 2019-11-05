@@ -22,39 +22,49 @@
 
 			<div class="card">
 					<div class="card-header">
-						<h3>Nuevo Mensaje</h3>
+						<h3>Nuevo Comentario</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" id="formMensajeChat" name="formMensajeChat" action="{{ route('mensajechat.store') }}"  role="form">
+						<form method="POST" id="formComentario" name="formComentario" action="{{ route('comentario.store') }}"  role="form">
 							{{ csrf_field() }}
-							<div class="row">
-								<label for="idConversacionChat">Conversacion:</label>
-								<select class="form-control" name="idConversacionChat" id="idConversacionChat">
-								<option value="" selected disabled>Seleccione una conversaci&oacute;n </option>
-									@foreach($listaConversaciones as $conversacion)
-										<option value="{{$conversacion->idConversacionChat}}">
-										{{$conversacion->idConversacionChat}}</option>
-									@endforeach
-								</select>
-							</div>
 
 							<div class="row">
 								<label for="idPersona">Persona:</label>
 								<select class="form-control" name="idPersona" id="idPersona">
 								<option value="" selected disabled>Seleccione una persona </option>
-
 									@foreach($listaPersonas as $persona)
 										<option value="{{$persona->idPersona}}">
 										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
 									@endforeach
 								</select>
+							</div>
 
+							<div class="row">
+								<label for="idTrabajo">Trabajo:</label>
+								<select class="form-control" name="idTrabajo" id="idTrabajo">
+								<option value="" selected disabled>Seleccione un trabajo</option>
+									@foreach($listaTrabajos as $trabajo)
+										<option value="{{$trabajo->idTrabajo}}">
+										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
+									@endforeach
+								</select>		
+							</div>
+
+							<div class="row">
+								<label for="idComentarioPadre">Comentario Padre:</label>
+								<select class="form-control" name="idComentarioPadre" id="idComentarioPadre">
+								<option value="" selected disabled>Menu Padre</option>
+									@foreach($listaComentarios as $comentario)
+										<option value="{{$comentario->idComentario}}">
+										{{$comentario->idComentario}}</option>
+									@endforeach
+								</select>		
 							</div>
 
 							<div class="row">
 								<div class="form-group">
-									<label>Mensaje:</label>
-									<input type="text" name="mensaje" id="mensaje" class="form-control input-sm">
+									<label>Contenido:</label>
+									<input type="text" name="contenido" id="contenido" class="form-control input-sm">
 								</div>
 							</div>
 
@@ -71,16 +81,15 @@
 			</div>
 		</div>
 		<script>
-			$("#formMensajeChat").validate({
+			$("#formComentario").validate({
 					rules: {
-						idConversacionChat: {
+						idTrabajo: {
 							required: true,
 							digits: true,
 						},
-						mensaje: {
+						contenido: {
 							required: true,
-							minlength: 1,
-							maxlength: 511,
+							maxlength: 255,
 						},
 						idPersona:{
 							required:true,
@@ -88,13 +97,12 @@
 						}
 					},
 					messages: {
-						idConversacionChat: {
-							required: "Por favor seleccione una conversaci&oacute;n",
-							digits: "La conversacion seleccionada es incorrecta",
+						idTrabajo: {
+							required: "Por favor seleccione un trabajo",
+							digits: "El trabajo seleccionado es incorrecto",
 						},
-						mensaje: {
-							required: "Por favor ingrese un mensaje",
-							minlength: "El m&iacute;nimo de letras que debe ingresar es 1",
+						contenido: {
+							required: "Por favor ingrese un contenido",
 							maxlength: "M&aacute;ximo de letras sobrepasado",
 						},
 						idPersona: {

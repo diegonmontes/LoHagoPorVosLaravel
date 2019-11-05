@@ -5,15 +5,15 @@
             <thead class="thead-dark">
                 <tr>
                     <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                        <h3>Lista Valoraciones</h3>
+                        <h3>Valoraciones</h3>
                       </td>
                       <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                             <a href="{{ route('valoracion.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i>Añadir Valoracion</a>
                     </td>
                 </tr>
                     <tr>
-                        <th>Id Valoracion</th>
-                        <th>valor</th>
+                        <th>ID Valoraci&oacute;n</th>
+                        <th>Valor</th>
                         <th>Persona</th>
                         <th>Trabajo</th>
                         <th colspan="1">Editar</th>

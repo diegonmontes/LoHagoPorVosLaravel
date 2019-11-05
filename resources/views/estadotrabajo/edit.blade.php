@@ -23,7 +23,7 @@
  
 			<div class="card">
 				<div class="card-header">
-					<h3>Editar Estado Trabajo</h3>
+					<h3>Editar un estado a un trabajo</h3>
 				</div>
 				<div class="card-body">
 					<form method="POST" id="formEstadoTrabajo" name="formEstadoTrabajo" action="{{ route('estadotrabajo.update',$estadoTrabajo->idEstadoTrabajo) }}"  role="form">
@@ -33,6 +33,7 @@
 						<div class="row">
 							<label for="idTrabajo">Trabajo:</label>
 							<select class="form-control" name="idTrabajo" id="idTrabajo">
+								<option value="" selected disabled>Seleccione un trabajo</option>
 								@foreach($listaTrabajos as $trabajo)
 									<option value="{{$trabajo->idTrabajo}}"
 										@if($estadoTrabajo->trabajo->idTrabajo == $trabajo->idTrabajo){
@@ -45,10 +46,10 @@
 							</select>
 						</div>
 
-
 						<div class="row">
 							<label for="idEstado">Estado:</label>
 							<select class="form-control" name="idEstado" id="idEstado">
+							<option value="" selected disabled>Seleccione un estado</option>
 								@foreach($listaEstados as $estado)
 									<option value="{{$estado->idEstado}}"
 										@if($estadoTrabajo->estado->idEstado == $estado->idEstado){
@@ -60,6 +61,8 @@
 								@endforeach
 							</select>
 						</div>
+
+						<br/>
 
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">

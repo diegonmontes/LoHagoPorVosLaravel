@@ -33,7 +33,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label>TITULO DEL ANUNCIO*</label>
-                                                <input type="text" name="titulo" id="titulo" class="form-control inputBordes" placeholder="El titulo de tu anuncio. Pensalo bien para llamar la atención." required>
+                                                <input type="text" name="titulo" id="titulo" class="form-control inputBordes" placeholder="El titulo de tu anuncio. Pensalo bien para llamar la atención.">
                                                 <span id="msgtitulo" class="text-danger">{{ $errors->first('titulo') }}</span>
                                             </div>
                                         </div>
@@ -56,7 +56,7 @@
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
                                                 <label>DESCRIPCION*</label><br>
-                                                <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes" placeholder="Describe bien lo que quieres. Mientras más detalles mejor." required></textarea>
+                                                <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes" placeholder="Describe bien lo que quieres. Mientras más detalles mejor."></textarea>
                                                 <span id="msgdescripcion" class="text-danger">{{ $errors->first('descripcion') }}</span>
                                             </div>
                                         </div>
@@ -65,6 +65,7 @@
                                     <div class="row">
                                         <label for="idPersona">Persona:</label>
                                         <select class="form-control" name="idPersona" id="idPersona">
+                                        <option value="" selected disabled>Seleccione una persona </option>
                                             @foreach($listaPersonas as $persona)
                                                 <option value="{{$persona->idPersona}}">
                                                 {{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}</option>
@@ -75,6 +76,7 @@
                                     <div class="row">
                                         <label for="idEstado">Estado:</label>
                                         <select class="form-control" name="idEstado" id="idEstado">
+                                        <option value="" selected disabled>Seleccione un estado </option>
                                             @foreach($listaEstados as $estado)
                                                 <option value="{{$estado->idEstado}}">
                                                 {{$estado->idEstado." - ".$estado->nombreEstado}}</option>
@@ -85,8 +87,8 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 inputSelect">
                                             <label for="idCategoriaTrabajo">CATEGORIA*</label>
-                                            <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo" required>
-                                                <option value="" disabled selected>Seleccione una categoria</option>
+                                            <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
+                                                <option value="" disabled selected>Seleccione una categor&iacute;a</option>
                                                 @foreach($listaCategoriaTrabajo as $unaCategoria)
                                                 <option value="{{$unaCategoria->idCategoriaTrabajo}}">
                                                     {{$unaCategoria->nombreCategoriaTrabajo}}</option>
@@ -100,14 +102,14 @@
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
                                                 <label>MONTO*</label>
-                                                <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+" required>
+                                                <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+">
                                                 <span id="msgmonto" class="text-danger">{{ $errors->first('monto') }}</span>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
                                                 <label>ESPERAR POSTULANTES HASTA*</label>
-                                                <input type="text"  id="datepicker"  class="form-control inputBordes" style="background-color: #fff;" placeholder="¿Hasta cuando se pueden postular?" readonly required>
+                                                <input type="text"  id="datepicker"  class="form-control inputBordes" style="background-color: #fff;" placeholder="¿Hasta cuando se pueden postular?" readonly>
                                                 <input type="text" id="datepickerAlt" name="tiempoExpiracion" class="datepicker-picker" >
                                                 <span id="msgtiempoExpiracion" class="text-danger">{{ $errors->first('tiempoExpiracion') }}</span>
                                             </div>
@@ -149,6 +151,26 @@
         
         <!-- Modal -->
 		<div id="loadingAnuncio" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title tituloModal" id="exampleModalLabel">
+                            
+                        </h5>
+                    </div>
+                    <div class="content align-content-center align-self-center" id="cargando">
+
+                    </div>
+                    <div class="content" id="mensaje">
+
+                    </div>
+                    <div class="modal-footer botonCerrar">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="loadingAnuncio" class="modal fade" tabindex="-1" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -290,13 +312,15 @@
             //Seteamos las variables ingresadas
             var titulo = $("#titulo").val();
             var descripcion = $("#descripcion").val();
-            var idCategoriaTrabajo = $("#idCategoriaTrabajo").val(); 
+            var idCategoriaTrabajo = $("#idCategoriaTrabajo").val();
+            var idEstado = $("idEstado").val();
+            var idPersona = $("idPersona").val();
             var monto = $("#monto").val();
             var tiempoExpiracion = $("#datepickerAlt").val();
             var idProvincia = $('#idProvincia').val();
             var idLocalidad = $('#idLocalidad').val();
             var imagenTrabajo = $('#files').val();
-            var data={titulo:titulo,descripcion:descripcion,idCategoriaTrabajo:idCategoriaTrabajo,monto:monto,tiempoExpiracion:tiempoExpiracion,idProvincia:idProvincia,idLocalidad:idLocalidad,imagenTrabajo:imagenTrabajo};
+            var data={titulo:titulo,descripcion:descripcion,idCategoriaTrabajo:idCategoriaTrabajo,idEstado:idEstado,idPersona:idPersona,monto:monto,tiempoExpiracion:tiempoExpiracion,idProvincia:idProvincia,idLocalidad:idLocalidad,imagenTrabajo:imagenTrabajo};
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': "{{ csrf_token() }}"

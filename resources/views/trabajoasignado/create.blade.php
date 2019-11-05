@@ -28,23 +28,26 @@
 						<form method="POST" id="formTrabajoAsignado" name="formTrabajoAsignado" action="{{ route('trabajoasignado.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-								<label for="idPersona">Persona:</label>
-								<select class="form-control" name="idPersona" id="idPersona">
-									@foreach($listaPersonas as $persona)
-										<option value="{{$persona->idPersona}}">
-										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
-									@endforeach
-								</select>
-							</div>
-							<div class="row">
 								<label for="idTrabajo">Trabajo:</label>
 								<select class="form-control" name="idTrabajo" id="idTrabajo">
+								<option value="" selected disabled>Seleccione un trabajo </option>
 									@foreach($listaTrabajos as $trabajo)
 										<option value="{{$trabajo->idTrabajo}}">
 										{{$trabajo->idTrabajo." - ".$trabajo->titulo}}</option>
 									@endforeach
 								</select>		
 							</div>
+							<div class="row">
+								<label for="idPersona">Persona:</label>
+								<select class="form-control" name="idPersona" id="idPersona">
+								<option value="" selected disabled>Seleccione una persona </option>
+									@foreach($listaPersonas as $persona)
+										<option value="{{$persona->idPersona}}">
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}</option>
+									@endforeach
+								</select>
+							</div>
+							
 							<br>
 							<div class="row">
 									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
@@ -70,10 +73,10 @@
 				},
 				messages: {
 					idTrabajo: {
-						required: "Por favor ingrese el nombre del estado",
+						required: "Por favor seleccione un trabajo",
 					},
 					idPersona: {
-						required: "Por favor ingrese una persona",
+						required: "Por favor seleccione una persona",
 					},
 				}
 			});

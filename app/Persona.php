@@ -32,7 +32,7 @@ class Persona extends Model
     }
 
     public function Trabajoaspirante() {
-        return $this->hasMany('App\Trabajoaspirante', 'idPersona', 'idPersona');
+        return $this->hasOne('App\Trabajoaspirante', 'idPersona', 'idPersona');
     }
 
     public function PreferenciaPersona() {

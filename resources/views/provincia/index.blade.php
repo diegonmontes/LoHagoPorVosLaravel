@@ -5,13 +5,14 @@
           <thead class="thead-dark">
               <tr>
                   <td colspan="2" style="background-color: #343a40; border-color: #343a40; color:#FFF">
-                    <h3>Lista de provincias</h3>
+                    <h3>Provincias</h3>
                   </td>
                   <td colspan="2" style="background-color: #343a40; border-color: #343a40">
                     <a href="{{ route('provincia.create') }}" class="btn btn-success" ><i class="fas fa-plus"></i></i>Añadir Provincia</a>
                   </td>
               </tr>
               <tr>
+                  <th>ID Provincia </th>
                   <th>Provincia</th>
                   <th>Codigo Iso 31662</th>
                   <th colspan="1">Editar</th>
@@ -22,6 +23,7 @@
               @if($provincias->count())  
               @foreach($provincias as $provincia)
               <tr>
+                <td>{{$provincia->idProvincia}}</td>
                 <td>{{$provincia->nombreProvincia}}</td>
                 <td>{{$provincia->codigoIso31662}}</td>
 

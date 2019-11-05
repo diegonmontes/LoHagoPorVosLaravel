@@ -12,9 +12,9 @@
                 </td>
                 </tr>
                     <tr>
-                        <th>Id Pago Recibido</th>
+                        <th>ID Pago Recibido</th>
                         <th>Trabajo</th>
-                        <th>Id Pago</th>
+                        <th>ID Pago</th>
                         <th>monto</th>
                         <th>metodo</th>
                         <th>tarjeta</th>

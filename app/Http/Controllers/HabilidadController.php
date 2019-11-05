@@ -16,7 +16,7 @@ class HabilidadController extends Controller
      */
     public function index()
     {
-        $habilidades=Habilidad::orderBy('idHabilidad','ASC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $habilidades=Habilidad::orderBy('idHabilidad','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('habilidad.index',compact('habilidades'));
     }
 
@@ -89,7 +89,9 @@ class HabilidadController extends Controller
      */
     public function destroy($id)
     {
-        Habilidad::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Habilidad::where('idHabilidad',$id)->update(['eliminado'=>1]);
+        //Habilidad::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('habilidad.index')->with('success','Registro eliminado satisfactoriamente');
     }
 

@@ -21,7 +21,7 @@ class MensajeChatController extends Controller
      */
     public function index()
     {
-        $mensajeschats=MensajeChat::orderBy('idMensajeChat','ASC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $mensajeschats=MensajeChat::orderBy('idMensajeChat','ASC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('mensajechat.index',compact('mensajeschats'));
     }
 
@@ -118,7 +118,9 @@ class MensajeChatController extends Controller
      */
     public function destroy($id)
     {
-        MensajeChat::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        MensajeChat::where('idMensajeChat',$id)->update(['eliminado'=>1]);
+        //MensajeChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('mensajechat.index')->with('success','Registro eliminado satisfactoriamente');
     }
     public function buscarMensajes(){
@@ -152,7 +154,7 @@ class MensajeChatController extends Controller
             }
 
             $listaMensajeChat=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaMensajeChat;
+            return json_encode($listaMensajeChat);
     }
 
 }

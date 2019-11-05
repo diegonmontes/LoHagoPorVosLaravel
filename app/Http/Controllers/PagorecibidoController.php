@@ -16,7 +16,7 @@ class PagorecibidoController extends Controller
      */
     public function index()
     {
-        $pagoRecibidos=Pagorecibido::orderBy('idPagoRecibido','DESC')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $pagoRecibidos=Pagorecibido::orderBy('idPagoRecibido','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('pagorecibido.index',compact('pagoRecibidos'));
     }
 
@@ -103,7 +103,9 @@ class PagorecibidoController extends Controller
      */
     public function destroy($id)
     {
-        Pagorecibido::find($id)->delete(); //Buscamos y eliminamos el elemento
+        // Actualizamos eliminado a 1 (Borrado lógico)
+        Pagorecibido::where('idPagoRecibido',$id)->update(['eliminado'=>1]);
+        //Pagorecibido::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('pagorecibido.index')->with('success','Registro eliminado satisfactoriamente');
     }
 
@@ -149,5 +151,12 @@ class PagorecibidoController extends Controller
 
             $listaPagos= $query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaPagos);
+    }
+
+    public function storepanel(Request $request)
+    {
+        $this->validate($request,[ 'monto'=>'required', 'metodo'=>'required', 'tarjeta'=>'required', 'fechapago'=>'required', 'fechaaprobado'=>'required', 'idTrabajo'=>'required', 'idPago'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        Pagorecibido::create($request->all()); //Creamos el elemento nuevo
+        return redirect()->route('pagorecibido.index')->with('success','Pago realizado satisfactoriamente');
     }
 }
