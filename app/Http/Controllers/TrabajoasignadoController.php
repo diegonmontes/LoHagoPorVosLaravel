@@ -115,26 +115,26 @@ class TrabajoasignadoController extends Controller
     }
 
     // Permite buscar todas las asignaciones a un trabajo
-    public function buscar($param){      
+    public function buscar(Request $param){      
         $query = Trabajoasignado::OrderBy('idTrabajoAsignado','ASC'); // Ordenamos las asignaciones por este medio
 
-            if (isset($param['idTrabajoAsignado'])){
-                $query->where("trabajoasignado.idTrabajoAsignado",$param['idTrabajoAsignado']);
+            if (isset($param->idTrabajoAsignado)){
+                $query->where("trabajoasignado.idTrabajoAsignado",$param->idTrabajoAsignado);
             }
 
-            if (isset($param['idTrabajo'])){
-                $query->where("trabajoasignado.idTrabajo",$param['idTrabajo']);
+            if (isset($param->idTrabajo)){
+                $query->where("trabajoasignado.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param['idPersona'])){
-                $query->where("trabajoasignado.idPersona",$param['idPersona']);
+            if (isset($param->idPersona)){
+                $query->where("trabajoasignado.idPersona",$param->idPersona);
             }
 
-            if (isset($param['eliminado'])){
-                $query->where("trabajoasignado.eliminado",$param['eliminado']);
+            if (isset($param->eliminado)){
+                $query->where("trabajoasignado.eliminado",$param->eliminado);
             }
 
             $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
-            return $listaTrabajoAsignado;
+            return json_encode($listaTrabajoAsignado);
     }
 }

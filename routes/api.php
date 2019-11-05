@@ -47,9 +47,14 @@ Route::post('historialTrabajos','TrabajoController@buscar');
 
 /** Trabajo Aspirantes */
 Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');
+Route::post('buscarAspiranteTrabajo','TrabajoaspiranteController@buscar');
 
 /** Trabajo Asignado */
 Route::post('elegirAspirante','TrabajoasignadoController@store');
+Route::post('buscarTrabajoAsingado','TrabajoasignadoController@buscar');
+
+/** PAGOS */
+Route::post('buscarPagoTrabajo','PagorecibidoController@buscar');
 
 /** APIs de Categoria trabajo */
 Route::get('listarCategorias','CategoriaTrabajoController@buscarCategorias');
