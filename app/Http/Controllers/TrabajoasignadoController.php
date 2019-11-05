@@ -148,7 +148,6 @@ class TrabajoasignadoController extends Controller
             }
 
             $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
-        
             return json_encode($listaTrabajoAsignado);
     }
 

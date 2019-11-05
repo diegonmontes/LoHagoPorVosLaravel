@@ -144,13 +144,56 @@ class TrabajoaspiranteController extends Controller
         $listaTrabajoAspirantes=$query->get();
         $listaAspirantes=array();
         $personaController= new PersonaController;
+        $localidadController= new LocalidadController;
+        $habilidadPersonaController= new HabilidadPersonaController;
+        $habilidadController= new HabilidadController;
+        //$i=0;
         foreach($listaTrabajoAspirantes as $aspirante){
+            //busco obj persona
             $request=['idPersona'=>$aspirante->idPersona];
             $persona=new Request($request);
             $unAspirante=$personaController->buscar($persona);
             $unAspirante=\json_decode($unAspirante);
+            //busco la localidad de esa persona
+            $idLocalidad=$unAspirante[0]->idLocalidad;
+            $requestLocalidad=['idLocalidad'=>$idLocalidad];
+            $requestLocalidad= new Request($requestLocalidad);
+            $localidad= $localidadController->buscarNuevo($requestLocalidad);
+            $localidad=\json_decode($localidad);
+            //busco la lista de habilidades de esa persona
+            $habilidadesPersona= $habilidadPersonaController->buscar($persona);
+            $habilidadesPersona=\json_decode($habilidadesPersona);
+            //busco cada habilidad para recuperar su nombre 
+            //print_r($habilidadesPersona);
+            //habilidad1
+            $idHabilidad1=$habilidadesPersona[0]->idHabilidad;
+            $requestHabilidad1=['idHabilidad'=>$idHabilidad1];
+            $requestHabilidad1= new Request($requestHabilidad1);
+            $habilidad1= $habilidadController->buscar($requestHabilidad1);
+            $habilidad1=\json_decode($habilidad1);
+            //habilidad2
+            $idHabilidad2=$habilidadesPersona[1]->idHabilidad;
+            $requestHabilidad2=['idHabilidad'=>$idHabilidad2];
+            $requestHabilidad2= new Request($requestHabilidad2);
+            $habilidad2= $habilidadController->buscar($requestHabilidad2);
+            $habilidad2=\json_decode($habilidad2);
+            //habilidad3
+            $idHabilidad3=$habilidadesPersona[2]->idHabilidad;
+            $requestHabilidad3=['idHabilidad'=>$idHabilidad3];
+            $requestHabilidad3= new Request($requestHabilidad3);
+            $habilidad3= $habilidadController->buscar($requestHabilidad3);
+            $habilidad3=\json_decode($habilidad3);
+            //asigno los objetos buscados a sus respectivos parametros
+            $unAspirante[0]->idLocalidad=$localidad;
+            $unAspirante[0]->habilidades=$habilidadesPersona;
+            $unAspirante[0]->habilidades[0]->idHabilidad=$habilidad1;
+            $unAspirante[0]->habilidades[1]->idHabilidad=$habilidad2;
+            $unAspirante[0]->habilidades[2]->idHabilidad=$habilidad3;
+            //agrego cada iteracion a un arreglo
             array_push($listaAspirantes,$unAspirante);
+            //$i++;
         }
+        //print_r($listaAspirantes);
         return \json_encode($listaAspirantes);   
     }
 }
