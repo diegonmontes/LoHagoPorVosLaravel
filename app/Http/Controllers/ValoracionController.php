@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Valoracion;
 use App\Trabajo;
 use App\Persona;
-
+use App\Estadotrabajo;
 
 class ValoracionController extends Controller
 {
