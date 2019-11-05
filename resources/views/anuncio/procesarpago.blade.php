@@ -2,6 +2,10 @@
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
 use Illuminate\Http\Request;
+use App\Estadotrabajo;
+use App\Trabajo;
+
+
 
     if ($_GET!=null){
         $idPago = $_GET['collection_id'];
@@ -23,6 +27,16 @@ use Illuminate\Http\Request;
         $informacionPagoRecibido = ['idTrabajo'=>$idTrabajo,'idPago'=>$idPago,'metodo'=>$metodo,'monto'=>$monto,'tarjeta'=>$tarjeta,'fechapago'=>$fechapago,'fechaaprobado'=>$fechaaprobado];
         $requestInformacionPagoRecibido = new Request($informacionPagoRecibido);
         $PagoRecibidoController->store($requestInformacionPagoRecibido);
+        //Actualizamos el estado del trabajo
+        $paramTrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>3];
+        $requesTrabajo = new Request($paramTrabajo);
+        Trabajo::find($idTrabajo)->update($requesTrabajo->all());
+        //LLenamos la tabla estadoTrabajo
+        $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>3];
+        $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+        Estadotrabajo::create($requesEstadoTrabajo->all());
+       
+
         header("Location: http://localhost/LoHagoPorVosLaravel/public/");
         exit;
     } else {
