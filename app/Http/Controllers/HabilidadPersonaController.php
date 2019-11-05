@@ -120,7 +120,6 @@ class HabilidadPersonaController extends Controller
     public function buscar(Request $param){      
         $query = HabilidadPersona::OrderBy('idHabilidadPersona','ASC'); // Ordenamos las habilidades de las personas por este medio
 
-            
             if (isset($param->idHabilidadPersona)){
                 $query->where("habilidadpersona.idHabilidadPersona",$param->idHabilidadPersona);
             }
@@ -137,8 +136,7 @@ class HabilidadPersonaController extends Controller
                 $query->where("habilidadpersona.eliminado",$param->eliminado);
             }
             $listaHabilidadPersona=$query->get();   // Hacemos el get y seteamos en lista
-            
-            return $listaHabilidadPersona;
+            return json_encode($listaHabilidadPersona);
     }
 
 

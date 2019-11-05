@@ -148,6 +148,6 @@ class PagorecibidoController extends Controller
             }
 
             $listaPagos= $query->get();   // Hacemos el get y seteamos en lista
-            return $listaPagos;
+            return json_encode($listaPagos);
     }
 }
