@@ -29,7 +29,7 @@ class TrabajoasignadoController extends Controller
      */
     public function create()
     {
-        $arregloBuscarTrabajos=['eliminado'=>0];
+        $arregloBuscarTrabajos=['eliminado'=>0,'idEstado'=>3]; //Estado evaluando postulaciones
         $arregloBuscarTrabajos = new Request($arregloBuscarTrabajos);
         $arregloBuscarPersonas=['eliminado'=>0];
         $arregloBuscarPersonas = new Request($arregloBuscarPersonas);
@@ -60,6 +60,14 @@ class TrabajoasignadoController extends Controller
         }else{
             return redirect()->route('veranuncio',$request->idTrabajo)->with('success','Registro actualizado satisfactoriamente');
         }
+    }
+
+    public function storepanel(Request $request)
+    {   
+        $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        Trabajoasignado::create($request->all()); //Creamos el elemento nuevo
+        return redirect()->route('trabajoasignado.index')->with('success','Registro actualizado satisfactoriamente');
+        
     }
 
     /**

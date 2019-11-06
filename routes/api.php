@@ -44,6 +44,8 @@ Route::post('storeTrabajo','TrabajoController@store');
 Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
+Route::post('buscarComentarios','ComentarioController@buscarComentarios');
+
 
 /** Trabajo Aspirantes */
 Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');

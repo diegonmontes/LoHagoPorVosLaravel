@@ -676,8 +676,8 @@ class TrabajoController extends Controller
                 ], 422);
         }
     }   
-       
-                    
+    
+    
 
 }
 

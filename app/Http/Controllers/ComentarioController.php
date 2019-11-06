@@ -82,7 +82,6 @@ class ComentarioController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $this->validate($request,['idComentario'=>'required','contenido'=>'required','idTrabajo'=>'required','idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Comentario::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('comentario.index')->with('success','Registro actualizado satisfactoriamente');
@@ -132,6 +131,25 @@ class ComentarioController extends Controller
 
             $listaComentarios=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaComentarios);
+    }
+
+    // Funcion para ordenar los comentarios y mandarselo a flutter flutter
+    public function buscarComentarios(Request $param){
+        $query = Comentario::OrderBy('idComentario','ASC'); // Ordenamos las postulaciones por este medio
+        $query->where("comentario.idTrabajo",$param->idTrabajo);
+        $query->where("comentario.idComentarioPadre",null);
+        $listaComentariosPadre=$query->get();
+        $listaComentarios=array();
+
+        foreach ($listaComentariosPadre as $comentarioPadre){
+            $arregloBuscarHijo = ['eliminado'=>0,'idComentarioPadre'=>$comentarioPadre[0]->idComentario];
+            $arregloBuscarHijo = new Request($arregloBuscarHijo);
+            $listaHijos = $this->buscar($arregloBuscarHijo);
+            $listaHijos = json_decode($listaHijos);
+            $comentarioPadre[0]->hijos = $listaHijos;
+            array_push($listaComentarios,$comentarioPadre);
+        }
+        return json_encode($listaComentarios);
     }
 
 

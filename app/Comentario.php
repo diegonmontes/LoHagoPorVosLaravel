@@ -9,7 +9,7 @@ class Comentario extends Model
     protected $table='comentario';
     protected $primaryKey = 'idComentario';
     protected $fillable = [
-        'comentario', 'idComentarioPadre', 'idTrabajo', 'idPersona','idComentario'
+        'contenido', 'idComentarioPadre', 'idTrabajo', 'idPersona','idComentario'
     ];
  
     public function Trabajo() 
