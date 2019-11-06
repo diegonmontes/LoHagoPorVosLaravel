@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 use App\Habilidad;
 use Illuminate\Http\Response;
@@ -16,6 +16,7 @@ class HabilidadController extends Controller
      */
     public function index()
     {
+        Auth::user()->rolesAutorizados([1]);
         $habilidades=Habilidad::orderBy('idHabilidad','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('habilidad.index',compact('habilidades'));
     }
@@ -27,6 +28,7 @@ class HabilidadController extends Controller
      */
     public function create()
     {
+        Auth::user()->rolesAutorizados([1]);
         return view('habilidad.create'); //Vista para crear el elemento nuevo
     }
 
@@ -38,6 +40,7 @@ class HabilidadController extends Controller
      */
     public function store(Request $request)
     {
+        Auth::user()->rolesAutorizados([1]);
         $this->validate($request,[ 'nombreHabilidad'=>'required', 'descripcionHabilidad'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         Habilidad::create($request->all()); //Creamos el elemento nuevo
         return redirect()->route('habilidad.index')->with('success','Registro creado satisfactoriamente');
@@ -63,6 +66,7 @@ class HabilidadController extends Controller
      */
     public function edit($id)
     {
+        Auth::user()->rolesAutorizados([1]);
         $habilidad=Habilidad::find($id); //Buscamos el elemento para cargarlo en la vista para luego editarlo
         return view('habilidad.edit',compact('habilidad'));
     }
@@ -76,6 +80,7 @@ class HabilidadController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Auth::user()->rolesAutorizados([1]);
         $this->validate($request,[ 'nombreHabilidad'=>'required' ,'descripcionHabilidad'=>'required']); //Validamos los datos antes de actualizar
         Habilidad::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('habilidad.index')->with('success','Registro actualizado satisfactoriamente');
