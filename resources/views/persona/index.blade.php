@@ -34,7 +34,11 @@
                         <td>{{$persona->apellidoPersona}}</td>
                         <td>{{$persona->dniPersona}}</td>
                         <td>{{$persona->telefonoPersona}}</td>
-                        <td>{{$persona->imagenPersona}}</td>
+                        @if($persona->imagenPersona!=null)
+                            <td><img src="/LoHagoPorVosLaravel/public/storage/perfiles/{{$persona->imagenPersona}}" onClick=abrirImagen("{{$persona->imagenPersona}}") width="75px;" height="50px"></td>
+                        @else
+                            <td>{{$persona->imagenPersona}}</td>
+                        @endif
                         <td>{{$persona->usuario->idUsuario.' - '.$persona->usuario->mailUsuario}}</td>
                         <td>{{$persona->localidad->idLocalidad.' - '.$persona->localidad->nombreLocalidad}}</td>
                         
@@ -56,6 +60,32 @@
             </tbody>
         </table>
             {{ $personas->links() }}
+               <!-- Modal -->
+            <div id="modalConfirmacion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                <!-- Contenido del modal -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Im&aacute;gen de la persona</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Texto del modal</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
-
+@endsection
+@section('jsAbrirModalImagen')
+<script>
+    function abrirImagen(valor){
+    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/perfiles/' + valor + '" width="100%" height="150px"> </img>';
+    $('.modal-body').html(linkImagen);
+    $('#modalConfirmacion').modal("show");
+    }
+</script>
 @endsection

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Habilidad;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class HabilidadController extends Controller
 {
@@ -42,6 +44,22 @@ class HabilidadController extends Controller
     {
         Auth::user()->rolesAutorizados([1]);
         $this->validate($request,[ 'nombreHabilidad'=>'required', 'descripcionHabilidad'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
+        
+        if(isset($request['imagenHabilidad']) && $request['imagenHabilidad']!=null){
+            $imagen=$request->file('imagenHabilidad'); // Obtenemos el obj de la img
+         //   print_R($request['imagenHabilidad']);
+         //   die();
+            $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+            $nombreImagen ='imagenHabilidad-'.date("YmdHms").'.'. $extension;
+            $request = $request->except('imagenHabilidad'); // Guardamos todo el obj sin la clave imagen trabajo
+            $request['imagenHabilidad']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+            $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $imagen = File::get($imagen);
+            Storage::disk('habilidad')->put($nombreImagen, $imagen);    
+        }
+        
+         
         Habilidad::create($request->all()); //Creamos el elemento nuevo
         return redirect()->route('habilidad.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -80,8 +98,19 @@ class HabilidadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Auth::user()->rolesAutorizados([1]);
         $this->validate($request,[ 'nombreHabilidad'=>'required' ,'descripcionHabilidad'=>'required']); //Validamos los datos antes de actualizar
+        if(isset($request['imagenHabilidad']) && $request['imagenHabilidad']!=null){
+            $imagen=$request->file('imagenHabilidad'); // Obtenemos el obj de la img
+            $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+            $nombreImagen ='imagenHabilidad-'.date("YmdHms").'.'. $extension;
+            $request = $request->except('imagenHabilidad'); // Guardamos todo el obj sin la clave imagen trabajo
+            $request['imagenHabilidad']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+            $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $imagen = File::get($imagen);
+            Storage::disk('habilidad')->put($nombreImagen, $imagen);    
+        }
+        
         Habilidad::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
         return redirect()->route('habilidad.index')->with('success','Registro actualizado satisfactoriamente');
     }

@@ -40,7 +40,11 @@
                         <td>{{$trabajo->titulo}}</td>
                         <td>{{$trabajo->descripcion}}</td>
                         <td>{{$trabajo->monto}}</td>
-                        <td>{{$trabajo->imagenTrabajo}}</td>
+                        @if($trabajo->imagenTrabajo!=null)
+                            <td><img src="/LoHagoPorVosLaravel/public/storage/trabajos/{{$trabajo->imagenTrabajo}}" onClick=abrirImagen("{{$trabajo->imagenTrabajo}}") width="75px;" height="50px"></td>
+                        @else
+                            <td>{{$trabajo->imagenTrabajo}}</td>
+                        @endif
                         <td>{{$trabajo->tiempoExpiracion}}</td>
                         <td><a class="btn btn-primary btn-sm" href="{{action('TrabajoController@editpanel', $trabajo->idTrabajo)}}" ><i class="fas fa-edit"></i></a></td>
                                                 
@@ -61,6 +65,33 @@
             </tbody>
         </table>
             {{ $trabajos->links() }}
+            <div id="modalConfirmacion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                <!-- Contenido del modal -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Im&aacute;gen del trabajo</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Texto del modal</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
 
+@endsection
+@section('jsAbrirModalImagen')
+<script>
+    function abrirImagen(valor){
+    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/trabajos/' + valor + '" width="100%" height="150px"> </img>';
+    $('.modal-body').html(linkImagen);
+    $('#modalConfirmacion').modal("show");
+    }
+    
+</script>
 @endsection
