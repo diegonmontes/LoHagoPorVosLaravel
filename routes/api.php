@@ -41,7 +41,7 @@ Route::post('datosPersona', 'PersonaController@buscar');
 
 /** APIs de Trabajo persona */
 Route::post('storeTrabajo','TrabajoController@store');
-Route::post('listarTrabajos','TrabajoController@buscarTrabajos');
+Route::post('listarTrabajos','TrabajoController@buscar');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
 Route::post('buscarComentarios','ComentarioController@buscarComentarios');
@@ -71,7 +71,6 @@ Route::get('listarHabilidades','HabilidadController@buscarHabilidades');
 /** APIs de Localidad */
 Route::post('listarLocalidades','LocalidadController@buscarLocalidades');
 Route::post('datosLocalidad','LocalidadController@buscarNuevo');
-Route::get('listarTrabajos','TrabajoController@buscarTrabajos');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('datosMP', 'MercadoPagoController@crearPago');
 
