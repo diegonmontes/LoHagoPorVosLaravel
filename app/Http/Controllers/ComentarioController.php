@@ -142,11 +142,11 @@ class ComentarioController extends Controller
         $listaComentarios=array();
 
         foreach ($listaComentariosPadre as $comentarioPadre){
-            $arregloBuscarHijo = ['eliminado'=>0,'idComentarioPadre'=>$comentarioPadre[0]->idComentario];
+            $arregloBuscarHijo = ['eliminado'=>0,'idComentarioPadre'=>$comentarioPadre->idComentario];
             $arregloBuscarHijo = new Request($arregloBuscarHijo);
             $listaHijos = $this->buscar($arregloBuscarHijo);
             $listaHijos = json_decode($listaHijos);
-            $comentarioPadre[0]->hijos = $listaHijos;
+            $comentarioPadre->hijos = $listaHijos;
             array_push($listaComentarios,$comentarioPadre);
         }
         return json_encode($listaComentarios);
