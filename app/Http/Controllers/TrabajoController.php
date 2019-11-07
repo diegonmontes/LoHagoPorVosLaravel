@@ -235,6 +235,12 @@ class TrabajoController extends Controller
         //Obtenemos el id de la persona que esta logeada
         $idPersona=$persona[0]->idPersona; 
 
+        if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
+            $categoriaTrabajo = new CategoriaTrabajo;
+            $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
+            $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
+        }
+
 
         //Control del boton para elegir un postulante
 
@@ -291,7 +297,7 @@ class TrabajoController extends Controller
         $arregloBuscarPago=['idTrabajo'=>$idTrabajo, 'eliminado'=>0];
         $arregloBuscarPago = new Request($arregloBuscarPago);
         $busquedaPago = $pagoRecibidoController->buscar($arregloBuscarPago);
-        
+        $busquedaPago = json_decode($busquedaPago);
         if (count($busquedaPago)>0){
             //Si esta pago el anuncio seteo pagado en true
             $pagado = true;
@@ -300,6 +306,25 @@ class TrabajoController extends Controller
             $pagado = false;
         }
 
+        //Control si es el anuncio que me postule y esta pagado
+        //para mostrar el boton de terminar el trabajo o un mensaje que el anuncio ya está expirado
+        //Control pago
+        $personaAsignadaPagado = new Trabajoasignado;
+        $laPersonaPagada = $personaAsignadaPagado::select('trabajoasignado.idPersona')
+                                ->join('pagorecibido','pagorecibido.idTrabajo','=','trabajoasignado.idTrabajo')
+                                ->where('trabajoasignado.idPersona','=',$idPersona)
+                                ->where('trabajoasignado.eliminado','=',0)
+                                ->where('pagorecibido.eliminado','=',0)
+                                ->get();
+
+
+        if(count($laPersonaPagada)>0){
+            $soyElAsignadoPagado = true;
+        }else{
+            $soyElAsignadoPagado = false;
+        };
+
+        
         
         //Si tiene una persona asignada y todavia no pago preparamos el enlace para pagar
         if(!$pagado & $asignarPersona){
@@ -315,11 +340,23 @@ class TrabajoController extends Controller
             $link = '#';
         }
 
+        //Si es estado 4 tiene que confirmar que se realizo el trabajo
+        $valorarPersona = false;
+        if($trabajo->idEstado == 4){
+            $valorarPersona = true;
+        }
+
+        //Si es estado 5 el trabajo esta terminado
+        $trabajoTerminado = false;
+        if($trabajo->idEstado == 5){
+            $trabajoTerminado = true;
+        }
+
         //Listamos los trabajos para mostrar en un carousel
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'anuncioExpirado'=>$anuncioExpirado,'esMiAnuncio'=>$esMiAnuncio,'asignarPersona'=>$asignarPersona]);
+            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'anuncioExpirado'=>$anuncioExpirado,'esMiAnuncio'=>$esMiAnuncio,'asignarPersona'=>$asignarPersona,'soyElAsignadoPagado'=>$soyElAsignadoPagado,'valorarPersona'=>$valorarPersona,'trabajoTerminado'=>$trabajoTerminado]);
         }else{
             $vista = abort(404);
         }

@@ -56,6 +56,13 @@ Route::get('/', function () {
             $param = new Request($param);
             $listaTrabajos =$trabajoController->buscar($param);
             $listaTrabajos = json_decode($listaTrabajos);
+            foreach ($listaTrabajos as $trabajo){
+                if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
+                    $categoriaTrabajo = new CategoriaTrabajo;
+                    $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
+                    $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
+                }
+            }
             $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
 
         }
@@ -66,6 +73,13 @@ Route::get('/', function () {
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);
         $listaTrabajos = json_decode($listaTrabajos);
+        foreach ($listaTrabajos as $trabajo){
+            if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
+                $categoriaTrabajo = new CategoriaTrabajo;
+                $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
+                $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
+            }
+        }
         $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
     }
     return $pagina;

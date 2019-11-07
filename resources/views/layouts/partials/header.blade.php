@@ -7,14 +7,25 @@
 <!-- Anuncios -->
 <div class="row app" style="margin: auto">
     @foreach($listaTrabajos as $trabajo)
-        <div class="card margenCardInicio">
+        <div class="card margenCardInicio cardInicio">
+            
             <div class="card-body">
-                <h5 class="card-title">{{$trabajo->titulo}}</h5>
-                <p class="card-text">{{$trabajo->descripcion}}</p>
+                
+                <h5 class="card-title">{{ucfirst($trabajo->titulo)}}</h5>
+             <hr>
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
+                @php $descripcion = substr($trabajo->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajo->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
             </div>
             <div class="card-footer">
+                <div class="row">
+                <div class="col-md-6">
                 <a href="veranuncio/{{$trabajo->idTrabajo}}" class="btn btn-sm btn-primary">Ver anuncio</a>
-                <label class="product_price float-right">${{$trabajo->monto}}</label>
+                </div>
+                <div class="col-md-6">
+                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajo->monto}}</label>
+                </div>
+                </div>
             </div>
         </div>
     @endforeach

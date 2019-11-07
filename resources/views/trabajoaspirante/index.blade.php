@@ -5,25 +5,28 @@
         <div class="col-md-6">
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="card-title">Datos del anuncio</h5>
+                    <h5 class="card-title">Datos del anuncio que me estoy postulando</h5>
                 </div>
                 <h1>{{$trabajo->titulo}}</h1>
-                @if(!$trabajo->imagenTrabajo)
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Image cap"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Imagen del anuncio</text></svg>
-                @endif
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
+
                 
                 <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
                     <p class="card-text">{{$trabajo->descripcion}}</p>
-                    <p class="card-text">${{$trabajo->monto}}</p>
-                    
+                            </li>
+                    <li class="list-group-item">
+                    <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajo->monto}}</label>
+                    </li>
                 </div>
             </div>
         </div>
-
+        <br>
         <div class="col-md-6">
             <div class="card text-center">
                 <div class="card-header">
-                    <h5 class="card-title">Datos Personales</h5>
+                    <h5 class="card-title">Mis datos</h5>
                 </div>
                 <div class="card-body">
                     <p class="card-text">Nombre: {{$persona->nombrePersona}}</p>
