@@ -41,20 +41,35 @@ class ComentarioController extends Controller
 
     public function store(Request $request)
     {
-        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
-        $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-        $idPersona=$persona[0]->idPersona;
+        if(isset($request['flutter'])){
+            $comentario = new Comentario();
+            $comentario->contenido = $request->contenido;
+            $comentario->idComentarioPadre = $request->idComentarioPadre;
+            $comentario->idPersona = $request->idPersona;
+            $comentario->idTrabajo = $request->idTrabajo;
+     
+            $success=Comentario::create($request->all());
+        }else{
+            $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+            $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+            $idPersona=$persona[0]->idPersona;
 
-        $idTrabajo = $request->idTrabajo;
-        $trabajo = Trabajo::find($idTrabajo);
-        $comentario = new Comentario();
-        $comentario->contenido = $request->contenido;
-        $comentario->idComentarioPadre = $request->idComentarioPadre;
-        $comentario->idPersona = $idPersona;
-        $comentario->idTrabajo = $idTrabajo;
- 
-        $trabajo->Comentarios()->save($comentario);
- 
+            $idTrabajo = $request->idTrabajo;
+            $trabajo = Trabajo::find($idTrabajo);
+            $comentario = new Comentario();
+            $comentario->contenido = $request->contenido;
+            $comentario->idComentarioPadre = $request->idComentarioPadre;
+            $comentario->idPersona = $idPersona;
+            $comentario->idTrabajo = $idTrabajo;
+    
+            $trabajo->Comentarios()->save($comentario);
+        }
+        if(isset($request['flutter'])&& $success){
+            return $respuesta = ['success'=>true];
+        }elseif(isset($request['flutter']) && !$success){
+            return $respuesta = ['success'=>false,
+            'error'=>'Ha ocurrido un error'];
+        }
         return \redirect()->route('veranuncio', $idTrabajo);
     }
 
@@ -139,14 +154,43 @@ class ComentarioController extends Controller
         $query->where("comentario.idTrabajo",$param->idTrabajo);
         $query->where("comentario.idComentarioPadre",null);
         $listaComentariosPadre=$query->get();
+        $usuarioController= new UserController;
+        $personaController= new PersonaController;
         $listaComentarios=array();
-
         foreach ($listaComentariosPadre as $comentarioPadre){
+            $listaComentariosHijos= array();
+            //busco los comentarios hijos y los coloco dentro del padre
             $arregloBuscarHijo = ['eliminado'=>0,'idComentarioPadre'=>$comentarioPadre->idComentario];
             $arregloBuscarHijo = new Request($arregloBuscarHijo);
             $listaHijos = $this->buscar($arregloBuscarHijo);
             $listaHijos = json_decode($listaHijos);
-            $comentarioPadre->hijos = $listaHijos;
+                foreach($listaHijos as $hijo){
+                    //busco la persona que hizo el comentario y traigo su usuario
+                    $buscarPersona = ['idPersona'=>$hijo->idPersona];
+                    $buscarPersona = new Request($buscarPersona);
+                    $persona = $personaController->buscar($buscarPersona);
+                    $persona = json_decode($persona);
+                    $idUsuario= $persona[0]->idUsuario;
+                    $buscarUsuario = ['idUsuario'=>$idUsuario];
+                    $buscarUsuario = new Request($buscarUsuario);
+                    $usuario = $usuarioController->buscar($buscarUsuario);
+                    $usuario = json_decode($usuario);
+                    $hijo->idPersona = $usuario;
+                    array_push($listaComentariosHijos,$hijo);
+                }
+            $comentarioPadre->hijos = $listaComentariosHijos;
+            //busco la persona que hizo el comentario y traigo su usuario
+            $buscarPersona = ['idPersona'=>$comentarioPadre->idPersona];
+            $buscarPersona = new Request($buscarPersona);
+            $persona = $personaController->buscar($buscarPersona);
+            $persona = json_decode($persona);
+            //print_r($persona);
+            $idUsuario= $persona[0]->idUsuario;
+            $buscarUsuario = ['idUsuario'=>$idUsuario];
+            $buscarUsuario = new Request($buscarUsuario);
+            $usuario = $usuarioController->buscar($buscarUsuario);
+            $usuario = json_decode($usuario);
+            $comentarioPadre->idPersona = $usuario;
             array_push($listaComentarios,$comentarioPadre);
         }
         return json_encode($listaComentarios);

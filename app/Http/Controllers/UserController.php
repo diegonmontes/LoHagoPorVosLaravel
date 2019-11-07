@@ -384,7 +384,7 @@ class UserController extends Controller
             }
 
             if (isset($param->idUsuario)){
-                $query->where("usuariol.idUsuario",$param->idUsuario);
+                $query->where("usuario.idUsuario",$param->idUsuario);
             }
 
             if (isset($param->idRol)){

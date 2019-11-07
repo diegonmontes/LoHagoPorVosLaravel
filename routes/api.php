@@ -45,6 +45,8 @@ Route::post('listarTrabajos','TrabajoController@buscar');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
 Route::post('buscarComentarios','ComentarioController@buscarComentarios');
+Route::post('guardarComentario','ComentarioController@store');
+
 
 
 /** Trabajo Aspirantes */
