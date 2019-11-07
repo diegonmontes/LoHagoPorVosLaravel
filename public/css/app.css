@@ -16701,13 +16701,7 @@ Date picker
   appearance:none;
 }
 
-/* Card */
-.margenCardInicio{
-  width: 18rem; 
-  margin-left: 1%; 
-  margin-right: 1%; 
-  margin-top: 1%
-}
+
 
 /*
 * Spinner de carga
@@ -16748,4 +16742,168 @@ Date picker
   }
 }
 
+.precioAnuncio{
+  font-weight: 600;
+}
 
+.signoPeso{
+  background-color: #ea5a55;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #fff;
+  text-align: center;
+  margin-right: 1px;
+}
+
+.imagenAnuncio{
+  max-width: 100%;
+  height: auto;
+}
+
+.cardInicio{
+  -webkit-box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
+  -moz-box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
+  box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
+}
+
+.navbar-toggler{
+  position: absolute;
+  left: 0;
+  margin-right: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 5px;
+}
+
+.msjVerAnuncio{
+  background-color: #38c172;
+  color: #fff;
+  text-align: center
+}
+
+@media (max-width: 575.98px) {
+  body{
+    min-width: 575.98px
+  }
+
+  /* Nombre navbar */
+  .tituloNavbar{
+    right: 0;
+    position: absolute;
+    margin-right: 26%;
+  }
+
+  #navbarmenu{
+    height: 60px;
+  }
+
+  #navbarmenu a img{
+    visibility: hidden;
+  }
+
+  /* Card */
+  .margenCardInicio{
+    min-width: 575px;
+    margin-bottom: 3%
+  }
+
+ }
+
+ @media (min-width: 576px) and (max-width: 767.98px) { 
+
+  body{
+    min-width: 576px
+  }
+
+  /* Nombre navbar */
+  .tituloNavbar{
+    right: 0;
+    position: absolute;
+    margin-right: 42%;
+  }
+
+  #navbarmenu{
+    height: 60px;
+  }
+
+  #navbarmenu a img{
+    visibility: hidden;
+  }
+  
+  /* Card */
+  .margenCardInicio{
+    min-width: 576px;
+    margin-bottom: 3%
+  }
+
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  body{
+    min-width: 768px;
+  }
+
+  /* Nombre navbar */
+  .tituloNavbar{
+    right: 0;
+    position: absolute;
+    margin-right: 41%;
+  }
+
+  #navbarmenu{
+    height: 60px;
+  }
+
+  #navbarmenu a img{
+    visibility: hidden;
+  }
+
+  /* Card */
+  .margenCardInicio{
+    width: 48%;
+    margin-left: 1%; 
+    margin-right: 1%; 
+    margin-bottom: 3%
+  }
+
+  .navbar-nav li{
+    width: max-content;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+
+  /* Card */
+  .margenCardInicio{
+    width: 31%;
+    margin-left: 1%; 
+    margin-right: 1%; 
+    margin-bottom: 3%
+  }
+
+  .navbar-nav li{
+    width: max-content;
+  }
+}
+
+ @media (min-width: 1200px) { 
+ /* Card */
+ .margenCardInicio{
+  width: 18rem;
+  margin-left: 1%; 
+  margin-right: 1%; 
+  margin-bottom: 3%
+}
+
+.navbar-nav li{
+  width: max-content;
+}
+
+.navbar-nav {
+  right: 0;
+  position: absolute;
+  margin-right: 3%;
+}
+
+}
