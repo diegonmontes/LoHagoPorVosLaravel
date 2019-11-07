@@ -77,4 +77,34 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne('App\Rol', 'idRol', 'idRol');
     }
 
+        public function rolesAutorizados($roles)
+    {
+        if ($this->tieneAlgunRol($roles)) {
+            return true;
+        }
+        abort(401, 'Esta acción no está autorizada.');
+    }
+    public function tieneAlgunRol($roles)
+    {
+        if (is_array($roles)) {
+            foreach ($roles as $role) {
+                if ($this->tieneRol($role)) {
+                    return true;
+                }
+            }
+        } else {
+            if ($this->tieneRol($roles)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public function tieneRol($role)
+    {
+        if ($this->Rol()->where('idRol', $role)->first()) {
+            return true;
+        }
+        return false;
+    }
+
 }

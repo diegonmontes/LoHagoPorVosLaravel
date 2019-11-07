@@ -27,8 +27,11 @@
                         <td>{{$categoriaTrabajo->idCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->nombreCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->descripcionCategoriaTrabajo}}</td>
-                        <td>{{$categoriaTrabajo->imagenCategoriaTrabajo}}</td>
-                        
+                        @if($categoriaTrabajo->imagenCategoriaTrabajo!=null)
+                            <td><img src="/LoHagoPorVosLaravel/public/storage/trabajos/{{$categoriaTrabajo->imagenCategoriaTrabajo}}" onClick=abrirImagen("{{$categoriaTrabajo->imagenCategoriaTrabajo}}") width="75px;" height="50px"></td>
+                        @else
+                            <td>{{$categoriaTrabajo->imagenCategoriaTrabajo}}</td> 
+                        @endif
                         <td><a class="btn btn-primary btn-sm" href="{{action('CategoriaTrabajoController@edit', $categoriaTrabajo->idCategoriaTrabajo)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
                             <form action="{{action('CategoriaTrabajoController@destroy', $categoriaTrabajo->idCategoriaTrabajo)}}" method="post">
@@ -47,6 +50,35 @@
             </tbody>
         </table>
             {{ $categoriasTrabajo->links() }}
+             <!-- Modal -->
+             <div id="modalConfirmacion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                <!-- Contenido del modal -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Im&aacute;gen de la categor&iacute;a</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Texto del modal</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
 
+@endsection
+
+@section('jsAbrirModalImagen')
+<script>
+    function abrirImagen(valor){
+    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/trabajos/' + valor + '" width="100%" height="150px"> </img>';
+    $('.modal-body').html(linkImagen);
+    $('#modalConfirmacion').modal("show");
+    }
+    
+</script>
 @endsection

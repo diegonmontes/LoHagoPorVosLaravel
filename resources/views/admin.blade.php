@@ -169,5 +169,7 @@
 <script src="{{ asset('js/navbar.js') }}"></script>
 
 @yield('js')
+@yield('jsAbrirModalImagen')
+
 </body>
 </html>

@@ -91,14 +91,13 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('Mailvalidado');
 
-Route::prefix('administrador')->group(function(){
+Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
     Route::resource('rol', 'RolController');
     Route::resource('provincia', 'ProvinciaController');
 
     Route::resource('localidad', 'LocalidadController');
     
-    
-    Route::resource('habilidad', 'HabilidadController');
+    Route::resource('habilidad', 'HabilidadController')->middleware('auth', 'role:1');;
     
     Route::resource('categoriatrabajo', 'CategoriaTrabajoController');
     

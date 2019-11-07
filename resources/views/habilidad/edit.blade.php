@@ -26,7 +26,7 @@
 					<h3>Editar Habilidad</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" id="formHabilidad" name="formHabilidad" action="{{ route('habilidad.update',$habilidad->idHabilidad) }}"  role="form">
+					<form method="POST" id="formHabilidad" name="formHabilidad" enctype="multipart/form-data" action="{{ route('habilidad.update',$habilidad->idHabilidad) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
@@ -41,6 +41,23 @@
 								<input type="text" name="descripcionHabilidad" id="descripcionHabilidad" class="form-control input-sm" value="{{$habilidad->descripcionHabilidad}}">
 							</div>
 						</div>
+
+						<div class="row margenImagenHabilidad">
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								<div class="drag-drop-imagenHabilidad imagenHabilidad">
+									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenHabilidad" />
+									<output id="thumbnil" class="preview-imagenHabilidad">
+										<img  class="preview-imagenHabilidad" src="
+												@if($habilidad->imagenHabilidad != null)
+													{{ asset('storage/habilidad/'.$habilidad->imagenHabilidad)}}
+												@else{{asset('images/fotoPerfil.png')}}@endif
+										">
+									</output>
+								</div>
+							</div>
+						</div>
+
+						<br/>
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
 							<a href="{{ route('habilidad.index') }}" class="btn btn-info btn-block" >Atrás</a>

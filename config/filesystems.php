@@ -76,6 +76,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'habilidad' => [
+            'driver' => 'local',
+            'root' => public_path('/storage/habilidad'),
+            'visibility' => 'public',
+        ],
+
     ],
 
 ];

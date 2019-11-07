@@ -25,7 +25,7 @@
 						<h3>Nueva Categoria</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" action="{{ route('categoriatrabajo.store') }}" id="formCategoriaTrabajo" name="formCategoriaTrabajo" role="form">
+						<form method="POST" enctype="multipart/form-data" action="{{ route('categoriatrabajo.store') }}" id="formCategoriaTrabajo" name="formCategoriaTrabajo" role="form">
 							{{ csrf_field() }}
 							<div class="row">
 								<div class="form-group">
@@ -40,6 +40,18 @@
 									<input type="text" name="descripcionCategoriaTrabajo" id="descripcionCategoriaTrabajo" class="form-control input-sm">
 								</div>
 							</div>
+
+							<div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <label>INGRESE UNA IMAGEN(opcional)</label>
+                                    <div class="drag-drop-imagenCategoriaTrabajo imagenCategoriaTrabajo">
+                                        <input class="inputimagenCategoriaTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenCategoriaTrabajo" />
+                                        <output id="thumbnil" class="preview-imagenCategoriaTrabajo">
+                                                <img class="preview-imagenimagenCategoriaTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
+                                        </output>
+                                    </div>
+                                </div>
+                            </div>
 
 							<br>
 							<div class="row">
