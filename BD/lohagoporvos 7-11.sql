@@ -2,7 +2,7 @@
 CREATE TABLE `estado`(
     `idEstado` int NOT NULL AUTO_INCREMENT,
     `nombreEstado` VARCHAR(80),
-    `descripcionEstado` VARCHAR(80),
+    `descripcionEstado` VARCHAR(160),
     `eliminado` TINYINT(1) DEFAULT 0,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NULL DEFAULT NULL,
