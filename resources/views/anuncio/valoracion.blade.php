@@ -75,13 +75,13 @@
 @section('content')
 <section class="container h-100">
 <div class="row h-100 justify-content-center ">
-    <h1>aca va un formulario para que complete y valore la persona</h1>
+    <h1>aca va un formulario para que complete y starse la persona</h1>
 
     <form method="POST" id="formTerminado" name="formTerminado" action="{{route('trabajo.valorarpersona')}}"  role="form">
         {{ csrf_field() }}
         <div class="row">
             <div class="form-group">
-                <label>Describe y valora el trabajo realizado</label>
+                <label>Describe y starsa el trabajo realizado</label>
                 <textarea type="text" name="descripcionTrabajo" id="descripcionTrabajo" class="form-control input-sm"></textarea>
             </div>
         </div>

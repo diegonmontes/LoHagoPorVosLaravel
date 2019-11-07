@@ -43,6 +43,6 @@ class EstadoTrabajoExpirado extends Command
         $trabajo->whereRaw('tiempoExpiracion < NOW()')
                 ->where('eliminado','=',0)
                 ->update(['idEstado'=>2]);
-        
+                error_log('hola');
     }
 }
