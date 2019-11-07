@@ -19,6 +19,8 @@ class CreateValoracionTable extends Migration
             $table->integer('valor')->nullable(false)->default(0);
             $table->integer('idTrabajo')->unsigned()->nullable(false);
             $table->integer('idPersona')->unsigned()->nullable(false);
+            $table->string('comentarioValoracion',511);
+            $table->string('imagenValoracion',511);
             $table->tinyInteger('eliminado')->default(0);
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
             $table->foreign('idPersona')->references('idPersona')->on('persona');

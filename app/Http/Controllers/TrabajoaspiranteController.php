@@ -164,7 +164,7 @@ class TrabajoaspiranteController extends Controller
             $idLocalidad=$unAspirante[0]->idLocalidad;
             $requestLocalidad=['idLocalidad'=>$idLocalidad];
             $requestLocalidad= new Request($requestLocalidad);
-            $localidad= $localidadController->buscarNuevo($requestLocalidad);
+            $localidad= $localidadController->buscar($requestLocalidad);
             $localidad=\json_decode($localidad);
             //busco la lista de habilidades de esa persona
             $habilidadesPersona= $habilidadPersonaController->buscar($persona);

@@ -159,5 +159,50 @@ class TrabajoasignadoController extends Controller
             return json_encode($listaTrabajoAsignado);
     }
 
+    // Funcion donde generamos todo el arreglo para mostrar los datos en la parte de valoracion
+    public function buscarDatosPostulacion(request $request){
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $usuarioController = new UserController();
+        $datosPostulacion = array();
+        // Realizamos la busqueda del trabajo asignado con ese id trabajo
+        $idTrabajo = $request->idTrabajo;
+        $arregloBuscarTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajoAsignado = new Request($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = $this->buscar($arregloBuscarTrabajoAsignado);
+        $trabajoAsignado = json_decode($listaTrabajoAsignado);
+        $trabajoAsignado = $trabajoAsignado[0];
+
+        // Hacemos la busqueda del trabajo
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $listaTrabajo = $trabajoController->buscar($arregloBuscarTrabajo);
+        $trabajo = json_decode($listaTrabajo);
+        $trabajo = $trabajo[0];
+
+        // Realizamos la busqueda de la persona
+        $idPersona=$trabajoAsignado->idPersona;
+        $arregloBuscarPersona = ['idPersona'=>$idPersona];
+        $arregloBuscarPersona = new Request($arregloBuscarPersona);
+        $listaPersona = $personaController->buscar($arregloBuscarPersona);
+        $persona = json_decode($listaPersona);
+        $persona = $persona[0];    
+        
+        // Realizamos la busqueda del usuario
+        $idUsuario=$persona->idUsuario;
+        $arregloBuscarUsuario = ['idUsuario'=>$idUsuario];
+        $arregloBuscarUsuario = new Request($arregloBuscarUsuario);
+        $listaUsuario = $usuarioController->buscar($arregloBuscarUsuario);
+        $usuario = json_decode($listaUsuario);
+        $usuario = $usuario[0];     
+
+        $datosPostulacion[0] = $usuario;
+        $datosPostulacion[1] = $persona;
+        $datosPostulacion[2] = $trabajo;
+
+        return json_encode($datosPostulacion);
+        
+    }
+
   
 }
