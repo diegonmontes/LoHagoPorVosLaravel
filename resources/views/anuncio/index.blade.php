@@ -152,6 +152,26 @@
 @section('js')
 
 <script type="text/javascript">
+    $(document).ready(function(){
+        var valorInicial = $('select#idProvincia').val();
+        cargarLocalidades(valorInicial,null);
+        
+        $("#idProvincia").change(function(){
+            var idProvincia = $(this).val();
+            cargarLocalidades(idProvincia,null);
+        });
+        
+        $('#borrarCampos').click(function() {
+            $('input[type="text"]').val('');
+            $('select[name="idProvincia"]').val('20');
+            cargarLocalidades(20,null);
+            $('input[type=checkbox]').prop('checked',false);
+        });
+    });
+</script>
+
+
+<script type="text/javascript">
     $('#datepicker').datetimepicker({
         altField: "#datepickerAlt",
         altFieldTimeOnly: false,

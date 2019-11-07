@@ -168,7 +168,7 @@ class TrabajoController extends Controller
                     Estadotrabajo::create($requesEstadoTrabajo->all());
 
                     return response()->json([
-                        'url' => route('inicio'),
+                        'url' => route('historial'),
                         'success'   => true,
                         'message'   => 'Los datos se han guardado correctamente.' 
                         ], 200);

@@ -27,9 +27,6 @@ Route::post('actualizarMail', 'UserController@actualizarMail');
 Route::post('actualizarClave', 'UserController@actualizarClave');
 
 
-
-
-
 /** APIs de Persona */
 Route::post('crearPerfil', 'PersonaController@store');
 Route::post('perfil', 'PersonaController@getCurrentPerfil');
@@ -80,3 +77,8 @@ Route::get('listarMensajes','MensajeChatController@buscarMensajes');
 
 /** POSTULACIONES */
 Route::post('postularme','TrabajoaspiranteController@store');
+
+/** VALORACION */
+Route::post('enviarValoracion','ValoracionController@store');
+Route::post('buscarDatosPostulacion','TrabajoasignadoController@buscarDatosPostulacion');
+

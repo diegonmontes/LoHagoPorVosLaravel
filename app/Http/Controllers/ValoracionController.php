@@ -53,9 +53,39 @@ class ValoracionController extends Controller
     {
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
+
+        if (isset($request['flutter']) && $request['flutter']==true ){ // Significa que la peticion viene desde flutter
+            $idPersonaLogeada = $request->idPersona;
+            $idTrabajo = $request->idTrabajo;
+            
+            $trabajoController = new TrabajoController();
+            $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+            $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+            $trabajo = Trabajo::where('idTrabajo',$idTrabajo)->get();
+            $trabajo = $trabajo[0];
+            if ($trabajo->idPersona==$idPersonaLogeada){ // Significa que esta valorando el creador del anuncio
+                // Hacemos la busqueda del trabajo en trabajo aspirante para obtener el id del aspirante
+                $trabajoAspiranteController = new TrabajoaspiranteController();
+                $arregloBuscarTrabajoAspirante = ['idTrabajo'=>$idTrabajo];
+                $arregloBuscarTrabajoAspirante = new Request($arregloBuscarTrabajoAspirante);
+                $listaTrabajoAspirante = $trabajoAspiranteController->buscar($arregloBuscarTrabajoAspirante);
+                $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
+                $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
+                $request->idPersona = $trabajoAspirante->idPersona;
+            } else { // Significa que el aspirante esta valorando al creador del anuncio
+                $request->idPersona = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
+            }
+        }
         //Creamos el elemento nuevo
-        Valoracion::create($request->all());
-        return redirect()->route('valoracion.index')->with('success','Registro creado satisfactoriamente');
+        if (Valoracion::create($request->all())){
+            if ($usandoFlutter){
+                return $respuesta = ['success'=>true];
+            } else {
+                return redirect()->route('valoracion.index')->with('success','Registro creado satisfactoriamente');
+            }
+        }
+        
+       
     }
 
     /**
