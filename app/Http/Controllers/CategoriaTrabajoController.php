@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\CategoriaTrabajo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 
 class CategoriaTrabajoController extends Controller
 {
@@ -42,6 +45,17 @@ class CategoriaTrabajoController extends Controller
         //
        
         $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required','descripcionCategoriaTrabajo'=>'required']);
+        if(isset($request['imagenCategoriaTrabajo']) && $request['imagenCategoriaTrabajo']!=null){
+            $imagen=$request->file('imagenCategoriaTrabajo'); // Obtenemos el obj de la img
+            $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+            $nombreImagen ='imagenCategoriaTrabajo-'.date("YmdHms").'.'. $extension;
+            $request = $request->except('imagenCategoriaTrabajo'); // Guardamos todo el obj sin la clave imagen trabajo
+            $request['imagenCategoriaTrabajo']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+            $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $imagen = File::get($imagen);
+            Storage::disk('trabajo')->put($nombreImagen, $imagen);    
+        }
         CategoriaTrabajo::create($request->all());
         return redirect()->route('categoriatrabajo.index')->with('success','Registro creado satisfactoriamente');
     }
@@ -84,6 +98,18 @@ class CategoriaTrabajoController extends Controller
     {
         //
         $this->validate($request,[ 'nombreCategoriaTrabajo'=>'required','descripcionCategoriaTrabajo'=>'required']);
+        if(isset($request['imagenCategoriaTrabajo']) && $request['imagenCategoriaTrabajo']!=null){
+            $imagen=$request->file('imagenCategoriaTrabajo'); // Obtenemos el obj de la img
+            $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+            $nombreImagen ='imagenCategoriaTrabajo-'.date("YmdHms").'.'. $extension;
+            $request = $request->except('imagenCategoriaTrabajo'); // Guardamos todo el obj sin la clave imagen trabajo
+            $request['imagenCategoriaTrabajo']=$nombreImagen; // Asignamos de nuevo a imagenTrabajo, su nombre
+            $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+             //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+            $imagen = File::get($imagen);
+            Storage::disk('trabajo')->put($nombreImagen, $imagen);    
+        }
+        
         CategoriaTrabajo::find($id)->update($request->all());
         return redirect()->route('categoriatrabajo.index')->with('success','Registro actualizado satisfactoriamente');
     }

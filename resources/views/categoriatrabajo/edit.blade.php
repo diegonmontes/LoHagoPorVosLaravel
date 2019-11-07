@@ -26,7 +26,7 @@
 					<h3>Editar categoria</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" name="formCategoriaTrabajo" id="formCategoriaTrabajo" action="{{ route('categoriatrabajo.update',$categoriaTrabajo->idCategoriaTrabajo) }}"  role="form">
+					<form method="POST" enctype="multipart/form-data"  name="formCategoriaTrabajo" id="formCategoriaTrabajo" action="{{ route('categoriatrabajo.update',$categoriaTrabajo->idCategoriaTrabajo) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 						<div class="row">
@@ -40,6 +40,22 @@
 							<div class="form-group">
 								<label>Descripcion:</label><br>
 								<input type="text" name="descripcionCategoriaTrabajo" id="descripcionCategoriaTrabajo" class="form-control input-sm" value="{{$categoriaTrabajo->descripcionCategoriaTrabajo}}">
+							</div>
+						</div>
+
+						
+						<div class="row margenImagenCategoriaTrabajo">
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								<div class="drag-drop-imagenCategoriaTrabajo imagenCategoriaTrabajo">
+									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenCategoriaTrabajo" />
+									<output id="thumbnil" class="preview-imagenCategoriaTrabajo">
+										<img  class="preview-imagenCategoriaTrabajo" src="
+												@if($categoriaTrabajo->imagenCategoriaTrabajo != null)
+													{{ asset('storage/trabajos/'.$categoriaTrabajo->imagenCategoriaTrabajo)}}
+												@else{{asset('images/fotoPerfil.png')}}@endif
+										">
+									</output>
+								</div>
 							</div>
 						</div>
 						<div class="row">
