@@ -12,12 +12,8 @@
                 <div class="card-header">
                     <h5 class="card-title">{{$trabajo->titulo}}</h5>
                 </div>
-                @if(!$trabajo->imagenTrabajo)
-                    @php $nombreImagen = $trabajo->CategoriaTrabajo->imagenCategoriaTrabajo @endphp
-                    <img src="{{ asset("storage/trabajos/$nombreImagen")}}">
-                @else 
-                    <img src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
-                @endif
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
+
                 <div class="card-body">
                     <p class="card-text">{{$trabajo->descripcion}}</p>
                 </div>
@@ -30,45 +26,97 @@
             @include('comentario.form')
         </div>
 
-        <div class="col-md-2" >
+        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
             <div class="card">
-                <ul class="list-group list-group-flush" style="width:15rem">
-                    <li class="list-group-item">{{$trabajo->titulo}}</li>
-                    <li class="list-group-item">${{$trabajo->monto}}</li>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">{{$trabajo->titulo}}<label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajo->monto}}</label></li>
                     @if($anuncioExpirado)
                         @if($esMiAnuncio)
                             @if($asignarPersona)
 
                                 @if(!$pagado)
                                     {{-- Decodificamos el link recibido para obtener el smart checkout --}}
-                                    <a class='btn btn-success btn-sm' href={{$link}}> Pagar </a>
+                                    <a class='btn btn-success btn-lg' href={{$link}}> Pagar </a>
                                 @else
+                                
+                                    @if($valorarPersona)
+                                        <a href="{{route('trabajo.valor',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Valorar el trabajo</a>
 
-                                    <a class='btn btn-success btn-sm' href="#">Esperando a que se realice el trabajo</a>
+                                    @else
+                                        @if($trabajoTerminado)
+                                        <li class="list-group-item msjVerAnuncio">Anuncio terminado</li>
 
+                                        @else
+                                        <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
+                                        @endif
+                                    @endif        
                                 @endif
 
                             @else
+                                @if($soyElAsignadoPagado)
+                                
+                                    <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-sm btn-primary">Termine el trabajo</a>
 
-                                <a class='btn btn-success' href="{{route('anuncio.postulante',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
+                                @else
+                                    @if($esMiAnuncio)
+
+
+                                    <a class='btn btn-lg btn-primary' href="{{route('anuncio.postulante',$trabajo->idTrabajo)}}" > Elegir un postulante </a>
+
+
+                                    @else
+                                        @if($mostrarBotonPostularse)
+                                        <li class="list-group-item msjVerAnuncio"> Trabajo expirado</li>
+
+
+                                        @else
+                                        <li class="list-group-item msjVerAnuncio">Esperando que se asigne una persona</li>
+
+                                        @endif
+                                        
+                                    @endif
+                                @endif
 
                             @endif
                         @else
 
-                            <a class='btn btn-success btn-sm' href="#"> Esperando a que se designe un postulante</a>
+                            @if($soyElAsignadoPagado)
+                                @if($valorarPersona)
+                                <li class="list-group-item msjVerAnuncio">Trabajo terminado. Esperando valoracion</li>
 
+                                @else
+                                @if($trabajoTerminado)
+                                <li class="list-group-item msjVerAnuncio">Anuncio terminado</li>
+
+                                @else
+                                    <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Termine el trabajo</a>
+                                @endif
+                                @endif
+                            @else
+                                <li class="list-group-item msjVerAnuncio"> Esperando a que se eliga un postulante</li>
+                            @endif
+           
                         @endif
                     @else
                         {{-- Si ya se postulo no mostramos boton postularse --}}
                         @if($esMiAnuncio)
-                            <a class='btn btn-success btn-sm' href="#"> Anuncio no expirado </a>
-                            <a class='btn btn-success btn-sm' href="#"> Todavia se reciben postulantes </a>
+
+                            @if($pagado)
+                                {{-- Decodificamos el link recibido para obtener el smart checkout --}}
+                                <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
+
+                            @else
+
+                                <li class="list-group-item msjVerAnuncio">Todavia se reciben postulantes en este anuncio</li>
+                            
+                            @endif
+
 
                         @else
                             @if($mostrarBotonPostularse)
                                 <a href="{{route ('postularme',$trabajo->idTrabajo)}}" class="btn btn-success">Postularme</a>
                             @else
-                                <a class='btn btn-success btn-sm' href="#"> Ya estoy postulado </a>
+                                <li class="list-group-item msjVerAnuncio">Ya estoy postulado</li>
                             @endif
                         @endif
                     @endif   

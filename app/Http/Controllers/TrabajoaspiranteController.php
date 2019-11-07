@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Trabajoaspirante;
 use App\Persona;
 use App\Trabajo;
+use App\CategoriaTrabajo;
 use Auth;
 
 class TrabajoaspiranteController extends Controller
@@ -22,6 +23,11 @@ class TrabajoaspiranteController extends Controller
         $persona = Persona::where('idUsuario','=',$idUsuario)->get()[0];
         //Buscamos el trabajo que se quiere postular
         $trabajo = Trabajo::find($id);
+        if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
+            $categoriaTrabajo = new CategoriaTrabajo;
+            $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
+            $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
+        }
         return view('trabajoaspirante.index',['persona'=>$persona, 'trabajo'=>$trabajo]);
     }
 
