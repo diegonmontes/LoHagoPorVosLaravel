@@ -82,6 +82,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'valoracion' => [
+            'driver' => 'local',
+            'root' => public_path('/storage/valoracion'),
+            'visibility' => 'public',
+        ],
+
     ],
 
 ];
