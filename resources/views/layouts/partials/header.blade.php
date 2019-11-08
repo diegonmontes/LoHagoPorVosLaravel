@@ -13,8 +13,17 @@
                 
                 <h5 class="card-title">{{ucfirst($trabajo->titulo)}}</h5>
              <hr>
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
-                @php $descripcion = substr($trabajo->descripcion, 0, 100)  @endphp
+             @if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == '')
+                @php $imagen = $trabajo->CategoriaTrabajo['imagenCategoriaTrabajo']; $nombreImagen = $trabajo->CategoriaTrabajo['nombreCategoriaTrabajo'] @endphp
+
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagen" )}}" alt="{{$nombreImagen}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajo->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajo->descripcion, 0, 100)  @endphp
                 <p class="card-text">{{$descripcion}} @if(strlen($trabajo->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
             </div>
             <div class="card-footer">

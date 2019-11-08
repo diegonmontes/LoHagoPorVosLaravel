@@ -175,7 +175,7 @@ Route::get('historial', 'TrabajoController@historial')->name('historial')->middl
 
 Route::get('veranuncio/{idTrabajo}', 'TrabajoController@veranuncio')->name('veranuncio')->middleware('auth','Mailvalidado','controlperfil');
 Route::get('trabajorealizado/{idTrabajo}', 'TrabajoController@trabajorealizado')->name('trabajorealizado')->middleware('auth','Mailvalidado','controlperfil');
-Route::post('terminado', 'TrabajoController@terminado')->name('trabajo.terminado')->middleware('auth','Mailvalidado','controlperfil');
+Route::post('terminado', 'ValoracionController@store')->name('valoracion.enviarvaloracion')->middleware('auth','Mailvalidado','controlperfil');
 Route::get('valorar/{idTrabajo}', 'TrabajoController@valor')->name('trabajo.valor')->middleware('auth','Mailvalidado','controlperfil');
 Route::post('valorarpersona', 'ValoracionController@valorarpersona')->name('trabajo.valorarpersona')->middleware('auth','Mailvalidado','controlperfil');
 
@@ -198,7 +198,6 @@ Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('person
 Route::get('trabajo/{id}/editpanel','TrabajoController@editpanel')->name('trabajo.editpanel');
 Route::get('trabajoaspirante/{id}/editpanel','TrabajoaspiranteController@editpanel')->name('trabajoaspirante.editpanel');
 
-
-
 Route::resource('usuario', 'UserController');
+
 

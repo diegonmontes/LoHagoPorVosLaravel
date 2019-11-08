@@ -22,7 +22,7 @@ box-shadow: 0px 0px 10px 0px rgba(154,61,182,1);
     <br>
     
     @foreach($listaPostulantes as $postulante)
-    @php $persona = $postulante->Persona[0] @endphp
+    @php $persona = $postulante->Persona @endphp
 
     <form class="col-xs-12 col-sm-12 col-md-8" style="min-width: 100%;min-height: 100%;margin-bottom: 1%;" action="{{route('trabajoasignado.store')}}" method="POST">
             {{ csrf_field() }}

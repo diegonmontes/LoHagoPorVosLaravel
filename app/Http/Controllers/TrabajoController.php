@@ -235,11 +235,7 @@ class TrabajoController extends Controller
         //Obtenemos el id de la persona que esta logeada
         $idPersona=$persona[0]->idPersona; 
 
-        if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
-            $categoriaTrabajo = new CategoriaTrabajo;
-            $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
-            $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
-        }
+        
 
 
         //Control del boton para elegir un postulante

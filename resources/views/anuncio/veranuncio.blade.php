@@ -12,7 +12,16 @@
                 <div class="card-header">
                     <h5 class="card-title">{{$trabajo->titulo}}</h5>
                 </div>
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}">
+
+                @if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == '')
+                    @php $imagen = $trabajo->CategoriaTrabajo['imagenCategoriaTrabajo']; $nombreImagen = $trabajo->CategoriaTrabajo['nombreCategoriaTrabajo'] @endphp
+
+                    <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagen" )}}" alt="{{$nombreImagen}}">
+
+                @else
+                    <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajo->imagenTrabajo}}">
+
+                @endif
 
                 <div class="card-body">
                     <p class="card-text">{{$trabajo->descripcion}}</p>

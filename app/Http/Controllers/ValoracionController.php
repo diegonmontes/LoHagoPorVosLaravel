@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+//Autenticacion
+use Auth;
 
 use Illuminate\Http\Request;
 use App\Valoracion;
@@ -59,28 +61,41 @@ class ValoracionController extends Controller
         $usandoFlutter = false; // Inicializamos en false
         $controller= new Controller;
 
+        $idTrabajo = $request->idTrabajo;
+        $trabajoController = new TrabajoController();
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $trabajo = Trabajo::where('idTrabajo',$idTrabajo)->get();
+        $trabajo = $trabajo[0];
+            
         if (isset($request['flutter']) && $request['flutter']==true){ // Significa que la peticion viene desde flutter
             $usandoFlutter = true; // Si viene de flutter, seteamos a true
-            $idPersonaLogeada = $request->idPersona;
-            $idTrabajo = $request->idTrabajo;
-            $trabajoController = new TrabajoController();
-            $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
-            $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
-            $trabajo = Trabajo::where('idTrabajo',$idTrabajo)->get();
-            $trabajo = $trabajo[0];
-            if ($trabajo->idPersona==$idPersonaLogeada){ // Significa que esta valorando el creador del anuncio
-                // Hacemos la busqueda del trabajo en trabajo aspirante para obtener el id del aspirante
-                $trabajoAspiranteController = new TrabajoaspiranteController();
-                $arregloBuscarTrabajoAspirante = ['idTrabajo'=>$idTrabajo];
-                $arregloBuscarTrabajoAspirante = new Request($arregloBuscarTrabajoAspirante);
-                $listaTrabajoAspirante = $trabajoAspiranteController->buscar($arregloBuscarTrabajoAspirante);
-                $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
-                $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
-                $request['idPersona'] = $trabajoAspirante->idPersona;
-            } else { // Significa que el aspirante esta valorando al creador del anuncio
-                $request['idPersona'] = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
-            }
+            $idPersonaLogeada = $request->idPersona;  
+        } else { // Significa que esta en laravel y obtenemos el id persona
+            $personaController = new PersonaController();
+            $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+            $arregloBuscarPersona = ['idUsuario'=>$idUsuario];
+            $arregloBuscarPersona = new Request($arregloBuscarPersona);
+            $listaPersona = $personaController->buscar($arregloBuscarPersona);
+            $listaPersona = json_decode($listaPersona);
+            $persona = $listaPersona[0];
+            $idPersonaLogeada = $persona->idPersona;
         }
+
+        if ($trabajo->idPersona==$idPersonaLogeada){ // Significa que esta valorando el creador del anuncio
+            // Hacemos la busqueda del trabajo en trabajo aspirante para obtener el id del aspirante
+            $trabajoAspiranteController = new TrabajoaspiranteController();
+            $arregloBuscarTrabajoAspirante = ['idTrabajo'=>$idTrabajo];
+            $arregloBuscarTrabajoAspirante = new Request($arregloBuscarTrabajoAspirante);
+            $listaTrabajoAspirante = $trabajoAspiranteController->buscar($arregloBuscarTrabajoAspirante);
+            $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
+            $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
+            $request['idPersona'] = $trabajoAspirante->idPersona;
+        } else { // Significa que el aspirante esta valorando al creador del anuncio
+            $request['idPersona'] = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
+        }
+
+
 
         if(isset($request['imagenValoracion']) && $request['imagenValoracion']!=null){
             if ($usandoFlutter){ // Significa que el nombre de la img viene por parametro
@@ -88,18 +103,19 @@ class ValoracionController extends Controller
                 $posicion = strrpos($nombreImagen,'.');
                 $extension = substr($nombreImagen,$posicion);
                 $imagen = base64_decode($request['imagenValoracion']); // Decodificamos la img
-                $request['imagenValoracion'] = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").$extension; // Definimos el nombre
+                $request['imagenValoracion'] = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").'.'.$extension; // Definimos el nombre
                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                 Storage::disk('valoracion')->put($request['imagenValoracion'], $imagen);            
             } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
                 $imagen=$request->file('imagenValoracion'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
-                $nombreImagen = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").$extension; // Definimos el nombre
+                $nombreImagen = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").'.'.$extension; // Definimos el nombre
                 $request = $request->except('imagenValoracion'); // Guardamos todo el obj sin la clave imagen valoracion
                 $request['imagenValoracion']=$nombreImagen; // Asignamos de nuevo a imagenValoracion, su nombre
                 $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                 $imagen = File::get($imagen);
+                
                 Storage::disk('valoracion')->put($nombreImagen, $imagen);        
             }
             //llamamos a la funcion que valida la imagen
@@ -109,13 +125,13 @@ class ValoracionController extends Controller
             $validoImagen = true;
         }
 
-        if(isset($request['comentarioValoracion']) && $request['comentarioValoracion']!=null){ // Significa que escribio un comentario
+        if(isset($request->comentarioValoracion) && $request['comentarioValoracion'] !=null){ // Significa que escribio un comentario
             $comentarioValoracion = $request->comentarioValoracion;
             $validoComentario=$controller->moderarTexto($comentarioValoracion,1); // 1 Significa que evaluamos la variable terms
         } else { // Significa que no ingreso ningun comentario
             $validoComentario = true;
         }
-
+        
         $errores="";
         if (!($validoComentario)){
             $errores.="Comentario ";
@@ -124,14 +140,14 @@ class ValoracionController extends Controller
         if (!($validoImagen)){
             $errores.= "Imagen ";
         }
-
+        
         if ($validoImagen && $validoComentario){ // Si estan valodado los dos campos
             if (Valoracion::create($request->all())){ // Si crea la valoracion
                 if ($usandoFlutter){ // Si esta en flutter
                     return $respuesta = ['success'=>true];
                 } else { // Si esta en laravel
                     return response()->json([
-                        'url' => route('index'),
+                        'url' => route('inicio'),
                         'success'   => true,
                         'message'   => 'Los datos se han guardado correctamente.' 
                         ], 200);
@@ -154,7 +170,7 @@ class ValoracionController extends Controller
                 }
                 return response()->json([
                     'success'   => false,
-                    'errors'   =>  $errores[0] 
+                    'errors'   =>  $errores 
                     ], 422);
             }
         }
