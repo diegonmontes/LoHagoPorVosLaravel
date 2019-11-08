@@ -2,7 +2,7 @@
 CREATE TABLE `estado`(
     `idEstado` int NOT NULL AUTO_INCREMENT,
     `nombreEstado` VARCHAR(80),
-    `descripcionEstado` VARCHAR(80),
+    `descripcionEstado` VARCHAR(160),
     `eliminado` TINYINT(1) DEFAULT 0,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NULL DEFAULT NULL,
@@ -137,6 +137,7 @@ CREATE TABLE `trabajo`(
     primary key (`idTrabajo`), 
     FOREIGN KEY (`idEstado`) REFERENCES `estado`(`idEstado`),
     FOREIGN KEY (`idLocalidad`) REFERENCES `localidad`(`idLocalidad`),
+    FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`),
     FOREIGN KEY (`idCategoriaTrabajo`) REFERENCES `categoriaTrabajo`(`idCategoriaTrabajo`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -146,6 +147,8 @@ CREATE TABLE `valoracion`(
     `valor` INT NOT NULL DEFAULT 0,
     `idTrabajo` INT NOT NULL,
     `idPersona` INT NOT NULL,
+    `comentarioValoracion` varchar(511),
+    `imagenValoracion` varchar(511),
     `eliminado` TINYINT(1) DEFAULT 0,
     `created_at` timestamp NULL DEFAULT NULL,
     `updated_at` timestamp NULL DEFAULT NULL,
@@ -238,7 +241,6 @@ CREATE TABLE `mensajechat`(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
-
 CREATE TABLE `comentario`(
     `idComentario` INT NOT NULL AUTO_INCREMENT,
     `contenido` VARCHAR(255) NOT NULL,
@@ -253,6 +255,11 @@ CREATE TABLE `comentario`(
     FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`),
     FOREIGN KEY (`idComentarioPadre`) REFERENCES `comentario`(`idComentario`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+
+
 --
 -- Poblacional
 --
@@ -289,36 +296,31 @@ INSERT INTO `rol`(`idRol`, `nombreRol`, `descripcionRol`) VALUES (1,'Administrad
 INSERT INTO `rol`(`idRol`, `nombreRol`, `descripcionRol`) VALUES (2,'Usuario','Usuario');
 INSERT INTO `rol`(`idRol`, `nombreRol`, `descripcionRol`) VALUES (3,'Gestor','Usuario');
 
-
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (1,'Esperando Postulaciones','El anuncio esta publicado y esperando las postulaciones');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (1,'Esperando Postulaciones','El anuncio espera postulaciones');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (2,'Evaluando Postulaciones','El anunciante esta evaluando las postulaciones');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (3,'Asignado','El anunciante asigno un postulante');
-INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Esperando confirmacion','Asignado realizo el trabajo, el anunciante debe confirmar el trabajo realizado');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Esperando Confirmacion','Asignado ya realizo el trabajo. El anunciante debe confirmar el trabajo realizado');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (5,'Finalizado','Anuncio finalizado');
-
-
 
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas','categoriaMascota.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto','categoriaAuto.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (3,'Pago de servicios','Pago de servicios','categoriaServicios.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (4,'Turnos','Turnos','categoriaTurnos.png');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (5,'Tramites','Tramites','categoriaTramite.png');
-INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa','categoriaCasa.jpg');
+INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (6,'Casa','Casa','categoriaCaja.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (7,'Jardin','Jardin','categoriaJardin.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (8,'Mantenimiento','Mantenimiento','categoriaMantenimiento.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (9,'Tecnico','Tecnico','categoriaTecnico.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (10,'Otro','Otro','categoriaOtro.png');
 
 
-
-
 INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `mailUsuario`, `email_verified_at`, `auth_key`, `claveUsuario`, `idRol`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'juan88', 'juan88@gmail.com', NULL, NULL, '$2y$10$/E8BV4bHWNJ5dRuiT.VzduKyk4b3wFmhqI9lCDSDyRQUwllpb6q1q', 2, NULL, '2019-09-23 00:36:43', '2019-09-23 00:36:43'),
-(2, 'Maria', 'marianqn@hotmail.com', NULL, NULL, '$2y$10$.zzZfhyCD0fccwS3al9yge.N/RcMlVevmcxuEXFu285I0MeuREFdy', 2, NULL, '2019-09-23 00:39:18', '2019-09-23 00:39:18'),
-(3, 'sofi89', 'sofia_love@yahoo.com', NULL, NULL, '$2y$10$wJYQxiIoDss0pMwOVGa9remm7eAthTg8dt6RkaduQLuTrK7jxH9US', 2, NULL, '2019-09-23 00:40:50', '2019-09-23 00:40:50'),
-(4, 'MarceloQ', 'marceloqa@gmail.com', NULL, NULL, '$2y$10$QGmABaoc/uDVF310J2Xyiujfs60tZcWL3.suK0xgl0UtIX5w4yPdm', 2, NULL, '2019-09-23 00:41:52', '2019-09-23 00:41:52'),
-(5, 'emiElMasCopado', 'emiliano896325@hotmail.com', NULL, NULL, '$2y$10$tLBIpow2heq/GtQzYpeH3.N8jmtJzEJwFt0peulIlwZ5eX5M.SKs2', 2, NULL, '2019-09-23 00:44:18', '2019-09-23 00:44:18'),
-(6, 'elpana', 'elpana@gmail.com', NULL, NULL, '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 2, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
+(1, 'juan88', 'juan88@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$/E8BV4bHWNJ5dRuiT.VzduKyk4b3wFmhqI9lCDSDyRQUwllpb6q1q', 2, NULL, '2019-09-23 00:36:43', '2019-09-23 00:36:43'),
+(2, 'Maria', 'marianqn@hotmail.com', '2019-11-07 20:06:06' , 'authkey', '$2y$10$.zzZfhyCD0fccwS3al9yge.N/RcMlVevmcxuEXFu285I0MeuREFdy', 2, NULL, '2019-09-23 00:39:18', '2019-09-23 00:39:18'),
+(3, 'sofi89', 'sofia_love@yahoo.com', '2019-11-07 20:06:06' , 'authkey', '$2y$10$wJYQxiIoDss0pMwOVGa9remm7eAthTg8dt6RkaduQLuTrK7jxH9US', 2, NULL, '2019-09-23 00:40:50', '2019-09-23 00:40:50'),
+(4, 'MarceloQ', 'marceloqa@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$QGmABaoc/uDVF310J2Xyiujfs60tZcWL3.suK0xgl0UtIX5w4yPdm', 2, NULL, '2019-09-23 00:41:52', '2019-09-23 00:41:52'),
+(5, 'emiElMasCopado', 'emiliano896325@hotmail.com','2019-11-07 20:06:06', 'authkey', '$2y$10$tLBIpow2heq/GtQzYpeH3.N8jmtJzEJwFt0peulIlwZ5eX5M.SKs2', 2, NULL, '2019-09-23 00:44:18', '2019-09-23 00:44:18'),
+(6, 'elpana', 'elpana@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 1, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
 
 
 INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`, `idLocalidad`, `eliminado`, `created_at`, `updated_at`) VALUES
@@ -329,23 +331,59 @@ INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPers
 (5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11'),
 (6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
 
-INSERT INTO `trabajo` (`idTrabajo`, `idPersona`, `idEstado`, `idCategoriaTrabajo`,`idLocalidad` ,`titulo`, `descripcion`, `monto`, `imagenTrabajo` ,`eliminado`, `created_at`, `updated_at`) VALUES
-(1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, NULL ,0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),
-(2, 5, 1, 2, 4634,'Quien me lava mi auto ????', 'Alguien que me lave el auto que no tengo ganas xD', 300.00, NULL,0, '2019-09-23 00:48:40', '2019-09-23 00:48:40'),
-(3, 1, 1, 2, 4634,'Recital de pablo londra', 'quien puede hacer la fila por mi el dia del recital', 150.00, NULL,0, '2019-09-23 00:51:06', '2019-09-23 00:51:06'),
-(4, 4, 1, 2, 4634,'cortar el cesped', 'tengo que cortar el cesped antes del finde. si queda bien lo llamo la proxima vez y recomiendo. pongo 5 estrellas', 560.00, NULL,0, '2019-09-23 00:55:10', '2019-09-23 00:55:10'),
-(5, 4, 1, 2, 4634,'armar la pelopincho', 'alguien para armar la pile porfa. me operaron y no puedo hacer fuerza. gracias', 360.00, NULL,0, '2019-09-23 00:56:35', '2019-09-23 00:56:35'),
-(6, 6, 1, 1, 4634,'pasear el perro', 'quien lo puede pasear a mi perro. es por el lunes a la tarde', 240.00, NULL, 0, '2019-09-23 01:01:51', '2019-09-23 01:01:51');
+INSERT INTO `trabajo` (`idTrabajo`, `idPersona`, `idEstado`, `idCategoriaTrabajo`,`idLocalidad` ,`titulo`, `descripcion`, `monto`, `imagenTrabajo` ,`tiempoExpiracion` ,`eliminado`, `created_at`, `updated_at`) VALUES
+(1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, NULL ,'2019-12-12 00:00:00', 0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),
+(2, 5, 1, 2, 4634,'Quien me lava mi auto ????', 'Alguien que me lave el auto que no tengo ganas xD', 300.00, NULL,'2019-12-12 00:00:00', 0, '2019-09-23 00:48:40', '2019-09-23 00:48:40'),
+(3, 1, 1, 3, 4634,'Recital de pablo londra', 'quien puede hacer la fila por mi el dia del recital', 150.00, NULL,'2019-12-12 00:00:00', 0, '2019-09-23 00:51:06', '2019-09-23 00:51:06'),
+(4, 4, 1, 4, 4634,'cortar el cesped', 'tengo que cortar el cesped antes del finde. si queda bien lo llamo la proxima vez y recomiendo. pongo 5 estrellas', 560.00, NULL,'2019-12-12 00:00:00',0, '2019-09-23 00:55:10', '2019-09-23 00:55:10'),
+(5, 4, 1, 5, 4634,'armar la pelopincho', 'alguien para armar la pile porfa. me operaron y no puedo hacer fuerza. gracias', 360.00, NULL,'2019-12-12 00:00:00', 0, '2019-09-23 00:56:35', '2019-09-23 00:56:35'),
+(6, 6, 1, 6, 4634,'pasear el perro', 'quien lo puede pasear a mi perro. es por el lunes a la tarde', 240.00, NULL, '2019-12-12 00:00:00', 0, '2019-09-23 01:01:51', '2019-09-23 01:01:51');
 
 INSERT INTO `habilidad`(`idHabilidad`, `nombreHabilidad`,`descripcionHabilidad`,`imagenHabilidad`,`eliminado`) VALUES 
-(1,'Habilidad 1','Descripcion habilidad 1',NULL,0),
-(2,'Habilidad 2','Descripcion habilidad 1',NULL,0),
-(3,'Habilidad 3','Descripcion habilidad 1',NULL,0);
+(1,'Creativo','Descripcion habilidad 1',NULL,0),
+(2,'Veloz','Descripcion habilidad 2',NULL,0),
+(3,'Agil','Descripcion habilidad 3',NULL,0),
+(4,'Social','Descripcion habilidad 4',NULL,0),
+(5,'Positivo','Descripcion habilidad 5',NULL,0),
+(6,'Confianza','Descripcion habilidad 6',NULL,0),
+(7,'Pintor','Descripcion habilidad 7',NULL,0);
+
 
 INSERT INTO `preferenciapersona`(`idPreferenciaPersona`, `idCategoriaTrabajo`,`idPersona`,`eliminado`) VALUES 
 (1,1,1,0),
 (2,2,2,0),
 (3,3,3,0);
+
+INSERT INTO `habilidadpersona`(`idHabilidadPersona`,`idPersona`,`idHabilidad`,`eliminado`) VALUES
+(1,1,1,0),
+(2,1,3,0),
+(3,1,5,0),
+(4,2,2,0),
+(5,2,4,0),
+(6,2,6,0),
+(7,3,1,0),
+(8,3,2,0),
+(9,3,5,0),
+(10,4,1,0),
+(11,4,6,0),
+(12,4,5,0),
+(13,5,7,0),
+(14,5,3,0),
+(15,5,2,0),
+(16,6,3,0),
+(17,6,4,0),
+(18,6,6,0);
+
+INSERT INTO `trabajoaspirante` (`idTrabajoAspirante`,`idPersona`,`idTrabajo`) VALUES
+(1,1,6),
+(2,2,6),
+(3,3,6);
+
+
+
+
+
+
 
 
 -- --------------------------------------------------------
@@ -360,23 +398,6 @@ CREATE TABLE `migrations` (
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2014_10_12_000000_create_users_table', 1),
-(2, '2014_10_12_100000_create_password_resets_table', 1),
-(3, '2016_07_29_171118_create_chatter_categories_table', 1),
-(4, '2016_07_29_171118_create_chatter_discussion_table', 1),
-(5, '2016_07_29_171118_create_chatter_post_table', 1),
-(6, '2016_07_29_171128_create_foreign_keys', 1),
-(7, '2016_08_02_183143_add_slug_field_for_discussions', 1),
-(8, '2016_08_03_121747_add_color_row_to_chatter_discussions', 1),
-(9, '2017_01_16_121747_add_markdown_and_lock_to_chatter_posts', 1),
-(10, '2017_01_16_121747_create_chatter_user_discussion_pivot_table', 1),
-(11, '2017_08_07_165345_add_chatter_soft_deletes', 1),
-(12, '2017_10_10_221227_add_chatter_last_reply_at_discussion', 1);
 
 -- --------------------------------------------------------
 
@@ -391,70 +412,6 @@ CREATE TABLE `password_resets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `users`
---
-
-CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Tony Lea', 'tony@hello.com', NULL, '$2y$10$9ED4Exe2raEeaeOzk.EW6uMBKn3Ib5Q.7kABWaf4QHagOgYHU8ca.', 'RvlORzs8dyG8IYqssJGcuOY2F0vnjBy2PnHHTX2MoV7Hh6udjJd6hcTox3un', '2016-07-29 18:13:02', '2016-08-18 17:33:50'),
-(2, 'Prueba', 'prueba@prueba.com', NULL, '$2y$10$F71IvjID7.YsPkWiO0I0D.47EcArgL9xXszfVeF/n5fY7lV.VpXZW', NULL, '2019-09-09 19:58:27', '2019-09-09 19:58:27');
-
---
--- Índices para tablas volcadas
---
-
-
---
--- Indices de la tabla `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `password_resets`
---
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
---
--- Indices de la tabla `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
-
---
--- AUTO_INCREMENT de la tabla `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- Restricciones para tablas volcadas
---
