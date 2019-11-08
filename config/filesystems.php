@@ -78,7 +78,13 @@ return [
 
         'habilidad' => [
             'driver' => 'local',
-            'root' => public_path('/storage/habilidad'),
+            'root' => public_path('/images/imagenHabilidad'),
+            'visibility' => 'public',
+        ],
+
+        'categoria' => [
+            'driver' => 'local',
+            'root' => public_path('/images/imagenCategoria'),
             'visibility' => 'public',
         ],
 
