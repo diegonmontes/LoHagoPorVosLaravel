@@ -8,6 +8,9 @@ use App\Trabajo;
 use App\Persona;
 use App\Estadotrabajo;
 
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 class ValoracionController extends Controller
 {
     //
@@ -53,11 +56,13 @@ class ValoracionController extends Controller
     {
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
+        $usandoFlutter = false; // Inicializamos en false
+        $controller= new Controller;
 
-        if (isset($request['flutter']) && $request['flutter']==true ){ // Significa que la peticion viene desde flutter
+        if (isset($request['flutter']) && $request['flutter']==true){ // Significa que la peticion viene desde flutter
+            $usandoFlutter = true; // Si viene de flutter, seteamos a true
             $idPersonaLogeada = $request->idPersona;
             $idTrabajo = $request->idTrabajo;
-            
             $trabajoController = new TrabajoController();
             $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
             $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
@@ -71,21 +76,89 @@ class ValoracionController extends Controller
                 $listaTrabajoAspirante = $trabajoAspiranteController->buscar($arregloBuscarTrabajoAspirante);
                 $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
                 $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
-                $request->idPersona = $trabajoAspirante->idPersona;
+                $request['idPersona'] = $trabajoAspirante->idPersona;
             } else { // Significa que el aspirante esta valorando al creador del anuncio
-                $request->idPersona = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
+                $request['idPersona'] = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
             }
         }
-        //Creamos el elemento nuevo
-        if (Valoracion::create($request->all())){
-            if ($usandoFlutter){
-                return $respuesta = ['success'=>true];
+
+        if(isset($request['imagenValoracion']) && $request['imagenValoracion']!=null){
+            if ($usandoFlutter){ // Significa que el nombre de la img viene por parametro
+                $nombreImagen = $request['nombreImagen'];
+                $posicion = strrpos($nombreImagen,'.');
+                $extension = substr($nombreImagen,$posicion);
+                $imagen = base64_decode($request['imagenValoracion']); // Decodificamos la img
+                $request['imagenValoracion'] = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").$extension; // Definimos el nombre
+                //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                Storage::disk('valoracion')->put($request['imagenValoracion'], $imagen);            
+            } else { // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $imagen=$request->file('imagenValoracion'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").$extension; // Definimos el nombre
+                $request = $request->except('imagenValoracion'); // Guardamos todo el obj sin la clave imagen valoracion
+                $request['imagenValoracion']=$nombreImagen; // Asignamos de nuevo a imagenValoracion, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                $imagen = File::get($imagen);
+                Storage::disk('valoracion')->put($nombreImagen, $imagen);        
+            }
+            //llamamos a la funcion que valida la imagen
+            $validoImagen = $controller->validarImagen($imagen,1);
+            
+        } else { // Si no carga ninguna imagen, seteamos por defecto el valor a true
+            $validoImagen = true;
+        }
+
+        if(isset($request['comentarioValoracion']) && $request['comentarioValoracion']!=null){ // Significa que escribio un comentario
+            $comentarioValoracion = $request->comentarioValoracion;
+            $validoComentario=$controller->moderarTexto($comentarioValoracion,1); // 1 Significa que evaluamos la variable terms
+        } else { // Significa que no ingreso ningun comentario
+            $validoComentario = true;
+        }
+
+        $errores="";
+        if (!($validoComentario)){
+            $errores.="Comentario ";
+        }
+
+        if (!($validoImagen)){
+            $errores.= "Imagen ";
+        }
+
+        if ($validoImagen && $validoComentario){ // Si estan valodado los dos campos
+            if (Valoracion::create($request->all())){ // Si crea la valoracion
+                if ($usandoFlutter){ // Si esta en flutter
+                    return $respuesta = ['success'=>true];
+                } else { // Si esta en laravel
+                    return response()->json([
+                        'url' => route('index'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.' 
+                        ], 200);
+                }
             } else {
-                return redirect()->route('valoracion.index')->with('success','Registro creado satisfactoriamente');
+                $respuesta = ['success'=>false];
+            }
+        } else {
+            $errores.='con contenido indebido. Por favor cambielo.';
+            if ($usandoFlutter){
+                $respuesta = ['success'=>false, 'error'=>$errores];
+            } else {
+                $errores = array();
+                if (!($validoComentario)){
+                    $errores["comentario"] = [0 => "Comentario con contenido indebido. Por favor cambielo."];
+                }
+        
+                if (!($validoImagen)){
+                    $errores["imagen"] = [0=>"Imagen con contenido indebido. Por favor cambielo."];
+                }
+                return response()->json([
+                    'success'   => false,
+                    'errors'   =>  $errores[0] 
+                    ], 422);
             }
         }
-        
-       
+        return response()->json($respuesta);  
     }
 
     /**
