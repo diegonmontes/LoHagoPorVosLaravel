@@ -204,5 +204,27 @@ class TrabajoasignadoController extends Controller
         
     }
 
+    public function misAsignaciones(Request $request){
+        $idPersona=$request->idPersona;
+        //Con el idPersona buscamos los trabajos asignados
+        $listaTrabajosAsignados = Trabajoasignado::select('trabajoasignado.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
+                                                    ->join('pagorecibido','trabajo.idTrabajo','=','pagorecibido.idTrabajo')
+                                                    ->where('trabajoasignado.idPersona','=',$idPersona)
+                                                    ->where('trabajoasignado.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','=',3)
+                                                    ->get();
+                                                    $lista=array();
+                                                    $trabajoController= new TrabajoController;
+                                                    foreach($listaTrabajosAsignados as $trabajo){
+                                                        $idTrabajo=$trabajo->idTrabajo;
+                                                        $param=['idTrabajo'=>$idTrabajo];
+                                                        $param=new Request($param);
+                                                        $objTrabajo=$trabajoController->buscar($param);
+                                                        $objTrabajo=\json_decode($objTrabajo);
+                                                        array_push($lista,$objTrabajo);
+                                                    }
+                                                    return \json_encode($lista);
+    }
   
 }

@@ -209,6 +209,29 @@ class TrabajoaspiranteController extends Controller
         return \json_encode($listaAspirantes);   
     }
 
+    public function misPostulaciones(Request $request){
+        $idPersona=$request->idPersona;
+        //Con el idPersona buscamos los trabajos que se postulo
+        $listaTrabajosAspirante = Trabajoaspirante::select('trabajo.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoaspirante.idTrabajo')
+                                                    ->where('trabajoaspirante.idPersona','=',$idPersona)
+                                                    ->where('trabajoaspirante.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','!=',4)
+                                                    ->where('trabajo.idEstado','!=',5)
+                                                    ->get();
+        $lista=array();
+        $trabajoController= new TrabajoController;
+        foreach($listaTrabajosAspirante as $trabajo){
+            $idTrabajo=$trabajo->idTrabajo;
+            $param=['idTrabajo'=>$idTrabajo];
+            $param=new Request($param);
+            $objTrabajo=$trabajoController->buscar($param);
+            $objTrabajo=\json_decode($objTrabajo);
+            array_push($lista,$objTrabajo);
+        }
+        return \json_encode($lista);
+    }
+
     public function indexpanel()
     {
         $trabajosAspirantes=Trabajoaspirante::orderBy('idTrabajoAspirante','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina

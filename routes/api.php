@@ -43,16 +43,19 @@ Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
 Route::post('buscarComentarios','ComentarioController@buscarComentarios');
 Route::post('guardarComentario','ComentarioController@store');
-
+Route::post('misTrabajosFinalizados','TrabajoController@misTrabajosFinalizados');
 
 
 /** Trabajo Aspirantes */
 Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');
 Route::post('buscarAspiranteTrabajo','TrabajoaspiranteController@buscar');
+Route::post('misPostulaciones','TrabajoaspiranteController@misPostulaciones');
 
 /** Trabajo Asignado */
 Route::post('elegirAspirante','TrabajoasignadoController@store');
 Route::post('buscarTrabajoAsingado','TrabajoasignadoController@buscar');
+Route::post('misAsignaciones','TrabajoasignadoController@misAsignaciones');
+
 
 /** PAGOS */
 Route::post('buscarPagoTrabajo','PagorecibidoController@buscar');
