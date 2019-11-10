@@ -24,11 +24,11 @@
             @if($categoriasTrabajo->count())
                 @foreach($categoriasTrabajo as $categoriaTrabajo)
                     <tr>
-                        <td>{{$categoriaTrabajo->idCategoriaTrabajo}}</td>
+                        <td>{{$categoriaTrabajo->idCategoriaTrabajo}}</td>  
                         <td>{{$categoriaTrabajo->nombreCategoriaTrabajo}}</td>
                         <td>{{$categoriaTrabajo->descripcionCategoriaTrabajo}}</td>
                         @if($categoriaTrabajo->imagenCategoriaTrabajo!=null)
-                            <td><img src="/LoHagoPorVosLaravel/public/storage/trabajos/{{$categoriaTrabajo->imagenCategoriaTrabajo}}" onClick=abrirImagen("{{$categoriaTrabajo->imagenCategoriaTrabajo}}") width="75px;" height="50px"></td>
+                        <td><img src="{{asset("images/imagenCategoria/$categoriaTrabajo->imagenCategoriaTrabajo")}}" onClick=abrirImagen("{{$categoriaTrabajo->imagenCategoriaTrabajo}}") width="75px;" height="50px"></td>
                         @else
                             <td>{{$categoriaTrabajo->imagenCategoriaTrabajo}}</td> 
                         @endif
@@ -75,7 +75,7 @@
 @section('jsAbrirModalImagen')
 <script>
     function abrirImagen(valor){
-    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/trabajos/' + valor + '" width="100%" height="150px"> </img>';
+    var linkImagen = '<img src="{{asset("images/imagenCategoria")}}/' + valor + '" width="100%" height="150px"> </img>';
     $('.modal-body').html(linkImagen);
     $('#modalConfirmacion').modal("show");
     }

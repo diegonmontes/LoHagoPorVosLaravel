@@ -31,7 +31,7 @@
 								<div class="drag-drop-imagenPersona inputImagenPersona">
 									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenPersona" />
 									<output id="thumbnil" class="preview-imagenPersona">
-										<img  class="preview-imagenPersona" src="
+										<img  class="preview-imagenPersona" src=
 												@if($persona->imagenPersona != null)
 													{{ asset('storage/perfiles/'.$persona->imagenPersona)}}
 												@else{{asset('images/fotoPerfil.png')}}@endif
@@ -203,15 +203,16 @@
 
 				
 					<br>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
-						</div>
-					</div>
-					<br>
+					
 					<div class="row">
 						<div class="col-xs-6 col-sm-12 col-md-12">
 							<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
+						</div>
+					</div>
+					<br/>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12">
+							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
 						</div>
 					</div>
 				</form>
@@ -276,7 +277,7 @@
 	})
 	function controlNombrePersona(){
 		var nombrePersona = $("#nombrePersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
 		if (patron.test(nombrePersona)){
 			if(nombrePersona.lenght > 80){
 				$("#msgnombrePersona").empty();
@@ -289,7 +290,7 @@
 			}
 		}else{
 			$("#msgnombrePersona").empty();
-			$("#msgnombrePersona").append("Solo esta permitido el ingreso de letras.");
+			$("#msgnombrePersona").append("Sfwfwolo esta permitido el ingreso de letras.");
 		}
 	}
 
@@ -302,7 +303,7 @@
 	})
 	function controlApellidoPersona(){
 		var apellidoPersona = $("#apellidoPersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
 		if (patron.test(apellidoPersona)){
 			if(apellidoPersona.lenght > 80){
 				$("#msgapellidoPersona").empty();

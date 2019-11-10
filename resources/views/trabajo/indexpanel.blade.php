@@ -14,15 +14,15 @@
                 </tr>
                     <tr>
                         <th>ID Trabajo</th>
-                        <th>Estado</th>
-                        <th>Categoria</th>
+                        <th>Estado actual</th>
+                        <th>Categor&iacute;a</th>
                         <th>Persona</th>
                         <th>Localidad</th>
-                        <th>Titulo</th>
-                        <th>Descripcion</th>
+                        <th>T&iacute;tulo</th>
+                        <th>Descripci&oacute;n</th>
                         <th>Monto</th>
                         <th>Imagen</th>
-                        <th>Tiempo Expiracion</th>
+                        <th>Tiempo Expiraci&oacute;n</th>
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
@@ -41,9 +41,9 @@
                         <td>{{$trabajo->descripcion}}</td>
                         <td>{{$trabajo->monto}}</td>
                         @if($trabajo->imagenTrabajo!=null)
-                            <td><img src="/LoHagoPorVosLaravel/public/storage/trabajos/{{$trabajo->imagenTrabajo}}" onClick=abrirImagen("{{$trabajo->imagenTrabajo}}") width="75px;" height="50px"></td>
+                            <td><img src="{{asset("storage/trabajos/$trabajo->imagenTrabajo")}}" onClick=abrirImagen("{{$trabajo->imagenTrabajo}}") width="75px;" height="50px"></td>
                         @else
-                            <td>{{$trabajo->imagenTrabajo}}</td>
+                            <td>{{$trabajo->imagenTrabajo}}</td> 
                         @endif
                         <td>{{$trabajo->tiempoExpiracion}}</td>
                         <td><a class="btn btn-primary btn-sm" href="{{action('TrabajoController@editpanel', $trabajo->idTrabajo)}}" ><i class="fas fa-edit"></i></a></td>
@@ -88,7 +88,8 @@
 @section('jsAbrirModalImagen')
 <script>
     function abrirImagen(valor){
-    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/trabajos/' + valor + '" width="100%" height="150px"> </img>';
+    var linkImagen = '<img src="{{asset("storage/trabajos")}}/' + valor + '" width="100%" height="150px"> </img>';
+
     $('.modal-body').html(linkImagen);
     $('#modalConfirmacion').modal("show");
     }

@@ -28,7 +28,7 @@
                         <td>{{$habilidad->nombreHabilidad}}</td>
                         <td>{{$habilidad->descripcionHabilidad}}</td>
                         @if($habilidad->imagenHabilidad!=null)
-                            <td><img src="/LoHagoPorVosLaravel/public/storage/habilidad/{{$habilidad->imagenHabilidad}}" onClick=abrirImagen("{{$habilidad->imagenHabilidad}}") width="75px;" height="50px"></td>
+                            <td><img src="{{asset("images/imagenHabilidad/$habilidad->imagenHabilidad")}}" onClick=abrirImagen("{{$habilidad->imagenHabilidad}}") width="75px;" height="50px"></td>
                         @else
                             <td>{{$habilidad->imagenHabilidad}}</td>
                         @endif
@@ -75,7 +75,7 @@
 @section('jsAbrirModalImagen')
 <script>
     function abrirImagen(valor){
-    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/habilidad/' + valor + '" width="100%" height="150px"> </img>';
+    var linkImagen = '<img src="{{asset("images/imagenHabilidad")}}/' + valor + '" width="100%" height="150px"> </img>';
     $('.modal-body').html(linkImagen);
     $('#modalConfirmacion').modal("show");
     }

@@ -655,6 +655,29 @@ class TrabajoController extends Controller
 
     public function storepanel(Request $request)
     {    
+
+        if (!(isset($request->idEstado))){ // Es decir viene el trabajo normal, no desde el panel de adm
+            $request['idEstado'] = 1;
+        }
+
+        $mensajesErrores =[             
+            'titulo.required' => 'El titulo es obligatorio.',
+            'titulo.max' => 'Maximo de letras sobrepasado.',
+            'descripcion.required' => 'La descripcion es obligatoria.',
+            'descripcion.max' => 'Maximo de letras sobrepasado.',
+            'monto.required' => 'El monto es obligatorio.',
+            'monto.numeric' => 'Solamente se puede ingresar numeros.',
+            'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio',
+            'idCategoriaTrabajo.required'=> 'La categoria es obligatoria',
+            'idEstado.required'=> 'El estado es obligatorio',
+            'idPersona.required'=> 'La persona es obligatoria',
+            
+        ] ;
+
+        //Validaciones del trabajo
+        $this->validate($request,['idCategoriaTrabajo'=>'required','idEstado'=>'required','idPersona'=>'required','titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required|date','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
+      
+        
         //Seteamo como 'esperando postulaciones'       
 
         if(isset($request['imagenTrabajo']) && $request['imagenTrabajo']!=null){
@@ -669,19 +692,6 @@ class TrabajoController extends Controller
                 Storage::disk('trabajo')->put($nombreImagen, $imagen);        
             }
 
-            $mensajesErrores =[             
-                'titulo.required' => 'El titulo es obligatorio.',
-                'titulo.max' => 'Maximo de letras sobrepasado.',
-                'descripcion.required' => 'La descripcion es obligatoria.',
-                'descripcion.max' => 'Maximo de letras sobrepasado.',
-                'monto.required' => 'El monto es obligatorio.',
-                'monto.numeric' => 'Solamente se puede ingresar numeros.',
-                'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio'
-            ] ;
-
-            //Validaciones del trabajo
-            $this->validate($request,[ 'titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required|date','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
-            $request['idEstado'] = 1;
             if (Trabajo::create($request->all())){
                 return response()->json([
                     'url' => route('inicio'),
@@ -694,11 +704,28 @@ class TrabajoController extends Controller
 
     public function updatepanel(Request $request)
     {
+        $mensajesErrores =[             
+            'titulo.required' => 'El titulo es obligatorio.',
+            'titulo.max' => 'Maximo de letras sobrepasado.',
+            'descripcion.required' => 'La descripcion es obligatoria.',
+            'descripcion.max' => 'Maximo de letras sobrepasado.',
+            'monto.required' => 'El monto es obligatorio.',
+            'monto.numeric' => 'Solamente se puede ingresar numeros.',
+            'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio',
+            'idCategoriaTrabajo.required'=> 'La categoria es obligatoria',
+            'idEstado.required'=> 'El estado es obligatorio',
+            'idPersona.required'=> 'La persona es obligatoria',
+            
+        ] ;
+
+        //Validaciones del trabajo
+        $this->validate($request,['idCategoriaTrabajo'=>'required','idEstado'=>'required','idPersona'=>'required','titulo'=>'required|max:255', 'descripcion'=>'required|max:511', 'monto'=>'required|numeric','tiempoExpiracion'=>'required|date','imagenTrabajo' =>'nullable:true'],$mensajesErrores);
+      
         $idTrabajo=$request->idTrabajo;
 
         if (Trabajo::find($idTrabajo)->update($request->all())){ // Si actualiza su perfil , obtenemos su id para llenar el resto de las tablas
             return response()->json([
-                'url' => route('inicio'),
+                'url' => route('trabajo.index'),
                 'success'   => true,
                 'message'   => 'Los datos se han guardado correctamente.'
                 ], 200);        

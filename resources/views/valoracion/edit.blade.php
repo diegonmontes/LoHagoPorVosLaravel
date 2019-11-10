@@ -1,4 +1,7 @@
 @extends('admin')
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
 @section('content')
 <div class="row">
 	<section class="content">
@@ -26,7 +29,7 @@
 					<h3>Editar Valoracion</h3>
 				</div>
 				<div class="card-body">
-					<form method="POST" id="formValoracion" name="formValoracion" action="{{ route('valoracion.update',$valoracion->idValoracion) }}"  role="form">
+					<form method="POST" id="formValoracion" enctype="multipart/form-data" name="formValoracion" action="{{ route('valoracion.update',$valoracion->idValoracion) }}"  role="form">
 						{{ csrf_field() }}
 						<input name="_method" type="hidden" value="PATCH">
 
@@ -68,6 +71,28 @@
 								<input type="text" name="valor" id="valor" class="form-control input-sm" value="{{$valoracion->valor}}">
 							</div>
 						</div>
+
+						<div class="row">
+							<div class="form-group">
+								<label>Comentario</label><br>
+								<input type="text" name="comentarioValoracion" id="comentarioValoracion" class="form-control input-sm" value="{{$valoracion->comentarioValoracion}}">
+							</div>
+						</div>
+						<label>Imagen Valoraci&oacute;n</label>
+						<div class="row">
+								<div class="drag-drop-imagenTrabajo imagenTrabajo">
+									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenValoracion" />
+									<output id="thumbnil" class="preview-imagenTrabajo">
+										<img  class="preview-imagenTrabajo" src="
+												@if($valoracion->imagenValoracion != null)
+													{{ asset('storage/valoracion/'.$valoracion->imagenValoracion)}}
+												@else{{asset('images/fotoPerfil.png')}}@endif
+										">
+									</output>
+								</div>
+						</div>
+
+
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
 							<a href="{{ route('valoracion.index') }}" class="btn btn-info btn-block" >Atrás</a>

@@ -1,4 +1,7 @@
 @extends('admin')
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
 @section('content')
 <div class="row">
 	<section class="content">
@@ -43,20 +46,18 @@
 							</div>
 						</div>
 
-						
-						<div class="row margenImagenCategoriaTrabajo">
-							<div class="col-xs-12 col-sm-12 col-md-12">
-								<div class="drag-drop-imagenCategoriaTrabajo imagenCategoriaTrabajo">
+						<div class="row">
+							<label>Imagen Categor&iacute;a trabajo</label>
+								<div class="drag-drop-imagenTrabajo imagenCategoriaTrabajo">
 									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenCategoriaTrabajo" />
-									<output id="thumbnil" class="preview-imagenCategoriaTrabajo">
-										<img  class="preview-imagenCategoriaTrabajo" src="
+									<output id="thumbnil" class="preview-imagenTrabajo">
+										<img  class="preview-imagenTrabajo" src="
 												@if($categoriaTrabajo->imagenCategoriaTrabajo != null)
-													{{ asset('storage/trabajos/'.$categoriaTrabajo->imagenCategoriaTrabajo)}}
+													{{ asset('images/imagenCategoria/'.$categoriaTrabajo->imagenCategoriaTrabajo)}}
 												@else{{asset('images/fotoPerfil.png')}}@endif
 										">
 									</output>
 								</div>
-							</div>
 						</div>
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
