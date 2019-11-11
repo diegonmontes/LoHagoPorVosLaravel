@@ -226,5 +226,60 @@ class TrabajoasignadoController extends Controller
                                                     }
                                                     return \json_encode($lista);
     }
+    // Recibimos por parametro el id trabajo. Enviamos a la funcion del email controller el obj trabajo, obj persona creador de este, objpersona y objusuario del asignado 
+    public function enviarMailConfirmacionAsignado(request $request){
+
+        // Hacemos la creacion de los objs controladores
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $usuarioController = new UserController();
+        
+        $idTrabajo = $request->idTrabajo; // Obtenemos el id del trabajo para buscar el trabajo 
+
+        // Obtenemos el trabajo que se asigno
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $listaTrabajo = $trabajoController->buscar($arregloBuscarTrabajo);
+        $listaTrabajo = json_decode($listaTrabajo);
+        $objTrabajo = $listaTrabajo[0];
+
+        // Obtenemos el idPersona del creador del trabajo
+
+        $idPersonaCreador = $objTrabajo->idPersona;
+        $arregloBuscarPersonaCreador = ['idPersona'=>$idPersonaCreador];
+        $arregloBuscarPersonaCreador = new Request($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = $personaController->buscar($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = json_decode($listaPersonaCreador);
+        $objPersonaCreador = $listaPersonaCreador[0];
+
+        // Buscamos el trabajo asignado
+        $arregloBuscarTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajoAsignado = new Request($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = $this->buscar($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = json_decode($listaTrabajoAsignado);
+        $objTrabajoAsignado = $listaTrabajoAsignado[0]; // Obtenemos el trabajo asignado
+
+        // Obtenemos el idPersona de la persona asignada del trabajo
+
+        $idPersonaAsignado = $objTrabajoAsignado->idPersona;
+        $arregloBuscarPersonaAsignada = ['idPersona'=>$idPersonaAsignado];
+        $arregloBuscarPersonaAsignada = new Request($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = $personaController->buscar($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = json_decode($listaPersonaAsignada);
+        $objPersonaAsignado = $listaPersonaAsignada[0];
+
+        // Obtenemos el usuario de la persona asignada del trabajo (en ella esta su mail)
+       
+        $idUsuarioAsignado = $objPersonaAsignado->idUsuario;
+        $arregloBuscarUsuarioAsignado = ['idUsuario'=>$idUsuarioAsignado];
+        $arregloBuscarUsuarioAsignado = new Request($arregloBuscarUsuarioAsignado);
+        $listaUsuarioAsignado = $usuarioController->buscar($arregloBuscarUsuarioAsignado);
+        $listaUsuarioAsignado = json_decode($listaUsuarioAsignado);
+        $objUsuarioAsignado = $listaUsuarioAsignado[0];
+
+        $mail = new EmailController;
+        $mail->enviarMailConfirmacionAsignado($objUsuarioAsignado,$objPersonaAsignado,$objTrabajo,$objPersonaCreador);
+
+    }
   
 }

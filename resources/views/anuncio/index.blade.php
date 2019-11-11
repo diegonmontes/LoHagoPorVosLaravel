@@ -30,8 +30,8 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
-                                                <label>TITULO DEL ANUNCIO*</label>
-                                                <input type="text" name="titulo" id="titulo" class="form-control inputBordes" placeholder="El titulo de tu anuncio. Pensalo bien para llamar la atención." required>
+                                                <label>T&Iacute;TULO DEL ANUNCIO *</label>
+                                                <input type="text" name="titulo" id="titulo" class="form-control inputBordes" placeholder="El titulo de tu anuncio. Pensalo bien para llamar la atención." >
                                                 <span id="msgtitulo" class="text-danger">{{ $errors->first('titulo') }}</span>
                                             </div>
                                         </div>
@@ -53,8 +53,8 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="form-group">
-                                                <label>DESCRIPCION*</label><br>
-                                                <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes" placeholder="Describe bien lo que quieres. Mientras más detalles mejor." required></textarea>
+                                                <label>DESCRIPCI&Oacute;N *</label><br>
+                                                <textarea type="text" rows="6" name="descripcion" id="descripcion" class="form-control inputBordes" placeholder="Describe bien lo que quieres. Mientras más detalles mejor." ></textarea>
                                                 <span id="msgdescripcion" class="text-danger">{{ $errors->first('descripcion') }}</span>
                                             </div>
                                         </div>
@@ -62,9 +62,9 @@
 
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12 inputSelect">
-                                            <label for="idCategoriaTrabajo">CATEGORIA*</label>
-                                            <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo" required>
-                                                <option value="" disabled selected>Seleccione una categoria</option>
+                                            <label for="idCategoriaTrabajo">CATEGOR&Iacute;A *</label>
+                                            <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
+                                                <option value="" disabled selected>Seleccione una categor&iacute;a</option>
                                                 @foreach($listaCategoriaTrabajo as $unaCategoria)
                                                 <option value="{{$unaCategoria->idCategoriaTrabajo}}">
                                                     {{$unaCategoria->nombreCategoriaTrabajo}}</option>
@@ -77,15 +77,15 @@
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
-                                                <label>MONTO*</label>
-                                                <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+" required>
+                                                <label>MONTO *</label>
+                                                <input type="number" name="monto" id="monto" class="form-control input-sm inputBordes" placeholder="$" min="1" pattern="^[0-9]+" >
                                                 <span id="msgmonto" class="text-danger">{{ $errors->first('monto') }}</span>
                                             </div>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-6">
                                             <div class="form-group">
-                                                <label>ESPERAR POSTULANTES HASTA*</label>
-                                                <input type="text"  id="datepicker"  class="form-control inputBordes" style="background-color: #fff;" placeholder="¿Hasta cuando se pueden postular?" readonly required>
+                                                <label>ESPERAR POSTULANTES HASTA *</label>
+                                                <input type="text"  id="datepicker"  class="form-control inputBordes" style="background-color: #fff;" placeholder="¿Hasta cuando se pueden postular?" readonly >
                                                 <input type="text" id="datepickerAlt" name="tiempoExpiracion" class="datepicker-picker" >
                                                 <span id="msgtiempoExpiracion" class="text-danger">{{ $errors->first('tiempoExpiracion') }}</span>
                                             </div>
@@ -95,7 +95,7 @@
                                                                     
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
-                                            <label for="idProvincia">PROVINCIA*</label>
+                                            <label for="idProvincia">PROVINCIA *</label>
                                             <select class="form-control" name="idProvincia" id="idProvincia" >
                                                 @foreach ($provincias as $unaProvincia)
                                                     <option value="{{$unaProvincia->idProvincia}}">
@@ -105,7 +105,7 @@
                                             <span id="msgProvincia" class="text-danger">{{ $errors->first('idProvincia') }}</span>
                                         </div>
                                         <div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
-                                            <label for="idLocalidad" class="control-label">LOCALIDAD*</label>
+                                            <label for="idLocalidad" class="control-label">LOCALIDAD *</label>
                                             <select name="idLocalidad" id="idLocalidad" class="form-control inputSelect">
                                                 <option value="">Seleccione una opcion</option>
                                             </select>
@@ -181,10 +181,8 @@
         altTimeFormat: "H:m",
         dateFormat: "dd/mm/yy",
         timeFormat: "HH:mm",
-        minDate: '2019-01-01',
+        minDate: 0,
         timeText:"Horario",
-        minDate: '2019-01-01',
-        minDate: '2019-01-01',
 		currentText: "Hoy",
 		closeText: "Cerrar",
 		prevText: "&#x3C;Anterior",
@@ -216,10 +214,10 @@
         var titulo = $("#titulo").val();
         if(titulo.length>255){
             $('#msgtitulo').empty();
-            $('#msgtitulo').append('Maximo de letras sobrepasado.')
+            $('#msgtitulo').append('M&aacute;ximo de letras sobrepasado.')
         }else if(titulo.length == 0){
             $('#msgtitulo').empty();
-            $('#msgtitulo').append('El titulo es obligatorio.')
+            $('#msgtitulo').append('Debe ingresar un t&iacute;tulo.')
         }else{
             $('#msgtitulo').empty();
         }
@@ -238,10 +236,10 @@
         var descripcion = $("#descripcion").val();
         if(descripcion.length>511){
             $('#msgdescripcion').empty();
-            $('#msgdescripcion').append('Maximo de letras sobrepasado.')
+            $('#msgdescripcion').append('M&aacute;ximo de letras sobrepasado.')
         }else if(descripcion.length == 0){
             $('#msgdescripcion').empty();
-            $('#msgdescripcion').append('La descripcion es obligatoria.')
+            $('#msgdescripcion').append('Debe ingresar una descripci&oacute;n del anuncio.')
         }else{
             $('#msgdescripcion').empty();
         }
@@ -261,10 +259,10 @@
         var patron = /^[0-9]+$/;
         if (!patron.test(monto)){
             $('#msgmonto').empty();
-            $('#msgmonto').append('Solamente se puede ingresar numeros.')
+            $('#msgmonto').append('Solamente se puede ingresar n&uacute;meros.')
         }else if(monto.length == 0){
             $('#msgmonto').empty();
-            $('#msgmonto').append('El monto es obligatorio.')
+            $('#msgmonto').append('Debe ingresar un monto.')
         }else{
             $('#msgmonto').empty();
         }

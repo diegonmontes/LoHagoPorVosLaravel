@@ -728,7 +728,7 @@ class TrabajoController extends Controller
             'descripcion.max' => 'Maximo de letras sobrepasado.',
             'monto.required' => 'El monto es obligatorio.',
             'monto.numeric' => 'Solamente se puede ingresar numeros.',
-            'tiempoExpiracion.required' => 'La fecha de expiracion es obligatorio',
+            'tiempoExpiracion.required' => 'Debe ingresar hasta cu&aacute;ndo va a esperar postulaciones.',
             'idCategoriaTrabajo.required'=> 'La categoria es obligatoria',
             'idEstado.required'=> 'El estado es obligatorio',
             'idPersona.required'=> 'La persona es obligatoria',

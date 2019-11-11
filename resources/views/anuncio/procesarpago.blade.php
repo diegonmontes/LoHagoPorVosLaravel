@@ -1,6 +1,7 @@
 @php
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
+use App\Http\Controllers\TrabajoasignadoController;
 use Illuminate\Http\Request;
 use App\Estadotrabajo;
 use App\Trabajo;
@@ -35,7 +36,11 @@ use App\Trabajo;
         $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>3];
         $requesEstadoTrabajo = new Request($paramEstadotrabajo);
         Estadotrabajo::create($requesEstadoTrabajo->all());
-       
+
+        $trabajoAsignadoController = new TrabajoasignadoController();
+        $arregloIdTrabajo = ['idTrabajo'=>$idTrabajo];
+        $requestIdTrabajo = new Request($arregloIdTrabajo);
+        $trabajoAsignadoController->enviarMailConfirmacionAsignado($requestIdTrabajo);
 
         header("Location: http://localhost/LoHagoPorVosLaravel/public/");
         exit;
