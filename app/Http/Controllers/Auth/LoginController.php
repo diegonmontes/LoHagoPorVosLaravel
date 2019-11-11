@@ -34,7 +34,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['guest','Mailvalidado'])->except('logout');
+        $this->middleware(['Mailvalidado','guest'])->except('logout');
     }
 
     /**

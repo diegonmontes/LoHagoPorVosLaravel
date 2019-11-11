@@ -15,216 +15,263 @@
 					{{Session::get('success')}}
 				</div>
 			@endif
-			<div class="col-xs-6 col-sm-6 col-md-8">
-		<form id="formPersona" method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form">
-			{{ csrf_field() }}
+			@if($existePersona)
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-8">
+
+					<form id="formRegistro" method="POST" action="{{ route('register') }}">
+						{{ csrf_field() }}
+						<div class="card">
+							<div class="card-header">
+								<h4>Mis datos de usuario</h4>
+							</div>
+							<div class="card-body">
+									
+								<div class="form-group">
+									<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="" required placeholder="Usuario" autofocus>                                
+									<span id="msgnombreUsuario" class="text-danger" role="alert"></span>
+								</div>
+	
+								<div class="form-group">
+									<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="" required autocomplete="mailUsuario" placeholder="Corre electrónico">
+									<span id="msgmailUsuario" class="text-danger" role="alert"></span>
+								</div>
+	
+								<div class="form-group">
+									<input id="claveUsuario" type="password" class="form-control" name="claveUsuario" required placeholder="Contraseña">
+									<span id="msgclaveUsuario" class="text-danger" role="alert"></span>
+	
+								</div>
+	
 			
-				<div class="card">
-					<div class="card-header">
-						<h4> Completar para terminar el registro </h4>
-					</div>
+								<button type="submit" class="btn btn-success btn-block inputBordes">Actualizar datos</button>
+							</div>
+					</form>
 
-					<div class="card-body">
+				</div>
+			</div>
 
-						<div class="row margenImagenPerfil">
-							<div class="col-xs-12 col-sm-12 col-md-12">
-								<div class="drag-drop-imagenPersona inputImagenPersona">
-									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenPersona" />
-									<output id="thumbnil" class="preview-imagenPersona">
-										<img  class="preview-imagenPersona" src="
-											@if($existePersona)
-												@if($persona->imagenPersona != null)
-													{{ asset('storage/perfiles/'.$persona->imagenPersona)}}
-												@else{{asset('images/fotoPerfil.png')}}@endif
-											@else {{asset('images/fotoPerfil.png')}}
-										@endif">
-									</output>
+			@endif
+
+
+
+
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-8">
+					<form id="formPersona" method="post" enctype="multipart/form-data" action="@if($existePersona){{ route('persona.update') }}@else{{ route('persona.store') }}@endif"  role="form">
+						{{ csrf_field() }}
+						<div class="card">
+							<div class="card-header">
+								@if($existePersona)
+									<h4>Mis datos personales</h4>
+								@else
+									<h4>Completar para terminar el registro </h4>
+								@endif
+									
+							</div>
+
+							<div class="card-body">
+
+								<div class="row margenImagenPerfil">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<div class="drag-drop-imagenPersona inputImagenPersona">
+											<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenPersona" />
+											<output id="thumbnil" class="preview-imagenPersona">
+												<img  class="preview-imagenPersona" src="
+													@if($existePersona)
+														@if($persona->imagenPersona != null)
+															{{ asset('storage/perfiles/'.$persona->imagenPersona)}}
+														@else{{asset('images/fotoPerfil.png')}}@endif
+													@else {{asset('images/fotoPerfil.png')}}
+												@endif">
+											</output>
+										</div>
+										<span id="msgimagenPersona" class="text-danger">{{ $errors->first('imagenPersona') }}</span>
+									</div>
 								</div>
-								<span id="msgimagenPersona" class="text-danger">{{ $errors->first('imagenPersona') }}</span>
-							</div>
-						</div>
 
-						<br>
+								<br>
 
-						<div class="row">
-							<input type="hidden" name="idPersona" id="idPersona" value="{{$persona->idPersona}}">
-							<div class="col-xs-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<label>NOMBRE</label>
-									<br>
-									<input type="text" name="nombrePersona" id="nombrePersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->nombrePersona }}@endif" placeholder="Pedro" required>
-									<span id="msgnombrePersona" class="text-danger">{{ $errors->first('nombrePersona') }}</span>
+								<div class="row">
+									<input type="hidden" name="idPersona" id="idPersona" value="{{$persona->idPersona}}">
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+											<label>NOMBRE</label>
+											<br>
+											<input type="text" name="nombrePersona" id="nombrePersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->nombrePersona }}@endif" placeholder="Pedro" required>
+											<span id="msgnombrePersona" class="text-danger">{{ $errors->first('nombrePersona') }}</span>
 
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+											<label>APELLIDO</label>
+											<br>
+											<input type="text" name="apellidoPersona" id="apellidoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->apellidoPersona }}@endif" placeholder="Sanchez" required>
+											<span id="msgapellidoPersona" class="text-danger">{{ $errors->first('apellidoPersona') }}</span>
+										</div>
+									</div>
 								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<label>APELLIDO</label>
-									<br>
-									<input type="text" name="apellidoPersona" id="apellidoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->apellidoPersona }}@endif" placeholder="Sanchez" required>
-									<span id="msgapellidoPersona" class="text-danger">{{ $errors->first('apellidoPersona') }}</span>
+
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+											<label>DNI</label><br>
+											<input type="text" name="dniPersona" id="dniPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->dniPersona }}@endif" placeholder="12345678" required>
+											<span id="msgdniPersona" class="text-danger">{{ $errors->first('dniPersona') }}</span>
+
+										</div>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+											<label>TELEFONO</label><br>
+											<input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif" placeholder="(299)15123456" required>
+											<span id="msgtelefonoPersona" class="text-danger">{{ $errors->first('telefonoPersona') }}</span>
+
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
 
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<label>DNI</label><br>
-									<input type="text" name="dniPersona" id="dniPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->dniPersona }}@endif" placeholder="12345678" required>
-									<span id="msgdniPersona" class="text-danger">{{ $errors->first('dniPersona') }}</span>
-
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
+									@if($existePersona)
+										<input type="hidden" id="localidadActual" name="localidadActual" value={{$persona->localidad->idLocalidad}}>
+									@endif
+										<label for="idProvincia">PROVINCIA</label>
+											<select class="form-control" name="idProvincia" id="idProvincia" style="color: #1e1e27" required>
+											@foreach ($provincias as $unaProvincia)
+												<option value="{{$unaProvincia->idProvincia}}"
+														@if($existePersona)
+															@if($unaProvincia->idProvincia == $persona->localidad->idProvincia)
+																selected
+															@endif
+														@else
+															@if($unaProvincia->idProvincia == 20)
+																selected
+															@endif
+														@endif
+												>{{$unaProvincia->nombreProvincia}}</option>
+												@endforeach
+										</select>
+										<span id="msgidProvincia" class="text-danger">{{ $errors->first('idProvincia') }}</span>
+									</div>
+									<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
+										<label for="idLocalidad" class="control-label">LOCALIDAD</label>
+										<select name="idLocalidad" id="idLocalidad" class="form-control" style="color: #1e1e27" required>
+											<option value="">Seleccione una opcion</option>
+										</select>
+										<span id="msgidLocalidad" class="text-danger">{{ $errors->first('idLocalidad') }}</span>
+									</div>
 								</div>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6">
-								<div class="form-group">
-									<label>TELEFONO</label><br>
-									<input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif" placeholder="(299)15123456" required>
-									<span id="msgtelefonoPersona" class="text-danger">{{ $errors->first('telefonoPersona') }}</span>
 
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
-							@if($existePersona)
-								<input type="hidden" id="localidadActual" name="localidadActual" value={{$persona->localidad->idLocalidad}}>
-							@endif
-								<label for="idProvincia">PROVINCIA</label>
-									<select class="form-control" name="idProvincia" id="idProvincia" style="color: #1e1e27" required>
-									@foreach ($provincias as $unaProvincia)
-										<option value="{{$unaProvincia->idProvincia}}"
-												@if($existePersona)
-													@if($unaProvincia->idProvincia == $persona->localidad->idProvincia)
-														selected
-													@endif
-												@else
-													@if($unaProvincia->idProvincia == 20)
-														selected
-													@endif
-												@endif
-										>{{$unaProvincia->nombreProvincia}}</option>
-										@endforeach
-								</select>
-								<span id="msgidProvincia" class="text-danger">{{ $errors->first('idProvincia') }}</span>
-							</div>
-							<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
-								<label for="idLocalidad" class="control-label">LOCALIDAD</label>
-								<select name="idLocalidad" id="idLocalidad" class="form-control" style="color: #1e1e27" required>
-									<option value="">Seleccione una opcion</option>
-								</select>
-								<span id="msgidLocalidad" class="text-danger">{{ $errors->first('idLocalidad') }}</span>
-							</div>
-						</div>
-
-						<br>
-						<div class="row">
-							<div class="col-xs-12 col-sm-12 col-md-6" id="seleccionHabilidades">
-							@php
-							if (count($habilidades)>0){ // Si existe alguna habilidad cargada en la base de datos
-								echo '<h6>HABILIDADES</h6>';
-								if ($listaHabilidadesSeleccionadas!=null){ // Si lista de habilidades no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
-									foreach ($habilidades as $habilidad){ // por cada habilidad cargada en la bd
-										$cantidadHabilidadesSeleccionadas = count($listaHabilidadesSeleccionadas); // obtenemos la cantidad de habilidades que cargo previamente
-										$seleccionoHabilidad=false; // seteamos a falso
-										$i=0; // inicializamos
-										while ($seleccionoHabilidad!=true && $i<$cantidadHabilidadesSeleccionadas){
-											$habilidadActual=$listaHabilidadesSeleccionadas[$i]; // seteamos el obj de la habilidad actual
-											if ($habilidad->idHabilidad==$habilidadActual->idHabilidad){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
-												$seleccionoHabilidad=true;
+								<br>
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6" id="seleccionHabilidades">
+									@php
+									if (count($habilidades)>0){ // Si existe alguna habilidad cargada en la base de datos
+										echo '<h6>HABILIDADES</h6>';
+										if ($listaHabilidadesSeleccionadas!=null){ // Si lista de habilidades no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
+											foreach ($habilidades as $habilidad){ // por cada habilidad cargada en la bd
+												$cantidadHabilidadesSeleccionadas = count($listaHabilidadesSeleccionadas); // obtenemos la cantidad de habilidades que cargo previamente
+												$seleccionoHabilidad=false; // seteamos a falso
+												$i=0; // inicializamos
+												while ($seleccionoHabilidad!=true && $i<$cantidadHabilidadesSeleccionadas){
+													$habilidadActual=$listaHabilidadesSeleccionadas[$i]; // seteamos el obj de la habilidad actual
+													if ($habilidad->idHabilidad==$habilidadActual->idHabilidad){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
+														$seleccionoHabilidad=true;
+													};
+													$i++;
+												};
+												if ($seleccionoHabilidad){ // si lo selecciono, asignamos checked
+													echo '<div class="form-check form-check-inline col-5">';
+													echo '<input class="form-check-input" checked type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
+													echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
+													echo '</div>';
+												} else {
+													echo '<div class="form-check form-check-inline col-5">';
+													echo '<input class="form-check-input" type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
+													echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
+													echo '</div>';
+												}
 											};
-											$i++;
-										};
-										if ($seleccionoHabilidad){ // si lo selecciono, asignamos checked
-											echo '<div class="form-check form-check-inline col-5">';
-											echo '<input class="form-check-input" checked type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
-											echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
-											echo '</div>';
-										} else {
-											echo '<div class="form-check form-check-inline col-5">';
-											echo '<input class="form-check-input" type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
-											echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
-											echo '</div>';
-										}
-									};
 
-								} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna habilidad
-									foreach ($habilidades as $habilidad){
-										echo '<div class="form-check form-check-inline col-5">';
-										echo '<input class="form-check-input" type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
-										echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
-										echo '</div>';
+										} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna habilidad
+											foreach ($habilidades as $habilidad){
+												echo '<div class="form-check form-check-inline col-5">';
+												echo '<input class="form-check-input" type="checkbox" id="habilidades' .$habilidad->idHabilidad.'" name="habilidades[]" value="' .$habilidad->idHabilidad.'">';
+												echo '<label class="form-check-label" for="habilidades' .$habilidad->idHabilidad.'">'.$habilidad->nombreHabilidad.'</label>';
+												echo '</div>';
+											}
+										}
 									}
-								}
-							}
-							@endphp
+									@endphp
+									<div class="row">
+										<span id="msghabilidades" class="text-danger">{{ $errors->first('habilidades') }}</span>
+									</div>
+									</div>
+									<br>
+									<div class="col-xs-12 col-sm-12 col-md-6" id="categoriasDeTrabajo">
+									@php
+									if (count($categoriasTrabajo)>0){
+										echo '<h6>PREFERENCIAS DE CATEGORIAS DE TRABAJO</h6>';
+
+										if ($listaPreferenciasSeleccionadas!=null){ // Si lista de preferencias no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
+											foreach ($categoriasTrabajo as $categoriaTrabajo){ // por cada categoria trabajo cargada en la bd
+												$cantidadPreferenciasSeleccionadas = count($listaPreferenciasSeleccionadas); // obtenemos la cantidad de preferencias que cargo previamente
+												$seleccionoPreferencia=false; // seteamos a falso
+												$i=0; // inicializamos
+												while ($seleccionoPreferencia!=true && $i<$cantidadPreferenciasSeleccionadas){
+													$preferenciaActual=$listaPreferenciasSeleccionadas[$i]; // seteamos el obj de la categoria actual
+													if ($categoriaTrabajo->idCategoriaTrabajo==$preferenciaActual->idCategoriaTrabajo){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
+														$seleccionoPreferencia=true;
+													};
+													$i++;
+												};
+												if ($seleccionoPreferencia){ // si lo selecciono, asignamos checked
+													echo '<div class="form-check form-check-inline col-5">';
+													echo '<input class="form-check-input" checked type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
+													echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
+													echo '</div>';
+												} else {
+													echo '<div class="form-check form-check-inline col-5">';
+													echo '<input class="form-check-input" type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
+													echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
+													echo '</div>';
+												}
+											};
+
+										} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna preferencia
+											foreach ($categoriasTrabajo as $categoriaTrabajo){
+												echo '<div class="form-check form-check-inline col-5">';
+												echo '<input class="form-check-input" type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
+												echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
+												echo '</div>';
+											}
+										}
+									}
+									@endphp
+									<div class="row">
+									<span id="msgpreferenciaPersona" class="text-danger">{{ $errors->first('preferenciaPersona') }}</span>
+									</div>
+									</div>
+								</div>
+
+						
+							<br>
 							<div class="row">
-								<span id="msghabilidades" class="text-danger">{{ $errors->first('habilidades') }}</span>
-							</div>
+								<div class="col-xs-12 col-sm-12 col-md-12">
+									<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
+								</div>
 							</div>
 							<br>
-							<div class="col-xs-12 col-sm-12 col-md-6" id="categoriasDeTrabajo">
-							@php
-							if (count($categoriasTrabajo)>0){
-								echo '<h6>PREFERENCIAS DE CATEGORIAS DE TRABAJO</h6>';
-
-								if ($listaPreferenciasSeleccionadas!=null){ // Si lista de preferencias no es null, significa que esta editando el perfil y vamos a poner en checked las habilidades que selecciono antes
-									foreach ($categoriasTrabajo as $categoriaTrabajo){ // por cada categoria trabajo cargada en la bd
-										$cantidadPreferenciasSeleccionadas = count($listaPreferenciasSeleccionadas); // obtenemos la cantidad de preferencias que cargo previamente
-										$seleccionoPreferencia=false; // seteamos a falso
-										$i=0; // inicializamos
-										while ($seleccionoPreferencia!=true && $i<$cantidadPreferenciasSeleccionadas){
-											$preferenciaActual=$listaPreferenciasSeleccionadas[$i]; // seteamos el obj de la categoria actual
-											if ($categoriaTrabajo->idCategoriaTrabajo==$preferenciaActual->idCategoriaTrabajo){ // si coinciden seteamos a true. es para que no recorra de mas el arreglo
-												$seleccionoPreferencia=true;
-											};
-											$i++;
-										};
-										if ($seleccionoPreferencia){ // si lo selecciono, asignamos checked
-											echo '<div class="form-check form-check-inline col-5">';
-											echo '<input class="form-check-input" checked type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
-											echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
-											echo '</div>';
-										} else {
-											echo '<div class="form-check form-check-inline col-5">';
-											echo '<input class="form-check-input" type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
-											echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
-											echo '</div>';
-										}
-									};
-
-								} else { // si ingresa aca es porque esta creando un perfil y nunca selecciono ninguna preferencia
-									foreach ($categoriasTrabajo as $categoriaTrabajo){
-										echo '<div class="form-check form-check-inline col-5">';
-										echo '<input class="form-check-input" type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
-										echo '<label class="form-check-label" for="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'">'.$categoriaTrabajo->nombreCategoriaTrabajo.'</label>';
-										echo '</div>';
-									}
-								}
-							}
-							@endphp
 							<div class="row">
-							<span id="msgpreferenciaPersona" class="text-danger">{{ $errors->first('preferenciaPersona') }}</span>
+								<div class="col-xs-6 col-sm-12 col-md-12">
+									<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
+								</div>
 							</div>
-							</div>
-						</div>
-
-				
-					<br>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
-						</div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-xs-6 col-sm-12 col-md-12">
-							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
-						</div>
-					</div>
-				</form>
-			</div>
+						</form>
+				</div>
+        	</div>
 		</div>
 	</div>
 
