@@ -290,8 +290,8 @@
 	})
 	function controlNombrePersona(){
 		var nombrePersona = $("#nombrePersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
-		if (patron.test(nombrePersona)){
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
+		if (/^[a-z ]+$/i.test(nombrePersona)){
 			if(nombrePersona.lenght > 80){
 				$("#msgnombrePersona").empty();
 				$("#msgnombrePersona").append("Sobrepasado el limite maximo de letas.");
@@ -316,7 +316,7 @@
 	})
 	function controlApellidoPersona(){
 		var apellidoPersona = $("#apellidoPersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
 		if (patron.test(apellidoPersona)){
 			if(apellidoPersona.lenght > 80){
 				$("#msgapellidoPersona").empty();

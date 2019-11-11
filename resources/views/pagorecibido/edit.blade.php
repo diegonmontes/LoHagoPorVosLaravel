@@ -78,7 +78,7 @@
 							<div class="form-group">
 								<label>Fecha Pago:</label><br>
 								<input type="text"  id="datepickerPago" class="form-control inputBordes" value="{{$pagoRecibido->fechapago}}" style="background-color: #fff;" readonly>
-                                <input type="text" id="datepickerPagoAlt" name="fechapago" class="datepicker-picker"  >	
+                                <input type="text" id="datepickerPagoAlt"  value="{{$pagoRecibido->fechapago}}" name="fechapago" class="datepicker-picker"  >	
 							</div>
 						</div>
 
@@ -86,7 +86,7 @@
 							<div class="form-group">
 								<label>Fecha Aprobado:</label><br>
 								<input type="text"  id="datepickerAprobado" value="{{$pagoRecibido->fechaaprobado}}"  class="form-control inputBordes" style="background-color: #fff;" readonly>
-                                <input type="text" id="datepickerAprobadoAlt" name="fechaaprobado" class="datepicker-picker" >
+                                <input type="text" id="datepickerAprobadoAlt" value="{{$pagoRecibido->fechaaprobado}}" name="fechaaprobado" class="datepicker-picker" >
 							</div>
 						</div>
 
@@ -109,7 +109,22 @@
 					altTimeFormat: "H:m",
 					dateFormat: "yy-mm-dd",
 					timeFormat: "HH:mm:ss",
-					minDate: 0
+					timeText:"Horario",
+					minDate: '2019-01-01',
+					currentText: "Hoy",
+					closeText: "Cerrar",
+					prevText: "&#x3C;Anterior",
+					nextText: "&#x3ESiguiente",
+					monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+					"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+					monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+					"jul","ago","sep","oct","nov","dic" ],
+					dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+					dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+					dayNamesMin: [ "D","L","M","M","J","V","S" ],
+					showMonthAfterYear: false,
+					yearSuffix: "",
+					weekHeader: "Sm"
 				});   
 		
 				$('#datepickerAprobado').datetimepicker({
@@ -121,7 +136,21 @@
 					altTimeFormat: "H:m",
 					dateFormat: "yy-mm-dd",
 					timeFormat: "HH:mm:ss",
-					minDate: 0
+					minDate: '2019-01-01',
+					currentText: "Hoy",
+					closeText: "Cerrar",
+					prevText: "&#x3C;Anterior",
+					nextText: "&#x3ESiguiente",
+					monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+					"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+					monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+					"jul","ago","sep","oct","nov","dic" ],
+					dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+					dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+					dayNamesMin: [ "D","L","M","M","J","V","S" ],
+					showMonthAfterYear: false,
+					yearSuffix: "",
+					weekHeader: "Sm"
 				});   
 			</script>
 
@@ -150,7 +179,6 @@
 							},
 							fechapago:{
 								required: true,
-								validDate: true,
 							},
 							monto: {
 								required: true,
@@ -168,7 +196,6 @@
 							},		
 							fechaaprobado:{
 								required: true,
-								validDate: true,
 							},
 						},
 						messages: {

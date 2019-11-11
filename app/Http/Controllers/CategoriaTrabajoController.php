@@ -54,7 +54,7 @@ class CategoriaTrabajoController extends Controller
             $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
              //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             $imagen = File::get($imagen);
-            Storage::disk('trabajo')->put($nombreImagen, $imagen);    
+            Storage::disk('categoria')->put($nombreImagen, $imagen);    
         }
         CategoriaTrabajo::create($request->all());
         return redirect()->route('categoriatrabajo.index')->with('success','Registro creado satisfactoriamente');
@@ -107,7 +107,7 @@ class CategoriaTrabajoController extends Controller
             $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
              //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
             $imagen = File::get($imagen);
-            Storage::disk('trabajo')->put($nombreImagen, $imagen);    
+            Storage::disk('categoria')->put($nombreImagen, $imagen);    
         }
         
         CategoriaTrabajo::find($id)->update($request->all());

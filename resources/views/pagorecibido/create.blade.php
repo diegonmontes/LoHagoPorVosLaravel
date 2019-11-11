@@ -104,7 +104,22 @@
 				altTimeFormat: "H:m",
 				dateFormat: "yy-mm-dd",
 				timeFormat: "HH:mm:ss",
-				minDate: 0
+				minDate: '2019-01-01',
+				timeText:"Horario",
+				currentText: "Hoy",
+				closeText: "Cerrar",
+				prevText: "&#x3C;Anterior",
+				nextText: "&#x3ESiguiente",
+				monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+				"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+				monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+				"jul","ago","sep","oct","nov","dic" ],
+				dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+				dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+				dayNamesMin: [ "D","L","M","M","J","V","S" ],
+				showMonthAfterYear: false,
+				yearSuffix: "",
+				weekHeader: "Sm"
 			});   
 	
 			$('#datepickerAprobado').datetimepicker({
@@ -116,21 +131,30 @@
 				altTimeFormat: "H:m",
 				dateFormat: "yy-mm-dd",
 				timeFormat: "HH:mm:ss",
-				minDate: 0
+				minDate: '2019-01-01',
+				currentText: "Hoy",
+				closeText: "Cerrar",
+				prevText: "&#x3C;Anterior",
+				nextText: "&#x3ESiguiente",
+				monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+				"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+				monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+				"jul","ago","sep","oct","nov","dic" ],
+				dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+				dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+				dayNamesMin: [ "D","L","M","M","J","V","S" ],
+				showMonthAfterYear: false,
+				yearSuffix: "",
+				weekHeader: "Sm",
 			});   
 		</script>
+
+		
 
 		<script>
 			jQuery.validator.addMethod("lettersonly", function(value, element) {
 				return this.optional(element) || /^[a-z ]+$/i.test(value);
 			}, "Solo puede ingresar letras");
-				
-			jQuery.validator.addMethod("validDate", function (value, element) {
-					var stamp = value.split(" "); // Dividimos el input en fecha(0) y hora-min(1)
-					var validDate = !/Invalid|NaN/.test(new Date(stamp[0]).toString()); // verificamos que la fecha sea correcta
-					return this.optional(element) || (validDate);
-				}, "Por favor ingrese una fecha correcta (DD/MM/AAAA HH-MM)");
-			
 						
 			$("#formPagoRecibido").validate({
 					rules: {
@@ -145,7 +169,6 @@
 						},
 						fechapago:{
 							required: true,
-							validDate: true,
 						},
 						monto: {
 							required: true,
@@ -163,7 +186,6 @@
 						},		
 						fechaaprobado:{
 							required: true,
-							validDate: true,
 						},
 					},
 					messages: {

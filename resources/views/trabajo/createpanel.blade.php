@@ -85,7 +85,6 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12 inputSelect">
                                             <label for="idCategoriaTrabajo">CATEGORIA*</label>
                                             <select class="form-control" name="idCategoriaTrabajo" id="idCategoriaTrabajo">
                                                 <option value="" disabled selected>Seleccione una categor&iacute;a</option>
@@ -95,7 +94,6 @@
                                                 @endforeach
                                             </select>
                                             <span id="msgidCategoriaTrabajo" class="text-danger">{{ $errors->first('idCategoriaTrabajo') }}</span>
-                                        </div>
                                     </div>
 
                                     <div class="row">
@@ -200,9 +198,24 @@
                 controlType: 'select',
                 oneLine: true,
                 altTimeFormat: "H:m",
-                dateFormat: "dd/mm/yy",
+				dateFormat: "yy-mm-dd",
                 timeFormat: "HH:mm",
-                minDate: 0
+                minDate: '2019-01-01',
+				currentText: "Hoy",
+                timeText:"Horario",
+				closeText: "Cerrar",
+				prevText: "&#x3C;Anterior",
+				nextText: "&#x3ESiguiente",
+				monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+				"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+				monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+				"jul","ago","sep","oct","nov","dic" ],
+				dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+				dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+				dayNamesMin: [ "D","L","M","M","J","V","S" ],
+				showMonthAfterYear: false,
+				yearSuffix: "",
+				weekHeader: "Sm"
             });   
         </script>
 @endsection

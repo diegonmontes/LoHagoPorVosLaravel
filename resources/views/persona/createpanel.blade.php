@@ -86,7 +86,6 @@
 							</div>
 						</div>
 						
-
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
 								<label for="idProvincia">PROVINCIA</label>
@@ -129,6 +128,7 @@
 							<div class="col-xs-12 col-sm-12 col-md-6" id="categoriasDeTrabajo">
 							@php
 							if (count($categoriasTrabajo)>0){
+								echo '<h6>PREFERENCIAS</h6>';
 								foreach ($categoriasTrabajo as $categoriaTrabajo){
 									echo '<div class="form-check form-check-inline col-5">';
 										echo '<input class="form-check-input" type="checkbox" id="preferenciaPersona' .$categoriaTrabajo->idCategoriaTrabajo.'" name="preferenciaPersona[]" value="' .$categoriaTrabajo->idCategoriaTrabajo.'">';
@@ -145,18 +145,17 @@
 						</div>
 
 				
-					<br>
-					<div class="row">
-						<div class="col-xs-12 col-sm-12 col-md-12">
-							<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
+						<div class="row">
+							<div class="col-xs-6 col-sm-12 col-md-12">
+								<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
+							</div>
 						</div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col-xs-6 col-sm-12 col-md-12">
-							<input type="submit"  value="Guardar mis datos" class="btn btn-success btn-block inputBordes">
+						<br/>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-12">
+								<input id="borrarCampos" type="button"  value="Borrar" class="btn btn-primary btn-block inputBordes">
+							</div>
 						</div>
-					</div>
 				</form>
 			</div>
 		</div>
@@ -219,7 +218,7 @@
 	})
 	function controlNombrePersona(){
 		var nombrePersona = $("#nombrePersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
 		if (patron.test(nombrePersona)){
 			if(nombrePersona.lenght > 80){
 				$("#msgnombrePersona").empty();
@@ -245,7 +244,7 @@
 	})
 	function controlApellidoPersona(){
 		var apellidoPersona = $("#apellidoPersona").val();
-		var patron = /^[a-zA-Z ]+$/; //Patron que debe respetarse
+		var patron = /^[a-zA-Z ]+$/i; //Patron que debe respetarse
 		if (patron.test(apellidoPersona)){
 			if(apellidoPersona.lenght > 80){
 				$("#msgapellidoPersona").empty();

@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/fontawesome-free/css/all.css') }}">   
+    <link rel="stylesheet" type="text/css"  href="{{ asset('styles/imagenTrabajo.css') }}">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script> 
     <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/additional-methods.js"></script>

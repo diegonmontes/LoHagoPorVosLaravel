@@ -16,6 +16,9 @@
                         <th>Valor</th>
                         <th>Persona</th>
                         <th>Trabajo</th>
+                        <th>Comentario</th>
+                        <th>Imagen </th>
+                        
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
                     </tr>
@@ -28,6 +31,13 @@
                         <td>{{$valoracion->valor}}</td>
                         <td>{{$valoracion->persona->idPersona." - ".$valoracion->persona->nombrePersona." ".$valoracion->persona->apellidoPersona}}</td>
                         <td>{{$valoracion->trabajo->idTrabajo." - ".$valoracion->trabajo->titulo}}</td>
+                        <td>{{$valoracion->comentarioValoracion}}</td>
+                        @if($valoracion->imagenValoracion!=null)
+                            <td><img src="{{asset("storage/valoracion/$valoracion->imagenValoracion")}}" onClick=abrirImagen("{{$valoracion->imagenValoracion}}") width="75px;" height="50px"></td>
+                        @else
+                            <td>{{$valoracion->imagenValoracion}}</td> 
+                        @endif
+
                         <td><a class="btn btn-primary btn-sm" href="{{action('ValoracionController@edit', $valoracion->idValoracion)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>
                             <form action="{{action('ValoracionController@destroy', $valoracion->idValoracion)}}" method="post">
@@ -46,6 +56,35 @@
             </tbody>
         </table>
             {{ $valoraciones->links() }}
+            <!-- Modal -->
+            <div id="modalConfirmacion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                <!-- Contenido del modal -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"> Im&aacute;gen de la valoraci&oacute;n</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Texto del modal</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 </section>
 
+@endsection
+
+@section('jsAbrirModalImagen')
+<script>
+    function abrirImagen(valor){
+    var linkImagen = '<img src="{{asset("storage/valoracion")}}/' + valor + '" width="100%" height="150px"> </img>';
+    $('.modal-body').html(linkImagen);
+    $('#modalConfirmacion').modal("show");
+    }
+    
+</script>
 @endsection

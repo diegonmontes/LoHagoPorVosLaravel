@@ -111,11 +111,9 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
-            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
-            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
 
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -318,11 +316,10 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
-            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
-            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
+
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
         
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -671,6 +668,26 @@ class PersonaController extends Controller
 
     public function storepanel(Request $request)
     {    
+        $mensajesErrores =[
+            'habilidades.min' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'habilidades.required' => 'Debe seleccionar minimo tres habilidades que posea.',
+            'preferenciaPersona.min' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'preferenciaPersona.required' => 'Debe seleccionar minimo tres categorias que desea ver primero.',
+            'nombrePersona.required' => 'El nombre es obligatorio.',
+            'apellidoPersona.required' => 'El apellido es obligatorio.',
+            'nombrePersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'apellidoPersona.max' => 'Sobrepasado el limite maximo de palabras.',
+            'dniPersona.required' => 'El dni es obligatorio.',
+            'telefonoPersona.required' => 'El telefono es obligatorio.',
+            'idLocalidad.required' => 'La localidad es obligatoria.',
+            'idProvincia.required' => 'La provincia es obligatoria.',
+            'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
+            'dniPersona.min' => 'Ingrese un DNI valido.',
+        ] ;
+
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+
+        
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
                 $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
                 $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
@@ -739,11 +756,9 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
-            'nombrePersona.alpha' => 'Solo esta permitido el ingreso de letras.',
-            'apellidoPersona.alpha' => 'Solo esta permitido el ingreso de letras.',
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80|alpha','apellidoPersona'=>'required|max:80|alpha','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
         
         
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){

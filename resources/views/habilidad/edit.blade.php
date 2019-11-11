@@ -1,4 +1,7 @@
 @extends('admin')
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
 @section('content')
 <div class="row">
 	<section class="content">
@@ -41,20 +44,17 @@
 								<input type="text" name="descripcionHabilidad" id="descripcionHabilidad" class="form-control input-sm" value="{{$habilidad->descripcionHabilidad}}">
 							</div>
 						</div>
-
-						<div class="row margenImagenHabilidad">
-							<div class="col-xs-12 col-sm-12 col-md-12">
-								<div class="drag-drop-imagenHabilidad imagenHabilidad">
+						<div class="row">
+								<div class="drag-drop-imagenTrabajo imagenTrabajo">
 									<input type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenHabilidad" />
-									<output id="thumbnil" class="preview-imagenHabilidad">
-										<img  class="preview-imagenHabilidad" src="
+									<output id="thumbnil" class="preview-imagenTrabajo">
+										<img  class="preview-imagenTrabajo" src="
 												@if($habilidad->imagenHabilidad != null)
-													{{ asset('storage/habilidad/'.$habilidad->imagenHabilidad)}}
+													{{ asset('images/imagenHabilidad/'.$habilidad->imagenHabilidad)}}
 												@else{{asset('images/fotoPerfil.png')}}@endif
 										">
 									</output>
 								</div>
-							</div>
 						</div>
 
 						<br/>

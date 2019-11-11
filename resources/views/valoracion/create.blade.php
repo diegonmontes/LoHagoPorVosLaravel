@@ -1,4 +1,7 @@
 @extends('admin')
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
 @section('content')
 <div class="row">
 	<section class="content">
@@ -25,7 +28,7 @@
 						<h3>Nueva Valoraci&oacute;n</h3>
 					</div>
 					<div class="card-body">
-						<form method="POST" id="formValoracion" name="formValoracion" action="{{ route('valoracion.store') }}"  role="form">
+						<form method="POST" id="formValoracion" enctype="multipart/form-data" name="formValoracion" action="{{ route('valoracion.storepanel') }}"  role="form">
 							{{ csrf_field() }}
 							
 							<div class="row">
@@ -47,7 +50,7 @@
 
 									@foreach($listaPersonas as $persona)
 										<option value="{{$persona->idPersona}}">
-										{{$persona->idPersona." - ".$persona->nombrePersona." - ".$persona->apellidoPersona}}</option>
+										{{$persona->idPersona." - ".$persona->nombrePersona." ".$persona->apellidoPersona}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -58,6 +61,23 @@
 									<input type="text" name="valor" id="valor" class="form-control input-sm">
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label>Comentario:</label>
+									<input type="text" name="comentarioValoracion" id="comentarioValoracion" class="form-control input-sm">
+								</div>
+							</div>
+
+							<div class="row">
+                                    <label>INGRESE UNA IMAGEN(opcional)</label>
+                                    <div class="drag-drop-imagenTrabajo imagenTrabajo">
+                                        <input class="inputImagenTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenValoracion" />
+                                        <output id="thumbnil" class="preview-imagenTrabajo">
+                                                <img class="preview-imagenTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
+                                        </output>
+                                    </div>
+                            </div>
 
 							<br>
 							<div class="row">

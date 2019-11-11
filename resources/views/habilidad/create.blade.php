@@ -31,11 +31,11 @@
 						<form method="POST" id="formHabilidad" enctype="multipart/form-data" name="formHabilidad" action="{{ route('habilidad.store') }}"  role="form">
 							{{ csrf_field() }}
 							<div class="row">
-									<div class="form-group">
-										<label>Nombre:</label>
-										<input type="text" name="nombreHabilidad" id="nombreHabilidad" class="form-control input-sm">
-									</div>
+								<div class="form-group">
+									<label>Nombre:</label>
+									<input type="text" name="nombreHabilidad" id="nombreHabilidad" class="form-control input-sm">
 								</div>
+							</div>
 							<div class="row">
 								<div class="form-group">
 									<label>Descripci&oacute;n:</label>
@@ -44,15 +44,13 @@
 							</div>
 
 							<div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
                                     <label>INGRESE UNA IMAGEN(opcional)</label>
-                                    <div class="drag-drop-imagenHabilidad imagenHabilidad">
-                                        <input class="inputImagenHabilidad" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenHabilidad" />
-                                        <output id="thumbnil" class="preview-imagenHabilidad">
-                                                <img class="preview-imagenHabilidad" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
+                                    <div class="drag-drop-imagenTrabajo imagenTrabajo">
+                                        <input class="inputimagenTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenHabilidad" />
+                                        <output id="thumbnil" class="preview-imagenTrabajo">
+                                                <img class="preview-imagenTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
                                         </output>
                                     </div>
-                                </div>
                             </div>
 							<br>
 							<div class="row">

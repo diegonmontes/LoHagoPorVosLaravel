@@ -118,6 +118,7 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
     Route::resource('pagorecibido', 'PagorecibidoController');
     
     Route::resource('trabajoasignado', 'TrabajoasignadoController');
+    Route::post('valoracion/storepanel','ValoracionController@storepanel')->name('valoracion.storepanel');
     
     Route::resource('valoracion', 'ValoracionController');
     

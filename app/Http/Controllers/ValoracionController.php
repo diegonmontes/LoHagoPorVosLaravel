@@ -116,7 +116,7 @@ class ValoracionController extends Controller
                  //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
                 $imagen = File::get($imagen);
                 
-                Storage::disk('valoracion')->put($nombreImagen, $imagen);        
+                Storage::disk('valoracion')->put($nombreImagen, $imagen);      
             }
             //llamamos a la funcion que valida la imagen
             $validoImagen = $controller->validarImagen($imagen,1);
@@ -225,7 +225,22 @@ class ValoracionController extends Controller
         //Buscamos el usuario
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
+
+        if(isset($request['imagenValoracion']) && $request['imagenValoracion']!=null){
+            // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $imagen=$request->file('imagenValoracion'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").'.'.$extension; // Definimos el nombre
+                $request = $request->except('imagenValoracion'); // Guardamos todo el obj sin la clave imagen valoracion
+                $request['imagenValoracion']=$nombreImagen; // Asignamos de nuevo a imagenValoracion, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                $imagen = File::get($imagen);      
+                Storage::disk('valoracion')->put($nombreImagen, $imagen);      
+        } 
+        
         Valoracion::find($id)->update($request->all()); //Actualizamos el elemento con los datos nuevos
+
         return redirect()->route('valoracion.index')->with('success','Registro actualizado satisfactoriamente');
     }
 
@@ -302,4 +317,57 @@ class ValoracionController extends Controller
         return redirect()->route('inicio')->with('success','Gracias por valorar');
 
     }
+
+    public function storepanel(Request $request)
+    {
+        //Validamos los datos antes de guardar el elemento nuevo
+        $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
+        
+        $idTrabajo = $request->idTrabajo;
+        $trabajoController = new TrabajoController();
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $trabajo = Trabajo::where('idTrabajo',$idTrabajo)->get();
+        $trabajo = $trabajo[0];
+        $personaController = new PersonaController();
+
+        $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+        $arregloBuscarPersona = ['idUsuario'=>$idUsuario];
+        $arregloBuscarPersona = new Request($arregloBuscarPersona);
+        $listaPersona = $personaController->buscar($arregloBuscarPersona);
+        $listaPersona = json_decode($listaPersona);
+        $persona = $listaPersona[0];
+        $idPersonaLogeada = $persona->idPersona;
+
+        if ($trabajo->idPersona==$idPersonaLogeada){ // Significa que esta valorando el creador del anuncio
+            // Hacemos la busqueda del trabajo en trabajo aspirante para obtener el id del aspirante
+            $trabajoAspiranteController = new TrabajoaspiranteController();
+            $arregloBuscarTrabajoAspirante = ['idTrabajo'=>$idTrabajo];
+            $arregloBuscarTrabajoAspirante = new Request($arregloBuscarTrabajoAspirante);
+            $listaTrabajoAspirante = $trabajoAspiranteController->buscar($arregloBuscarTrabajoAspirante);
+            $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
+            $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
+            $request['idPersona'] = $trabajoAspirante->idPersona;
+        } else { // Significa que el aspirante esta valorando al creador del anuncio
+            $request['idPersona'] = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
+        }
+        
+        if(isset($request['imagenValoracion']) && $request['imagenValoracion']!=null){
+            // Significa que esta en laravel, no tenemos el nombre de la img ni su formato
+                $imagen=$request->file('imagenValoracion'); // Obtenemos el obj de la img
+                $extension = $imagen->getClientOriginalExtension(); // Obtenemos la extension
+                $nombreImagen = 'valoracion'.$request['idPersona'].'-'.date("YmdHms").'.'.$extension; // Definimos el nombre
+                $request = $request->except('imagenValoracion'); // Guardamos todo el obj sin la clave imagen valoracion
+                $request['imagenValoracion']=$nombreImagen; // Asignamos de nuevo a imagenValoracion, su nombre
+                $request = new Request($request); // Creamos un obj Request del nuevo request generado anteriormente
+                 //Recibimos el archivo y lo guardamos en la carpeta storage/app/public
+                $imagen = File::get($imagen);      
+                Storage::disk('valoracion')->put($nombreImagen, $imagen);      
+        } 
+        
+                Valoracion::create($request->all()); // Si crea la valoracion
+                return redirect()->route('valoracion.index')->with('success','Registro creado satisfactoriamente');   
+                 
+    }
+
 }

@@ -1,4 +1,7 @@
 @extends('admin')
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
 @section('content')
 <div class="row">
 	<section class="content">
@@ -42,15 +45,13 @@
 							</div>
 
 							<div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
                                     <label>INGRESE UNA IMAGEN(opcional)</label>
-                                    <div class="drag-drop-imagenCategoriaTrabajo imagenCategoriaTrabajo">
-                                        <input class="inputimagenCategoriaTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenCategoriaTrabajo" />
-                                        <output id="thumbnil" class="preview-imagenCategoriaTrabajo">
-                                                <img class="preview-imagenimagenCategoriaTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
+                                    <div class="drag-drop-imagenTrabajo imagenTrabajo">
+                                        <input class="inputimagenTrabajo" type="file" id="files" accept="image/*"  onchange="showMyImage(this)" name="imagenCategoriaTrabajo" />
+                                        <output id="thumbnil" class="preview-imagenTrabajo">
+                                                <img class="preview-imagenTrabajo" src="{{asset('images/subirImagen.png')}}" style="width: 30%; margin: auto;">
                                         </output>
                                     </div>
-                                </div>
                             </div>
 
 							<br>

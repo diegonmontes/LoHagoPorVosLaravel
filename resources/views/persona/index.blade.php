@@ -35,7 +35,7 @@
                         <td>{{$persona->dniPersona}}</td>
                         <td>{{$persona->telefonoPersona}}</td>
                         @if($persona->imagenPersona!=null)
-                            <td><img src="/LoHagoPorVosLaravel/public/storage/perfiles/{{$persona->imagenPersona}}" onClick=abrirImagen("{{$persona->imagenPersona}}") width="75px;" height="50px"></td>
+                        <td><img src="{{asset("storage/perfiles/$persona->imagenPersona")}}" onClick=abrirImagen("{{$persona->imagenPersona}}") width="75px;" height="50px"></td>
                         @else
                             <td>{{$persona->imagenPersona}}</td>
                         @endif
@@ -83,7 +83,7 @@
 @section('jsAbrirModalImagen')
 <script>
     function abrirImagen(valor){
-    var linkImagen = '<img src="/LoHagoPorVosLaravel/public/storage/perfiles/' + valor + '" width="100%" height="150px"> </img>';
+    var linkImagen = '<img src="{{asset("storage/perfiles")}}/' + valor + '" width="100%" height="150px"> </img>';
     $('.modal-body').html(linkImagen);
     $('#modalConfirmacion').modal("show");
     }
