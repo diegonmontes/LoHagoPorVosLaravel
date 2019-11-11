@@ -529,7 +529,12 @@ class TrabajoController extends Controller
         return redirect()->route('inicio')->with('success','Gracias por el trabajo realizado');
 
     }
-
+    public function buscarPersonaTrabajo(Request $request){
+        $idPersonaTrabajo=Trabajo::select('trabajo.idPersona')
+                            ->where('trabajoaspirante.idPersona','=',$request->idPersona)
+                            ->get();
+        return \json_encode($idPersonaTrabajo);
+    }
 
     public function  valor($idTrabajo){
         //buscamos el trabajo que la persona lo termino y espera que lo valoren

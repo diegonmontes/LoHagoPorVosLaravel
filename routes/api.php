@@ -43,6 +43,7 @@ Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
 Route::post('buscarComentarios','ComentarioController@buscarComentarios');
 Route::post('guardarComentario','ComentarioController@store');
+Route::post('buscarPersonaTrabajo','TrabajoController@buscarPersonaTrabajo');
 
 
 
