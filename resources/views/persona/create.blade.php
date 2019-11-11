@@ -28,20 +28,15 @@
 							<div class="card-body">
 									
 								<div class="form-group">
-									<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="" required placeholder="Usuario" autofocus>                                
+								<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="{{$usuario->nombreUsuario}}" required placeholder="Usuario" autofocus>                                
 									<span id="msgnombreUsuario" class="text-danger" role="alert"></span>
 								</div>
 	
 								<div class="form-group">
-									<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="" required autocomplete="mailUsuario" placeholder="Corre electrónico">
+									<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="{{$usuario->mailUsuario}}" required autocomplete="mailUsuario" placeholder="Corre electrónico">
 									<span id="msgmailUsuario" class="text-danger" role="alert"></span>
 								</div>
 	
-								<div class="form-group">
-									<input id="claveUsuario" type="password" class="form-control" name="claveUsuario" required placeholder="Contraseña">
-									<span id="msgclaveUsuario" class="text-danger" role="alert"></span>
-	
-								</div>
 	
 			
 								<button type="submit" class="btn btn-success btn-block inputBordes">Actualizar datos</button>
