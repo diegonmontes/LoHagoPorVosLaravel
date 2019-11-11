@@ -91,8 +91,10 @@ class ValoracionController extends Controller
             $listaTrabajoAspirante = json_decode($listaTrabajoAspirante);
             $trabajoAspirante = $listaTrabajoAspirante[0]; // Obtenemos el obj
             $request['idPersona'] = $trabajoAspirante->idPersona;
+            $valorandoCreador = true;
         } else { // Significa que el aspirante esta valorando al creador del anuncio
             $request['idPersona'] = $trabajo->idPersona;  // Seteamos al id persona del creador del anuncio
+            $valorandoCreador = false;
         }
 
 
@@ -141,8 +143,37 @@ class ValoracionController extends Controller
             $errores.= "Imagen ";
         }
         
-        if ($validoImagen && $validoComentario){ // Si estan valodado los dos campos
-            if (Valoracion::create($request->all())){ // Si crea la valoracion
+        if ($validoImagen && $validoComentario){ // Si estan validado los dos campos
+            
+            
+            try {
+                if($valorandoCreador){
+                    //Actualizamos el estado del trabajo a finalizado
+                    $trabajo->update(['idEstado'=>5]);
+                    //Creamos estadotrabajo con el estado en 5
+                    $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>5];
+                    $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+                    Estadotrabajo::create($requesEstadoTrabajo->all());
+                    Valoracion::create($request->all());
+                    $procsoExitoso = true;
+                }else{
+                    //Actualizamos el estado del trabajo a finalizado
+                    $trabajo->update(['idEstado'=>4]);
+                    //Creamos estadotrabajo con el estado en 4
+                    $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>4];
+                    $requesEstadoTrabajo = new Request($paramEstadotrabajo);
+                    Estadotrabajo::create($requesEstadoTrabajo->all());
+                    Valoracion::create($request->all());
+                    $procsoExitoso = true;
+
+                }
+            } catch (Exception $e) {
+                //report($e);
+        
+                $procsoExitoso = false;
+            }
+
+            if ($procsoExitoso){ // Si crea la valoracion
                 if ($usandoFlutter){ // Si esta en flutter
                     return $respuesta = ['success'=>true];
                 } else { // Si esta en laravel

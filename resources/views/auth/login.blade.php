@@ -6,16 +6,16 @@
         <div class="row h-100 justify-content-center align-items-center">
                 <div class="row">
                         @if(Session::has('error'))
-                                <div class="alert alert-info col-md-8">
-                                    {{Session::get('error')}}
-                                </div>
-                                @endif
-                                @if(Session::has('success'))
-                                <div class="alert alert-info col-md-3" style="position: absolute;z-index: 2;top: 30px;">
-                                    {{Session::get('success')}}
-                                </div>
-                            @endif
-                        </div>
+                            <div class="alert alert-info col-md-8">
+                                {{Session::get('error')}}
+                            </div>
+                        @endif
+                        @if(Session::has('success'))
+                            <div class="alert alert-info col-md-3" style="position: absolute;z-index: 2;top: 30px;">
+                                {{Session::get('success')}}
+                            </div>
+                        @endif
+                </div>
             <div class="col-md-4">
                 <form class="form-signin" method="POST" action="{{ route('login') }}">
                     @csrf

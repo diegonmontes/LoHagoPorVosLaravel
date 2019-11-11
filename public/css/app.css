@@ -16900,10 +16900,10 @@ Date picker
   width: max-content;
 }
 
-.navbar-nav {
+/* .navbar-nav {
   right: 0;
   position: absolute;
   margin-right: 3%;
-}
+} */
 
 }

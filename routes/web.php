@@ -156,7 +156,6 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
 
 
 
-Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
 
 Route::post('store','TrabajoasignadoController@store')->name('trabajoasignado.store')->middleware('auth','Mailvalidado','controlperfil');
 
@@ -183,6 +182,8 @@ Route::post('valorarpersona', 'ValoracionController@valorarpersona')->name('trab
 
 Route::post('comentario', 'ComentarioController@store')->name('comentario.store')->middleware('auth','Mailvalidado','controlperfil');
 Route::get('postularme/{id}','TrabajoaspiranteController@index')->name('postularme')->middleware('auth','controlperfil');
+Route::post('store','TrabajoaspiranteController@store')->name('trabajoaspirante.store')->middleware('auth','controlperfil');
+
 Route::get('postulantes/{id}','TrabajoController@postulantes')->name('anuncio.postulante')->middleware('auth','controlperfil');
 
 
