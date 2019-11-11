@@ -57,10 +57,11 @@ class TrabajoaspiranteController extends Controller
      */
     public function store(Request $request)
     {   
-        $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
-        $existe = Trabajoaspirante::where('idPersona','=',$request['idPersona'])->where('idTrabajo','=',$request['idTrabajo'])->get();
+        //Validamos los datos antes de guardar el elemento nuevo
+        $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); 
+        $existe = Trabajoaspirante::where('idPersona','=',$request['idPersona'])->where('idTrabajo','=',$request['idTrabajo'])->where('eliminado','=',0)->get();
         $success = false;
-        if(!count($existe)){
+        if(count($existe) < 1){
             $success = true;
             Trabajoaspirante::create($request->all()); //Creamos el elemento nuevo
         } 

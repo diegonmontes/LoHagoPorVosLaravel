@@ -192,4 +192,78 @@
 
 </div> --}}
 
+
+<div id="respuestaComentario" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Error al subir el comentario</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div id="msjError"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+@endsection
+
+@section('js')
+<script type="text/javascript">
+
+
+$(document).ready(function (e){
+    $(".formComentario").on('submit',(function(e){
+        e.preventDefault();
+        var comentarioPadre = $("#idComentarioPadre").val();
+        var idTrabajo = $("#idTrabajo").val();
+        var idUsuario = $("#idUsuario").val();
+        var contenido = $("#contenido").val();
+
+        var data={comentarioPadre:comentarioPadre,idTrabajo:idTrabajo,idUsuario:idUsuario,contenido:contenido};
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            url: "{{route('comentario.store')}}",
+            method: "POST",
+            data:new FormData(this),
+            dataType:'json',
+            contentType: false,
+            cache: false,
+            processData: false,
+            beforeSend: function() {
+                $(".subirComentario").attr("disabled",true);
+                $(".subirComentario").empty();
+                $(".subirComentario").append("Enviando...");
+            },
+            success: function(data){
+                $(".subirComentario").attr("disabled",false);
+                $(".subirComentario").empty();
+                $(".subirComentario").append("Enviar");
+                window.location = data.url
+            },
+            error: function(msg){
+                var errors = $.parseJSON(msg.responseText);
+                $("#msjError").empty();
+                $("#msjError").append("<p>"+errors.errors+"</p>")
+                $(".subirComentario").empty();
+                $(".subirComentario").append("Enviar");
+                $(".subirComentario").attr("disabled",false);
+                $("#respuestaComentario").modal("show");
+                
+            }                      
+        });
+    }));
+});
+</script>
+
+
 @endsection

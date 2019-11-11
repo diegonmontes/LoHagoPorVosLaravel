@@ -50,19 +50,41 @@ class ComentarioController extends Controller
      
             $success=Comentario::create($request->all());
         }else{
-            $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
-            $persona = Persona::where('idUsuario','=',$idUsuario)->get();
-            $idPersona=$persona[0]->idPersona;
 
-            $idTrabajo = $request->idTrabajo;
-            $trabajo = Trabajo::find($idTrabajo);
-            $comentario = new Comentario();
-            $comentario->contenido = $request->contenido;
-            $comentario->idComentarioPadre = $request->idComentarioPadre;
-            $comentario->idPersona = $idPersona;
-            $comentario->idTrabajo = $idTrabajo;
-    
-            $trabajo->Comentarios()->save($comentario);
+            $controlTexto = new Controller;
+            if($request->contenido == ''){
+                $respuesta = response()->json([
+                    'success'   => false,
+                    'errors'   =>  'Por favor escriba un comentario antes de enviar.'
+                    ], 422);
+            }else{
+                $correcto = $controlTexto->moderarTexto($request->contenido,1);
+                if($correcto){
+                    $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
+                    $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+                    $idPersona=$persona[0]->idPersona;
+
+                    $idTrabajo = $request->idTrabajo;
+                    $trabajo = Trabajo::find($idTrabajo);
+                    $comentario = new Comentario();
+                    $comentario->contenido = $request->contenido;
+                    $comentario->idComentarioPadre = $request->idComentarioPadre;
+                    $comentario->idPersona = $idPersona;
+                    $comentario->idTrabajo = $idTrabajo;
+            
+                    $trabajo->Comentarios()->save($comentario);
+                    $respuesta = response()->json([
+                        'url' => route('veranuncio', $idTrabajo),
+                        'success'   => true,
+                        'message'   => 'Se envio el comentario.'
+                    ],200);
+                }else{
+                    $respuesta = response()->json([
+                        'success'   => false,
+                        'errors'   =>  'Comentario con contenido indebido. Por favor cambielo.'
+                        ], 422);
+                }
+            }
         }
         if(isset($request['flutter'])&& $success){
             return $respuesta = ['success'=>true];
@@ -70,7 +92,7 @@ class ComentarioController extends Controller
             return $respuesta = ['success'=>false,
             'error'=>'Ha ocurrido un error'];
         }
-        return \redirect()->route('veranuncio', $idTrabajo);
+        return $respuesta;
     }
 
     public function edit($id)

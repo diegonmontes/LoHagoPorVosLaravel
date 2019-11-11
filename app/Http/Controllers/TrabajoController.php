@@ -460,19 +460,28 @@ class TrabajoController extends Controller
         $persona = $controlPersona->buscar($param);
         $persona = json_decode($persona);
         $idPersona = $persona[0]->idPersona;
+
         //Buscamos todos los trabajos que anuncio la persona que estan esperando postulaciones
         $paramTrabajos = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>1]);
         $listaTrabajos = $this->buscar($paramTrabajos);
         $listaTrabajos = json_decode($listaTrabajos);
+
         //Buscamos todos los trabajos que anuncio la persona que ya se puede evaluar las postulaciones
         $paramTrabajosEvaluar = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>2]);
         $listaTrabajosEvaluar = $this->buscar($paramTrabajosEvaluar);
         $listaTrabajosEvaluar = json_decode($listaTrabajosEvaluar);
+
         //Buscamos todos los trabajos que anuncio la persona que estan esperando la confirmacion
         $paramTrabajosTerminados = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>4]);
         $listaTrabajosTerminados = $this->buscar($paramTrabajosTerminados);
         $listaTrabajosTerminados = json_decode($listaTrabajosTerminados);
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar]);
+
+        //Buscamos todos los trabajos que anuncio la persona que estan cerradas
+        $paramTrabajosCerradas = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>5]);
+        $listaTrabajosCerradas = $this->buscar($paramTrabajosCerradas);
+        $listaTrabajosCerradas = json_decode($listaTrabajosCerradas);
+
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas]);
 
     }
 
@@ -487,12 +496,37 @@ class TrabajoController extends Controller
         $persona = $controlPersona->buscar($param);
         $persona = json_decode($persona);
         $idPersona = $persona[0]->idPersona;
+
+        //Con el idPersona buscamos los trabajos terminados por el
+        $listaTrabajosCerrados = Trabajoasignado::select('trabajoasignado.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
+                                                    ->join('pagorecibido','trabajo.idTrabajo','=','pagorecibido.idTrabajo')
+                                                    ->where('trabajoasignado.idPersona','=',$idPersona)
+                                                    ->where('trabajoasignado.eliminado','=',0)
+                                                    ->where('trabajo.eliminado','=',0)
+                                                    ->where('pagorecibido.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','=',5)
+                                                    ->get();
+
+        //Con el idPersona buscamos los trabajos terminados por el
+        $listaTrabajosTerminados = Trabajoasignado::select('trabajoasignado.idTrabajo')
+                                                    ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
+                                                    ->join('pagorecibido','trabajo.idTrabajo','=','pagorecibido.idTrabajo')
+                                                    ->where('trabajoasignado.idPersona','=',$idPersona)
+                                                    ->where('trabajoasignado.eliminado','=',0)
+                                                    ->where('trabajo.eliminado','=',0)
+                                                    ->where('pagorecibido.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','=',4)
+                                                    ->get();
+
         //Con el idPersona buscamos los trabajos asignados
         $listaTrabajosAsignados = Trabajoasignado::select('trabajoasignado.idTrabajo')
                                                     ->join('trabajo','trabajo.idTrabajo','=','trabajoasignado.idTrabajo')
                                                     ->join('pagorecibido','trabajo.idTrabajo','=','pagorecibido.idTrabajo')
                                                     ->where('trabajoasignado.idPersona','=',$idPersona)
                                                     ->where('trabajoasignado.eliminado','=',0)
+                                                    ->where('trabajo.eliminado','=',0)
+                                                    ->where('pagorecibido.eliminado','=',0)
                                                     ->where('trabajo.idEstado','=',3)
                                                     ->get();
       
@@ -501,12 +535,13 @@ class TrabajoController extends Controller
                                                     ->join('trabajo','trabajo.idTrabajo','=','trabajoaspirante.idTrabajo')
                                                     ->where('trabajoaspirante.idPersona','=',$idPersona)
                                                     ->where('trabajoaspirante.eliminado','=',0)
+                                                    ->where('trabajo.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','!=',3)
                                                     ->where('trabajo.idEstado','!=',4)
                                                     ->where('trabajo.idEstado','!=',5)
-
                                                     ->get();
            
-        return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante]);
+        return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosCerrados'=>$listaTrabajosCerrados]);
 
     }
 

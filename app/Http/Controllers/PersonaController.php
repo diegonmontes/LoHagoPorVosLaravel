@@ -45,9 +45,17 @@ class PersonaController extends Controller
         $provinciaController = new ProvinciaController();
         $categoriaTrabajoController = new CategoriaTrabajoController();
         $habilidadController = new HabilidadController();
+        $usuarioController = new UserController();
 
         $idUsuario = Auth::user()->idUsuario;
-        $laPersona = Persona::where('idUsuario','=',$idUsuario)->get();
+        //Buscamos el usuario
+        $paramBuscarUsuario = ['idUsuario'=>$idUsuario, 'eliminado'=>0];
+        $paramBuscarUsuario = new Request($paramBuscarUsuario);
+        $usuario = $usuarioController->buscar($paramBuscarUsuario);
+        $usuario = json_decode($usuario);
+        $usuario = $usuario[0];
+
+        $laPersona = Persona::where('idUsuario','=',$idUsuario)->where('eliminado','=',0)->get();
         $arregloBuscarHabilidadesSeleccionadas = ['eliminado'=>0];
         $arregloBuscarHabilidadesSeleccionadas = new Request($arregloBuscarHabilidadesSeleccionadas);
         $listaHabilidadesSeleccionadas = $habilidadPersonaController->buscar($arregloBuscarHabilidadesSeleccionadas);
@@ -61,8 +69,8 @@ class PersonaController extends Controller
             $persona = $laPersona[0];
             $existePersona = true;
             $idPersona=$persona->idPersona;
-            $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->get();
-            $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->get();
+            $listaHabilidadesSeleccionadas=HabilidadPersona::where('idPersona','=',$idPersona)->where('eliminado','=',0)->get();
+            $listaPreferenciasSeleccionadas=PreferenciaPersona::where('idPersona','=',$idPersona)->where('eliminado','=',0)->get();
         }else{
             $persona = new Persona;
             $existePersona = false;
@@ -83,7 +91,7 @@ class PersonaController extends Controller
         $categoriasTrabajo = $categoriaTrabajoController ->buscar($arregloBuscarCategorias);
         $categoriasTrabajo = json_decode($categoriasTrabajo);
 
-        return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
+        return view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas,'usuario'=>$usuario]);
     }
 
     /**

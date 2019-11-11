@@ -13,7 +13,7 @@ Para seguir con el registro primero debés validar tu correo electronico haciend
 <br>
 En caso que no funcione el boton copia y pega el siguiente enlace en tu navegador web
 <br>
-<a>{{ route('validarmail',[$auth_key,$id]) }}</a>
+<a href="{{ route('validarmail',[$auth_key,$id]) }}">{{ route('validarmail',[$auth_key,$id]) }}</a>
 <br>
 </body>
 
