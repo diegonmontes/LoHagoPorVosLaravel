@@ -16912,6 +16912,23 @@ Date picker
   max-width: 40px;
   height: auto;
   border-radius: 50%;
-  right: 0%;
 }
 
+.listaPostulantes{
+  text-align: end;
+}
+
+.listaPostulantesNombre{
+  left: 0%;
+  position: absolute;
+  margin-left: 10px;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+.listaPostulantesValoracion{
+  position: absolute;
+  margin-right: 50%; 
+  left: 50%; 
+  display: contents;
+}

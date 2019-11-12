@@ -356,6 +356,25 @@ class TrabajoController extends Controller
                                                     ->where('trabajoaspirante.eliminado','=',0)
                                                     ->get();
 
+        $valoracionController = new ValoracionController;
+        foreach($listaAspirantes as $aspirante){
+            $idPersona = $aspirante->idPersona;
+            $listaValoracionRequest = new Request(['idPersona'=>$idPersona,'eliminado'=>0]);
+            $listaValoracion = $valoracionController->buscar($listaValoracionRequest);
+            $listaValoracion = json_decode($listaValoracion);
+            $valorMaximo = 0;
+            $cantValoraciones = count($listaValoracion);
+            foreach($listaValoracion as $valoracion){
+                $valorMaximo = $valorMaximo + $valoracion->valor;
+            }
+            if($cantValoraciones == 0){
+                $aspirante['valoracion'] = 0;    
+            }else{
+                $aspirante['valoracion'] = round($valorMaximo/$cantValoraciones);
+            }
+        }
+
+
         //Listamos los trabajos para mostrar en un carousel
         $listaTrabajo = Trabajo::all();
 
@@ -374,8 +393,28 @@ class TrabajoController extends Controller
         $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona
         $persona = Persona::where('idUsuario','=',$idUsuario)->get();
         $listaPostulantes = array();
+
+        
         if($trabajo->idPersona == $persona[0]->idPersona){
             $listaPostulantes = Trabajoaspirante::where('idTrabajo','=',$idTrabajo)->where('eliminado','=',0)->get();
+        }
+
+        $valoracionController = new ValoracionController;
+        foreach($listaPostulantes as $aspirante){
+            $idPersona = $aspirante->idPersona;
+            $listaValoracionRequest = new Request(['idPersona'=>$idPersona,'eliminado'=>0]);
+            $listaValoracion = $valoracionController->buscar($listaValoracionRequest);
+            $listaValoracion = json_decode($listaValoracion);
+            $valorMaximo = 0;
+            $cantValoraciones = count($listaValoracion);
+            foreach($listaValoracion as $valoracion){
+                $valorMaximo = $valorMaximo + $valoracion->valor;
+            }
+            if($cantValoraciones == 0){
+                $aspirante['valoracion'] = 0;    
+            }else{
+                $aspirante['valoracion'] = round($valorMaximo/$cantValoraciones);
+            }
         }
 
         return view('anuncio.postulantes',['trabajo'=>$trabajo,'listaPostulantes'=>$listaPostulantes]);

@@ -121,7 +121,12 @@
                                 @foreach($listaAspirantes as $aspirante)
                                     @php $usuario = $aspirante->Persona->Usuario @endphp
                                     @php $fotoPerfil = $aspirante->Persona->imagenPerfil @endphp
-                                    <li class="list-group-item">{{$usuario->nombreUsuario}}
+                                    <li class="list-group-item listaPostulantes"><label class="listaPostulantesNombre">{{$usuario->nombreUsuario}}</label>
+                                        <label class="listaPostulantesValoracion">
+                                            @for($i=0;$i<$aspirante->valoracion;$i++)
+                                                <span class="fa fa-star icon"></span>
+                                            @endfor
+                                        </label>
                                         <img  class="imagenListaPostulante" src="
                                             @if($fotoPerfil != null)
                                                 {{ asset('storage/perfiles/'.$fotoPerfil)}}
