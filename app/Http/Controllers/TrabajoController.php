@@ -565,7 +565,9 @@ class TrabajoController extends Controller
         $listaTrabajosCerradas = $this->buscar($paramTrabajosCerradas);
         $listaTrabajosCerradas = json_decode($listaTrabajosCerradas);
 
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas]);
+        $categoriaTrabajo = new CategoriaTrabajo;
+
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
 
     }
 
@@ -625,7 +627,8 @@ class TrabajoController extends Controller
                                                     ->where('trabajo.idEstado','!=',5)
                                                     ->get();
            
-        return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosCerrados'=>$listaTrabajosCerrados]);
+        $categoriaTrabajo = new CategoriaTrabajo;                                           
+        return view('anuncio.mispostulaciones',['listaTrabajosAsignados'=>$listaTrabajosAsignados,'listaTrabajosAspirante'=>$listaTrabajosAspirante,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosCerrados'=>$listaTrabajosCerrados,'categoriaTrabajo'=>$categoriaTrabajo]);
 
     }
 
