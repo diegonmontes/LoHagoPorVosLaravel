@@ -54,7 +54,8 @@ Route::get('/', function () {
             $param=['idPersonaDistinto'=>$idPersona,'eliminado'=>0,'idEstado'=>1];
             $trabajoController = new TrabajoController();
             $param = new Request($param);
-            $listaTrabajos =$trabajoController->buscar($param);
+            //$listaTrabajos =$trabajoController->buscar($param);
+            $listaTrabajos =$trabajoController->ordenarTrabajosInicio($param);
             $listaTrabajos = json_decode($listaTrabajos);
             foreach ($listaTrabajos as $trabajo){
                 if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){

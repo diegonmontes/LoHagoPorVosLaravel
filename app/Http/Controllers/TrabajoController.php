@@ -444,6 +444,43 @@ class TrabajoController extends Controller
    
     }
 
+    // Ordenamos los trabajos para mostrar en el inicio que muestre primero los preferencias que la persona eligio
+    public function ordenarTrabajosInicio(request $request){
+        $preferenciaPersonaController = new PreferenciaPersonaController();
+
+        $arregloTrabajosPreferencia = array();
+        
+        $idPersona = $request->idPersonaDistinto; // Obtenemos el Id Persona para obtener sus preferencias
+        $arregloBuscarPreferenciaPersona = ['idPersona'=>$idPersona];
+        $arregloBuscarPreferenciaPersona = new Request($arregloBuscarPreferenciaPersona);
+        $listaPreferenciaPersona = $preferenciaPersonaController->buscar($arregloBuscarPreferenciaPersona);
+        $listaPreferenciaPersona = json_decode($listaPreferenciaPersona);
+
+        // Buscamos la lista de todos los trabajos ordenados por su id, independientemente de la categoria
+        $listaTrabajoDesordenada = $this->buscar($request);
+        $listaTrabajoDesordenada = json_decode($listaTrabajoDesordenada);
+
+        // Vamos a generar 2 arreglos, 1 con sus preferencias, y otro sin ellas
+        foreach($listaTrabajoDesordenada as $clave => $trabajo){
+            $i=0; // Inicializamos contador en 0
+            $encontrado=false;
+            while ($i<count($listaPreferenciaPersona) && $encontrado==false){ // contador menor a cantidad de prefencias de la persona y no haya encontrado esa categoria dentro de sus preferencias
+                if ($trabajo->idCategoriaTrabajo == $listaPreferenciaPersona[$i]->idCategoriaTrabajo){
+                    $encontrado=true;
+                    array_push($arregloTrabajosPreferencia,$trabajo); // Seteamos este trabajo en el arreglo de trabajos que prefiere ver primero
+                    unset($listaTrabajoDesordenada[$clave]); // Deseteamos el trabajo del arreglo general
+                }
+                $i++;
+            }
+        }
+
+        if (count($arregloTrabajosPreferencia)>0){ // Si existen trabajos con sus preferencias
+            shuffle($arregloTrabajosPreferencia); // Los mezclamos de forma aleatorio
+        }
+        $listaTrabajos = array_merge($arregloTrabajosPreferencia,$listaTrabajoDesordenada); // Unimos los 2 arreglos
+        return json_encode($listaTrabajos);
+    }
+
     public function show($id)
     {
         //

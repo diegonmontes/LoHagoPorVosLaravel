@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="form-group">
-                                <input id="mailUsuario" type="email" class="form-control redondearInput fondoInput @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" placeholder="Corre electrónico">
+                                <input id="mailUsuario" type="email" class="form-control redondearInput fondoInput @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" placeholder="Correo electrónico">
                                 <span id="msgmailUsuario" class="text-danger" role="alert"></span>
                             </div>
 
