@@ -51,22 +51,12 @@ box-shadow: 0px 0px 10px 0px rgba(154,61,182,1);
                             
                         <img style="border-radius: 50%; width: 200px; height: 200px" src="@if($persona->imagenPersona != null){{ asset('storage/perfiles/'.$persona->imagenPersona)}}@else{{asset('images/fotoPerfil.png')}}@endif" alt="" class="img-circle img-responsive">
                         <figcaption class="ratings">
-                            <p>Calificación
-                            <a href="#">
-                                <span class="fa fa-star"></span>
-                            </a>
-                            <a href="#">
-                                <span class="fa fa-star"></span>
-                            </a>
-                            <a href="#">
-                                <span class="fa fa-star"></span>
-                            </a>
-                            <a href="#">
-                                <span class="fa fa-star"></span>
-                            </a>
-                            <a href="#">
-                                <span class="fa fa-star-o"></span>
-                            </a> 
+                            <p>
+                            @for($i=0;$i<$postulante->valoracion;$i++)
+                                <a href="#">
+                                    <span class="fa fa-star"></span>
+                                </a>
+                            @endfor
                             </p>
                         </figcaption>
                     </figure>
