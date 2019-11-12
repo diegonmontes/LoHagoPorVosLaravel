@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang='es'>
-<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
     <title>Confirmacion de anuncio realizado</title>
     <style type="text/css">
         .im {

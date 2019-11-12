@@ -133,7 +133,6 @@ class ValoracionController extends Controller
         } else { // Significa que no ingreso ningun comentario
             $validoComentario = true;
         }
-        
         $errores="";
         if (!($validoComentario)){
             $errores.="Comentario ";
@@ -322,6 +321,12 @@ class ValoracionController extends Controller
                 $query->where("valoracion.eliminado",$param->eliminado);
             }
 
+            if (isset($param->idPersonaLogeada)){
+                $query->where("valoracion.idPersona",'!=',$param->idPersonaLogeada);
+            }
+
+
+
             $listaValoraciones=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaValoraciones);
     }
@@ -362,6 +367,7 @@ class ValoracionController extends Controller
     {
         //Validamos los datos antes de guardar el elemento nuevo
         $this->validate($request,[ 'valor'=>'required', 'idTrabajo'=>'required']);
+        //return "jaja";
         
         $idTrabajo = $request->idTrabajo;
         $trabajoController = new TrabajoController();

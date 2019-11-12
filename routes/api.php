@@ -38,7 +38,7 @@ Route::post('datosPersona', 'PersonaController@buscar');
 
 /** APIs de Trabajo persona */
 Route::post('storeTrabajo','TrabajoController@store');
-Route::post('listarTrabajos','TrabajoController@buscar');
+Route::post('listarTrabajosInicio','TrabajoController@ordenarTrabajosInicio');
 Route::post('detalleTrabajo','TrabajoController@buscarTrabajoParam');
 Route::post('historialTrabajos','TrabajoController@buscar');
 Route::post('buscarComentarios','ComentarioController@buscarComentarios');

@@ -223,6 +223,7 @@ class TrabajoaspiranteController extends Controller
                                                     ->join('trabajo','trabajo.idTrabajo','=','trabajoaspirante.idTrabajo')
                                                     ->where('trabajoaspirante.idPersona','=',$idPersona)
                                                     ->where('trabajoaspirante.eliminado','=',0)
+                                                    ->where('trabajo.idEstado','!=',3)
                                                     ->where('trabajo.idEstado','!=',4)
                                                     ->where('trabajo.idEstado','!=',5)
                                                     ->get();

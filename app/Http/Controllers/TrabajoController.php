@@ -947,9 +947,9 @@ class TrabajoController extends Controller
     // Aca llama a la funcion que va a enviar el mail para que confirme si el trabajo se hizo bien
     public function enviarMailConfirmarTrabajo (request $request){
         // Hacemos la creacion de los objs controladores
-        $trabajoAsignadoController = new TrabajoasignadoController();
-        $personaController = new PersonaController();
-        $usuarioController = new UserController();
+        $trabajoAsignadoController = new TrabajoasignadoController;
+        $personaController = new PersonaController;
+        $usuarioController = new UserController;
         
         $idTrabajo = $request->idTrabajo; // Obtenemos el id del trabajo para buscar el trabajo 
 
@@ -975,7 +975,7 @@ class TrabajoController extends Controller
         $listaTrabajoAsignado = $trabajoAsignadoController->buscar($arregloBuscarTrabajoAsignado);
         $listaTrabajoAsignado = json_decode($listaTrabajoAsignado);
         $objTrabajoAsignado = $listaTrabajoAsignado[0]; // Obtenemos el trabajo asignado
-
+        
         // Obtenemos el idPersona de la persona asignada del trabajo
 
         $idPersonaAsignado = $objTrabajoAsignado->idPersona;

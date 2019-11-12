@@ -154,7 +154,6 @@ class TrabajoasignadoController extends Controller
             if (isset($param->eliminado)){
                 $query->where("trabajoasignado.eliminado",$param->eliminado);
             }
-
             $listaTrabajoAsignado=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaTrabajoAsignado);
     }
