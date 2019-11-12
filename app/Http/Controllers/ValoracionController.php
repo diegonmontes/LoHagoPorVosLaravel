@@ -70,7 +70,7 @@ class ValoracionController extends Controller
             
         if (isset($request['flutter']) && $request['flutter']==true){ // Significa que la peticion viene desde flutter
             $usandoFlutter = true; // Si viene de flutter, seteamos a true
-            $idPersonaLogeada = $request->idPersona;  
+            $idPersonaLogeada = $request->idPersonaLogeada;  
         } else { // Significa que esta en laravel y obtenemos el id persona
             $personaController = new PersonaController();
             $idUsuario = Auth::user()->idUsuario; // Obtenemos el id usuario para obtener el id persona

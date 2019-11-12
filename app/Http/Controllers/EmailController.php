@@ -92,7 +92,7 @@ class EmailController extends Controller
 
     // Mail que se envia despues de que el asignado pone 'finalice mi trabajo' Es decir, pasa al estado 4
     // Mail que se envia al anunciante para que confirme que el trabajo se hizo correctamente
-    public function enviarMailConfirmarTrabajo($objUsuarioAsignado,$objPersonaAsignado,$objTrabajo,$objPersonaCreador){
+    public function enviarMailConfirmarTrabajo($objUsuarioCreador,$objPersonaAsignado,$objTrabajo,$objPersonaCreador){
 
         $dato = [
             'nombrePersonaAsignada' => $objPersonaAsignado->nombrePersona,
@@ -107,7 +107,7 @@ class EmailController extends Controller
 
        
         $subject = "Confirmar que se ha hecho el anuncio";
-        $for = "$objUsuarioAsignado->mailUsuario";
+        $for = "$objUsuarioCreador->mailUsuario";
         Mail::send('email/confirmaranuncioterminado',$dato, function($msj) use($subject,$for){
             $msj->from('lohagoporvosservicios@gmail.com',"Lo hago por vos");
             $msj->subject($subject);

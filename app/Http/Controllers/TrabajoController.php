@@ -990,15 +990,15 @@ class TrabajoController extends Controller
 
         // Obtenemos el usuario de la persona asignada del trabajo (en ella esta su mail)
     
-        $idUsuarioAsignado = $objPersonaAsignado->idUsuario;
-        $arregloBuscarUsuarioAsignado = ['idUsuario'=>$idUsuarioAsignado];
-        $arregloBuscarUsuarioAsignado = new Request($arregloBuscarUsuarioAsignado);
-        $listaUsuarioAsignado = $usuarioController->buscar($arregloBuscarUsuarioAsignado);
-        $listaUsuarioAsignado = json_decode($listaUsuarioAsignado);
-        $objUsuarioAsignado = $listaUsuarioAsignado[0];
+        $idUsuarioCreador = $objPersonaCreador->idUsuario;
+        $arregloBuscarUsuarioCreador = ['idUsuario'=>$idUsuarioCreador];
+        $arregloBuscarUsuarioCreador = new Request($arregloBuscarUsuarioCreador);
+        $listaUsuarioCreador = $usuarioController->buscar($arregloBuscarUsuarioCreador);
+        $listaUsuarioCreador = json_decode($listaUsuarioCreador);
+        $objUsuarioCreador = $listaUsuarioCreador[0];
 
         $mail = new EmailController;
-        if ($mail->enviarMailConfirmarTrabajo($objUsuarioAsignado,$objPersonaAsignado,$objTrabajo,$objPersonaCreador)){
+        if ($mail->enviarMailConfirmarTrabajo($objUsuarioCreador,$objPersonaAsignado,$objTrabajo,$objPersonaCreador)){
             $respuesta = true;
         } else {
             $respuesta = false;
