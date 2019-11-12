@@ -14,9 +14,14 @@
                 <h5 class="card-title">{{ucfirst($trabajo->titulo)}}</h5>
              <hr>
              @if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == '')
-                @php $imagen = $trabajo->CategoriaTrabajo['imagenCategoriaTrabajo']; $nombreImagen = $trabajo->CategoriaTrabajo['nombreCategoriaTrabajo'] @endphp
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
 
-                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagen" )}}" alt="{{$nombreImagen}}">
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
                 <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajo->imagenTrabajo}}">

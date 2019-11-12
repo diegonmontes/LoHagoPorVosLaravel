@@ -57,14 +57,9 @@ Route::get('/', function () {
             //$listaTrabajos =$trabajoController->buscar($param);
             $listaTrabajos =$trabajoController->ordenarTrabajosInicio($param);
             $listaTrabajos = json_decode($listaTrabajos);
-            foreach ($listaTrabajos as $trabajo){
-                if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
-                    $categoriaTrabajo = new CategoriaTrabajo;
-                    $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
-                    $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
-                }
-            }
-            $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
+            $categoriaTrabajo = new CategoriaTrabajo;
+
+            $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo]);
 
         }
     }else{
@@ -74,14 +69,8 @@ Route::get('/', function () {
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);
         $listaTrabajos = json_decode($listaTrabajos);
-        foreach ($listaTrabajos as $trabajo){
-            if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == ''){
-                $categoriaTrabajo = new CategoriaTrabajo;
-                $categoria = $categoriaTrabajo::find($trabajo->idCategoriaTrabajo);
-                $trabajo->imagenTrabajo = $categoria->imagenCategoriaTrabajo;
-            }
-        }
-        $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos]);
+        $categoriaTrabajo = new CategoriaTrabajo;
+        $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo]);
     }
     return $pagina;
 })->name('inicio');
