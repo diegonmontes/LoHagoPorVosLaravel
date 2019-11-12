@@ -160,6 +160,7 @@ class TrabajoaspiranteController extends Controller
         $localidadController= new LocalidadController;
         $habilidadPersonaController= new HabilidadPersonaController;
         $habilidadController= new HabilidadController;
+        $valoracionController= new ValoracionController;
         //$i=0;
         foreach($listaTrabajoAspirantes as $aspirante){
             //busco obj persona
@@ -173,6 +174,10 @@ class TrabajoaspiranteController extends Controller
             $requestLocalidad= new Request($requestLocalidad);
             $localidad= $localidadController->buscar($requestLocalidad);
             $localidad=\json_decode($localidad);
+            //busco las valoraciones de esa persona
+            $valoracion=$valoracionController->promedioValoraciones($persona);
+            $valoracion=\json_decode($valoracion);
+            //print_r($valoracion);
             //busco la lista de habilidades de esa persona
             $habilidadesPersona= $habilidadPersonaController->buscar($persona);
             $habilidadesPersona=\json_decode($habilidadesPersona);
@@ -198,6 +203,7 @@ class TrabajoaspiranteController extends Controller
             $habilidad3=\json_decode($habilidad3);
             //asigno los objetos buscados a sus respectivos parametros
             $unAspirante[0]->idLocalidad=$localidad;
+            $unAspirante[0]->valoracion=$valoracion;
             $unAspirante[0]->habilidades=$habilidadesPersona;
             $unAspirante[0]->habilidades[0]->idHabilidad=$habilidad1;
             $unAspirante[0]->habilidades[1]->idHabilidad=$habilidad2;

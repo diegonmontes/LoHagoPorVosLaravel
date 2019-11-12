@@ -89,4 +89,4 @@ Route::post('postularme','TrabajoaspiranteController@store');
 Route::post('enviarValoracion','ValoracionController@store');
 Route::post('buscarValoracionTrabajo','ValoracionController@buscar');
 Route::post('buscarDatosPostulacion','TrabajoasignadoController@buscarDatosPostulacion');
-
+Route::post('promedioValoraciones','ValoracionController@promedioValoraciones');
