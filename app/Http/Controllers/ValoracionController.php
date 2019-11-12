@@ -155,7 +155,12 @@ class ValoracionController extends Controller
                     $requesEstadoTrabajo = new Request($paramEstadotrabajo);
                     Estadotrabajo::create($requesEstadoTrabajo->all());
                     Valoracion::create($request->all());
-                    $procsoExitoso = true;
+                    $procesoExitoso = true;
+                    // Si esta todo bien, enviamos el mail al asignado confirmandole que ya se completaron todos los pasos y se le va a liberar el pago
+                    $requestIdTrabajo = ['idTrabajo'=>$idTrabajo];
+                    $requestIdTrabajo = new Request($requestIdTrabajo);
+                    $trabajoAsignadoController = new TrabajoasignadoController;
+                    $trabajoAsignadoController->enviarMailFinalizado($requestIdTrabajo);
                 }else{
                     //Actualizamos el estado del trabajo a finalizado
                     $trabajo->update(['idEstado'=>4]);
@@ -164,16 +169,20 @@ class ValoracionController extends Controller
                     $requesEstadoTrabajo = new Request($paramEstadotrabajo);
                     Estadotrabajo::create($requesEstadoTrabajo->all());
                     Valoracion::create($request->all());
-                    $procsoExitoso = true;
-
+                    $procesoExitoso = true;
+                    // Si esta todo bien, le mandamos un mail al anunciante para que confirme que se realizo el trabajo
+                    $requestIdTrabajo = ['idTrabajo'=>$idTrabajo];
+                    $requestIdTrabajo = new Request($requestIdTrabajo);
+                    $trabajoController = new TrabajoController();
+                    $trabajoController->enviarMailConfirmarTrabajo($requestIdTrabajo);
                 }
             } catch (Exception $e) {
                 //report($e);
         
-                $procsoExitoso = false;
+                $procesoExitoso = false;
             }
 
-            if ($procsoExitoso){ // Si crea la valoracion
+            if ($procesoExitoso){ // Si crea la valoracion
                 if ($usandoFlutter){ // Si esta en flutter
                     return $respuesta = ['success'=>true];
                 } else { // Si esta en laravel

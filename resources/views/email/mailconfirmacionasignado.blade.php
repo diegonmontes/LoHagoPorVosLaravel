@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang='es'>
-<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>"
+<head><meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
     <title>¡Se te ha asignado un anuncio!</title>
     <style type="text/css">
         .im {
