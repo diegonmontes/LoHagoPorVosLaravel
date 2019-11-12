@@ -623,9 +623,10 @@ class TrabajoController extends Controller
 
     }
     public function buscarPersonaTrabajo(Request $request){
-        $idPersonaTrabajo=Trabajo::select('trabajo.idPersona')
-                            ->where('trabajoaspirante.idPersona','=',$request->idPersona)
-                            ->get();
+        $trabajoController= new TrabajoController;
+        $trabajo= $trabajoController->buscar($request);
+        $objTrabajo= json_decode($trabajo);
+        $idPersonaTrabajo= $objTrabajo[0]->idPersona;
         return \json_encode($idPersonaTrabajo);
     }
 

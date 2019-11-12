@@ -410,4 +410,22 @@ class ValoracionController extends Controller
                  
     }
 
+    public function promedioValoraciones(Request $request){
+        $listaValoraciones= $this->buscar($request);
+        $listaValoraciones= json_decode($listaValoraciones);
+        $valoracionTotal=0;
+        foreach($listaValoraciones as $valoracion){
+            $valoracionTotal=$valoracionTotal + $valoracion->valor;
+        }
+        if(count($listaValoraciones)==0){
+            $valorRedondeado=0.0;
+        }else{
+            $valoracionPromedio= $valoracionTotal/count($listaValoraciones);
+            $valorRedondeado= \round($valoracionPromedio);
+        }
+        
+        return json_encode($valorRedondeado);
+    }
+
+
 }
