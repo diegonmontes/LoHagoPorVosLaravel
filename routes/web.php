@@ -202,4 +202,7 @@ Route::get('trabajoaspirante/{id}/editpanel','TrabajoaspiranteController@editpan
 
 Route::resource('usuario', 'UserController');
 
+Route::post('actualizar', 'UserController@actualizarUsuario')->name('actualizar')->middleware('auth','controlperfil','Mailvalidado');
+
+Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name('actualizarClaveNueva')->middleware('auth','controlperfil','Mailvalidado');
 

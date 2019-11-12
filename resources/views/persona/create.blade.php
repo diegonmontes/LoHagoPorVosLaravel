@@ -18,31 +18,33 @@
 			@if($existePersona)
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-8">
-
-					<form id="formRegistro" method="POST" action="{{ route('register') }}">
-						{{ csrf_field() }}
 						<div class="card">
 							<div class="card-header">
 								<h4>Mis datos de usuario</h4>
 							</div>
 							<div class="card-body">
-									
-								<div class="form-group">
-								<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="{{$usuario->nombreUsuario}}" required placeholder="Usuario" autofocus>                                
-									<span id="msgnombreUsuario" class="text-danger" role="alert"></span>
+								
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+										<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="{{$usuario->nombreUsuario}}" required placeholder="Usuario" autofocus readonly>                                
+											<span id="msgnombreUsuario" class="text-danger" role="alert"></span>
+										</div>
+									</div>
+								
+									<div class="col-xs-12 col-sm-12 col-md-6">
+										<div class="form-group">
+											<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="{{$usuario->mailUsuario}}" required autocomplete="mailUsuario" placeholder="Corre electrónico" readonly>
+											<span id="msgmailUsuario" class="text-danger" role="alert"></span>
+										</div>
+									</div>
 								</div>
 	
-								<div class="form-group">
-									<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="{{$usuario->mailUsuario}}" required autocomplete="mailUsuario" placeholder="Corre electrónico">
-									<span id="msgmailUsuario" class="text-danger" role="alert"></span>
-								</div>
-	
-	
-			
-								<button type="submit" class="btn btn-success btn-block inputBordes">Actualizar datos</button>
-							</div>
-					</form>
+								<button id="actualizarMail" class="btn btn-success btn-block inputBordes">Actualizar datos</button>
+								<br>
+								<button id="actualizarClave" class="btn btn-success btn-block inputBordes">Cambiar contraseña</button>
 
+							</div>
 				</div>
 			</div>
 
@@ -291,6 +293,123 @@
                 </div>
             </div>
 		</div>
+
+
+
+
+		<!-- Modal actualizar mail -->
+		<div id="actualizarMailModal" data-backdrop="static" data-keyboard="false" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">
+							Actualizar datos
+						</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="content align-content-center align-self-center">
+
+					</div>
+					<div class="content">
+						<form id="formRegistro" method="POST"  action="{{ route('actualizar') }}">
+							{{ csrf_field() }}
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-xs-12 col-sm-12 col-md-6">
+											<div class="form-group">
+											<label>USUARIO</label>
+											<input id="nombreUsuario" type="text" class="form-control" name="nombreUsuario" value="{{$usuario->nombreUsuario}}" required placeholder="Usuario" autofocus>                                
+												<span id="msgnombreUsuario" class="text-danger" role="alert"></span>
+											</div>
+										</div>
+									
+										<div class="col-xs-12 col-sm-12 col-md-6">
+											<div class="form-group">
+												<label>MAIL</label>
+												<input id="mailUsuario" type="email" class="form-control" name="mailUsuario" value="{{$usuario->mailUsuario}}" required autocomplete="mailUsuario" placeholder="Corre electrónico" >
+												<span id="msgmailUsuario" class="text-danger" role="alert"></span>
+											</div>
+										</div>
+
+										<div class="col-xs-12 col-sm-12 col-md-12">
+											<div class="form-group">
+												<label>Ingrese la contraseña actual</label>
+												<input id="claveUsuario" type="password" class="form-control" name="claveUsuario" required  placeholder="Contraseña" >
+												<span id="msgmailUsuario" class="text-danger" role="alert"></span>
+											</div>
+										</div>
+									</div>
+									<button type="submit" class="btn btn-success btn-block inputBordes">Actualizar datos</button>
+								</div>
+							</div>
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Modal actualizar contraseña -->
+		<div id="actualizarClaveModal" data-backdrop="static" data-keyboard="false" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">
+								Actualizar contraseña
+							</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="content align-content-center align-self-center">
+	
+						</div>
+						<div class="content">
+							<form id="formClaveNueva" method="POST"  action="{{ route('actualizarClaveNueva') }}">
+								{{ csrf_field() }}
+								<div class="card">
+									<div class="card-body">
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12">
+												<div class="form-group">
+												<label>CONTRASEÑA ACTUAL</label>
+												<input id="claveUsuario" type="password" class="form-control" name="claveUsuario" required placeholder="Contraseña actual" autofocus>                                
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12">
+												<div class="form-group">
+													<label>CONTRASEÑA NUEVA</label>
+													<input id="claveNueva" type="password" class="form-control" name="claveNueva" require placeholder="Contraseña nueva" >
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-12 col-md-12">
+												<div class="form-group">
+													<label>REPETIR CONTRASEÑA NUEVA</label>
+													<input id="claveNuevaRepetida" type="password" class="form-control" name="claveNuevaRepetida" required  placeholder="Repetir contraseña" >
+												</div>
+											</div>
+										</div>
+										<button type="submit" class="btn btn-success btn-block inputBordes">Actualizar contraseña</button>
+									</div>
+								</div>
+							</form>
+	
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+
     </section>
 @endsection
 
@@ -539,6 +658,167 @@
 		}));
 	});
 </script>
+@if($existePersona)
+
+
+<script type="text/javascript">
+
+$("#actualizarMail").on("click",function(){
+	$("#actualizarMailModal").modal("show");
+})
+
+$("#actualizarClave").on("click",function(){
+	$("#actualizarClaveModal").modal("show");
+})
+</script>
+
+<script type="text/javascript">
+
+$(document).ready(function (e){
+	$("#formRegistro").on('submit',(function(e){
+		e.preventDefault();
+		var nombreUsuario = $("#nombreUsuario").val();
+		var mailUsuario = $("#mailUsuario").val();
+		var claveUsuario = $("#claveUsuario").val(); 
+	
+		var data={nombreUsuario:nombreUsuario,mailUsuario:mailUsuario,claveUsuario:claveUsuario};
+		$.ajax({
+			headers: {
+				'X-CSRF-TOKEN': "{{ csrf_token() }}"
+			},
+			url: "{{ route('actualizar') }}",
+			method: "POST",
+			data:new FormData(this),
+			dataType:'json',
+			contentType: false,
+			cache: false,
+			processData: false,
+			beforeSend: function() {
+				//Cerramos el modal de actualizar datos
+				$("#actualizarMailModal").modal("hide");
+				//Quitamos el boton cerrar
+				$('.botonCerrar').empty();
+				//Quitamos el mensaje
+				$('#mensaje').empty();
+				//Quitamos el titulo y agregamos uno nuevo
+				$('.tituloModal').empty();
+				$('.tituloModal').append('Cargando datos ...')
+				//Agregamos el icono de carga
+				$('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
+				//Abrimos el modal
+				$('#loadingPersona').modal('show');
+			},
+			success: function(data){
+				//Quitamos el boton cerrar
+				$('.botonCerrar').empty();
+				//Quitamos el icono de carga
+				$('#cargando').empty();
+				//Quitamos el titulo y agregamos uno nuevo
+				$('.tituloModal').empty();
+				$('.tituloModal').append('<p>Datos actualizados exitosamente.<p>');
+				//Quitamos el mensaje y agremaos uno nuevo
+				$('#mensaje').empty();
+				$('#mensaje').append('<br><h5 style="margin-left: 3%">La pagina se redireccionara en 3 segundos...</h5><br>');
+				//Dejamos el modal abierto 3 segundos
+				setTimeout(function(){
+					$('#loadingPersona').modal('hide');
+					window.location = data.url
+				},3000);
+			},
+			error: function(msg){
+				var errors = $.parseJSON(msg.responseText);
+
+				//Quitamos el titulo y agregamos uno nuevo
+				$('.tituloModal').empty();
+				$('.tituloModal').append('Error al actualizar los datos');
+				//Quitamso el icono de carga
+				$('#cargando').empty();
+				//Agregamos un mensaje
+				$('#mensaje').append('<br><h5 style="margin-left: 3%">'+errors.errors+'</h5><br>');
+				//Agregamos el boton cerrar
+				$('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+				
+				
+			}                      
+		});
+	}));
+});
+</script>
+
+
+<script type="text/javascript">
+
+	$(document).ready(function (e){
+		$("#formClaveNueva").on('submit',(function(e){
+			e.preventDefault();
+			var claveUsuario = $("#claveUsuario").val();
+			var claveNueva = $("#claveNueva").val();
+			var claveNuevaRepetida = $("#claveNuevaRepetida").val(); 
+		
+			var data={claveUsuario:claveUsuario,claveNueva:claveNueva,claveNuevaRepetida:claveNuevaRepetida};
+			$.ajax({
+				headers: {
+					'X-CSRF-TOKEN': "{{ csrf_token() }}"
+				},
+				url: "{{ route('actualizarClaveNueva') }}",
+				method: "POST",
+				data:new FormData(this),
+				dataType:'json',
+				contentType: false,
+				cache: false,
+				processData: false,
+				beforeSend: function() {
+					//Cerramos el modal de actualizar datos
+					$("#actualizarClaveModal").modal("hide");
+					//Quitamos el boton cerrar
+					$('.botonCerrar').empty();
+					//Quitamos el mensaje
+					$('#mensaje').empty();
+					//Quitamos el titulo y agregamos uno nuevo
+					$('.tituloModal').empty();
+					$('.tituloModal').append('Cargando datos ...')
+					//Agregamos el icono de carga
+					$('#cargando').append('<p><div class="lds-ring"><div></div><div></div><div></div><div></div></div></p>');
+					//Abrimos el modal
+					$('#loadingPersona').modal('show');
+				},
+				success: function(data){
+					//Quitamos el boton cerrar
+					$('.botonCerrar').empty();
+					//Quitamos el icono de carga
+					$('#cargando').empty();
+					//Quitamos el titulo y agregamos uno nuevo
+					$('.tituloModal').empty();
+					$('.tituloModal').append('<p>Contraseña actualizados exitosamente.<p>');
+					//Quitamos el mensaje y agremaos uno nuevo
+					$('#mensaje').empty();
+					$('#mensaje').append('<br><h5 style="margin-left: 3%">Debera iniciar sesión con la contraseña nueva. La pagina se redireccionara en 3 segundos...</h5><br>');
+					//Dejamos el modal abierto 3 segundos
+					setTimeout(function(){
+						$('#loadingPersona').modal('hide');
+						window.location = data.url
+					},3000);
+				},
+				error: function(msg){
+					var errors = $.parseJSON(msg.responseText);
+	
+					//Quitamos el titulo y agregamos uno nuevo
+					$('.tituloModal').empty();
+					$('.tituloModal').append('Error al actualizar los datos');
+					//Quitamso el icono de carga
+					$('#cargando').empty();
+					//Agregamos un mensaje
+					$('#mensaje').append('<br><h5 style="margin-left: 3%">'+errors.errors+'</h5><br>');
+					//Agregamos el boton cerrar
+					$('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+					
+					
+				}                      
+			});
+		}));
+	});
+	</script>
+@endif
 @endsection
 
 

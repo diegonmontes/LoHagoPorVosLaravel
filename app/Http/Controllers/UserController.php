@@ -272,21 +272,23 @@ class UserController extends Controller
                 $usuario->auth_key = null;
                 $usuario->save();
 
-                return redirect()->route('persona.create')->with('success','Registro satisfactorio de su correo electronico. Ahora completa con tus datos el siguiente formulario.');
+                $respuesta = redirect()->route('persona.create')->with('success','Registro satisfactorio de su correo electronico.');
 
             }elseif($usuario->auth_key == null && $usuario->email_verified_at != null){
 
-                return redirect()->route('persona.create')->with('success','Complete el siguiente formulario para poder terminar su perfil.');
+                $respuesta = redirect()->route('persona.create')->with('success','Complete el siguiente formulario para poder terminar su perfil.');
 
             }elseif($usuario->auth_key != $auth_key){
 
-                return redirect()->route('login')->with('success','Hubo un error en la autenticacion de su correo. Intentelo nuevamente mas tarde.');
+                $respuesta = edirect()->route('login')->with('success','Hubo un error en la autenticacion de su correo. Intentelo nuevamente mas tarde.');
 
             }
         }else{
-            return redirect()->route('login')->with('success','Usuario inexistente');
+            $respuesta = redirect()->route('login')->with('success','Usuario inexistente');
 
         }
+
+        return $respuesta;
     }
     //
     /**
@@ -411,7 +413,120 @@ class UserController extends Controller
             return json_encode($listaUsuarios);
     }
     
+    public function actualizarUsuario(Request $request){
+        $idUsuario = Auth::user()->idUsuario;
+        $usuarioController = new UserController;
+        //Buscamos el usuario
+        $usuario = User::find($idUsuario);
+        $claveIngresada = $request->claveUsuario;
+        if(Hash::check($claveIngresada, $usuario->claveUsuario)){
+
+            if($request->mailUsuario == $usuario->mailUsuario){
+                //Solo actualiza el nombre de usuario
+                $requestUpdate = new Request(['nombreUsuario'=>$request->nombreUsuario]);
+                if($usuario->update($requestUpdate->all())){
+                    $respuesta = response()->json([
+                        'url' => route('persona.create'),
+                        'success'   => true,
+                        'message'   => 'Los datos se han guardado correctamente.' //Se recibe en la seccion "success", data.message
+                        ], 200);
+                }else{
+                    $respuesta = response()->json([
+                        'success'   => false,
+                        'errors'   => 'Ups! Algo salio mal.' 
+                        ], 422);
+                }
+            }else{
+                //Esta actualizando el mail y quizas el nombre de usuario
+                $requestUpdate = new Request(['nombreUsuario'=>$request->nombreUsuario,'mailUsuario'=>$request->mailUsuario,'auth_key' => str_random(150),'email_verified_at'=>null]);
+                $usuarioController = new UserController;
+                $requestBuscarMail = new Request(['mailUsuario'=>$request->mailUsuario,'eliminado'=>0]);
+                $existeUsuario = $usuarioController->buscar($requestBuscarMail);
+                $existeUsuario = json_decode($existeUsuario);
+
+                if(count($existeUsuario)<1){
+                    if($usuario->update($requestUpdate->all())){
+                        $mail = new EmailController;
+                        $mail->nuevoMail($usuario);
+                        Auth::logout();
+                        $respuesta = response()->json([
+                            'url' => route('login'),
+                            'success'   => true,
+                            'message'   => 'Se envio un mail para verificar el correo electronico.' //Se recibe en la seccion "success", data.message
+                            ], 200);
+                    }else{
+                        $respuesta = response()->json([
+                            'success'   => false,
+                            'errors'   => 'Ups! Algo salio mal.' 
+                            ], 422);
+                    }
+                }else{
+                    $respuesta = response()->json([
+                        'success'   => false,
+                        'errors'   => 'Email ya registrado. Intente con otro.' 
+                        ], 422);
+                }
+            }
+        }else{
+            $respuesta = response()->json([
+                'success'   => false,
+                'errors'   => 'Contraseña incorrecta.' 
+                ], 422);
+        }
+
+        return $respuesta;
+    }
     
+    public function actualizarClaveNueva(Request $request){
+
+        $idUsuario = Auth::user()->idUsuario;
+        $usuarioController = new UserController;
+        //Buscamos el usuario
+        $usuario = User::find($idUsuario);
+        $claveIngresada = $request->claveUsuario;
+        if(Hash::check($claveIngresada, $usuario->claveUsuario)){
+            if($request->claveNueva == $request->claveNuevaRepetida){
+                if(strlen($request->claveNueva) > 7 ){
+                    $claveNueva = bcrypt($request->claveNueva);
+                    $requestUpdate = new Request(['claveUsuario'=>$claveNueva]);
+                    if($usuario->update($requestUpdate->all())){
+                        Auth::logout();
+                        $respuesta = response()->json([
+                            'url' => route('login'),
+                            'success'   => true,
+                            'message'   => 'Los datos se han guardado correctamente.'
+                            ], 200);
+                    }else{
+                        $respuesta = response()->json([
+                            'success'   => false,
+                            'errors'   => 'Ups! Algo salio mal.' 
+                            ], 422);
+                    }  
+                }else{
+                    $respuesta = response()->json([
+                        'success'   => false,
+                        'errors'   => 'La contraseña debe contener como minimo 8 caracteres.' 
+                        ], 422);
+                }
+            }else{
+                $respuesta = response()->json([
+                    'success'   => false,
+                    'errors'   => 'La contraseña nueva con clave nueva repetida son diferentes.' 
+                    ], 422);
+            }
+
+        }else{
+
+            $respuesta = response()->json([
+                'success'   => false,
+                'errors'   => 'Contraseña incorrecta.' 
+                ], 422);
+
+        }
+
+        return $respuesta;
+
+    }
 
 }
 

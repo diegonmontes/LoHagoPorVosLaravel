@@ -16907,3 +16907,11 @@ Date picker
 } */
 
 }
+
+.imagenListaPostulante{
+  max-width: 40px;
+  height: auto;
+  border-radius: 50%;
+  right: 0%;
+}
+

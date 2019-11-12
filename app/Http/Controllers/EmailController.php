@@ -41,4 +41,25 @@ class EmailController extends Controller
         
         return redirect()->route('home');
     }
+
+    public function nuevoMail($usuario){
+        //Creamos un arreglo para enviar los datos que necesitamos a la vista del mail
+        $dato = [
+                    'mailUsuario' => $usuario->mailUsuario,
+                    'nombreUsuario' => $usuario->nombreUsuario,
+                    'auth_key' => $usuario->auth_key,
+                    'id' => $usuario->idUsuario
+                ];
+        $subject = "Actualizacion de mail";
+        $for = "$usuario->mailUsuario";
+        Mail::send('email/nuevoMail',$dato, function($msj) use($subject,$for){
+            $msj->from('lohagoporvosservicios@gmail.com',"Lo hago por vos");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        
+        return redirect()->route('home');
+    }
+
+    
 }

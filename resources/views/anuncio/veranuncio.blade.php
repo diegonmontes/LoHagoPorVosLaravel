@@ -117,7 +117,20 @@
                             @else
 
                                 <li class="list-group-item msjVerAnuncio">Todavia se reciben postulantes en este anuncio</li>
-                            
+                                <li class="list-group-item">Usuarios que se postularon</li>
+                                @foreach($listaAspirantes as $aspirante)
+                                    @php $usuario = $aspirante->Persona->Usuario @endphp
+                                    @php $fotoPerfil = $aspirante->Persona->imagenPerfil @endphp
+                                    <li class="list-group-item">{{$usuario->nombreUsuario}}
+                                        <img  class="imagenListaPostulante" src="
+                                            @if($fotoPerfil != null)
+                                                {{ asset('storage/perfiles/'.$fotoPerfil)}}
+                                            @else{{asset('images/fotoPerfil.png')}}
+                                        @endif">
+                                    </li>
+
+
+                                @endforeach
                             @endif
 
 
@@ -191,7 +204,6 @@
         </a>
 
 </div> --}}
-
 
 <div id="respuestaComentario" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
