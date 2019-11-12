@@ -41,7 +41,7 @@ class EmailController extends Controller
         
         return redirect()->route('home');
     }
-    
+
     // Recibe por parametro el obj usuario del asignado (para obtener su mail)
     // Obj persona asignado para obtener datos de el
     // Obj trabajo para obtener datos de ello
@@ -63,7 +63,14 @@ class EmailController extends Controller
         $subject = "Se te ha asignado un anuncio";
         $for = "$objUsuarioAsignado->mailUsuario";
         Mail::send('email/mailconfirmacionasignado',$dato, function($msj) use($subject,$for){
+            $msj->from('lohagoporvosservicios@gmail.com',"Lo hago por vos");    
+            $msj->subject($subject);
+            $msj->to($for);
+        });
 
+        return redirect()->route('home');
+
+    }
     public function nuevoMail($usuario){
         //Creamos un arreglo para enviar los datos que necesitamos a la vista del mail
         $dato = [
