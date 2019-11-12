@@ -27,13 +27,38 @@
         <div class="row" style="margin: auto">
             @foreach($listaTrabajos as $trabajoPendiente)
                 <div class="card margenCardInicio">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$trabajoPendiente->titulo}}</h5>
-                        <p class="card-text">{{$trabajoPendiente->descripcion}}</p>
-                    </div>
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoPendiente->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoPendiente->imagenTrabajo == null || $trabajoPendiente->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoPendiente->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoPendiente->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoPendiente->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoPendiente->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
                     <div class="card-footer">
-                        <a href="{{route('veranuncio',$trabajoPendiente->idTrabajo)}}" class="btn btn-sm btn-primary">Ver anuncio</a>
-                        <label class="product_price float-right">${{$trabajoPendiente->monto}}</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{{route('veranuncio',$trabajoPendiente->idTrabajo)}}" class="btn btn-sm btn-primary">Ver anuncio</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoPendiente->monto}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -46,20 +71,45 @@
     <div role="tabpanel" class="tab-pane" id="asignar">
 
         @if(count($listaTrabajosEvaluar)>0)
-            <div class="row" style="margin: auto">
-                @foreach($listaTrabajosEvaluar as $trabajoAsignar)
-                    <div class="card margenCardInicio">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$trabajoAsignar->titulo}}</h5>
-                            <p class="card-text">{{$trabajoAsignar->descripcion}}</p>
-                        </div>
-                        <div class="card-footer">
+        <div class="row" style="margin: auto">
+            @foreach($listaTrabajosEvaluar as $trabajoAsignar)
+                <div class="card margenCardInicio">
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoAsignar->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoAsignar->imagenTrabajo == null || $trabajoAsignar->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoAsignar->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoAsignar->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoAsignar->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoAsignar->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
                             <a class='btn btn-sm btn-primary' href="{{route('anuncio.postulante',$trabajoAsignar->idTrabajo)}}" > Elegir un postulante </a>
-                            <label class="product_price float-right">${{$trabajoAsignar->monto}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoAsignar->monto}}</label>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
+        </div>
         @else
             <h4> Nada para mostrar. </h4>
         @endif
@@ -69,21 +119,45 @@
     <div role="tabpanel" class="tab-pane" id="terminadas">
 
         @if(count($listaTrabajosTerminados)>0)
-            <!-- Anuncios activos -->
-            <div class="row" style="margin: auto">
-                @foreach($listaTrabajosTerminados as $trabajoTerminado)
-                    <div class="card margenCardInicio">
-                        <div class="card-body">
-                            <h5 class="card-title">{{$trabajoTerminado->titulo}}</h5>
-                            <p class="card-text">{{$trabajoTerminado->descripcion}}</p>
-                        </div>
-                        <div class="card-footer">
+        <div class="row" style="margin: auto">
+            @foreach($listaTrabajosTerminados as $trabajoTerminado)
+                <div class="card margenCardInicio">
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoTerminado->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoTerminado->imagenTrabajo == null || $trabajoTerminado->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoTerminado->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoTerminado->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoTerminado->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoTerminado->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
                             <a href="{{route('trabajo.valor',$trabajoTerminado->idTrabajo)}}" class="btn btn-sm btn-primary">Valorar el trabajo</a>
-                            <label class="product_price float-right">${{$trabajoTerminado->monto}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoTerminado->monto}}</label>
+                            </div>
                         </div>
                     </div>
-                @endforeach
-            </div>
+                </div>
+            @endforeach
+        </div>
         @else
             <h4> Nada para mostrar. </h4>
         @endif
@@ -91,23 +165,47 @@
     </div>
 
     <div role="tabpanel" class="tab-pane" id="cerradas">
-            
+
         @if(count($listaTrabajosCerradas)>0)
-            <!-- Anuncios cerrados -->
-            <div class="row" style="margin: auto">
-                @foreach($listaTrabajosCerradas as $trabajoCerrado)
+        <div class="row" style="margin: auto">
+            @foreach($listaTrabajosCerradas as $trabajoCerrado)
                 <div class="card margenCardInicio">
-                    <div class="card-body">
-                        <h5 class="card-title">{{$trabajoCerrado->titulo}}</h5>
-                        <p class="card-text">{{$trabajoCerrado->descripcion}}</p>
-                    </div>
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoCerrado->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoCerrado->imagenTrabajo == null || $trabajoCerrado->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoCerrado->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoCerrado->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoCerrado->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoCerrado->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
                     <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
                             <li class="list-group-item msjVerAnuncio">Anuncio terminado</li>
-                            <label class="product_price float-right">${{$trabajoCerrado->monto}}</label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoCerrado->monto}}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                @endforeach
-            </div>
+            @endforeach
+        </div>
         @else
             <h4> Nada para mostrar. </h4>
         @endif
