@@ -24,19 +24,19 @@ box-shadow: 0px 0px 10px 0px rgba(154,61,182,1);
     @foreach($listaPostulantes as $postulante)
     @php $persona = $postulante->Persona @endphp
 
-    <form class="col-xs-12 col-sm-12 col-md-8" style="min-width: 100%;min-height: 100%;margin-bottom: 1%;" action="{{route('trabajoasignado.store')}}" method="POST">
+    <form class="col-xs-12 col-sm-12 col-md-6" style="min-width: 100%;min-height: 100%;margin-bottom: 1%;" action="{{route('trabajoasignado.store')}}" method="POST">
             {{ csrf_field() }}
 
             <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}">
         
             <input type="hidden" name="idPersona" value="{{$persona->idPersona}}">
-            <button class="col-xs-12 col-sm-12 col-md-8" type="submit" style="border: none;-moz-appearance: inherit;-o-appearance: inherit;-ms-appearance: inherit;appearance: inherit;-webkit-appearance: inherit;padding: 0%">
+            <button class="col-xs-12 col-sm-12 col-md-6" type="submit" style="border: none;-moz-appearance: inherit;-o-appearance: inherit;-ms-appearance: inherit;appearance: inherit;-webkit-appearance: inherit;padding: 0%">
 
     <div class="row col-md-12" style="margin: 0%;padding: 0%">
         <div class="card" style="min-width: 100%;min-height: 100%;">
             
             <div class="row text-left" style="margin:3%">
-                <div class="col-xs-4 col-sm-4 col-md-4">
+                <div class="col-xs-7 col-sm-7 col-md-7">
                 <h2>{{$persona->apellidoPersona}} {{$persona->nombrePersona}}</h2>
                     <p><strong>Usuario: </strong> {{$persona->Usuario->nombreUsuario}} </p>
                     <p><strong>Localidad: </strong> {{$persona->Localidad->nombreLocalidad}} </p>
@@ -46,7 +46,7 @@ box-shadow: 0px 0px 10px 0px rgba(154,61,182,1);
                         @endforeach
                     </p>
                 </div>             
-                <div class="col-xs-4 col-sm-4 col-md-4 text-center">
+                <div class="col-xs-5 col-sm-5 col-md-5 text-center">
                     <figure>
                             
                         <img style="border-radius: 50%; width: 200px; height: 200px" src="@if($persona->imagenPersona != null){{ asset('storage/perfiles/'.$persona->imagenPersona)}}@else{{asset('images/fotoPerfil.png')}}@endif" alt="" class="img-circle img-responsive">
