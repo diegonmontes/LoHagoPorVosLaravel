@@ -30,7 +30,7 @@
                             <br>                 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <label for="mailUsuario" class="sr-only">{{ __('Mail') }}</label>
-                                    <input id="mailUsuario" type="email" class="form-control redondearInput fondoInput @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" autofocus placeholder="Correo electonico">
+                                    <input id="mailUsuario" type="email" class="form-control redondearInput fondoInput @error('emailUsuario') is-invalid @enderror" name="mailUsuario" value="{{ old('emailUsuario') }}" required autocomplete="mailUsuario" autofocus placeholder="Correo electr&oacute;nico">
                                     @error('emailUsuario')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
