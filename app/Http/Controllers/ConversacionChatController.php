@@ -136,8 +136,8 @@ class ConversacionChatController extends Controller
                 $query->where("conversacionchat.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param->idPersona)){
-                $query->where("conversacionchat.idPersona1",$param->idPersona);
+            if (isset($param->idPersona1)){
+                $query->where("conversacionchat.idPersona1",$param->idPersona1);
             }
 
             if (isset($param->idPersona2)){
@@ -146,6 +146,10 @@ class ConversacionChatController extends Controller
 
             if (isset($param->eliminado)){
                 $query->where("conversacionchat.eliminado",$param->eliminado);
+            }
+            if (isset($param->idPersona)){
+                $query->where("conversacionchat.idPersona1",$param->idPersona);
+                $query->orwhere("conversacionchat.idPersona2",$param->idPersona);
             }
 
             $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista

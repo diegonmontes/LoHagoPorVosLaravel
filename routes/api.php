@@ -81,6 +81,10 @@ Route::post('datosMP', 'MercadoPagoController@crearPago');
 
 /** CHAT */
 Route::get('listarMensajes','MensajeChatController@buscarMensajes');
+Route::post('guardarMensaje','MensajeChatController@store');
+Route::post('listarMensajesConversacion','MensajeChatController@listarMensajesConversacion');
+Route::post('listarConversaciones','ConversacionChatController@buscar');
+
 
 /** POSTULACIONES */
 Route::post('postularme','TrabajoaspiranteController@store');
