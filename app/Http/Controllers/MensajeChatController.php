@@ -157,4 +157,27 @@ class MensajeChatController extends Controller
             return json_encode($listaMensajeChat);
     }
 
+    public function fetch()
+    {
+        return MensajeChat::with('user')->get();
+    }
+
+    public function sentMessage(Request $request)
+    {
+        $usuario = Auth::user();
+
+        $mensaje = MensajeChat::create([
+            'mensaje' => $request->message,
+            'idPersona' => Auth::user()->Persona->idPersona,
+            'idConversacionChat'=>1
+        ]);
+
+        broadcast(new MessageSentEvent($usuario, $mensaje))->toOthers();
+    }
+
+    public function chat()
+    {
+        return view('mensajechat.chat');
+    }
+
 }

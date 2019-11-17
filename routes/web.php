@@ -196,3 +196,6 @@ Route::post('actualizar', 'UserController@actualizarUsuario')->name('actualizar'
 
 Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name('actualizarClaveNueva')->middleware('auth','controlperfil','Mailvalidado');
 
+Route::get('chat', 'MensajeChatController@chat');
+Route::get('messages', 'MensajeChatController@fetch')->middleware('auth');
+Route::post('messages', 'MensajeChatController@sentMessage')->middleware('auth');

@@ -15,6 +15,7 @@
         "laravel/tinker": "^1.0",
         "mercadopago/dx-php": "dev-master",
         "pear/http_request2": "^2.3",
+        "pusher/pusher-php-server": "~3.0",
         "twbs/bootstrap": "4.3.1",
         "tymon/jwt-auth": "dev-develop"
     },
