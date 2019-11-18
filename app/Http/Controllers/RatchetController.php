@@ -9,6 +9,8 @@ use React\EventLoop\TimerInterface;
 use SplObjectStorage;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
+Use App\MensajeChat;
+
 
 class RatchetController extends Controller implements MessageComponentInterface
 {
