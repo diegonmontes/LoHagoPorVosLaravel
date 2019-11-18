@@ -157,4 +157,10 @@ class MensajeChatController extends Controller
             return json_encode($listaMensajeChat);
     }
 
+    public function chat()
+    {
+        $mensajes = MensajeChat::all();
+        return view('conversacionchat.chat', compact('mensajes'));
+    }
+
 }
