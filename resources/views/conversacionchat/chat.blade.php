@@ -8,21 +8,21 @@
                     <div class="card-header">Chat Room <span id="total_client" class="float-right"></span></div>
                     <div class="card-body">
                         <div id="chat_output" class="pre-scrollable" style="height: 600px">
-                            @foreach($mensajes as $mensaje)
-                                @if($mensaje->Persona->Usuario->idUsuario == auth()->id())
-                                    <span class="text-success"><b>{{$mensaje->Persona->nombrePersona}}
-                                            :</b> {{$mensaje->mensaje}} <span
-                                                class="text-warning float-right">{{date('Y-m-d h:i a', strtotime($mensaje->created_at))}}</span></span>
+                            @foreach($mensajes as $message)
+                                @if($message->user_id == auth()->id())
+                                    <span class="text-success"><b>{{$message->user_id}}. {{$message->name}}
+                                            :</b> {{$message->message}} <span
+                                                class="text-warning float-right">{{date('Y-m-d h:i a', strtotime($message->created_at))}}</span></span>
                                     <br><br>
                                 @else
-                                    <span class="text-info"><b>{{$mensaje->idUsuario}}. {{$mensaje->name}}
-                                            :</b> {{$mensaje->mensaje}} <span
-                                                class="text-warning float-right">{{date('Y-m-d h:i a', strtotime($mensaje->created_at))}}</span></span>
+                                    <span class="text-info"><b>{{$message->user_id}}. {{$message->name}}
+                                            :</b> {{$message->message}} <span
+                                                class="text-warning float-right">{{date('Y-m-d h:i a', strtotime($message->created_at))}}</span></span>
                                     <br><br>
                                 @endif
                             @endforeach
                         </div>
-                        <input id="chat_input" class="form-control" placeholder="Write mensaje and Press Enter"/>
+                        <input id="chat_input" class="form-control" placeholder="Write Message and Press Enter"/>
                     </div>
                 </div>
             </div>
@@ -57,7 +57,7 @@
                     ws.send(
                         JSON.stringify({
                             'type': 'chat',
-                            'idUsuario': '{{auth()->id()}}',
+                            'user_id': '{{auth()->id()}}',
                             'user_name': '{{auth()->user()->name}}',
                             'chat_msg': chat_msg
                         })
@@ -76,11 +76,11 @@
             console.log(e);
             alert('Check if WebSocket server is running!');
         };
-        ws.onmensaje = function (e) {
+        ws.onmessage = function (e) {
             let json = JSON.parse(e.data);
             switch (json.type) {
                 case 'chat':
-                    $('#chat_output').append(json.msg); // Append the new mensaje received
+                    $('#chat_output').append(json.msg); // Append the new message received
                     $("#chat_output").animate({scrollTop: $('#chat_output').prop("scrollHeight")}, 1000); // Scroll the chat output div
                     console.log("Received " + json.msg);
                     break;
