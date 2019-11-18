@@ -144,6 +144,9 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
     
 });
 
+Route::get('/chat', 'MensajeChatController@indexDos');
+Route::get('/messages', 'MensajeChatController@fetch')->middleware('auth');
+Route::post('/messages', 'MensajeChatController@sentMessage')->middleware('auth');
 
 
 

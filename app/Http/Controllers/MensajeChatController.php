@@ -157,4 +157,29 @@ class MensajeChatController extends Controller
             return json_encode($listaMensajeChat);
     }
 
+    public function fetch()
+    {
+        return MensajeChat::with('persona')->get();
+        
+    }
+
+    public function sentMessage(Request $request)
+    {
+        $user = Auth::user();
+
+        $mensaje = MensajeChat::create([
+            'mensaje' => $request->mensaje,
+            'idUsuario' => Auth::user()->idUsuario,
+        ]);
+
+        broadcast(new MessageSentEvent($user, $mensaje))->toOthers();
+    }
+
+    public function indexDos()
+    {
+        //$mensajeschats=MensajeChat::orderBy('idMensajeChat','ASC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('chat/chat');
+    }
+
+
 }

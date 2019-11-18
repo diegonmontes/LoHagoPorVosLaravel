@@ -79,7 +79,6 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem" />
-      <path value="$PROJECT_DIR$/vendor/devdojo/chatter" />
       <path value="$PROJECT_DIR$/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/vendor/jakub-onderka/php-console-color" />
       <path value="$PROJECT_DIR$/vendor/jakub-onderka/php-console-highlighter" />
@@ -127,7 +126,6 @@
       <path value="$PROJECT_DIR$/vendor/vendor/monolog" />
       <path value="$PROJECT_DIR$/vendor/vendor/hamcrest" />
       <path value="$PROJECT_DIR$/vendor/vendor/opis" />
-      <path value="$PROJECT_DIR$/vendor/vendor/devdojo" />
       <path value="$PROJECT_DIR$/vendor/vendor/myclabs" />
       <path value="$PROJECT_DIR$/vendor/vendor/phpunit" />
       <path value="$PROJECT_DIR$/vendor/vendor/phar-io" />
