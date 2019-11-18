@@ -128,7 +128,7 @@ class MensajeChatController extends Controller
         $listaMensajes = $objMensaje->get();
         return json_encode($listaMensajes);
     }
-
+    
     // Permite buscar todas los mensajes
     public function buscar(Request $param){      
         $query = MensajeChat::OrderBy('idMensajeChat','ASC'); // Ordenamos los mensajes este medio
@@ -157,4 +157,31 @@ class MensajeChatController extends Controller
             return json_encode($listaMensajeChat);
     }
 
+    //lista los mensajes de una conversacion y por cada uno busca la persona y el usuario
+    public function listarMensajesConversacion(Request $param){
+        $listaMensajesConversacion= $this->buscar($param);
+        $listaMensajesConversacion= json_decode($listaMensajesConversacion);
+        $listaMensajes= array();
+        $personaController=new PersonaController;
+        $usuarioController=new UserController;
+        foreach($listaMensajesConversacion as $mensajeConversacion){
+            $idPersona=$mensajeConversacion->idPersona;
+            $idPersona= ['idPersona'=>$idPersona];
+            $idPersona= new Request($idPersona);
+            //busca la persona que envio el mensaje
+            $objPersona= $personaController->buscar($idPersona);
+            $objPersona=json_decode($objPersona);
+            $idUsuario= $objPersona[0]->idUsuario;
+            $idUsuario= ['idUsuario'=>$idUsuario];
+            $idUsuario= new Request($idUsuario);
+            //busca el usuario de la persona
+            $objUsuario= $usuarioController->buscar($idUsuario);
+            $objUsuario= json_decode($objUsuario);
+            //setea un nuevo param llamado usuario donde se guarda el objeto usuario por cada mensaje
+            $mensajeConversacion->usuario= $objUsuario;
+            array_push($listaMensajes,$mensajeConversacion);
+        }
+        //print_r($listaMensajes);
+        return $listaMensajes;
+    }
 }
