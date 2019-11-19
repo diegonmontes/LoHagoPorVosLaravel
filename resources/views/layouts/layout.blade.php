@@ -16,6 +16,8 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" type="text/css"  href="{{ asset('styles/imagenTrabajo.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/estiloPropio.css') }}">
+
 
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/fontawesome-free/css/all.css') }}"> 
     
