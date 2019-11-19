@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\MessageSentEvent;
 use Auth;
 use App\Persona;
 Use App\ConversacionChat;
 Use App\MensajeChat;
+use App\Http\Controllers\PersonaController;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -184,4 +187,38 @@ class MensajeChatController extends Controller
         //print_r($listaMensajes);
         return $listaMensajes;
     }
+    public function fetch()
+    {
+        return MensajeChat::with('persona')->get();
+        
+    }
+
+    public function sentMessage(Request $request)
+    {
+        $idUsuario = Auth::user()->idUsuario;
+        //Con el idUsuario buscamos la persona
+        $controlPersona = new PersonaController;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $controlPersona->buscar($param);
+        $persona = json_decode($persona);
+        $persona= $persona[0];
+
+        $mensaje = MensajeChat::create([
+            'mensaje' => $request->mensaje,
+            'idConversacionChat'=>1,
+            'idPersona'=>$persona->idPersona,
+            
+        ]);
+
+        broadcast(new MessageSentEvent($persona, $mensaje))->toOthers();
+    }
+
+    public function indexDos()
+    {
+        //$mensajeschats=MensajeChat::orderBy('idMensajeChat','ASC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('chat/chat');
+    }
+
+
 }

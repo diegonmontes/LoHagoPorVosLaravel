@@ -30,6 +30,7 @@
                         <a class="dropdown-item" href="{{route('persona.create')}}"><i class="fas fa-user"></i> Mi Perfil</a>
                         <a class="dropdown-item" href="{{route('historial')}}"><i class="fas fa-list"></i> Mis Anuncios</a>
                         <a class="dropdown-item" href="{{route('mispostulaciones')}}"><i class="fas fa-hands-helping"></i> Mis Postulaciones</a>
+                        <a class="dropdown-item" href="{{route('conversaciones')}}"><i class="fas fa-envelope"></i> Conversaciones </a>
                         
                         @if (Auth::user()->idRol==1) <a class="dropdown-item" href="{{route('categoriatrabajo.index')}}"><i class="fas fa-hands-helping"></i> Administrador</a> @endif 
                         <a class="dropdown-item" href="{{ route('logout') }}"

@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\TrabajoController;
 use App\Http\Controllers\PersonaController;
 
+Broadcast::routes();
 
 
 //Si esta logeado mostramos todos los anuncios que no sean de la persona logeada
@@ -144,6 +145,9 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
     
 });
 
+Route::get('/chat', 'MensajeChatController@indexDos');
+Route::get('messages', 'MensajeChatController@fetch')->middleware('auth');
+Route::post('messages', 'MensajeChatController@sentMessage')->middleware('auth');
 
 
 
@@ -196,3 +200,4 @@ Route::post('actualizar', 'UserController@actualizarUsuario')->name('actualizar'
 
 Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name('actualizarClaveNueva')->middleware('auth','controlperfil','Mailvalidado');
 
+Route::get('conversaciones', 'ConversacionChatController@misconversaciones')->name('conversaciones')->middleware('auth','Mailvalidado','controlperfil');
