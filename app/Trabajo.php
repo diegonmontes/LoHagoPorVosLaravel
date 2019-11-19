@@ -52,5 +52,6 @@ class Trabajo extends Model
     {
         return $this->hasMany('App\Comentario', 'idTrabajo')->whereNull('idComentarioPadre');
     }
+
 }
 

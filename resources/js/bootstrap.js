@@ -41,8 +41,11 @@ window.axios.defaults.headers.common = {
  window.Pusher = require('pusher-js');
 
  window.Echo = new Echo({
+     authEndpoint: 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth',
      broadcaster: 'pusher',
      key: process.env.MIX_PUSHER_APP_KEY,
      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
      encrypted: true
  });
+
+ window.Echo.connector.pusher.config.authEndpoint = 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth';

@@ -136,8 +136,8 @@ class ConversacionChatController extends Controller
                 $query->where("conversacionchat.idTrabajo",$param->idTrabajo);
             }
 
-            if (isset($param->idPersona)){
-                $query->where("conversacionchat.idPersona1",$param->idPersona);
+            if (isset($param->idPersona1)){
+                $query->where("conversacionchat.idPersona1",$param->idPersona1);
             }
 
             if (isset($param->idPersona2)){
@@ -148,8 +148,36 @@ class ConversacionChatController extends Controller
                 $query->where("conversacionchat.eliminado",$param->eliminado);
             }
 
+            if (isset($param->idPersona)){
+                $query->where("conversacionchat.idPersona1",$param->idPersona);
+                $query->orwhere("conversacionchat.idPersona2",$param->idPersona);
+            }
+
             $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaConversacionChat);
+    }
+
+    public function misconversaciones(request $param){
+
+        $personaController = new PersonaController();
+        //Para ello primero vemos quien esta logeado y tomamos su idUsuario
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $personaController->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+        $paramIdPersona = ['idPersona'=>$idPersona];
+        $paramIdPersona = new Request($paramIdPersona);
+        $listaConversaciones = $this->buscar($paramIdPersona);
+        $listaConversaciones = json_decode($listaConversaciones);
+
+      //  $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('conversacionchat.misconversaciones',compact('listaConversaciones'));
+
+
+        
+
     }
 
 }

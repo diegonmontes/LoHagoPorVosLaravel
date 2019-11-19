@@ -14,16 +14,16 @@ class MessageSentEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $mensaje;
-    public $usuario;
+    public $persona;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($usuario,$mensaje)
+    public function __construct($persona,$mensaje)
     {
-        $this->usuario = $usuario;
+        $this->persona = $persona;
         $this->mensaje = $mensaje;
     }
 

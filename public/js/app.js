@@ -1849,9 +1849,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['user'],
+  props: ['persona'],
   data: function data() {
     return {
       newMessage: ''
@@ -1860,8 +1859,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     sendMessage: function sendMessage() {
       this.$emit('messagesent', {
-        user: this.user,
-        message: this.newMessage
+        persona: this.persona,
+        mensaje: this.newMessage
       });
       this.newMessage = '';
     }
@@ -50365,8 +50364,8 @@ var render = function() {
       attrs: {
         id: "btn-input",
         type: "text",
-        name: "message",
-        placeholder: "Type your message here..."
+        name: "mensaje",
+        placeholder: "Escriba su mensaje..."
       },
       domProps: { value: _vm.newMessage },
       on: {
@@ -50396,7 +50395,7 @@ var render = function() {
           attrs: { id: "btn-chat" },
           on: { click: _vm.sendMessage }
         },
-        [_vm._v("\n            Send\n        ")]
+        [_vm._v("\n            Enviar\n        ")]
       )
     ])
   ])
@@ -50426,14 +50425,16 @@ var render = function() {
   return _c(
     "ul",
     { staticClass: "chat" },
-    _vm._l(_vm.messages, function(message) {
+    _vm._l(_vm.messages, function(mensaje) {
       return _c("li", { staticClass: "left clearfix" }, [
         _c("div", { staticClass: "chat-body clearfix" }, [
           _c("div", { staticClass: "header" }, [
             _c("strong", { staticClass: "primary-font" }, [
               _vm._v(
                 "\n                    " +
-                  _vm._s(message.user.name) +
+                  _vm._s(mensaje.persona.nombrePersona) +
+                  " " +
+                  _vm._s(mensaje.persona.apellidoPersona) +
                   "\n                "
               )
             ])
@@ -50441,7 +50442,7 @@ var render = function() {
           _vm._v(" "),
           _c("p", [
             _vm._v(
-              "\n                " + _vm._s(message.message) + "\n            "
+              "\n                " + _vm._s(mensaje.mensaje) + "\n            "
             )
           ])
         ])
@@ -62634,7 +62635,7 @@ var app = new Vue({
     this.fetchMessages();
     Echo["private"]('chat').listen('MessageSent', function (e) {
       _this.messages.push({
-        message: e.message.message,
+        message: e.message.mensaje,
         user: e.user
       });
     });
@@ -62643,13 +62644,13 @@ var app = new Vue({
     fetchMessages: function fetchMessages() {
       var _this2 = this;
 
-      axios.get('/messages').then(function (response) {
+      axios.get('messages').then(function (response) {
         _this2.messages = response.data;
       });
     },
     addMessage: function addMessage(message) {
       this.messages.push(message);
-      axios.post('/messages', message).then(function (response) {});
+      axios.post('messages', message).then(function (response) {});
     }
   }
 });
@@ -62705,11 +62706,13 @@ window.axios.defaults.headers.common = {
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
+  authEndpoint: 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth',
   broadcaster: 'pusher',
   key: "8379da258ca6e4d4cb93",
   cluster: "eu",
   encrypted: true
 });
+window.Echo.connector.pusher.config.authEndpoint = 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth';
 
 /***/ }),
 

@@ -1,14 +1,14 @@
 <template>
     <ul class="chat">
-        <li class="left clearfix" v-for="message in messages">
+        <li class="left clearfix" v-for="mensaje in messages">
             <div class="chat-body clearfix">
                 <div class="header">
                     <strong class="primary-font">
-                        {{ message.user.name }}
+                        {{ mensaje.persona.nombrePersona}} {{mensaje.persona.apellidoPersona}}
                     </strong>
                 </div>
                 <p>
-                    {{ message.message }}
+                    {{ mensaje.mensaje }}
                 </p>
             </div>
         </li>

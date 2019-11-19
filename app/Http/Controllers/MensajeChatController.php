@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Events\MessageSentEvent;
 use Auth;
 use App\Persona;
 Use App\ConversacionChat;
 Use App\MensajeChat;
+use App\Http\Controllers\PersonaController;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -165,14 +168,16 @@ class MensajeChatController extends Controller
 
     public function sentMessage(Request $request)
     {
-        $user = Auth::user();
+        $persona = $request->persona;
 
         $mensaje = MensajeChat::create([
             'mensaje' => $request->mensaje,
-            'idUsuario' => Auth::user()->idUsuario,
+            'idConversacionChat'=>1,
+            'idPersona'=>$persona->idPersona,
+            
         ]);
 
-        broadcast(new MessageSentEvent($user, $mensaje))->toOthers();
+        broadcast(new MessageSentEvent($persona, $mensaje))->toOthers();
     }
 
     public function indexDos()

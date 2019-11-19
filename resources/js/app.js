@@ -37,7 +37,7 @@ const app = new Vue({
         Echo.private('chat')
             .listen('MessageSent', (e) => {
                 this.messages.push({
-                    message: e.message.message,
+                    message: e.message.mensaje,
                     user: e.user
                 });
             });
