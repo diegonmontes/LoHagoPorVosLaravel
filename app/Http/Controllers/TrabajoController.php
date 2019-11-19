@@ -437,6 +437,10 @@ class TrabajoController extends Controller
     public function buscar(Request $param){     
         $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
 
+            if(isset($param->filtrar)){
+                $query->where("trabajo.titulo", 'like', '%'.$param->filtrar.'%');
+            }
+
             if (isset($param->idTrabajo)){
                 $query->where("trabajo.idTrabajo",$param->idTrabajo);
             }
@@ -490,6 +494,7 @@ class TrabajoController extends Controller
             return json_encode($listaTrabajos);
    
     }
+
 
     // Ordenamos los trabajos para mostrar en el inicio que muestre primero los preferencias que la persona eligio
     public function ordenarTrabajosInicio(request $request){
