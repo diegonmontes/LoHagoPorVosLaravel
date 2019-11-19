@@ -168,7 +168,14 @@ class MensajeChatController extends Controller
 
     public function sentMessage(Request $request)
     {
-        $persona = $request->persona;
+        $idUsuario = Auth::user()->idUsuario;
+        //Con el idUsuario buscamos la persona
+        $controlPersona = new PersonaController;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $controlPersona->buscar($param);
+        $persona = json_decode($persona);
+        $persona= $persona[0];
 
         $mensaje = MensajeChat::create([
             'mensaje' => $request->mensaje,
