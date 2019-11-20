@@ -446,3 +446,24 @@ Date picker
   margin-bottom:-3px;
   color:#fff !important;
 }
+
+
+.iconoBusqueda {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 3 !important;
+  display: block !important;
+  width: 34px !important;
+  height: 34px !important;
+  line-height: 34px !important;
+  text-align: center !important;
+  pointer-events: none !important;
+}
+
+.buscador {
+  padding-left: 30px!important;
+  -moz-border-radius: 50% !important;
+  -webkit-border-radius: 50% !important;
+  border-radius: 100px !important;
+}
