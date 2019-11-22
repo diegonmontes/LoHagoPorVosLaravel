@@ -2,8 +2,8 @@
 
 namespace App\Events;
 
-use App\User;
-use App\Message;
+use App\Persona;
+use App\MensajeChat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -19,26 +19,26 @@ class MessageSent implements ShouldBroadcast
     /**
      * User that sent the message
      *
-     * @var User
+     * @var Persona
      */
-    public $user;
+    public $persona;
 
     /**
      * Message details
      *
-     * @var Message
+     * @var Mensaje
      */
-    public $message;
+    public $mensaje;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user, Message $message)
+    public function __construct(Persona $persona, MensajeChat $mensaje)
     {
-        $this->user = $user;
-        $this->message = $message;
+        $this->persona = $persona;
+        $this->mensaje = $mensaje;
     }
 
     /**

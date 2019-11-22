@@ -126,7 +126,7 @@ class ConversacionChatController extends Controller
 
     // Esta funcion busca todas las conversaciones con parametros que le enviemos
     public function buscar(Request $param){      
-        $query = ConversacionChat::OrderBy('idConversacionChat','DESC'); // Ordenamos las conversaciones por este medio
+        $query = ConversacionChat::orderBy('idConversacionChat','DESC'); // Ordenamos las conversaciones por este medio
            
             if (isset($param->idConversacionChat)){
                 $query->where("conversacionchat.idConversacionChat",$param->idConversacionChat);
@@ -147,11 +147,7 @@ class ConversacionChatController extends Controller
             if (isset($param->eliminado)){
                 $query->where("conversacionchat.eliminado",$param->eliminado);
             }
-            if (isset($param->idPersona)){
-                $query->where("conversacionchat.idPersona1",$param->idPersona);
-                $query->orwhere("conversacionchat.idPersona2",$param->idPersona);
-            }
-
+            
             if (isset($param->idPersona)){
                 $query->where("conversacionchat.idPersona1",$param->idPersona);
                 $query->orwhere("conversacionchat.idPersona2",$param->idPersona);
@@ -173,14 +169,13 @@ class ConversacionChatController extends Controller
         $idPersona = $persona[0]->idPersona;
         $paramIdPersona = ['idPersona'=>$idPersona];
         $paramIdPersona = new Request($paramIdPersona);
-        $listaConversaciones = $this->buscar($paramIdPersona);
+        $conversacionChatController = new ConversacionChatController();
+        $listaConversaciones = $conversacionChatController->buscar($paramIdPersona);
         $listaConversaciones = json_decode($listaConversaciones);
+        $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->orWhere('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
 
       //  $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('conversacionchat.misconversaciones',compact('listaConversaciones'));
-
-
-        
 
     }
 

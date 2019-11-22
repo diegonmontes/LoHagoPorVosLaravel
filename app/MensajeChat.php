@@ -16,7 +16,7 @@ class MensajeChat extends Model
     }
 
     public function Persona() {
-        return $this->hasOne('App\Persona', 'idPersona', 'idPersona');
+        return $this->belongsTo('App\Persona', 'idPersona', 'idPersona');
     }
 
 }

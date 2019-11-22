@@ -14,9 +14,6 @@
     $listaPersonas = json_decode($listaPersonas);
     $persona = $listaPersonas[0];
     $persona=json_encode($persona);
-
-    
-
 @endphp
 <div class="container">
     <div class="row">
