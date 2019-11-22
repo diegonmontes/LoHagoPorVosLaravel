@@ -197,16 +197,17 @@ class MensajeChatController extends Controller
     {
         $idUsuario = Auth::user()->idUsuario;
         //Con el idUsuario buscamos la persona
-        $persona = Persona::where('idUsuario',$idUsuario)->first();
+        $persona = Persona::where('idUsuario',$idUsuario)->first(); // Lo buscamos asi porque tiene que ser un app/persona
+        $idConversacionChat = $request->idConversacionChat; // ya recibimos el id conversacion
         
         $mensaje = MensajeChat::create([
-            'mensaje' => $request->mensaje['mensaje'],
+            'mensaje' => $request->mensaje['mensaje'], // ya recibimos el msj
             'idConversacionChat'=>$request->idConversacionChat,
-            'idPersona'=>$request->mensaje['persona']['idPersona'],
+            'idPersona'=>$request->mensaje['persona']['idPersona'], // ya recibimos la persona
             
         ]);
         
-        broadcast(new MessageSent($persona, $mensaje))->toOthers();
+        broadcast(new MessageSent($persona, $mensaje, $idConversacionChat))->toOthers();
     }
 
     public function indexDos()

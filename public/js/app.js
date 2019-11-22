@@ -62639,6 +62639,8 @@ var app = new Vue({
         persona: e.persona,
         mensaje: e.mensaje.mensaje
       });
+
+      document.getElementById('ultimoMensajeConversacion' + e.idConversacionChat).innerHTML = e.mensaje.mensaje;
     });
   },
   methods: {
@@ -62654,7 +62656,7 @@ var app = new Vue({
       //            var idConversacionChat = location.search.split('/')[1]; // obtenemos el id
       var idConversacionChat = document.querySelector("input[name=idConversacionChat]").value;
       this.messages.push(message);
-      document.getElementById('ultimoMensajeConversacion1').innerHTML = "hola";
+      document.getElementById('ultimoMensajeConversacion' + idConversacionChat).innerHTML = message.mensaje;
       console.log(idConversacionChat);
       console.log(message.mensaje);
       axios.post('enviarmensaje', {

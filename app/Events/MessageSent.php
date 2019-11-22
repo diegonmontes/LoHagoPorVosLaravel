@@ -22,7 +22,7 @@ class MessageSent implements ShouldBroadcast
      * @var Persona
      */
     public $persona;
-
+    public $idConversacionChat;
     /**
      * Message details
      *
@@ -35,10 +35,11 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct(Persona $persona, MensajeChat $mensaje)
+    public function __construct(Persona $persona, MensajeChat $mensaje, $idConversacionChat)
     {
         $this->persona = $persona;
         $this->mensaje = $mensaje;
+        $this->idConversacionChat = $idConversacionChat;
     }
 
     /**

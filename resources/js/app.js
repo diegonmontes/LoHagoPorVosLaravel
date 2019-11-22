@@ -39,14 +39,14 @@ const app = new Vue({
             .listen('MessageSent', (e) => {
                 this.messages.push({
                     persona: e.persona,
-                    mensaje: e.mensaje.mensaje           
+                    mensaje: e.mensaje.mensaje,
                 });
+                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
             });
     },
 
     methods: {
         fetchMessages(idConversacionChat) {
-            console.log(idConversacionChat);
             axios.get('messages/'+idConversacionChat).then(response => {
                 this.messages = response.data;
             });
@@ -56,9 +56,7 @@ const app = new Vue({
             var idConversacionChat = document.querySelector("input[name=idConversacionChat]").value;
             
             this.messages.push(message);
-            document.getElementById('ultimoMensajeConversacion1').innerHTML = "hola";
-            console.log(idConversacionChat);
-            console.log(message.mensaje);
+            document.getElementById('ultimoMensajeConversacion'+idConversacionChat).innerHTML = message.mensaje;
 
             axios.post('enviarmensaje',{
                 headers: {
