@@ -68,6 +68,9 @@
     </style>
 
     <!-- Scripts -->
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <script defer>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),

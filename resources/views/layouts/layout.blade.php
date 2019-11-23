@@ -23,6 +23,20 @@
     
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script src="http://localhost/LoHagoPorVosLaravel/public/js/app.js"></script>
+      <!-- Scripts -->
+
+
+    <script defer>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'pusherKey' => config('broadcasting.connections.pusher.key'),
+            'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+        ]) !!};
+    </script>
+
 
 
     @yield('css')

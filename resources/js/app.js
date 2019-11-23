@@ -32,27 +32,45 @@ const app = new Vue({
     },
 
     created() {
-        this.fetchMessages();
+        var idConversacionChat = location.search.split('/')[1];
+        this.fetchMessages(idConversacionChat);
 
         Echo.private('chat')
             .listen('MessageSent', (e) => {
                 this.messages.push({
-                    message: e.message.mensaje,
-                    user: e.user
+                    persona: e.persona,
+                    mensaje: e.mensaje.mensaje,
                 });
+                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
+                document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
+                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).classList.add('mensajeSinLeer');
             });
     },
 
     methods: {
-        fetchMessages() {
-            axios.get('messages').then(response => {
+        fetchMessages(idConversacionChat) {
+            axios.get('messages/'+idConversacionChat).then(response => {
                 this.messages = response.data;
             });
         },
         addMessage(message) {
+//            var idConversacionChat = location.search.split('/')[1]; // obtenemos el id
+            var idConversacionChat = document.querySelector("input[name=idConversacionChat]").value;
+            
             this.messages.push(message);
+            document.getElementById('ultimoMensajeConversacion'+idConversacionChat).innerHTML = message.mensaje;
 
-            axios.post('messages', message).then(response => {});
+            axios.post('enviarmensaje',{
+                headers: {
+                    "Content-type": "application/json"
+                },
+                idConversacionChat:idConversacionChat,
+                mensaje:message
+            }).then(response => {
+                console.log(response.data);
+            });
+            
+
         }
     }
 });

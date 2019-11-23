@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Events\MessageSentEvent;
+use App\Events\MessageSent;
 use Auth;
 use App\Persona;
 Use App\ConversacionChat;
@@ -135,15 +135,14 @@ class MensajeChatController extends Controller
     // Permite buscar todas los mensajes
     public function buscar(Request $param){      
         $query = MensajeChat::OrderBy('idMensajeChat','ASC'); // Ordenamos los mensajes este medio
-
+            
             if (isset($param->idMensajeChat)){
                 $query->where("mensajechat.idMensajeChat",$param->idMensajeChat);
             }
 
             if (isset($param->idConversacionChat)){
                 $query->where("mensajechat.idConversacionChat",$param->idConversacionChat);
-            }
-
+            } 
             if (isset($param->idPersona)){
                 $query->where("mensajechat.idPersona",$param->idPersona);
             }
@@ -155,7 +154,6 @@ class MensajeChatController extends Controller
             if (isset($param->eliminado)){
                 $query->where("mensajechat.eliminado",$param->eliminado);
             }
-
             $listaMensajeChat=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaMensajeChat);
     }
@@ -187,9 +185,9 @@ class MensajeChatController extends Controller
         //print_r($listaMensajes);
         return $listaMensajes;
     }
-    public function fetch()
+    public function fetch($idConversacionChat)
     {
-        return MensajeChat::with('persona')->get();
+        return MensajeChat::with('persona')->where('idConversacionChat',$idConversacionChat)->get();
         
     }
 
@@ -197,27 +195,39 @@ class MensajeChatController extends Controller
     {
         $idUsuario = Auth::user()->idUsuario;
         //Con el idUsuario buscamos la persona
-        $controlPersona = new PersonaController;
-        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
-        $param = new Request($param);
-        $persona = $controlPersona->buscar($param);
-        $persona = json_decode($persona);
-        $persona= $persona[0];
-
+        $persona = Persona::where('idUsuario',$idUsuario)->first(); // Lo buscamos asi porque tiene que ser un app/persona
+        $idConversacionChat = $request->idConversacionChat; // ya recibimos el id conversacion
+        
         $mensaje = MensajeChat::create([
-            'mensaje' => $request->mensaje,
-            'idConversacionChat'=>1,
-            'idPersona'=>$persona->idPersona,
+            'mensaje' => $request->mensaje['mensaje'], // ya recibimos el msj
+            'idConversacionChat'=>$request->idConversacionChat,
+            'idPersona'=>$request->mensaje['persona']['idPersona'], // ya recibimos la persona
             
         ]);
-
-        broadcast(new MessageSentEvent($persona, $mensaje))->toOthers();
+        
+        broadcast(new MessageSent($persona, $mensaje, $idConversacionChat))->toOthers();
     }
 
     public function indexDos()
     {
         //$mensajeschats=MensajeChat::orderBy('idMensajeChat','ASC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('chat/chat');
+    }
+
+    public function mensajesconversacion($idConversacionChat){
+        $personaController = new PersonaController();
+        //Para ello primero vemos quien esta logeado y tomamos su idUsuario
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $personaController->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+
+        $listaMensajes=MensajeChat::orderBy('idMensajeChat','DESC')->where('eliminado','0')->orWhere('idConversacionChat',$idConversacionChat)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->orWhere('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+      //  $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        return view('conversacionchat.misconversaciones',compact('listaMensajes'),['listaConversaciones'=>$listaConversaciones]);
     }
 
 
