@@ -16,6 +16,7 @@ use App\Persona;
 use App\Provincia;
 use App\Habilidad;
 use App\CategoriaTrabajo;
+use App\Http\Controllers\UserController;
 
 
 
@@ -48,7 +49,15 @@ Route::get('/', function () {
             $provincias=Provincia::all();
             $habilidades=Habilidad::all();
             $categoriasTrabajo=CategoriaTrabajo::all();
-            $pagina = view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas]);
+            $idUsuario = Auth::user()->idUsuario;
+            //Buscamos el usuario
+            $usuarioController = new UserController;
+            $paramBuscarUsuario = ['idUsuario'=>$idUsuario, 'eliminado'=>0];
+            $paramBuscarUsuario = new Request($paramBuscarUsuario);
+            $usuario = $usuarioController->buscar($paramBuscarUsuario);
+            $usuario = json_decode($usuario);
+            $usuario = $usuario[0];
+            $pagina = view('persona.create',compact('persona'),['provincias'=>$provincias,'categoriasTrabajo'=>$categoriasTrabajo,'habilidades'=>$habilidades, 'existePersona'=>$existePersona,'listaHabilidadesSeleccionadas'=>$listaHabilidadesSeleccionadas,'listaPreferenciasSeleccionadas'=>$listaPreferenciasSeleccionadas,'usuario'=>$usuario]);
         }else{
             //Si tiene el perfil creado buscamos los anuncios para mostrar
             $idPersona = $persona[0]->idPersona;
@@ -59,8 +68,8 @@ Route::get('/', function () {
             $listaTrabajos =$trabajoController->ordenarTrabajosInicio($param);
             $listaTrabajos = json_decode($listaTrabajos);
             $categoriaTrabajo = new CategoriaTrabajo;
-
-            $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo]);
+            $busqueda = false;
+            $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo, 'busqueda'=>$busqueda]);
 
         }
     }else{
@@ -71,7 +80,8 @@ Route::get('/', function () {
         $listaTrabajos =$trabajoController->buscar($param);
         $listaTrabajos = json_decode($listaTrabajos);
         $categoriaTrabajo = new CategoriaTrabajo;
-        $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo]);
+        $busqueda = false;
+        $pagina = view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo, 'busqueda'=>$busqueda]);
     }
     return $pagina;
 })->name('inicio');
@@ -202,3 +212,4 @@ Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name
 
 Route::get('conversaciones', 'ConversacionChatController@misconversaciones')->name('conversaciones')->middleware('auth','Mailvalidado','controlperfil');
 
+Route::get('buscar', 'TrabajoController@filtrar')->name('buscar');

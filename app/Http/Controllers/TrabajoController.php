@@ -437,9 +437,29 @@ class TrabajoController extends Controller
     public function buscar(Request $param){     
         $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
 
+            //Funciones para filtrar
+
             if(isset($param->filtrar)){
                 $query->where("trabajo.titulo", 'like', '%'.$param->filtrar.'%');
+                $query->orwhere("trabajo.descripcion", 'like', '%'.$param->filtrar.'%');
             }
+
+            if(isset($param->rangoMonto)){
+                if($param->rangoMonto>0){
+                    $query->where("trabajo.monto",'<=',$param->rangoMonto);
+                }
+            }
+
+            if (isset($param->categoria)){
+                $query->whereIn('idCategoriaTrabajo', $param->categoria);
+            }
+            
+
+            // if (isset($param->provincia)){
+            //     $query->select('.idTrabajo')->whereIn('idCategoriaTrabajo', $param->categoria);
+            // }
+
+            //Otras funciones
 
             if (isset($param->idTrabajo)){
                 $query->where("trabajo.idTrabajo",$param->idTrabajo);
@@ -1011,7 +1031,18 @@ class TrabajoController extends Controller
         return $respuesta;
     }
     
-    
+    public function filtrar(Request $request){
+        $param=['idEstado'=>'1','eliminado'=>0,'filtrar'=>$request->filtrar,'categoria'=>$request->categoria,'rangoMonto'=>$request->rangoMonto, 'provincia'=>$request->provincia];
+        $trabajoController = new TrabajoController();
+        $param = new Request($param);
+        $listaTrabajos =$trabajoController->buscar($param);
+        $listaTrabajos = json_decode($listaTrabajos);
+        $categoriaTrabajo = new CategoriaTrabajo;
+        $listaCategoria = CategoriaTrabajo::all();
+        $provincias = Provincia::all();
+        $busqueda = true;
+        return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo,'listaCategoria'=>$listaCategoria, 'busqueda'=>$busqueda, 'provincias'=>$provincias]);
+    }
 
 }
 
