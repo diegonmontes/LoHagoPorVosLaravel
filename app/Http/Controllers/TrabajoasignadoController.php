@@ -52,9 +52,7 @@ class TrabajoasignadoController extends Controller
     public function store(Request $request)
     {   
         $this->validate($request,[ 'idTrabajo'=>'required', 'idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
-        Trabajoasignado::create($request->all()); //Creamos el elemento nuevo
-
-    
+        Trabajoasignado::create($request->all()); //Creamos el elemento nuevo 
         if(isset($request->flutter)){
             return $respuesta = ['success'=>true];
         }else{

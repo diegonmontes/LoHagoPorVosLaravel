@@ -158,6 +158,29 @@ class ConversacionChatController extends Controller
             $listaConversacionChat=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaConversacionChat);
     }
+    /**
+     * Lista las conversaciones de un usuario con sus respectivos obj persona
+     */
+    public function listarConversacionesFlutter(Request $request){
+        $personaController= new PersonaController;
+        //busco las conversaciones de una persona
+        $listaConversacionChat= $this->buscar($request);
+        $listaConversacionChat=json_decode($listaConversacionChat);
+        //por cada conversacion busco las personas involucradas
+        foreach ($listaConversacionChat as $conversacion){
+            $persona1=$conversacion->idPersona1;
+            $request= new Request(['idPersona'=>$persona1]);
+            $persona1=json_decode($personaController->buscar($request));
+            $persona2=$conversacion->idPersona2;
+            $request= new Request(['idPersona'=>$persona2]);
+            $persona2=json_decode($personaController->buscar($request));
+            //setea un nuevo param llamado persona1 o persona2 donde se guarda el objeto persona por cada conversacion
+            $conversacion->persona1= $persona1;
+            $conversacion->persona2= $persona2;
+            $listaConversaciones []= $conversacion;
+        }
+        return $listaConversaciones;
+    }
 
     public function misconversaciones(request $param){
 

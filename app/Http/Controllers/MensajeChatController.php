@@ -172,6 +172,8 @@ class MensajeChatController extends Controller
             //busca la persona que envio el mensaje
             $objPersona= $personaController->buscar($idPersona);
             $objPersona=json_decode($objPersona);
+            //setea un nuevo param llamado persona donde se guarda el objeto persona por cada mensaje
+            $mensajeConversacion->persona= $objPersona;
             $idUsuario= $objPersona[0]->idUsuario;
             $idUsuario= ['idUsuario'=>$idUsuario];
             $idUsuario= new Request($idUsuario);
