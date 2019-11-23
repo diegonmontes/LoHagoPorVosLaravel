@@ -10,10 +10,12 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <form class="navbar-form" role="search">
+                <form class="navbar-form" role="search" action="{{route('buscar')}}">
                         <div class="input-group">
-                            <i class="fas fa-search iconoBusqueda"></i>
-                            <input type="text" class="form-control buscador" placeholder="Buscar" name="tituloAnuncio">
+                            <input type="text" class="form-control" placeholder="Buscar" name="filtrar">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                            </span>
                         </div>
                     </form>
                 </li>
