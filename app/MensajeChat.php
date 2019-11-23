@@ -9,7 +9,7 @@ class MensajeChat extends Model
 
     protected $table='mensajechat';
     protected $primaryKey='idMensajeChat';
-    protected $fillable = ['idMensajeChat','idConversacionChat', 'idPersona', 'mensaje', 'eliminado'];  
+    protected $fillable = ['idMensajeChat','idConversacionChat', 'idPersona', 'mensaje', 'visto', 'fechaVisto','eliminado'];  
 
     public function ConversacionChat() {
         return $this->hasOne('App\ConversacionChat', 'idConversacionChat', 'idConversacionChat');

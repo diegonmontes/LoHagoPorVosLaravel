@@ -231,6 +231,8 @@ CREATE TABLE `mensajechat`(
   `idConversacionChat` INT NOT NULL,
   `idPersona` INT NOT NULL,
   `mensaje` varchar(511),
+  `visto` TINYINT(1) DEFAULT 0,
+  `fechaVisto` timestamp NULL DEFAULT NULL,
   `eliminado` TINYINT(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -373,6 +375,15 @@ INSERT INTO `habilidadpersona`(`idHabilidadPersona`,`idPersona`,`idHabilidad`,`e
 (16,6,3,0),
 (17,6,4,0),
 (18,6,6,0);
+
+INSERT INTO `estadotrabajo` (`idEstadoTrabajo`,`idTrabajo`,`idEstado`) VALUES
+(1,1,1),
+(2,2,1),
+(3,3,1),
+(4,4,1),
+(5,5,1),
+(6,6,1);
+
 
 INSERT INTO `trabajoaspirante` (`idTrabajoAspirante`,`idPersona`,`idTrabajo`) VALUES
 (1,1,6),

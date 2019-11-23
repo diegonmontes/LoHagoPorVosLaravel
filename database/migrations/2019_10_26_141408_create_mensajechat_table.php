@@ -20,6 +20,8 @@ class CreateMensajechatTable extends Migration
             $table->integer('idPersona')->unsigned()->nullable(false);
             $table->string('mensaje',511);
             $table->tinyInteger('eliminado')->default(0);
+            $table->tinyInteger('visto')->default(0);
+            $table->timestamp('fechaVisto')->nullable(false);
             $table->timestamps();
             $table->foreign('idConversacionChat')->references('idConversacionChat')->on('conversacionchat');
             $table->foreign('idPersona')->references('idPersona')->on('persona');
