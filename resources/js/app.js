@@ -42,6 +42,7 @@ const app = new Vue({
                     mensaje: e.mensaje.mensaje,
                 });
                 document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
+                document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
             });
     },
 

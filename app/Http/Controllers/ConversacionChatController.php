@@ -6,6 +6,8 @@ use Auth;
 use App\Persona;
 use App\Trabajo;
 Use App\ConversacionChat;
+use App\Http\Controllers\MensajeChatController;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -170,10 +172,26 @@ class ConversacionChatController extends Controller
         $paramIdPersona = ['idPersona'=>$idPersona];
         $paramIdPersona = new Request($paramIdPersona);
         $conversacionChatController = new ConversacionChatController();
+        $mensajeChatController = new MensajeChatController();
         $listaConversaciones = $conversacionChatController->buscar($paramIdPersona);
         $listaConversaciones = json_decode($listaConversaciones);
         $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->orWhere('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
-
+        // A cada conversacion le agregamos el ulltimo mensaje que tengamos en ese momento
+        // Despues lo actualiza vue
+        
+        foreach ($listaConversaciones as $conversacion){
+            $idConversacionChat = $conversacion->idConversacionChat;
+            $arregloBuscarMensajes = ['idConversacionChat'=>$idConversacionChat];
+            
+            $arregloBuscarMensajes = new Request($arregloBuscarMensajes);
+            $listaMensajes = $mensajeChatController->buscar($arregloBuscarMensajes);
+            $listaMensajes = json_decode($listaMensajes);
+            $cantidadMensajes = count($listaMensajes);
+            if ($cantidadMensajes>0){
+                $ultimoMensaje = $listaMensajes[$cantidadMensajes-1]; // Obtenemos el ultimo mensaje
+                $conversacion['ultimoMensaje'] = $ultimoMensaje; // Se lo asignamos
+            }
+        }
       //  $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('conversacionchat.misconversaciones',compact('listaConversaciones'));
 

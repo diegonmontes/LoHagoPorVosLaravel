@@ -135,15 +135,14 @@ class MensajeChatController extends Controller
     // Permite buscar todas los mensajes
     public function buscar(Request $param){      
         $query = MensajeChat::OrderBy('idMensajeChat','ASC'); // Ordenamos los mensajes este medio
-
+            
             if (isset($param->idMensajeChat)){
                 $query->where("mensajechat.idMensajeChat",$param->idMensajeChat);
             }
 
             if (isset($param->idConversacionChat)){
                 $query->where("mensajechat.idConversacionChat",$param->idConversacionChat);
-            }
-
+            } 
             if (isset($param->idPersona)){
                 $query->where("mensajechat.idPersona",$param->idPersona);
             }
@@ -155,7 +154,6 @@ class MensajeChatController extends Controller
             if (isset($param->eliminado)){
                 $query->where("mensajechat.eliminado",$param->eliminado);
             }
-
             $listaMensajeChat=$query->get();   // Hacemos el get y seteamos en lista
             return json_encode($listaMensajeChat);
     }

@@ -17,6 +17,16 @@ img{ max-width:100%;}
 }
 .top_spac{ margin: 20px 0 0;}
 
+.circuloNotificacion {
+     width: 15px;
+     height: 15px;
+     -moz-border-radius: 50%;
+     -webkit-border-radius: 50%;
+     border-radius: 50%;
+     background: #5cb85c;
+     margin-left:10px;
+}
+
 
 .recent_heading {float: left; width:40%;}
 .srch_bar {
@@ -159,16 +169,7 @@ img{ max-width:100%;}
             </div>
           </div>
           <div class="inbox_chat">
-            <div class="chat_list active_chat">
-              <div class="chat_people">
-                <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="chat_ib">
-                  <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                  <p>Test, which is a new approach to have all solutions 
-                    astrology under one roof.</p>
-                </div>
-              </div>
-            </div>
+            
             @php
             use App\Http\Controllers\PersonaController;
             use Illuminate\Http\Request;
@@ -200,9 +201,10 @@ img{ max-width:100%;}
                         <div class="chat_people">
                             <div class="chat_img"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
                                 <div class="chat_ib">
-                                <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span class="chat_date">Dec 25</span></h5>
-                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}">Test, which is a new approach to have all solutions 
-                                    astrology under one roof.</p>
+                                <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span name="notificacionConversacion{{$conversacion->idConversacionChat}}" id="notificacionConversacion{{$conversacion->idConversacionChat}}" class="circuloNotificacion"> </span> <span class="chat_date">{{$conversacion->ultimoMensaje->created_at}}</span></h5>
+                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}">
+                                  {{$conversacion->ultimoMensaje->mensaje}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -255,9 +257,16 @@ img{ max-width:100%;}
 @section('js')
   <script type="application/javascript">
   function asignarActivo(idConversacion){
+    $("#btn-input").prop('id','enviarMensaje'+idConversacion);
+    $("#enviarMensaje"+idConversacion).bind("keyup change", function(e) {
+        $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
+    });
+    $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
     $('#idConversacionChat').val(idConversacion);
     $('.chat_list').removeClass('active_chat'); // Al seleccionado le agregamos el active
     $('#divConversacion'+idConversacion).addClass('active_chat'); // Al seleccionado le agregamos el active
   }
+
+
   </script>
 @endsection

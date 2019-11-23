@@ -62641,13 +62641,13 @@ var app = new Vue({
       });
 
       document.getElementById('ultimoMensajeConversacion' + e.idConversacionChat).innerHTML = e.mensaje.mensaje;
+      document.getElementById('notificacionConversacion' + e.idConversacionChat).classList.add('circuloNotificacion');
     });
   },
   methods: {
     fetchMessages: function fetchMessages(idConversacionChat) {
       var _this2 = this;
 
-      console.log(idConversacionChat);
       axios.get('messages/' + idConversacionChat).then(function (response) {
         _this2.messages = response.data;
       });
@@ -62657,8 +62657,6 @@ var app = new Vue({
       var idConversacionChat = document.querySelector("input[name=idConversacionChat]").value;
       this.messages.push(message);
       document.getElementById('ultimoMensajeConversacion' + idConversacionChat).innerHTML = message.mensaje;
-      console.log(idConversacionChat);
-      console.log(message.mensaje);
       axios.post('enviarmensaje', {
         headers: {
           "Content-type": "application/json"
