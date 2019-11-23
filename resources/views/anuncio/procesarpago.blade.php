@@ -36,10 +36,24 @@ use App\Trabajo;
         $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>3];
         $requesEstadoTrabajo = new Request($paramEstadotrabajo);
         Estadotrabajo::create($requesEstadoTrabajo->all());
-
         $trabajoAsignadoController = new TrabajoasignadoController();
         $arregloIdTrabajo = ['idTrabajo'=>$idTrabajo];
         $requestIdTrabajo = new Request($arregloIdTrabajo);
+        //para crear la conversacion:
+        $controllerConversacion= new ConversacionChatController;
+        //busco la persona asignada
+        $trabajoAsignado=$trabajoAsignadoController->buscar($requestIdTrabajo);
+        $trabajoAsginado= json_decode($trabajoAsignado);
+        $idPersona1= $trabajoAsignado->idPersona;
+        //busco la persona que creo el trabajo
+        $trabajoController= new TrabajoController;
+        $trabajo=$trabajoController->buscar($requestIdTrabajo);
+        $trabajo= json_decode($trabajo);
+        $idPersona2= $trabajo->idPersona;
+        //creo la conversacion
+        $arregloConversacion = ['idTrabajo'=>$idTrabajo,'idPersona1'=>$idPersona1,'idPersona2'=>$idPersona2];
+        $arregloConversacion = new Request($arregloConversacion);
+        ConversacionChat::create($arregloConversacion);
         $trabajoAsignadoController->enviarMailConfirmacionAsignado($requestIdTrabajo);
 
         header("Location: http://localhost/LoHagoPorVosLaravel/public/");
