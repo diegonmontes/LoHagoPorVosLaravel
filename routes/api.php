@@ -84,6 +84,8 @@ Route::get('listarMensajes','MensajeChatController@buscarMensajes');
 Route::post('guardarMensaje','MensajeChatController@store');
 Route::post('listarMensajesConversacion','MensajeChatController@listarMensajesConversacion');
 Route::post('listarConversaciones','ConversacionChatController@listarConversacionesFlutter');
+Route::post('actualizarvisto','ConversacionChatController@actualizarvisto');
+
 
 
 /** POSTULACIONES */
