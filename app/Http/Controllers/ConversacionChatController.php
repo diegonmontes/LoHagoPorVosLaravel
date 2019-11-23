@@ -175,10 +175,10 @@ class ConversacionChatController extends Controller
         $mensajeChatController = new MensajeChatController();
         $listaConversaciones = $conversacionChatController->buscar($paramIdPersona);
         $listaConversaciones = json_decode($listaConversaciones);
-        $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->orWhere('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         // A cada conversacion le agregamos el ulltimo mensaje que tengamos en ese momento
         // Despues lo actualiza vue
-        
+     
         foreach ($listaConversaciones as $conversacion){
             $idConversacionChat = $conversacion->idConversacionChat;
             $arregloBuscarMensajes = ['idConversacionChat'=>$idConversacionChat];

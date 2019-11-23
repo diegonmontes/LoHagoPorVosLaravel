@@ -27,6 +27,11 @@ img{ max-width:100%;}
      margin-left:10px;
 }
 
+.mensajeSinLeer {
+  font-weight:bold;
+  color:#000 !important;
+}
+
 
 .recent_heading {float: left; width:40%;}
 .srch_bar {
@@ -202,7 +207,7 @@ img{ max-width:100%;}
                             <div class="chat_img"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
                                 <div class="chat_ib">
                                 <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span name="notificacionConversacion{{$conversacion->idConversacionChat}}" id="notificacionConversacion{{$conversacion->idConversacionChat}}" class="circuloNotificacion"> </span> <span class="chat_date">{{$conversacion->ultimoMensaje->created_at}}</span></h5>
-                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}">
+                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}" class="mensajeSinLeer">
                                   {{$conversacion->ultimoMensaje->mensaje}}
                                 </p>
                             </div>
@@ -248,9 +253,6 @@ img{ max-width:100%;}
       
       
     </div>
-    @foreach ($listaConversaciones as $conversacion)
-        @php print_R($conversacion->persona1)@endphp
-    @endforeach 
 
 @endsection
 
@@ -260,7 +262,9 @@ img{ max-width:100%;}
     $("#btn-input").prop('id','enviarMensaje'+idConversacion);
     $("#enviarMensaje"+idConversacion).bind("keyup change", function(e) {
         $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
+        $('#ultimoMensajeConversacion'+idConversacion).removeClass('mensajeSinLeer');
     });
+    $('#ultimoMensajeConversacion'+idConversacion).removeClass('mensajeSinLeer');
     $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
     $('#idConversacionChat').val(idConversacion);
     $('.chat_list').removeClass('active_chat'); // Al seleccionado le agregamos el active

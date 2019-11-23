@@ -62642,6 +62642,7 @@ var app = new Vue({
 
       document.getElementById('ultimoMensajeConversacion' + e.idConversacionChat).innerHTML = e.mensaje.mensaje;
       document.getElementById('notificacionConversacion' + e.idConversacionChat).classList.add('circuloNotificacion');
+      document.getElementById('ultimoMensajeConversacion' + e.idConversacionChat).classList.add('mensajeSinLeer');
     });
   },
   methods: {
