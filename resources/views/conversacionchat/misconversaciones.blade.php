@@ -158,6 +158,7 @@ img{ max-width:100%;}
 
 
 <h3 class=" text-center">Mis Conversaciones</h3>
+
 <div class="messaging">
       <div class="inbox_msg">
         <div class="inbox_people">
@@ -263,7 +264,9 @@ img{ max-width:100%;}
     $("#enviarMensaje"+idConversacion).bind("keyup change", function(e) {
         $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
         $('#ultimoMensajeConversacion'+idConversacion).removeClass('mensajeSinLeer');
+        actualizarVisto(idConversacion);
     });
+    actualizarVisto(idConversacion);
     $('#ultimoMensajeConversacion'+idConversacion).removeClass('mensajeSinLeer');
     $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
     $('#idConversacionChat').val(idConversacion);
@@ -271,6 +274,32 @@ img{ max-width:100%;}
     $('#divConversacion'+idConversacion).addClass('active_chat'); // Al seleccionado le agregamos el active
   }
 
+  function actualizarVisto(idConversacion){
+    console.log(idConversacion);
+    //data = "&idConversacionChat=" + idConversacion;
+    data= {'idConversacionChat':idConversacion};
+    var idConversacion = idConversacion;
+    //console.log(data);
+    
 
+    $.ajax({
+        headers: {
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                },
+        url: "{{ route('mensajechat.actualizarvisto') }}",
+        type: "get",
+        data: "idConversacionChat=" + idConversacion,
+        dataType: "json",
+        contentType: false,
+        cache: false,
+        processData: false,
+
+       success: function(datos)
+       {
+            
+       }
+     });
+  }
   </script>
+
 @endsection

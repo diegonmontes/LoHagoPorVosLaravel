@@ -230,5 +230,27 @@ class MensajeChatController extends Controller
         return view('conversacionchat.misconversaciones',compact('listaMensajes'),['listaConversaciones'=>$listaConversaciones]);
     }
 
+    public function actualizarvisto(request $request){
+        $idConversacionChat = $request->idConversacionChat;
+
+
+        if (isset($request->idPersonaLogeada)){ // Significa que esta en laravel y ya tenemos el id persona logeada
+            // Hay que poner el visto en los mensajes de la otra persona
+        } else { // Significa que esta en laravel y hay que buscar el id persona
+            $controlPersona = new PersonaController;
+            $idUsuario = Auth::user()->idUsuario;
+            $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+            $param = new Request($param);
+            $persona = $controlPersona->buscar($param);
+            $persona = json_decode($persona);
+            $idPersonaLogeada = $persona[0]->idPersona;
+        }
+
+            MensajeChat::where('idPersona','!=',$idPersonaLogeada)->update(['visto'=>1,'fechaVisto'=>now()]);
+
+
+
+    }
+
 
 }

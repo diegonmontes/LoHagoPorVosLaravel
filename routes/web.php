@@ -213,3 +213,5 @@ Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name
 Route::get('conversaciones', 'ConversacionChatController@misconversaciones')->name('conversaciones')->middleware('auth','Mailvalidado','controlperfil');
 
 Route::get('buscar', 'TrabajoController@filtrar')->name('buscar');
+
+Route::get('actualizarvisto','MensajeChatController@actualizarvisto')->name('mensajechat.actualizarvisto')->middleware('auth');
