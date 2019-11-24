@@ -1895,6 +1895,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['messages']
 });
@@ -50422,34 +50440,69 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "ul",
-    { staticClass: "chat" },
-    _vm._l(_vm.messages, function(mensaje) {
-      return _c("li", { staticClass: "left clearfix" }, [
-        _c("div", { staticClass: "chat-body clearfix" }, [
-          _c("div", { staticClass: "header" }, [
-            _c("strong", { staticClass: "primary-font" }, [
-              _vm._v(
-                "\n                    " +
-                  _vm._s(mensaje.persona.nombrePersona) +
-                  " " +
-                  _vm._s(mensaje.persona.apellidoPersona) +
-                  "\n                "
-              )
+  return _c("ul", { staticClass: "chat" }, [
+    _vm.messages.length > 0
+      ? _c(
+          "div",
+          _vm._l(_vm.messages, function(mensaje) {
+            return _c("li", { staticClass: "left clearfix" }, [
+              mensaje.enviado
+                ? _c("div", { staticClass: "chat-body clearfix" }, [
+                    _c("div", { staticClass: "header" }, [
+                      _c("strong", { staticClass: "primary-font" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(mensaje.persona.nombrePersona) +
+                            " " +
+                            _vm._s(mensaje.persona.apellidoPersona) +
+                            "\n                    "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(mensaje.mensaje) +
+                          "\n                "
+                      )
+                    ])
+                  ])
+                : _c(
+                    "div",
+                    { staticClass: "chat-body clearfix mensajeDerecha" },
+                    [
+                      _c("div", { staticClass: "header" }, [
+                        _c("strong", { staticClass: "primary-font" }, [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(mensaje.persona.nombrePersona) +
+                              " " +
+                              _vm._s(mensaje.persona.apellidoPersona) +
+                              "\n                    "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(mensaje.mensaje) +
+                            "\n                "
+                        )
+                      ])
+                    ]
+                  )
             ])
-          ]),
-          _vm._v(" "),
-          _c("p", [
-            _vm._v(
-              "\n                " + _vm._s(mensaje.mensaje) + "\n            "
-            )
-          ])
+          }),
+          0
+        )
+      : _c("div", [
+          _vm._v(
+            "\n        No seleccionaste ninguna conversacion, por favor selecciona una.\n    "
+          )
         ])
-      ])
-    }),
-    0
-  )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62633,7 +62686,8 @@ var app = new Vue({
     var _this = this;
 
     var idConversacionChat = location.search.split('/')[1];
-    this.fetchMessages(idConversacionChat);
+    var idPersonaLogeada = document.querySelector("input[name=idPersonaLogeada]").value;
+    this.fetchMessages(idConversacionChat, idPersonaLogeada);
     Echo["private"]('chat').listen('MessageSent', function (e) {
       _this.messages.push({
         persona: e.persona,
@@ -62646,10 +62700,16 @@ var app = new Vue({
     });
   },
   methods: {
-    fetchMessages: function fetchMessages(idConversacionChat) {
+    fetchMessages: function fetchMessages(idConversacionChat, idPersonaLogeada) {
       var _this2 = this;
 
-      axios.get('messages/' + idConversacionChat).then(function (response) {
+      axios.post('messages', {
+        headers: {
+          "Content-type": "application/json"
+        },
+        idConversacionChat: idConversacionChat,
+        idPersonaLogeada: idPersonaLogeada
+      }).then(function (response) {
         _this2.messages = response.data;
       });
     },
@@ -62664,9 +62724,7 @@ var app = new Vue({
         },
         idConversacionChat: idConversacionChat,
         mensaje: message
-      }).then(function (response) {
-        console.log(response.data);
-      });
+      }).then(function (response) {});
     }
   }
 });

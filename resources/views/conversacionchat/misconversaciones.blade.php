@@ -32,6 +32,10 @@ img{ max-width:100%;}
   color:#000 !important;
 }
 
+.mensajeDerecha {
+  float: right;
+}
+
 
 .recent_heading {float: left; width:40%;}
 .srch_bar {
@@ -202,13 +206,13 @@ img{ max-width:100%;}
 
                     //persona emisora y persona a
                     @endphp
-                    <a href="#" onclick="asignarActivo({{$conversacion->idConversacionChat}})" v-on:click="fetchMessages({{$conversacion->idConversacionChat}})">
+                    <a href="#" onclick="asignarActivo({{$conversacion->idConversacionChat}})" v-on:click="fetchMessages({{$conversacion->idConversacionChat}},{{$personaLogeada->idPersona}})">
                     <div class="chat_list" name="divConversacion" id="divConversacion{{$conversacion->idConversacionChat}}">
                         <div class="chat_people">
                             <div class="chat_img"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
                                 <div class="chat_ib">
-                                <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span name="notificacionConversacion{{$conversacion->idConversacionChat}}" id="notificacionConversacion{{$conversacion->idConversacionChat}}" class="circuloNotificacion"> </span> <span class="chat_date">{{$conversacion->ultimoMensaje->created_at}}</span></h5>
-                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}" class="mensajeSinLeer">
+                                <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span name="notificacionConversacion{{$conversacion->idConversacionChat}}" id="notificacionConversacion{{$conversacion->idConversacionChat}}" @if((!$conversacion->ultimoMensaje->visto) && $conversacion->ultimoMensaje->idPersona != $personaEmisora->idPersona) class="circuloNotificacion" @endif> </span> <span class="chat_date">{{$conversacion->ultimoMensaje->created_at}}</span></h5>
+                                <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}" @if((!$conversacion->ultimoMensaje->visto) && $conversacion->ultimoMensaje->idPersona != $personaEmisora->idPersona) class="mensajeSinLeer" @endif >
                                   {{$conversacion->ultimoMensaje->mensaje}}
                                 </p>
                             </div>
@@ -231,17 +235,18 @@ img{ max-width:100%;}
             $listaPersonas = $personaController->buscar($paramBuscarPersona);
             $listaPersonas = json_decode($listaPersonas);
             $persona = $listaPersonas[0];
+            $idPersona = $persona->idPersona;
             $persona=json_encode($persona);
            
         @endphp
 
-        
                     <div class="panel panel-default">
                         <div class="panel-heading">Chats</div>
 
                         <div class="panel-body">
                             <chat-messages :messages="messages"></chat-messages>
                         </div>
+                        <input type="hidden" id="idPersonaLogeada" name="idPersonaLogeada" value="@php echo $idPersona @endphp">
                         <input type="hidden" value="" name="idConversacionChat" id="idConversacionChat">
                         <div class="panel-footer">
                             <chat-form
@@ -275,7 +280,6 @@ img{ max-width:100%;}
   }
 
   function actualizarVisto(idConversacion){
-    console.log(idConversacion);
     //data = "&idConversacionChat=" + idConversacion;
     data= {'idConversacionChat':idConversacion};
     var idConversacion = idConversacion;

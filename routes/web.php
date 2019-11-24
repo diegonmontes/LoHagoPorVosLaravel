@@ -156,7 +156,7 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
 });
 
 Route::get('/chat', 'MensajeChatController@indexDos');
-Route::get('messages/{idConversacionChat}', 'MensajeChatController@fetch')->middleware('auth');
+Route::post('messages', 'MensajeChatController@fetch')->middleware('auth');
 Route::post('enviarmensaje', 'MensajeChatController@sentMessage')->middleware('auth');
 
 

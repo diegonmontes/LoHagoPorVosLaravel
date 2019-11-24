@@ -33,7 +33,9 @@ const app = new Vue({
 
     created() {
         var idConversacionChat = location.search.split('/')[1];
-        this.fetchMessages(idConversacionChat);
+        var idPersonaLogeada = document.querySelector("input[name=idPersonaLogeada]").value;
+
+        this.fetchMessages(idConversacionChat,idPersonaLogeada);
 
         Echo.private('chat')
             .listen('MessageSent', (e) => {
@@ -48,8 +50,14 @@ const app = new Vue({
     },
 
     methods: {
-        fetchMessages(idConversacionChat) {
-            axios.get('messages/'+idConversacionChat).then(response => {
+        fetchMessages(idConversacionChat,idPersonaLogeada) {
+            axios.post('messages',{
+                headers: {
+                    "Content-type": "application/json"
+                },
+                idConversacionChat:idConversacionChat,
+                idPersonaLogeada:idPersonaLogeada
+            }).then(response => {
                 this.messages = response.data;
             });
         },
@@ -67,7 +75,6 @@ const app = new Vue({
                 idConversacionChat:idConversacionChat,
                 mensaje:message
             }).then(response => {
-                console.log(response.data);
             });
             
 

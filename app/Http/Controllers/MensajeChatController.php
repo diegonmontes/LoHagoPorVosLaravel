@@ -187,10 +187,21 @@ class MensajeChatController extends Controller
         //print_r($listaMensajes);
         return $listaMensajes;
     }
-    public function fetch($idConversacionChat)
+    public function fetch(request $request)
     {
-        return MensajeChat::with('persona')->where('idConversacionChat',$idConversacionChat)->get();
         
+        $idConversacionChat = $request->idConversacionChat;
+        $idPersonaLogeada = $request->idPersonaLogeada;
+        $listaMensajes= MensajeChat::with('persona')->where('idConversacionChat',$idConversacionChat)->get();
+        foreach ($listaMensajes as $mensaje){
+            if ($mensaje->persona->idPersona == $idPersonaLogeada){ // Significa que es la misma persona y el mando el msj
+                $mensaje['enviado'] = true;
+            } else { // Significa que el msj lo mando la otra persona
+                $mensaje['enviado'] = false;
+            }
+        }
+        return $listaMensajes;
+
     }
 
     public function sentMessage(Request $request)
@@ -247,11 +258,7 @@ class MensajeChatController extends Controller
             $persona = json_decode($persona);
             $idPersonaLogeada = $persona[0]->idPersona;
         }
-
             MensajeChat::where('idPersona','!=',$idPersonaLogeada)->update(['visto'=>1,'fechaVisto'=>now()]);
-
-
-
     }
 
 
