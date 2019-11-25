@@ -1,10 +1,31 @@
-body{
+body {
+  padding-top: 4.5rem !important;
   background-color: #ebebeb !important;
 }
+
+.custom-select {
+  display: inline-block;
+  width: 100%;
+  height: calc(1.6em + 0.75rem + 2px);
+  padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #495057;
+  vertical-align: middle;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
 /*
  * Navbar
  */
- .sombraNavbar{
+.sombraNavbar{
     box-shadow: 0px 5px 5px -5px #666;
 }
 
@@ -397,22 +418,23 @@ Date picker
 }
 
  @media (min-width: 1200px) { 
-  /* Card */
-  .cardInicio{
-    margin-left: 1%; 
-    margin-right: 1%; 
-    margin-bottom: 2%
-  }
+ /* Card */
+ .margenCardInicio{
+  width: 18rem;
+  margin-left: 1%; 
+  margin-right: 1%; 
+  margin-bottom: 3%
+}
 
-  .navbar-nav li{
-    width: max-content;
-  }
+.navbar-nav li{
+  width: max-content;
+}
 
-  /* .navbar-nav {
-    right: 0;
-    position: absolute;
-    margin-right: 3%;
-  } */
+/* .navbar-nav {
+  right: 0;
+  position: absolute;
+  margin-right: 3%;
+} */
 
 }
 
@@ -446,25 +468,4 @@ Date picker
   margin-top:3px;
   margin-bottom:-3px;
   color:#fff !important;
-}
-
-
-.iconoBusqueda {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  z-index: 3 !important;
-  display: block !important;
-  width: 34px !important;
-  height: 34px !important;
-  line-height: 34px !important;
-  text-align: center !important;
-  pointer-events: none !important;
-}
-
-.buscador {
-  padding-left: 30px!important;
-  -moz-border-radius: 50% !important;
-  -webkit-border-radius: 50% !important;
-  border-radius: 100px !important;
 }
