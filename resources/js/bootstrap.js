@@ -10,10 +10,8 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap');
 } catch (e) {}
-require('bootstrap-sass');
-require('bootstrap-sass/assets/stylesheets/_bootstrap.scss');
+
 
 window.Vue = require('vue');
 
@@ -38,6 +36,7 @@ window.axios.defaults.headers.common = {
 
  import Echo from 'laravel-echo';
 
+ 
  window.Pusher = require('pusher-js');
 
  window.Echo = new Echo({

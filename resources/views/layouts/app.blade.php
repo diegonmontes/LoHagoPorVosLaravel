@@ -3,16 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <!-- Icono -->
-    <link rel="shortcut icon" href="images/lohagoporvos.ico">
-    <link rel="stylesheet" type="text/css" href="styles/signin.css">
+    <link rel="shortcut icon" href="{{asset('images/lohagoporvos.ico')}}">
+
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Lo hago por vos') }}</title>
-
-    <!-- Scripts -->
-    <script type="text/javascript" src="{{ asset('js/app.js') }}" defer></script>
 
 
     <!-- Fonts -->
@@ -23,7 +22,22 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/fontawesome-free/css/all.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/estiloPropio.css') }}">
- 
+    <link rel="stylesheet" type="text/css" href="{{asset('styles/signin.css')}}">
+
+
+    <!-- Script -->
+    <script src="{{asset('js/app.js')}}" defer></script>
+    <script src="{{asset('js/jquery.js')}}"></script>
+    <script src="{{asset('js/bootstrap.js')}}"></script>
+
+
+    <script defer>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+            'pusherKey' => config('broadcasting.connections.pusher.key'),
+            'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+        ]) !!};
+    </script>
 
 
     @yield('css')
@@ -67,26 +81,13 @@
         }
     </style>
 
-    <!-- Scripts -->
-
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <script defer>
-        window.Laravel = {!! json_encode([
-            'csrfToken' => csrf_token(),
-            'pusherKey' => config('broadcasting.connections.pusher.key'),
-            'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
-        ]) !!};
-    </script>
+    
 
 </head>
 <body>
-    <div id="app">
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+    <main class="py-4">
+        @yield('content')
+    </main>
     @yield('js')
-    </div>
 </body>
 </html>

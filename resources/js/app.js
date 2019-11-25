@@ -6,7 +6,7 @@
  */
 
 require('./bootstrap');
-
+require('./jquery.js');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -22,7 +22,7 @@ import chatform from './components/ChatForm.vue';
 Vue.component('chat-form', chatform);
 
 
-
+if(document.getElementById('app')){
 const app = new Vue({
     
     el: '#app',
@@ -76,3 +76,4 @@ const app = new Vue({
 });
 
 
+};

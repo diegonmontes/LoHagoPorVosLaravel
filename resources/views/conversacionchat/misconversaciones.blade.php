@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 @section('css')
 <style>
 
@@ -155,7 +155,7 @@ img{ max-width:100%;}
 </style>
 @endsection
 @section('content')
-
+<div id="app">
 
 <h3 class=" text-center">Mis Conversaciones</h3>
 
@@ -254,7 +254,8 @@ img{ max-width:100%;}
       
       
     </div>
-
+</div>
+</div>
 @endsection
 
 @section('js')
@@ -301,5 +302,4 @@ img{ max-width:100%;}
      });
   }
   </script>
-
 @endsection
