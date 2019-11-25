@@ -2,6 +2,8 @@
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
 use App\Http\Controllers\TrabajoasignadoController;
+use App\Http\Controllers\ConversacionChatController;
+use App\Http\Controllers\TrabajoController;
 use Illuminate\Http\Request;
 use App\Estadotrabajo;
 use App\Trabajo;
@@ -43,19 +45,21 @@ use App\Trabajo;
         $controllerConversacion= new ConversacionChatController;
         //busco la persona asignada
         $trabajoAsignado=$trabajoAsignadoController->buscar($requestIdTrabajo);
-        $trabajoAsginado= json_decode($trabajoAsignado);
+        $trabajoAsignado= json_decode($trabajoAsignado);
+        $trabajoAsignado = $trabajoAsignado[0];
         $idPersona1= $trabajoAsignado->idPersona;
         //busco la persona que creo el trabajo
         $trabajoController= new TrabajoController;
         $trabajo=$trabajoController->buscar($requestIdTrabajo);
         $trabajo= json_decode($trabajo);
+        $trabajo = $trabajo[0];
         $idPersona2= $trabajo->idPersona;
         //creo la conversacion
         $arregloConversacion = ['idTrabajo'=>$idTrabajo,'idPersona1'=>$idPersona1,'idPersona2'=>$idPersona2];
         $arregloConversacion = new Request($arregloConversacion);
-        ConversacionChat::create($arregloConversacion);
+        $controllerConversacion->store($arregloConversacion);
+        //ConversacionChat::create($arregloConversacion);
         $trabajoAsignadoController->enviarMailConfirmacionAsignado($requestIdTrabajo);
-
         header("Location: http://localhost/LoHagoPorVosLaravel/public/");
         exit;
     } else {
