@@ -323,7 +323,8 @@ INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `mailUsuario`, `email_verif
 (3, 'sofi89', 'sofia_love@yahoo.com', '2019-11-07 20:06:06' , 'authkey', '$2y$10$wJYQxiIoDss0pMwOVGa9remm7eAthTg8dt6RkaduQLuTrK7jxH9US', 2, NULL, '2019-09-23 00:40:50', '2019-09-23 00:40:50'),
 (4, 'MarceloQ', 'marceloqa@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$QGmABaoc/uDVF310J2Xyiujfs60tZcWL3.suK0xgl0UtIX5w4yPdm', 2, NULL, '2019-09-23 00:41:52', '2019-09-23 00:41:52'),
 (5, 'emiElMasCopado', 'emiliano896325@hotmail.com','2019-11-07 20:06:06', 'authkey', '$2y$10$tLBIpow2heq/GtQzYpeH3.N8jmtJzEJwFt0peulIlwZ5eX5M.SKs2', 2, NULL, '2019-09-23 00:44:18', '2019-09-23 00:44:18'),
-(6, 'elpana', 'elpana@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 1, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
+(6, 'elpana', 'elpana@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 1, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22'),
+(7, 'lohagoporvos', 'lohagoporvosservicios@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 1, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
 
 
 INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`, `idLocalidad`, `eliminado`, `created_at`, `updated_at`) VALUES
@@ -332,7 +333,8 @@ INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPers
 (3, 'Sofia', 'Galletas', '45698746', '2991365289', 3, 4634, 0, '2019-09-23 00:41:13', '2019-09-23 00:41:13'),
 (4, 'Marcelo Antonio', 'Quintana', '43589633', '2994896324', 4, 4634, 0, '2019-09-23 00:42:34', '2019-09-23 00:42:34'),
 (5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11'),
-(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
+(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03'),
+(7, 'Lo Hago', 'Por Vos', '12312312', '2994122312', 7, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
 
 INSERT INTO `trabajo` (`idTrabajo`, `idPersona`, `idEstado`, `idCategoriaTrabajo`,`idLocalidad` ,`titulo`, `descripcion`, `monto`, `imagenTrabajo` ,`tiempoExpiracion` ,`eliminado`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, NULL ,'2019-12-12 00:00:00', 0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),

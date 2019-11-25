@@ -13,7 +13,7 @@
                     </p>
                 </div>
 
-                <div v-else class="chat-body clearfix">
+                <div v-else-if="mensaje.persona.idPersona == 7" class="chat-body clearfix alert alert-info" role="alert">
                     <div class="header">
                         <strong class="primary-font">
                             {{ mensaje.persona.nombrePersona}} {{mensaje.persona.apellidoPersona}}
@@ -22,6 +22,17 @@
                     <p>
                         {{ mensaje.mensaje }}
                     </p>
+                </div>
+
+                <div v-else class="chat-body clearfix">
+                    <div class="header">
+                        <strong class="primary-font">
+                            {{ mensaje.persona.nombrePersona}} {{mensaje.persona.apellidoPersona}}
+                        </strong>
+                    </div>
+                        <p>
+                            {{ mensaje.mensaje }}
+                        </p>
                 </div>
 
 

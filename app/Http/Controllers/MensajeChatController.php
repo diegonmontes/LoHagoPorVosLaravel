@@ -57,6 +57,7 @@ class MensajeChatController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request,['idConversacionChat'=>'required','mensaje'=>'required','idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
         MensajeChat::create($request->all()); //Creamos el elemento nuevo
         return redirect()->route('mensajechat.index')->with('success','Registro creado satisfactoriamente');
