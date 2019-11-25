@@ -54,4 +54,3 @@ class Trabajo extends Model
     }
 
 }
-

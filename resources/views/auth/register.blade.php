@@ -13,10 +13,12 @@
                 <form id="formRegistro" method="POST" action="{{ route('register') }}">
                     <div class="card fondoTarjeta sombraTarjeta">
                         <div class="card-body">
+                            <a href="{{route('inicio')}}" style="text-decoration:none;">
                             <div class="row justify-content-center align-items-center">
                                 <img src={{asset('images/LogoLoHagoPorVos.png')}} alt="Logo Lo hago por vos" style="width: 35%;"/>
-                                <h3 class="h3 mb-3 font-weight-normal" style="color: #FFF; font-weight: 600">{{ __('Completá el formulario') }}</h3>
+                                <h3 class="h3 mb-3 font-weight-normal" style="color: #FFF; font-weight: 600; text-decoration:none;">{{ __('Completá el formulario') }}</h3>
                             </div>
+                            </a>
                                 @csrf
                                 
                             <div class="form-group">

@@ -23,10 +23,12 @@
                     <div class="card fondoTarjeta sombraTarjeta">
                             
                         <div class="card-body">
-                            <div class="row justify-content-center align-items-center">
-                            <img src={{asset('images/LogoLoHagoPorVos.png')}} alt="Logo Lo hago por vos" style="width: 35%;"/>
-                                <h3 style="color: #FFF; font-weight: 600">LO HAGO POR VOS</h3>
-                            </div>
+                            <a href="{{route('inicio')}}" style="text-decoration:none;">
+                                <div class="row justify-content-center align-items-center">
+                                <img src={{asset('images/LogoLoHagoPorVos.png')}} alt="Logo Lo hago por vos" style="width: 35%;"/>
+                                    <h3 style="color: #FFF; font-weight: 600">LO HAGO POR VOS</h3>
+                                </div>
+                            </a>
                             <br>                 
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <label for="mailUsuario" class="sr-only">{{ __('Mail') }}</label>
