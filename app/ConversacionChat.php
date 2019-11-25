@@ -8,7 +8,7 @@ class ConversacionChat extends Model
 {
     protected $table='conversacionchat';
     protected $primaryKey='idConversacionChat';
-    protected $fillable = ['idConversacionChat', 'idTrabajo', 'idPersona1', 'idPersona2','eliminado'];  
+    protected $fillable = ['idConversacionChat', 'idTrabajo', 'idPersona1', 'idPersona2','deshabilitado','eliminado'];  
 
     public function Trabajo() {
         return $this->hasOne('App\Trabajo', 'idTrabajo', 'idTrabajo');

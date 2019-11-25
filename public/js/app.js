@@ -50447,28 +50447,7 @@ var render = function() {
           _vm._l(_vm.messages, function(mensaje) {
             return _c("li", { staticClass: "left clearfix" }, [
               mensaje.enviado
-                ? _c("div", { staticClass: "chat-body clearfix" }, [
-                    _c("div", { staticClass: "header" }, [
-                      _c("strong", { staticClass: "primary-font" }, [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(mensaje.persona.nombrePersona) +
-                            " " +
-                            _vm._s(mensaje.persona.apellidoPersona) +
-                            "\n                    "
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(mensaje.mensaje) +
-                          "\n                "
-                      )
-                    ])
-                  ])
-                : _c(
+                ? _c(
                     "div",
                     { staticClass: "chat-body clearfix mensajeDerecha" },
                     [
@@ -50493,6 +50472,27 @@ var render = function() {
                       ])
                     ]
                   )
+                : _c("div", { staticClass: "chat-body clearfix" }, [
+                    _c("div", { staticClass: "header" }, [
+                      _c("strong", { staticClass: "primary-font" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(mensaje.persona.nombrePersona) +
+                            " " +
+                            _vm._s(mensaje.persona.apellidoPersona) +
+                            "\n                    "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v(
+                        "\n                    " +
+                          _vm._s(mensaje.mensaje) +
+                          "\n                "
+                      )
+                    ])
+                  ])
             ])
           }),
           0

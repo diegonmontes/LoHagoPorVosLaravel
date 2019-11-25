@@ -19,6 +19,7 @@ class CreateConversacionchatTable extends Migration
             $table->integer('idTrabajo')->unsigned()->nullable(false);
             $table->integer('idPersona1')->unsigned()->nullable(false);
             $table->integer('idPersona2')->unsigned()->nullable(false);
+            $table->tinyInteger('deshabilitado')->default(0);
             $table->tinyInteger('eliminado')->default(0);
             $table->timestamps();
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');

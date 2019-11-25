@@ -216,6 +216,7 @@ CREATE TABLE `conversacionchat`(
   `idTrabajo` INT NOT NULL,
   `idPersona1` INT NOT NULL,
   `idPersona2` INT NOT NULL,
+  `deshabilitado` TINYINT(1) DEFAULT 0,
   `eliminado` TINYINT(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
