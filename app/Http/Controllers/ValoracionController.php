@@ -8,7 +8,10 @@ use Illuminate\Http\Request;
 use App\Valoracion;
 use App\Trabajo;
 use App\Persona;
+use App\ConversacionChat;
 use App\Estadotrabajo;
+use App\Http\Controllers\TrabajoController;
+
 
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -67,7 +70,10 @@ class ValoracionController extends Controller
         $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
         $trabajo = Trabajo::where('idTrabajo',$idTrabajo)->get();
         $trabajo = $trabajo[0];
-            
+
+        $conversacion = ConversacionChat::where('idTrabajo',$idTrabajo)->get();
+        $conversacion = $conversacion[0];
+        
         if (isset($request['flutter']) && $request['flutter']==true){ // Significa que la peticion viene desde flutter
             $usandoFlutter = true; // Si viene de flutter, seteamos a true
             $idPersonaLogeada = $request->idPersonaLogeada;  
@@ -147,8 +153,10 @@ class ValoracionController extends Controller
             
             try {
                 if($valorandoCreador){
-                    //Actualizamos el estado del trabajo a finalizado
+                    //Actualizamos el estado del trabajo a finalizado y deshabilitamos el chat
                     $trabajo->update(['idEstado'=>5]);
+                    $conversacion->update(['deshabilitado'=>1]);
+                    
                     //Creamos estadotrabajo con el estado en 5
                     $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>5];
                     $requesEstadoTrabajo = new Request($paramEstadotrabajo);
