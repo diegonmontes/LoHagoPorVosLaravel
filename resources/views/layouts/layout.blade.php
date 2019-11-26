@@ -27,9 +27,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 
     <!-- Script -->
-    <script src="{{asset('js/app.js')}}" defer></script>
+    <script src="{{asset('js/popper.js')}}"></script>
+
     <script src="{{asset('js/jquery.js')}}"></script>
+    <script src="{{asset('js/app.js')}}"></script>
     <script src="{{asset('js/bootstrap.js')}}"></script>
+
     @yield('jsHead')
 
     <!-- CDN JQuery -->

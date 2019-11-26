@@ -7,6 +7,8 @@
 
 require('./bootstrap');
 require('./jquery.js');
+require('./popper.js');
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
