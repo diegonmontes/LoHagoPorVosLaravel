@@ -27,7 +27,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 
     <!-- Pusher -->
-    <script>
+    <script defer>
         window.Laravel = {!! json_encode([
             'csrfToken' => csrf_token(),
             'pusherKey' => config('broadcasting.connections.pusher.key'),
@@ -36,7 +36,7 @@
         </script>
     
 <!-- Script -->
-<script src="{{asset('js/app.js')}}"  ></script>
+<script src="{{asset('js/app.js')}}" defer></script>
 
 <script src="{{asset('js/jquery.js')}}"></script>
 <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
@@ -61,7 +61,6 @@
 @yield('content')
 
 @include('layouts.partials.footer')
-@include('layouts.partials.footer-scripts')
 
 @yield('js')
 

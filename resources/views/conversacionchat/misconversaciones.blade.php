@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.conversacion')
 @section('css')
 <style>
 
