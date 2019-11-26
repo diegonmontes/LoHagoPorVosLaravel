@@ -33,7 +33,7 @@
             'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
         ]) !!};
     </script>
-        <script src="{{asset('js/app.js')}}" ></script>
+        <script src="{{asset('js/app.js')}}"></script>
 
     <script src="{{asset('js/jquery.js')}}"></script>
     <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>

@@ -43,11 +43,6 @@
 <script src="{{asset('js/bootstrap.js')}}"></script>
     @yield('jsHead')
 
-    <!-- CDN JQuery -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
-    
-
 
 
     @yield('css')
