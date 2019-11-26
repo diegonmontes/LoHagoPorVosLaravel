@@ -244,7 +244,7 @@ img{ max-width:100%;}
 
                     //persona emisora y persona a
                     @endphp
-                    <a href="#" onclick="asignarActivo({{$conversacion->idConversacionChat}})" v-on:click="fetchMessages({{$conversacion->idConversacionChat}},{{$personaLogeada->idPersona}})">
+                    <a href="#" onclick="asignarActivo({{$conversacion->idConversacionChat}},{{$conversacion->deshabilitado}})" v-on:click="fetchMessages({{$conversacion->idConversacionChat}},{{$personaLogeada->idPersona}})">
                     <div class="chat_list" name="divConversacion" id="divConversacion{{$conversacion->idConversacionChat}}">
                         <div class="chat_people">
                             <div class="chat_img"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
@@ -303,8 +303,19 @@ img{ max-width:100%;}
 
 @section('js')
   <script type="application/javascript">
-  function asignarActivo(idConversacion){
+  function asignarActivo(idConversacion,deshabilitado){
+    // Vemos si esta deshabilitado, si si, deshabilitamos boton enviar del form y asignamos nuevo msj
+    
+    
     $("#btn-input").prop('id','enviarMensaje'+idConversacion);
+    if (deshabilitado){
+      $("#btn-chat").attr("disabled", true);
+      $('[name*="mensaje"]').attr("placeholder", "El anuncio ya finalizó y no se pueden enviar más mensajes").blur();
+    } else {
+      $("#btn-chat").attr("disabled", false);
+      $('[name*="mensaje"]').attr("placeholder", "Escriba su mensaje...").blur();
+    }
+
     $("#enviarMensaje"+idConversacion).bind("keyup change", function(e) {
         $('#notificacionConversacion'+idConversacion).removeClass('circuloNotificacion');
         $('#ultimoMensajeConversacion'+idConversacion).removeClass('mensajeSinLeer');
