@@ -1,5 +1,5 @@
 body {
-  padding-top: 4.5rem !important;
+  padding-top: 3.5rem !important;
   background-color: #ebebeb !important;
 }
 
@@ -295,6 +295,7 @@ Date picker
   -webkit-box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
   -moz-box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
   box-shadow: 0px 0px 6px 0px rgba(138,138,138,1);
+  padding: 0px !important;
 }
 
 .navbar-toggler{
@@ -415,6 +416,11 @@ Date picker
   .navbar-nav li{
     width: max-content;
   }
+
+  .imgCarousel{
+    width: 300px !important;
+    min-height: 100% !important;
+  }
 }
 
  @media (min-width: 1200px) { 
@@ -423,7 +429,7 @@ Date picker
   width: 18rem;
   margin-left: 1%; 
   margin-right: 1%; 
-  margin-bottom: 3%
+  margin-top: 2%
 }
 
 .navbar-nav li{
@@ -435,6 +441,18 @@ Date picker
   position: absolute;
   margin-right: 3%;
 } */
+  .imgCarousel{
+    width: 35% !important;
+    min-height: 100% !important;
+  }
+
+  .botonNextCarousel{
+    height: 100px;
+    background-color:green;
+    width: 45px;
+    right: 0px;
+    border: 1px #7b7979 solid;
+  }
 
 }
 
