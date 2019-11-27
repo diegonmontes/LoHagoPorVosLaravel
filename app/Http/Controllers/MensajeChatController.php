@@ -59,7 +59,17 @@ class MensajeChatController extends Controller
     {
         
         $this->validate($request,['idConversacionChat'=>'required','mensaje'=>'required','idPersona'=>'required']); //Validamos los datos antes de guardar el elemento nuevo
-        MensajeChat::create($request->all()); //Creamos el elemento nuevo
+        $persona = Persona::where('idPersona',$request->idPersona)->first(); // Lo buscamos asi porque tiene que ser un app/persona
+        $idConversacionChat = $request->idConversacionChat;
+        $idPersona = $request->idPersona;        
+        $mensaje = MensajeChat::create([
+            'mensaje' => $request->mensaje, // ya recibimos el msj
+            'idConversacionChat'=>$idConversacionChat,
+            'idPersona'=>$idPersona, // ya recibimos la persona
+        ]);
+
+        broadcast(new MessageSent($persona, $mensaje, $idConversacionChat))->toOthers();
+
         return redirect()->route('mensajechat.index')->with('success','Registro creado satisfactoriamente');
     }
 
