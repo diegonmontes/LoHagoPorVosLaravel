@@ -452,6 +452,16 @@ Date picker
     width: 45px;
     right: 0px;
     border: 1px #7b7979 solid;
+    top: 30%;
+  }
+
+  .botonPreviousCarousel{
+    height: 100px;
+    background-color:green;
+    width: 45px;
+    left: 0px;
+    border: 1px #7b7979 solid;
+    top: 30%;
   }
 
 }
