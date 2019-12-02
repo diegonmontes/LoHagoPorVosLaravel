@@ -85,6 +85,8 @@
 								</div>
 							</div>
 						</div>
+
+
 						
 						<div class="row">
 							<div class="col-xs-12 col-sm-12 col-md-6 inputSelect">
@@ -103,6 +105,13 @@
 									<option value="">Seleccione una opcion</option>
 								</select>
 								<span id="msgidLocalidad" class="text-danger">{{ $errors->first('idLocalidad') }}</span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="form-group">
+								<label>N&uacute;mero de CBU:</label><br>
+								<input type="text" name="numeroCBU" id="numeroCBU" class="form-control input-sm">
 							</div>
 						</div>
 
@@ -304,6 +313,24 @@
 		}else{
 			$('#msgtelefonoPersona').empty();
 		}
+	}
+
+	function controlNumeroCBU() {
+		var numeroCBU = $('#numeroCBU').val();
+		var patron = /^[0-9]+$/; //Patron que debe respetarse
+		if(numeroCBU.length == 0){
+			if (!patron.test(telefonoPersona)){
+				$('#msgnumeroCBU').empty();
+				$('#msgnumeroCBU').append('Ingrese un numero de CBU v&aacute;lido.')
+			} else {
+				if (!(numeroCBU.length == 22)){
+					$('#msgnumeroCBU').empty();
+					$('#msgnumeroCBU').append('El CBU tiene 22 numeros.')
+					}
+			}
+		} else {
+			$('#msgnumeroCBU').empty();
+		}	
 	}
 
 	//Funcion que controla los checkbox de habilidades

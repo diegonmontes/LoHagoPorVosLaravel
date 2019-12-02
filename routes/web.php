@@ -152,6 +152,15 @@ Route::prefix('administrador')->middleware('auth','role:1')->group(function(){
     Route::post('trabajoaspirante/updatepanel','TrabajoaspiranteController@updatepanel')->name('trabajoaspirante.updatepanel');
     
     Route::resource('trabajoaspirante', 'TrabajoaspiranteController');
+
+    Route::get('multa/indexpanel','MultaController@indexpanel')->name('multa.indexpanel');
+    
+    Route::get('multa/createpanel','MultaController@createpanel')->name('multa.createpanel');
+    
+    Route::post('multa/storepanel','MultaController@storepanel')->name('multa.storepanel');
+
+    Route::resource('multa', 'MultaController');
+    
     
 });
 

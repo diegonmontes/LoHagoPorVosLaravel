@@ -9,7 +9,7 @@ class Persona extends Model
     //
     protected $table='persona';
     protected $primaryKey = 'idPersona';
-    protected $fillable = ['idPersona', 'nombrePersona','apellidoPersona','dniPersona','telefonoPersona', 'imagenPersona','idLocalidad','idUsuario','eliminado'];
+    protected $fillable = ['idPersona', 'nombrePersona','apellidoPersona','dniPersona','telefonoPersona', 'imagenPersona','numeroCBU','idLocalidad','idUsuario','eliminado'];
 
     public function Localidad()
     {
@@ -53,6 +53,11 @@ class Persona extends Model
 
     public function MensajeChat() {
         return $this->hasMany('App\MensajeChat', 'idPersona', 'idPersona');
+    }
+
+    public function Multa()
+    {
+        return $this->hasMany('App\Multa', 'idMulta', 'idMulta');
     }
 
     

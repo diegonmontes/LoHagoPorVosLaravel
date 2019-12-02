@@ -17,6 +17,7 @@
                         <th>Apellido</th>
                         <th>DNI</th>
                         <th>Telefono</th>
+                        <th>CBU</th>
                         <th>Imagen</th>
                         <th>ID Usuario</th>
                         <th>Localidad</th>
@@ -34,6 +35,7 @@
                         <td>{{$persona->apellidoPersona}}</td>
                         <td>{{$persona->dniPersona}}</td>
                         <td>{{$persona->telefonoPersona}}</td>
+                        <td>{{$persona->numeroCBU}}</td>
                         @if($persona->imagenPersona!=null)
                         <td><img src="{{asset("storage/perfiles/$persona->imagenPersona")}}" onClick=abrirImagen("{{$persona->imagenPersona}}") width="75px;" height="50px"></td>
                         @else

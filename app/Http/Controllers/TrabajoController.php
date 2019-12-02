@@ -872,6 +872,11 @@ class TrabajoController extends Controller
                     'success'   => true,
                     'message'   => 'Los datos se han guardado correctamente.' 
                     ], 200);
+            } else {
+                return response()->json([
+                    'success'   => false,
+                    'errors'   =>  'Ocurrio un error'
+                    ], 422);
             }
         
     }

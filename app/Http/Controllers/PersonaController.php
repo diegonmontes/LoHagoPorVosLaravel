@@ -119,10 +119,12 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
+            'numeroCBU.min' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.max' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.numeric' => 'Solo se puede ingresar n&uacute;meros.'
         ] ;
-
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
-
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required','numeroCBU'=>'nullable|numeric|min:22|max:22'],$mensajesErrores);
+        
         $controller= new Controller;
         $nombre=$request->nombrePersona;
         $apellido=$request->apellidoPersona;
@@ -324,10 +326,11 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
-
+            'numeroCBU.min' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.max' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.numeric' => 'Solo se puede ingresar n&uacute;meros.'
         ] ;
-
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required','numeroCBU'=>'nullable|numeric|min:22|max:22'],$mensajesErrores);
         
         $controller= new Controller;
         $nombre=$request->nombrePersona;
@@ -689,12 +692,13 @@ class PersonaController extends Controller
             'telefonoPersona.required' => 'El telefono es obligatorio.',
             'idLocalidad.required' => 'La localidad es obligatoria.',
             'idProvincia.required' => 'La provincia es obligatoria.',
-            'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
-            'dniPersona.min' => 'Ingrese un DNI valido.',
+            'numeroCBU.min' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.max' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.numeric' => 'Solo se puede ingresar n&uacute;meros.'
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
-
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required','numeroCBU'=>'nullable|numeric|min:22|max:22'],$mensajesErrores);
+        
         
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){
                 $imagen=$request->file('imagenPersona'); // Obtenemos el obj de la img
@@ -764,9 +768,12 @@ class PersonaController extends Controller
             'idProvincia.required' => 'La provincia es obligatoria.',
             'dniPersona.numeric' => 'Solo se puede ingresar numeros.',
             'dniPersona.min' => 'Ingrese un DNI valido.',
+            'numeroCBU.min' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.max' => 'Un CBU tiene 22 n&uacute;meros.',
+            'numeroCBU.numeric' => 'Solo se puede ingresar n&uacute;meros.'
         ] ;
 
-        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required'],$mensajesErrores);
+        $this->validate($request,["habilidades"=> "required|array|min:3","preferenciaPersona"=> "required|array|min:3",'nombrePersona'=>'required|max:80','apellidoPersona'=>'required|max:80','dniPersona'=>'required|numeric|min:8','telefonoPersona'=>'required|max:32','idLocalidad'=>'required','numeroCBU'=>'nullable|numeric|min:22|max:22'],$mensajesErrores);
         
         
         if(isset($request['imagenPersona']) && $request['imagenPersona']!=null){

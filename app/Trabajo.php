@@ -53,4 +53,9 @@ class Trabajo extends Model
         return $this->hasMany('App\Comentario', 'idTrabajo')->whereNull('idComentarioPadre');
     }
 
+    public function Multa() {
+        return $this->hasOne('App\Multa', 'idTrabajo', 'idTrabajo');
+    }
+
+
 }

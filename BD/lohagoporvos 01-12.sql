@@ -74,6 +74,7 @@ CREATE TABLE `persona`(
     `telefonoPersona` VARCHAR(32),
     `idLocalidad` INT NOT NULL,
     `imagenPersona` VARCHAR(511),
+    `numeroCBU` VARCHAR(22),
     `idUsuario` INT NOT NULL,
     `eliminado` TINYINT(1) DEFAULT 0,
     `created_at` timestamp NULL DEFAULT NULL,
@@ -259,6 +260,19 @@ CREATE TABLE `comentario`(
     FOREIGN KEY (`idComentarioPadre`) REFERENCES `comentario`(`idComentario`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `multa`(
+  `idMulta` INT NOT NULL AUTO_INCREMENT,
+  `idTrabajo` INT NOT NULL,
+  `idPersona` INT NOT NULL,
+  `motivo` varchar(511),
+  `valor` varchar(16),
+  `eliminado` TINYINT(1) DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`idMulta`),
+  FOREIGN KEY (`idTrabajo`) REFERENCES `trabajo`(`idTrabajo`),
+  FOREIGN KEY (`idPersona`) REFERENCES `persona`(`idPersona`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -304,6 +318,8 @@ INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (2,
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (3,'Asignado','El anunciante asigno un postulante');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (4,'Esperando Confirmacion','Asignado ya realizo el trabajo. El anunciante debe confirmar el trabajo realizado');
 INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (5,'Finalizado','Anuncio finalizado');
+INSERT INTO `estado`(`idEstado`, `nombreEstado`, `descripcionEstado`) VALUES (6,'Cancelado','Anuncio cancelado');
+
 
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (1,'Mascotas','Mascotas','categoriaMascota.jpg');
 INSERT INTO `categoriaTrabajo`(`idCategoriaTrabajo`, `nombreCategoriaTrabajo`,`descripcionCategoriaTrabajo`,`imagenCategoriaTrabajo`) VALUES (2,'Auto','Auto','categoriaAuto.jpg');
@@ -327,14 +343,14 @@ INSERT INTO `usuario` (`idUsuario`, `nombreUsuario`, `mailUsuario`, `email_verif
 (7, 'lohagoporvos', 'lohagoporvosservicios@gmail.com', '2019-11-07 20:06:06', 'authkey', '$2y$10$oWPaukdqz42rriPArLqYhuk4Hr.m.yuAEH55kniQtUo.vVb6hfNFu', 1, NULL, '2019-09-23 00:57:22', '2019-09-23 00:57:22');
 
 
-INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`,`imagenPersona`, `idLocalidad`, `eliminado`, `created_at`, `updated_at`) VALUES
-(1, 'Juan', 'Sanchez', '89576214', '2995049638', 1, 'diegoImplorando.jpg',4634, 0, '2019-09-23 00:37:12', '2019-09-23 00:37:12'),
-(2, 'Maria Jose', 'Perez', '46325896', '02995698835', 2, 'nickiAdolorida.jpg',4634, 0, '2019-09-23 00:39:52', '2019-09-23 00:39:52'),
-(3, 'Sofia', 'Galletas', '45698746', '2991365289', 3, 'ofeliaPensando.jpg', 4634, 0, '2019-09-23 00:41:13', '2019-09-23 00:41:13'),
-(4, 'Marcelo Antonio', 'Quintana', '43589633', '2994896324', 4,'diegoContento.jpg', 4634, 0, '2019-09-23 00:42:34', '2019-09-23 00:42:34'),
-(5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 'juanRomanContento.jpg',2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11'),
-(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 'juanRomanLegendario.jpg', 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03'),
-(7, 'Lo Hago', 'Por Vos', '12312312', '2994122312', 7, 'sistema.jpg', 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
+INSERT INTO `persona` (`idPersona`, `nombrePersona`, `apellidoPersona`, `dniPersona`, `telefonoPersona`, `idUsuario`,`imagenPersona`,`numeroCBU`,`idLocalidad`, `eliminado`, `created_at`, `updated_at`) VALUES
+(1, 'Juan', 'Sanchez', '89576214', '2995049638', 1, 'diegoImplorando.jpg',1234123412341234123412,4634, 0, '2019-09-23 00:37:12', '2019-09-23 00:37:12'),
+(2, 'Maria Jose', 'Perez', '46325896', '02995698835', 2, 'nickiAdolorida.jpg',1234156785678234123412,4634, 0, '2019-09-23 00:39:52', '2019-09-23 00:39:52'),
+(3, 'Sofia', 'Galletas', '45698746', '2991365289', 3, 'ofeliaPensando.jpg',1234123412341234125678,4634, 0, '2019-09-23 00:41:13', '2019-09-23 00:41:13'),
+(4, 'Marcelo Antonio', 'Quintana', '43589633', '2994896324', 4,'diegoContento.jpg', 1234123412341234123412, 4634, 0, '2019-09-23 00:42:34', '2019-09-23 00:42:34'),
+(5, 'Emiliano', 'Gonzales', '46987456', '2991365852', 5, 'juanRomanContento.jpg',1234123456781234123412, 2968, 0, '2019-09-23 00:45:11', '2019-09-23 00:45:11'),
+(6, 'Federico', 'de Girasol', '46986325', '2998963258', 6, 'juanRomanLegendario.jpg',1234123412341234123412, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03'),
+(7, 'Lo Hago', 'Por Vos', '12312312', '2994122312', 7, 'sistema.jpg', 5678123412341234123412, 4634, 0, '2019-09-23 00:58:03', '2019-09-23 00:58:03');
 
 INSERT INTO `trabajo` (`idTrabajo`, `idPersona`, `idEstado`, `idCategoriaTrabajo`,`idLocalidad` ,`titulo`, `descripcion`, `monto`, `imagenTrabajo` ,`tiempoExpiracion` ,`eliminado`, `created_at`, `updated_at`) VALUES
 (1, 3, 1, 1, 4634,'Lavar a Flopy', 'Alguien que pueda llevar a mi perrita al petshop MiPerrito', 600.00, NULL ,'2019-12-12 00:00:00', 0, '2019-09-23 00:47:02', '2019-09-23 00:47:02'),

@@ -21,6 +21,7 @@ class CreatePersonaTable extends Migration
             $table->string('dniPersona',10)->unique()->nullable(false);
             $table->string('telefonoPersona',32);
             $table->string('imagenPersona',511)->default('fotoperfil.png');
+            $table->string('numeroCBU',22);
             $table->integer('idUsuario')->unsigned()->nullable(false);
             $table->integer('idLocalidad')->unsigned()->nullable(false);
             $table->tinyInteger('eliminado')->default(0);

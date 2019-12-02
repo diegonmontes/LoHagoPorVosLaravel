@@ -14,7 +14,6 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/app.css') }}">
-
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/estiloPropio.css') }}">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/fontawesome-free/css/all.css') }}">   
     <link rel="stylesheet" type="text/css"  href="{{ asset('styles/imagenTrabajo.css') }}">
@@ -35,6 +34,13 @@
                 'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
             ]) !!};
             </script>
+
+            <!-- Script -->
+<script src="{{asset('js/app.js')}}"  ></script>
+
+<script src="{{asset('js/jquery.js')}}"></script>
+<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+<script src="{{asset('js/bootstrap.js')}}"></script>
    
     @yield('css')
     @yield('jsHead')
@@ -103,6 +109,12 @@
                     <li class="list-group-item">
                         <a href="{{ route('mensajechat.index') }}">
                             Mensajes
+                        </a>
+                    </li>
+
+                    <li class="list-group-item">
+                        <a href="{{ route('multa.indexpanel') }}">
+                            Multas
                         </a>
                     </li>
 
@@ -180,7 +192,6 @@
 @include('layouts.partials.footer')
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
 
 @yield('js')
 @yield('jsAbrirModalImagen')

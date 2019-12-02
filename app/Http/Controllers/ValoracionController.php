@@ -11,8 +11,6 @@ use App\Persona;
 use App\ConversacionChat;
 use App\Estadotrabajo;
 use App\Http\Controllers\TrabajoController;
-
-
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
