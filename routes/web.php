@@ -191,6 +191,8 @@ Route::get('trabajorealizado/{idTrabajo}', 'TrabajoController@trabajorealizado')
 Route::post('terminado', 'ValoracionController@store')->name('valoracion.enviarvaloracion')->middleware('auth','Mailvalidado','controlperfil');
 Route::get('valorar/{idTrabajo}', 'TrabajoController@valor')->name('trabajo.valor')->middleware('auth','Mailvalidado','controlperfil');
 Route::post('valorarpersona', 'ValoracionController@valorarpersona')->name('trabajo.valorarpersona')->middleware('auth','Mailvalidado','controlperfil');
+Route::get('cancelar/{idTrabajo}', 'TrabajoController@cancelartrabajo')->name('trabajo.cancelartrabajo')->middleware('auth','Mailvalidado','controlperfil');
+Route::post('multa.cancelartrabajo', 'MultaController@cancelartrabajo')->name('multa.cancelartrabajo')->middleware('auth','Mailvalidado','controlperfil');
 
 
 

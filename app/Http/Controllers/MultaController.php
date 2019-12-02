@@ -4,6 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Multa;
+use App\Estadotrabajo;
+use App\Trabajo;
+use App\Persona;
+use App\User;
+use App\ConversacionChat;
+use Auth;
+use App\Http\Controllers\TrabajoasignadoController;
+use App\Http\Controllers\TrabajoaspiranteController;
+use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\MontoController;
+use App\Http\Controllers\EmailController;
 
 
 class MultaController extends Controller
@@ -144,4 +156,234 @@ class MultaController extends Controller
         //Multa::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('multa.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }
+
+    public function cancelartrabajo(request $request){
+        
+        $idTrabajo = $request->idTrabajo;
+        $motivo = $request->motivo;
+        $conversacionChatController = new ConversacionChatController();
+        $valor = 300;
+
+        if (isset($request->idPersona)){ // Si esta seteado significa que viene desde flutter o esta cancelando el que esta asignado
+            $idPersona = $request->idPersona;
+        } else { // Significa que esta en laravel y esta cancelando el creador
+            $idUsuario = Auth::user()->idUsuario;
+            $persona = Persona::where('idUsuario','=',$idUsuario)->get();
+            $idPersona=$persona[0]->idPersona;
+        }
+
+        try {
+            Trabajo::find($idTrabajo)->update(['idEstado'=>6]);
+
+            // Creamos el registro nuevo en estadotrabajo
+            $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>6];
+            $requestEstadoTrabajo = new Request($paramEstadotrabajo);
+            Estadotrabajo::create($requestEstadoTrabajo->all());
+
+            // Obtenemos el id de la conversacion para deshabilitarlo
+            $arregloConversacion = ['idTrabajo'=>$idTrabajo];
+            $requestArregloConversacion = new Request($arregloConversacion);
+            $listaConversaciones = $conversacionChatController->buscar($requestArregloConversacion);
+            $listaConversaciones = json_decode($listaConversaciones);
+            $objConversacion = $listaConversaciones[0];
+            $idConversacion = $objConversacion->idConversacionChat;
+
+            ConversacionChat::find($idConversacion)->update(['deshabilitado'=>true]);
+            $paramMulta = ['idTrabajo'=>$idTrabajo,'idPersona'=>$idPersona,'motivo'=>$motivo,'valor'=>$valor];
+            if (Multa::create($paramMulta)){
+                $multaCreada = true;
+            } else {
+                $multaCreada = false;
+            }
+    
+        } catch (Exception $e){
+
+        }
+
+        if ($multaCreada){ // Es decir esta todo bien yy ahora envia los mails
+            $arregloIdTrabajo = ['idTrabajo'=>$idTrabajo];
+            $requestIdTrabajo = new Request($arregloIdTrabajo);
+
+            $this->enviarMailCanceladoAsignado($requestIdTrabajo);
+            $this->enviarMailCreadorCancelado($requestIdTrabajo);
+            $respuesta = true;
+        } else {
+            $respuesta = false;
+        }
+
+        return $respuesta;
+    }
+
+    // Recibimos por parametro el id trabajo. Enviamos a la funcion del email controller el obj trabajo, obj persona creador de este, objpersona y objusuario del asignado 
+    // Aca llama a la funcion que va a enviar el mail que le envia al asignado cuando el creador cancela su anuncio
+    public function enviarMailCanceladoAsignado(request $request){
+
+        // Hacemos la creacion de los objs controladores
+        $trabajoController = new TrabajoController();
+        $personaController = new PersonaController();
+        $usuarioController = new UserController();
+        $trabajoAsignadoController = new TrabajoasignadoController();
+        $multaController = new MultaController();
+        
+        $idTrabajo = $request->idTrabajo; // Obtenemos el id del trabajo para buscar el trabajo 
+
+        // Obtenemos el trabajo que se asigno
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $listaTrabajo = $trabajoController->buscar($arregloBuscarTrabajo);
+        $listaTrabajo = json_decode($listaTrabajo);
+        $objTrabajo = $listaTrabajo[0];
+
+        // Obtenemos el idPersona del creador del trabajo
+
+        $idPersonaCreador = $objTrabajo->idPersona;
+        $arregloBuscarPersonaCreador = ['idPersona'=>$idPersonaCreador];
+        $arregloBuscarPersonaCreador = new Request($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = $personaController->buscar($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = json_decode($listaPersonaCreador);
+        $objPersonaCreador = $listaPersonaCreador[0];
+
+        // Buscamos el trabajo asignado
+        $arregloBuscarTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajoAsignado = new Request($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = $trabajoAsignadoController->buscar($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = json_decode($listaTrabajoAsignado);
+        $objTrabajoAsignado = $listaTrabajoAsignado[0]; // Obtenemos el trabajo asignado
+
+        // Obtenemos el idPersona de la persona asignada del trabajo
+
+        $idPersonaAsignado = $objTrabajoAsignado->idPersona;
+        $arregloBuscarPersonaAsignada = ['idPersona'=>$idPersonaAsignado];
+        $arregloBuscarPersonaAsignada = new Request($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = $personaController->buscar($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = json_decode($listaPersonaAsignada);
+        $objPersonaAsignado = $listaPersonaAsignada[0];
+
+        // Obtenemos el usuario de la persona asignada del trabajo (en ella esta su mail)
+       
+        $idUsuarioAsignado = $objPersonaAsignado->idUsuario;
+        $arregloBuscarUsuarioAsignado = ['idUsuario'=>$idUsuarioAsignado];
+        $arregloBuscarUsuarioAsignado = new Request($arregloBuscarUsuarioAsignado);
+        $listaUsuarioAsignado = $usuarioController->buscar($arregloBuscarUsuarioAsignado);
+        $listaUsuarioAsignado = json_decode($listaUsuarioAsignado);
+        $objUsuarioAsignado = $listaUsuarioAsignado[0];
+
+        $listaMultas=$multaController->buscar($arregloBuscarTrabajo);
+        $listaMultas = json_decode($listaMultas);
+        $objMulta = $listaMultas[0];
+
+        
+        $mail = new EmailController;
+        if ($mail->enviarMailAsignadoCancelado($objUsuarioAsignado,$objPersonaAsignado,$objMulta,$objTrabajo,$objPersonaCreador)){
+            $respuesta = true;
+        } else {
+            $respuesta = false;
+        }
+        
+        return $respuesta;
+    }
+
+    // Recibimos por parametro el id trabajo. Enviamos a la funcion del email controller el obj trabajo, obj persona creador de este, objpersona y objusuario del asignado 
+    // Aca llama a la funcion que va a enviar el mail que le envia confirmando al creador que cancelo su anuncio
+    public function enviarMailCreadorCancelado (request $request){
+        // Hacemos la creacion de los objs controladores
+        $trabajoAsignadoController = new TrabajoasignadoController;
+        $personaController = new PersonaController;
+        $usuarioController = new UserController;
+        $trabajoController = new TrabajoController;
+        $multaController = new MultaController();
+        $idTrabajo = $request->idTrabajo; // Obtenemos el id del trabajo para buscar el trabajo 
+
+        // Obtenemos el trabajo que se asigno
+        $arregloBuscarTrabajo = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajo = new Request($arregloBuscarTrabajo);
+        $listaTrabajo = $trabajoController->buscar($arregloBuscarTrabajo);
+        $listaTrabajo = json_decode($listaTrabajo);
+        $objTrabajo = $listaTrabajo[0];
+
+        // Obtenemos el idPersona del creador del trabajo
+
+        $idPersonaCreador = $objTrabajo->idPersona;
+        $arregloBuscarPersonaCreador = ['idPersona'=>$idPersonaCreador];
+        $arregloBuscarPersonaCreador = new Request($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = $personaController->buscar($arregloBuscarPersonaCreador);
+        $listaPersonaCreador = json_decode($listaPersonaCreador);
+        $objPersonaCreador = $listaPersonaCreador[0];
+
+        // Buscamos el trabajo asignado
+        $arregloBuscarTrabajoAsignado = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarTrabajoAsignado = new Request($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = $trabajoAsignadoController->buscar($arregloBuscarTrabajoAsignado);
+        $listaTrabajoAsignado = json_decode($listaTrabajoAsignado);
+        $objTrabajoAsignado = $listaTrabajoAsignado[0]; // Obtenemos el trabajo asignado
+        
+        // Obtenemos el idPersona de la persona asignada del trabajo
+
+        $idPersonaAsignado = $objTrabajoAsignado->idPersona;
+        $arregloBuscarPersonaAsignada = ['idPersona'=>$idPersonaAsignado];
+        $arregloBuscarPersonaAsignada = new Request($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = $personaController->buscar($arregloBuscarPersonaAsignada);
+        $listaPersonaAsignada = json_decode($listaPersonaAsignada);
+        $objPersonaAsignado = $listaPersonaAsignada[0];
+
+        // Obtenemos el usuario de la persona asignada del trabajo (en ella esta su mail)
+    
+        $idUsuarioCreador = $objPersonaCreador->idUsuario;
+        $arregloBuscarUsuarioCreador = ['idUsuario'=>$idUsuarioCreador];
+        $arregloBuscarUsuarioCreador = new Request($arregloBuscarUsuarioCreador);
+        $listaUsuarioCreador = $usuarioController->buscar($arregloBuscarUsuarioCreador);
+        $listaUsuarioCreador = json_decode($listaUsuarioCreador);
+        $objUsuarioCreador = $listaUsuarioCreador[0];
+
+        
+        $arregloBuscarMulta = ['idTrabajo'=>$idTrabajo];
+        $arregloBuscarMulta = new Request($arregloBuscarMulta);
+        $listaMultas = $multaController->buscar($arregloBuscarMulta);
+        $listaMultas = json_decode($listaMultas);
+        $objMulta = $listaMultas[0];
+
+        $mail = new EmailController;
+        if ($mail->enviarMailCreadorCancelado($objUsuarioCreador,$objPersonaAsignado,$objMulta,$objTrabajo,$objPersonaCreador)){
+            $respuesta = true;
+        } else {
+            $respuesta = false;
+        }
+        return $respuesta;
+    }
+    // Permite buscar todas las multas 
+    public function buscar(request $param){
+        $query = Multa::OrderBy('idMulta','ASC'); // Ordenamos las valoraciones por este medio
+
+            if (isset($param->idMulta)){
+                $query->where("multa.idMulta",$param->idMulta);
+            }
+
+            if (isset($param->valor)){
+                $query->where("multa.valor",$param->valor);
+            }
+
+            if (isset($param->motivo)){
+                $query->where("multa.motivo",$param->motivo);
+            }
+
+            if (isset($param->idTrabajo)){
+                $query->where("multa.idTrabajo",$param->idTrabajo);
+            }
+
+            if (isset($param->idPersona)){
+                $query->where("multa.idPersona",$param->idPersona);
+            }
+
+            if (isset($param->eliminado)){
+                $query->where("multa.eliminado",$param->eliminado);
+            }
+
+            $listaMultas=$query->get();   // Hacemos el get y seteamos en lista
+            return json_encode($listaMultas);
+
+    }
+
+
+
+
 }

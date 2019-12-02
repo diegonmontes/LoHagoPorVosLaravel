@@ -726,6 +726,13 @@ class TrabajoController extends Controller
         return view('anuncio.valoracion',['trabajo'=>$trabajo,'persona'=>$persona]);
     }
 
+    public function cancelartrabajo($idTrabajo){
+        $trabajo=Trabajo::where('idTrabajo','=', $idTrabajo)->get()[0];
+        return  view('anuncio.cancelar',compact('trabajo'));
+        //return view('anuncio.index',['provincias'=>$listaProvincias,'listaCategoriaTrabajo'=>$listaCategoriaTrabajo]);
+
+    }
+
     public function update(Request $request)
     {
         $idTrabajo = $request->idTrabajo;

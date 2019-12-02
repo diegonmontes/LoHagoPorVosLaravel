@@ -139,7 +139,58 @@ class EmailController extends Controller
         });
 
         return redirect()->route('home');
+    }
 
+    public function enviarMailAsignadoCancelado ($objUsuarioAsignado,$objPersonaAsignado,$objMulta,$objTrabajo,$objPersonaCreador){
+        $dato = [
+            'nombrePersonaAsignada' => $objPersonaAsignado->nombrePersona,
+            'apellidoPersonaAsignada' => $objPersonaAsignado->apellidoPersona,
+            'tituloTrabajo' => $objTrabajo->titulo,
+            'descripcionTrabajo' => $objTrabajo->descripcion,
+            'nombrePersonaCreador' => $objPersonaCreador->nombrePersona,
+            'apellidoPersonaCreador' => $objPersonaCreador->apellidoPersona,
+            'valor'=> $objMulta->valor,
+            'motivo'=> $objMulta->motivo,
+            'fechaMulta'=> $objMulta->created_at
+        ];
+        
+        $subject = "Se ha cancelado un anuncio que se te habia asignado";
+        $for = "$objUsuarioAsignado->mailUsuario";
+        Mail::send('email/asignadocancelado',$dato, function($msj) use($subject,$for){
+            $msj->from('lohagoporvosservicios@gmail.com',"Lo hago por vos");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+
+        return true;
 
     }
+
+    public function  enviarMailCreadorCancelado($objUsuarioCreador,$objPersonaAsignado,$objMulta,$objTrabajo,$objPersonaCreador){
+        $dato = [
+            'nombrePersonaAsignada' => $objPersonaAsignado->nombrePersona,
+            'apellidoPersonaAsignada' => $objPersonaAsignado->apellidoPersona,
+            'tituloTrabajo' => $objTrabajo->titulo,
+            'descripcionTrabajo' => $objTrabajo->descripcion,
+            'nombrePersonaCreador' => $objPersonaCreador->nombrePersona,
+            'apellidoPersonaCreador' => $objPersonaCreador->apellidoPersona,
+            'valor'=> $objMulta->valor,
+            'motivo'=> $objMulta->motivo,
+            'fechaMulta'=> $objMulta->created_at
+        ];
+        
+        $subject = "Cancelaste un anuncio";
+        $for = "$objUsuarioCreador->mailUsuario";
+        Mail::send('email/creadorcancelado',$dato, function($msj) use($subject,$for){
+            $msj->from('lohagoporvosservicios@gmail.com',"Lo hago por vos");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+
+    return true;
+    }
+
+
+
+
 }

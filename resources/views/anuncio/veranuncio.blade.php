@@ -57,6 +57,7 @@
 
                                         @else
                                         <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
+                                        <a href="{{route('trabajo.cancelartrabajo',$trabajo->idTrabajo)}}"> <button type="button" class="btn btn-danger">Cancelar el anuncio</button> </a>
                                         @endif
                                     @endif        
                                 @endif
