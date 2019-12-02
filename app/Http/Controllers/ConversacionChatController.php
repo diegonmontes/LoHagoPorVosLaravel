@@ -222,36 +222,38 @@ class ConversacionChatController extends Controller
 
     public function miChat(Request $request){        
         $personaController = new PersonaController();
-        //Para ello primero vemos quien esta logeado y tomamos su idUsuario
+        //Buscamos la persona logeada
         $idUsuario = Auth::user()->idUsuario;
         $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
         $param = new Request($param);
         $persona = $personaController->buscar($param);
         $persona = json_decode($persona);
         $idPersona = $persona[0]->idPersona;
-        $paramConversacionAnuncio = ['idTrabajo'=>6];
+        //Buscamos la conversacion del anuncio
+        $paramConversacionAnuncio = ['idTrabajo'=>$request->idTrabajo];
         $paramConversacionAnuncio = new Request($paramConversacionAnuncio);
         $conversacionChatController = new ConversacionChatController();
         $mensajeChatController = new MensajeChatController();
-        $listaConversaciones = $conversacionChatController->buscar($paramConversacionAnuncio);
-        $listaConversaciones = json_decode($listaConversaciones);
-        $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
+        $conversacion = $conversacionChatController->buscar($paramConversacionAnuncio);
+        $conversacion = json_decode($conversacion);
+        //Enviamos todos los elementos y los ordenamos en forma desedente
+        //Paginacion de 15 elementos por pagina
+        $conversacion=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); 
         
-        foreach ($listaConversaciones as $conversacion){
-            $idConversacionChat = $conversacion->idConversacionChat;
-            $arregloBuscarMensajes = ['idConversacionChat'=>$idConversacionChat];
-            
-            $arregloBuscarMensajes = new Request($arregloBuscarMensajes);
-            $listaMensajes = $mensajeChatController->buscar($arregloBuscarMensajes);
-            $listaMensajes = json_decode($listaMensajes);
-            $cantidadMensajes = count($listaMensajes);
-            if ($cantidadMensajes>0){
-                $ultimoMensaje = $listaMensajes[$cantidadMensajes-1]; // Obtenemos el ultimo mensaje
-                $conversacion['ultimoMensaje'] = $ultimoMensaje; // Se lo asignamos
-            }
+        $idConversacionChat = $conversacion->idConversacionChat;
+        $arregloBuscarMensajes = ['idConversacionChat'=>$idConversacionChat];
+        
+        $arregloBuscarMensajes = new Request($arregloBuscarMensajes);
+        $listaMensajes = $mensajeChatController->buscar($arregloBuscarMensajes);
+        $listaMensajes = json_decode($listaMensajes);
+        $cantidadMensajes = count($listaMensajes);
+        if ($cantidadMensajes>0){
+            $ultimoMensaje = $listaMensajes[$cantidadMensajes-1]; // Obtenemos el ultimo mensaje
+            $conversacion['ultimoMensaje'] = $ultimoMensaje; // Se lo asignamos
         }
-        return redirect()->route('inicio',compact('listaConversaciones'));
+        
 
+        return view('conversacionchat.chat', compact('conversacion'));
     }
 
 }

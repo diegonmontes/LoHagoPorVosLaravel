@@ -222,9 +222,9 @@ img{ max-width:100%;}
             use App\Http\Controllers\PersonaController;
             use Illuminate\Http\Request;
             @endphp
-            @if(count($listaConversaciones)>0)
+            @if(count($conversacion)>0)
             
-                @foreach ($listaConversaciones as $conversacion)
+                @foreach ($conversacion as $conversacion)
                     @php
 
                     $idUsuario = Auth::user()->idUsuario;
