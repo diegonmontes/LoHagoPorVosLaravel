@@ -45,9 +45,9 @@ const app = new Vue({
                     persona: e.persona,
                     mensaje: e.mensaje.mensaje,
                 });
-                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
-                document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
-                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).classList.add('mensajeSinLeer');
+                    document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
+                    document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
+                    document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).classList.add('mensajeSinLeer');
             });
     },
 

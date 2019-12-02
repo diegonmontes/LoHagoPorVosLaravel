@@ -57,6 +57,13 @@
 
                                         @else
                                         <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
+                                       
+                                        {{-- <a href="{{route('chatanuncio',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Ver chat</a> --}}
+                                        <form action="{{url('buscarchat')}}" method="post">
+                                            {{ csrf_field() }}
+                                        <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
+                                            <input type="submit">
+                                            </form>
                                         @endif
                                     @endif        
                                 @endif
