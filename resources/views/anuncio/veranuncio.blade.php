@@ -61,9 +61,9 @@
                                         {{-- <a href="{{route('chatanuncio',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Ver chat</a> --}}
                                         <form action="{{url('chat')}}" method="post">
                                             {{ csrf_field() }}
-                                        <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
+                                            <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
                                             <input type="submit">
-                                            </form>
+                                        </form>
                                         @endif
                                     @endif        
                                 @endif
@@ -72,6 +72,7 @@
                                 @if($soyElAsignadoPagado)
                                 
                                     <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-sm btn-primary">Termine el trabajo</a>
+                                    
 
                                 @else
                                     @if($esMiAnuncio)
@@ -106,6 +107,11 @@
 
                                 @else
                                     <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Termine el trabajo</a>
+                                    <form action="{{url('chat')}}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
+                                        <input type="submit">
+                                    </form>
                                 @endif
                                 @endif
                             @else
