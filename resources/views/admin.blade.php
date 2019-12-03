@@ -17,6 +17,13 @@
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/estiloPropio.css') }}">
     <link rel="stylesheet" type="text/css"  href="{{ asset('css/fontawesome-free/css/all.css') }}">   
     <link rel="stylesheet" type="text/css"  href="{{ asset('styles/imagenTrabajo.css') }}">
+    
+    <!-- Script -->
+    <script src="{{asset('js/app.js')}}"  ></script>
+    <script src="{{asset('js/jquery.js')}}"></script>
+    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
+    <script src="{{asset('js/bootstrap.js')}}"></script>
+   
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script> 
     <script src="http://ajax.microsoft.com/ajax/jquery.validate/1.7/additional-methods.js"></script>
@@ -25,23 +32,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
-   
-    <!-- Pusher -->
-    <script defer>
-            window.Laravel = {!! json_encode([
-                'csrfToken' => csrf_token(),
-                'pusherKey' => config('broadcasting.connections.pusher.key'),
-                'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
-            ]) !!};
-            </script>
 
-            <!-- Script -->
-<script src="{{asset('js/app.js')}}"  ></script>
-
-<script src="{{asset('js/jquery.js')}}"></script>
-<script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
-<script src="{{asset('js/bootstrap.js')}}"></script>
-   
     @yield('css')
     @yield('jsHead')
 

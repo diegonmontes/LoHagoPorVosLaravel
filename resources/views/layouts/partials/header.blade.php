@@ -7,6 +7,7 @@
 
 
 <!-- carousel -->
+@if(!$busqueda)
 
 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -43,6 +44,7 @@
           <span class="sr-only">Next</span>
         </a>
       </div>
+@endif
 <!-- Anuncios -->
     @if($busqueda)
     <div class="row">
@@ -59,22 +61,21 @@
                 </div>
             
                 <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                    <form class="navbar-form" role="search" action="{{route('buscar')}}">
+                    <form id="formFiltrar" name="formFiltrar" role="form" action="{{route('buscar')}}" method="GET">
+
                         <div class="card-body">
                             <hr>
-                            <div data-role="main" class="ui-content">
-                                <div data-role="rangeslider">
-                                    <label for="rangoMonto">Monto:</label>
-                                    <input type="range" name="rangoMonto" id="rangoMonto" value="0" min="0" max="9999">
-                                </div>
+                            <div class="form-group">
+                                <label for="rangoMonto">Monto:</label>
+                                <input type="number" name="rangoMonto" id="rangoMonto" class="form-control input-sm inputBordes" placeholder="$" min="0" pattern="^[0-9]+" style="-moz-appearance: textfield;">
                             </div>
                             <hr>
-                            Catgorias
+                            Categorias
                             <div class="form-check form-check">
                                 @foreach($listaCategoria as $categoria)
                                     <div class="form-check">
-                                        <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$categoria->idCategoriaTrabajo}}" id="defaultCheck{{$categoria->idCategoria}}" name="categoria[]">
-                                        <label class="form-check-label" for="defaultCheck{{$categoria->idCategoria}}">
+                                        <input class="form-check-input" type="checkbox" value="{{$categoria->idCategoriaTrabajo}}" id="defaultCheck{{$categoria->idCategoriaTrabajo}}" name="categoria[]">
+                                        <label class="form-check-label" for="defaultCheck{{$categoria->idCategoriaTrabajo}}">
                                             {{$categoria->nombreCategoriaTrabajo}}
                                         </label>
                                     </div>
@@ -82,14 +83,32 @@
                             </div>
                             <hr>
                             Provincias
-                            <div class="form-check form-check">
+                            <ul class="nav flex-column" role="tablist">
                                 @foreach($provincias as $provincia)
-                                    <div class="form-check">
-                                        <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$provincia->idProvincia}}" id="defaultCheck{{$provincia->idProvincia}}" name="provincia[]">
-                                        <label class="form-check-label" for="defaultCheck{{$provincia->idProvincia}}">
-                                            {{$provincia->nombreProvincia}}
-                                        </label>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#@php echo str_replace(" ","",(strtolower($provincia->nombreProvincia))) @endphp" role="tab" data-toggle="tab" aria-selected="true">{{$provincia->nombreProvincia}}</a>  
+                                </li>
+                                @endforeach
+                            </ul>
+                            <hr>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                    
+
+                                @foreach($provincias as $provincia)
+                                <div role="tabpanel" class="tab-pane" id="@php echo str_replace(" ","",(strtolower($provincia->nombreProvincia))) @endphp">
+                                        Localidades
+                                    <div class="form-check form-check">
+                                    @foreach($provincia->Localidad as $localidad)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="{{$localidad->idLocalidad}}" id="defaultCheck{{$localidad->idLocalidad}}" name="localidad[]">
+                                            <label class="form-check-label" for="defaultCheck{{$localidad->idLocalidad}}">
+                                                {{$localidad->nombreLocalidad}}
+                                            </label>
+                                        </div>
+                                    @endforeach
                                     </div>
+                                </div>
                                 @endforeach
                             </div>
                         </div>
@@ -100,6 +119,8 @@
                 </div>
             </div>   
         </div>
+
+        
     @endif
 
     <div class="@if(!$busqueda) container @else col-md-9 @endif">

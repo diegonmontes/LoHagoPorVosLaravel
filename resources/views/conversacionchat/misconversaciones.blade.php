@@ -208,13 +208,13 @@ img{ max-width:100%;}
             <div class="recent_heading">
               <h4>Recientes</h4>
             </div>
-            <div class="srch_bar">
+            {{-- <div class="srch_bar">
               <div class="stylish-input-group">
                 <input type="text" class="search-bar"  placeholder="Search" >
                 <span class="input-group-addon">
                 <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
                 </span> </div>
-            </div>
+            </div> --}}
           </div>
           <div class="inbox_chat">
             
@@ -279,7 +279,6 @@ img{ max-width:100%;}
         @endphp
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Chats</div>
 
                         <div class="panel-body">
                             <chat-messages :messages="messages"></chat-messages>

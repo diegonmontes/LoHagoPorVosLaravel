@@ -23,11 +23,13 @@ window.Vue = require('vue');
  */
     
 window.axios = require('axios');
+if(document.getElementById('app')){
 
-window.axios.defaults.headers.common = {
-    'X-CSRF-TOKEN': window.Laravel.csrfToken,
-    'X-Requested-With': 'XMLHttpRequest'
-};
+    window.axios.defaults.headers.common = {
+        'X-CSRF-TOKEN': window.Laravel.csrfToken,
+        'X-Requested-With': 'XMLHttpRequest'
+    };
+}
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -40,11 +42,11 @@ window.axios.defaults.headers.common = {
  window.Pusher = require('pusher-js');
 
  window.Echo = new Echo({
-     authEndpoint: 'http://172.16.163.118/LoHagoPorVosLaravel/public/broadcasting/auth',
+     authEndpoint: 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth',
      broadcaster: 'pusher',
      key: process.env.MIX_PUSHER_APP_KEY,
      cluster: process.env.MIX_PUSHER_APP_CLUSTER,
      encrypted: true
  });
 
- window.Echo.connector.pusher.config.authEndpoint = 'http://172.16.163.118/LoHagoPorVosLaravel/public/broadcasting/auth';
+ window.Echo.connector.pusher.config.authEndpoint = 'http://localhost/LoHagoPorVosLaravel/public/broadcasting/auth';

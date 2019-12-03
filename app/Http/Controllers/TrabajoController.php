@@ -492,11 +492,11 @@ class TrabajoController extends Controller
             if (isset($param->categoria)){
                 $query->whereIn('idCategoriaTrabajo', $param->categoria);
             }
-            
 
-            // if (isset($param->provincia)){
-            //     $query->select('.idTrabajo')->whereIn('idCategoriaTrabajo', $param->categoria);
-            // }
+            if (isset($param->localidad)){
+                $query->whereIn('localidad.idLocalidad', $param->localidad);
+            }
+
 
             //Otras funciones
 
