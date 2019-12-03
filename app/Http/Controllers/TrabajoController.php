@@ -20,11 +20,14 @@ use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
 use App\Http\Controllers\TrabajoaspiranteController;
 use App\Http\Controllers\TrabajoasignadoController;
+use App\Http\Controllers\MultaController;
 //Vendor
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
+
 
 
 class TrabajoController extends Controller
@@ -297,6 +300,7 @@ class TrabajoController extends Controller
         if (count($busquedaPago)>0){
             //Si esta pago el anuncio seteo pagado en true
             $pagado = true;
+            $objPago = $busquedaPago[0];
         } else { 
             // En caso contrario en false
             $pagado = false;
@@ -323,9 +327,32 @@ class TrabajoController extends Controller
         
         
         //Si tiene una persona asignada y todavia no pago preparamos el enlace para pagar
+        // Tambien verificamos que no tenga ninguna multa si no se lo sumamos
         if(!$pagado & $asignarPersona){
+            // Buscamos si tiene alguna multa
+            $multaController = new MultaController();
+            $idPersona = $trabajo['idPersona'];
+            $arregloBuscarMulta = ['idPersona'=>$idPersona,'eliminado'=>0,'pagado'=>0];
+            $requestBuscarMulta = new Request($arregloBuscarMulta);
+            $listaMultas = $multaController->buscar($requestBuscarMulta);
+            $listaMultas = json_decode($listaMultas);
+
+            $tieneMulta = false; // inicializamos en false
+            if (count($listaMultas)>0){
+                $tieneMulta = true; // Seteamos en true
+                $objMulta = $listaMultas[0];
+                $valorMulta = $objMulta->valor;
+                $motivoMulta = $objMulta->motivo;   
+            }
+            
             $monto = $trabajo['monto'];
             $titulo = $trabajo['titulo'];
+            
+            if ($tieneMulta){
+                $monto = $monto + $valorMulta;
+                $titulo = $titulo . " y multa por motivo: " . $motivoMulta; 
+            }
+            
             $idTrabajo = $trabajo['idTrabajo'];
             $arregloTrabajo = ['monto'=>$monto,'titulo'=>$titulo,'idTrabajo'=>$idTrabajo];
             $requestTrabajo = new Request($arregloTrabajo);
@@ -334,6 +361,18 @@ class TrabajoController extends Controller
             $link = json_decode($link);
         }else{
             $link = '#';
+        }
+        $puedeCancelar = false;
+
+        // Si pago y asigno una persona, tiene 1 hora para poder cancelarlo y que se le cobre una multa
+        if ($pagado && $asignarPersona){
+            $fechaActual = Carbon::now(); // obtenemos la fecha actual
+            $fechaPagado = $objPago->created_at; // Obtenemos la fecha del pago
+            $fechaPagado = Carbon::parse($fechaPagado); // Hacemos el parse de la fecha del pago
+            $diferenciaHora = $fechaActual->diffInHours($fechaPagado); // Obtenemos la dif de horas
+            if ($diferenciaHora<1){ // si es menor a 1, significa que puede cancelarlo
+                $puedeCancelar = true;
+            } 
         }
 
         //Si es estado 4 tiene que confirmar que se realizo el trabajo
@@ -379,7 +418,7 @@ class TrabajoController extends Controller
         $listaTrabajo = Trabajo::all();
 
         if(isset($trabajo)){
-            $vista = view('anuncio.veranuncio',compact('trabajo'),['listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'anuncioExpirado'=>$anuncioExpirado,'esMiAnuncio'=>$esMiAnuncio,'asignarPersona'=>$asignarPersona,'soyElAsignadoPagado'=>$soyElAsignadoPagado,'valorarPersona'=>$valorarPersona,'trabajoTerminado'=>$trabajoTerminado,'listaAspirantes'=>$listaAspirantes]);
+            $vista = view('anuncio.veranuncio',compact('trabajo'),['puedeCancelar'=>$puedeCancelar,'listaTrabajo'=>$listaTrabajo,'link'=>$link,'mostrarBotonPostularse'=>$mostrarBotonPostularse,'pagado'=>$pagado,'anuncioExpirado'=>$anuncioExpirado,'esMiAnuncio'=>$esMiAnuncio,'asignarPersona'=>$asignarPersona,'soyElAsignadoPagado'=>$soyElAsignadoPagado,'valorarPersona'=>$valorarPersona,'trabajoTerminado'=>$trabajoTerminado,'listaAspirantes'=>$listaAspirantes]);
         }else{
             $vista = abort(404);
         }
@@ -590,9 +629,13 @@ class TrabajoController extends Controller
         $listaTrabajosCerradas = $this->buscar($paramTrabajosCerradas);
         $listaTrabajosCerradas = json_decode($listaTrabajosCerradas);
 
+        $paramTrabajosEsperar = new Request(['eliminado='=>0,'idEstado'=>3]);
+        $listaTrabajosEsperar = $this->buscar($paramTrabajosEsperar);
+        $listaTrabajosEsperar = json_decode($listaTrabajosEsperar);
+
         $categoriaTrabajo = new CategoriaTrabajo;
 
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosEsperar'=>$listaTrabajosEsperar,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
 
     }
 

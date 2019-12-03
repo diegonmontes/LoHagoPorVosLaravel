@@ -266,6 +266,8 @@ CREATE TABLE `multa`(
   `idPersona` INT NOT NULL,
   `motivo` varchar(511),
   `valor` varchar(16),
+  `fechaPagado` timestamp NULL DEFAULT NULL,
+  `pagado` TINYINT(1) DEFAULT 0,
   `eliminado` TINYINT(1) DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,

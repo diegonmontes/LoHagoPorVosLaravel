@@ -77,6 +77,13 @@
 							</div>
 						</div>
 
+						<div class="row">
+								<div class="form-group">
+									<label> Pagado </label>
+									<input type="checkbox" name="pagado" id="pagado" value="{{$multa->pagado}}" class="form-control input-sm">
+								</div>
+							</div>	
+
 						
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">

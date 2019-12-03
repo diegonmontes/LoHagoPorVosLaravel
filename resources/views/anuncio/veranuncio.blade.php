@@ -5,6 +5,7 @@
 
 
 @section('content')
+
 <section class="container h-100">
     <div class="row h-100 justify-content-center ">
         <div class="col-md-8">
@@ -57,7 +58,10 @@
 
                                         @else
                                         <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
-                                        <a href="{{route('trabajo.cancelartrabajo',$trabajo->idTrabajo)}}"> <button type="button" class="btn btn-danger">Cancelar el anuncio</button> </a>
+                                        @endif
+
+                                        @if($puedeCancelar)
+                                        <li class="list-group-item"><a href="{{route('trabajo.cancelartrabajo',$trabajo->idTrabajo)}}"> <button type="button" class="btn btn-danger cancelarAnuncio">Cancelar el anuncio</button> </a></li>
                                         @endif
                                     @endif        
                                 @endif

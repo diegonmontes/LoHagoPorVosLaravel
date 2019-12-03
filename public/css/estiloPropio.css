@@ -312,6 +312,10 @@ Date picker
   text-align: center
 }
 
+.cancelarAnuncio{
+  width: 100%;  
+}
+
 @media (max-width: 575.98px) {
   body{
     min-width: 575.98px
