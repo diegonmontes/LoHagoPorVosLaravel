@@ -152,8 +152,8 @@ class ValoracionController extends Controller
             try {
                 if($valorandoCreador){
                     //Actualizamos el estado del trabajo a finalizado y deshabilitamos el chat
-                    $trabajo->update(['idEstado'=>5]);
-                    $conversacion->update(['deshabilitado'=>1]);
+                    $trabajo->update(['idEstado'=>5,'updated_at'=>now()]);
+                    $conversacion->update(['deshabilitado'=>1,'updated_at'=>now()]);
                     
                     //Creamos estadotrabajo con el estado en 5
                     $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>5];
@@ -298,7 +298,7 @@ class ValoracionController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Valoracion::where('idValoracion',$id)->update(['eliminado'=>1]);
+        Valoracion::where('idValoracion',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Valoracion::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('valoracion.index')->with('success','Registro eliminado satisfactoriamente');
     }
@@ -360,7 +360,7 @@ class ValoracionController extends Controller
         $valoracion::create($paramValoracion);
         //Actualizamos el estado del trabajo a finalizado
         $trabajo = new Trabajo;
-        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>5]);
+        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>5,'updated_at'=>now()]);
         //Creamos estadotrabajo con el estado en 1
         $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>5];
         $requesEstadoTrabajo = new Request($paramEstadotrabajo);

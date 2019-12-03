@@ -114,7 +114,7 @@ class EstadotrabajoController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Estadotrabajo::where('idEstadoTrabajo',$id)->update(['eliminado'=>1]);
+        Estadotrabajo::where('idEstadoTrabajo',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Estadotrabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('estadotrabajo.index')->with('success','Registro eliminado satisfactoriamente');
     }

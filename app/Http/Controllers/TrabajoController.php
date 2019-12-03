@@ -730,7 +730,7 @@ class TrabajoController extends Controller
         $idTrabajo = $request->idTrabajo;
         //Actualizamos el estado del trabajo
         $trabajo = new Trabajo;
-        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>4]);
+        $trabajo->where('idTrabajo','=', $idTrabajo)->update(['idEstado'=>4,'updated_at'=>now()]);
         //Y la tabla estadotrabajo tambien actualizamos
         $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>4];
         $requesEstadoTrabajo = new Request($paramEstadotrabajo);
@@ -798,7 +798,7 @@ class TrabajoController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Trabajo::where('idTrabajo',$id)->update(['eliminado'=>1]);
+        Trabajo::where('idTrabajo',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Trabajo::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajo.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }

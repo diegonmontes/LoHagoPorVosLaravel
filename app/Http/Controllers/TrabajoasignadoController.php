@@ -151,7 +151,7 @@ class TrabajoasignadoController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Trabajoasignado::where('idTrabajoAsignado',$id)->update(['eliminado'=>1]);
+        Trabajoasignado::where('idTrabajoAsignado',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Trabajoasignado::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajoasignado.index')->with('success','Registro eliminado satisfactoriamente');
     }

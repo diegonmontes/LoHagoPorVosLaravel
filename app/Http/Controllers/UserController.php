@@ -311,7 +311,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Usuario::where('idUsuario',$id)->update(['eliminado'=>1]);
+        Usuario::where('idUsuario',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
      //   User::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('usuario.index')->with('success','Registro eliminado satisfactoriamente');
     }

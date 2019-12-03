@@ -121,7 +121,7 @@ class ConversacionChatController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        ConversacionChat::where('idConversacionChat',$id)->update(['eliminado'=>1]);
+        ConversacionChat::where('idConversacionChat',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //ConversacionChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('conversacionchat.index')->with('success','Registro eliminado satisfactoriamente');
     }
