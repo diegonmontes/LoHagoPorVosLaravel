@@ -1,75 +1,116 @@
-<!-- Mensajes -->
+{{-- <!-- Mensajes -->
 @if(Session::has('success'))
     <div class="alert alert-info col-md-8">
         {{Session::get('success')}}
     </div>
-@endif
+@endif --}}
+
+
+<!-- carousel -->
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+                <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16eaa171476%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16eaa171476%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285%22%20y%3D%22216.2%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
+                <h5> Primera imagen </h5>
+                <p> Subtitulo</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+                <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16eaa171476%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16eaa171476%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285%22%20y%3D%22216.2%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
+                <h5> Segunda imagen </h5>
+                <p> Subtitulo</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+                <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_16eaa171476%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_16eaa171476%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285%22%20y%3D%22216.2%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
+                <h5> Tercera imagen </h5>
+                <p> Subtitulo</p>
+            </div>
+          </div>
+        </div>
+        <a class="carousel-control-prev botonPreviousCarousel" href="#carouselExampleIndicators" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next botonNextCarousel" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
 <!-- Anuncios -->
-<div class="row">
     @if($busqueda)
-    <div class="col-md-2">
-        <div id="accordion">
-            <div class="card">
-              <div class="card-header" id="headingOne">
-                <h5 class="mb-0">
-                  <button class="btn btn-toolbar" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        <i class="fas fa-filter"></i> Filtros
-                  </button>
-                </h5>
-              </div>
-          
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                <form class="navbar-form" role="search" action="{{route('buscar')}}">
-                    <div class="card-body">
-                        <hr>
-                        <div data-role="main" class="ui-content">
-                            <div data-role="rangeslider">
-                                <label for="rangoMonto">Monto:</label>
-                                <input type="range" name="rangoMonto" id="rangoMonto" value="0" min="0" max="9999">
+    <div class="row">
+        <!-- Panel de busqueda -->
+        <div class="col-md-2">
+            <div id="accordion">
+                <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                    <button class="btn btn-toolbar" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-filter"></i> Filtros
+                    </button>
+                    </h5>
+                </div>
+            
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <form class="navbar-form" role="search" action="{{route('buscar')}}">
+                        <div class="card-body">
+                            <hr>
+                            <div data-role="main" class="ui-content">
+                                <div data-role="rangeslider">
+                                    <label for="rangoMonto">Monto:</label>
+                                    <input type="range" name="rangoMonto" id="rangoMonto" value="0" min="0" max="9999">
+                                </div>
+                            </div>
+                            <hr>
+                            Catgorias
+                            <div class="form-check form-check">
+                                @foreach($listaCategoria as $categoria)
+                                    <div class="form-check">
+                                        <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$categoria->idCategoriaTrabajo}}" id="defaultCheck{{$categoria->idCategoria}}" name="categoria[]">
+                                        <label class="form-check-label" for="defaultCheck{{$categoria->idCategoria}}">
+                                            {{$categoria->nombreCategoriaTrabajo}}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <hr>
+                            Provincias
+                            <div class="form-check form-check">
+                                @foreach($provincias as $provincia)
+                                    <div class="form-check">
+                                        <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$provincia->idProvincia}}" id="defaultCheck{{$provincia->idProvincia}}" name="provincia[]">
+                                        <label class="form-check-label" for="defaultCheck{{$provincia->idProvincia}}">
+                                            {{$provincia->nombreProvincia}}
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
-                        <hr>
-                        Catgorias
-                        <div class="form-check form-check">
-                            @foreach($listaCategoria as $categoria)
-                                <div class="form-check">
-                                    <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$categoria->idCategoriaTrabajo}}" id="defaultCheck{{$categoria->idCategoria}}" name="categoria[]">
-                                    <label class="form-check-label" for="defaultCheck{{$categoria->idCategoria}}">
-                                        {{$categoria->nombreCategoriaTrabajo}}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                        <hr>
-                        Provincias
-                        <div class="form-check form-check">
-                            @foreach($provincias as $provincia)
-                                <div class="form-check">
-                                    <input class="form-check-input" style="left: -6px;top: -4px;" type="checkbox" value="{{$provincia->idProvincia}}" id="defaultCheck{{$provincia->idProvincia}}" name="provincia[]">
-                                    <label class="form-check-label" for="defaultCheck{{$provincia->idProvincia}}">
-                                        {{$provincia->nombreProvincia}}
-                                    </label>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                    <button class="btn btn-default" type="submit">Filtrar</button>
+                        <button class="btn btn-success" type="submit">Filtrar</button>
 
-                </form>
-            </div>
-            </div>
-        </div>   
-    </div>
+                    </form>
+                </div>
+                </div>
+            </div>   
+        </div>
     @endif
-        <div class="col-md-9">
-            <div class="row">
+
+    <div class="@if(!$busqueda) container @else col-md-9 @endif">
+                <div class="row">
             @foreach($listaTrabajos as $trabajo)
-                <div class="card col-md-3 cardInicio">
-                    
+                <div class="card col-md-3 cardInicio margenCardInicio">
+                        <div class="card-header">
+                                <h5 class="card-title">{{ucfirst($trabajo->titulo)}}</h5>
+                            </div>
                     <div class="card-body">
                         
-                        <h5 class="card-title">{{ucfirst($trabajo->titulo)}}</h5>
-                    <hr>
                     @if($trabajo->imagenTrabajo == null || $trabajo->imagenTrabajo == '')
                         @php 
                         
@@ -100,9 +141,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
+            </div>
 </div>
-
-
-                
+@if($busqueda)  </div>  @endif

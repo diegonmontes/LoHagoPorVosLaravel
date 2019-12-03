@@ -209,6 +209,7 @@ Route::prefix('anuncio')->group(function(){
     Route::get('nuevo','TrabajoController@index')->name('trabajo.index')->middleware('auth','controlperfil','Mailvalidado');
     Route::post('store','TrabajoController@store')->name('trabajo.store');
     Route::get('procesarpago','TrabajoController@procesarpago')->name('trabajo.procesarpago'); 
+
 });
 
 Route::get('persona/{id}/editpanel','PersonaController@editpanel')->name('persona.editpanel');
@@ -222,6 +223,8 @@ Route::post('actualizar', 'UserController@actualizarUsuario')->name('actualizar'
 Route::post('actualizarClaveNueva', 'UserController@actualizarClaveNueva')->name('actualizarClaveNueva')->middleware('auth','controlperfil','Mailvalidado');
 
 Route::get('conversaciones', 'ConversacionChatController@misconversaciones')->name('conversaciones')->middleware('auth','Mailvalidado','controlperfil');
+
+Route::post('chat', 'ConversacionChatController@miChat')->name('chat')->middleware('auth','Mailvalidado','controlperfil');
 
 Route::get('buscar', 'TrabajoController@filtrar')->name('buscar');
 

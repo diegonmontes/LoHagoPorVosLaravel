@@ -220,4 +220,27 @@ class ConversacionChatController extends Controller
 
     }
 
+    public function miChat(Request $request){        
+        $personaController = new PersonaController();
+        //Buscamos la persona logeada
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $personaController->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+        //Buscamos la conversacion del anuncio
+        $paramConversacionAnuncio = ['idTrabajo'=>$request->idTrabajo];
+        $paramConversacionAnuncio = new Request($paramConversacionAnuncio);
+        $conversacionChatController = new ConversacionChatController();
+        $mensajeChatController = new MensajeChatController();
+        $conversacion = $conversacionChatController->buscar($paramConversacionAnuncio);
+        $conversacion = json_decode($conversacion);
+        //Enviamos todos los elementos y los ordenamos en forma desedente
+        //Paginacion de 15 elementos por pagina
+        $conversacion=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); 
+        $conversacion = $conversacion[0];
+        return view('conversacionchat.chat', compact('conversacion'));
+    }
+
 }

@@ -45,9 +45,9 @@ const app = new Vue({
                     persona: e.persona,
                     mensaje: e.mensaje.mensaje,
                 });
-                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
-                document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
-                document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).classList.add('mensajeSinLeer');
+                    document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).innerHTML = e.mensaje.mensaje;
+                    document.getElementById('notificacionConversacion'+e.idConversacionChat).classList.add('circuloNotificacion');
+                    document.getElementById('ultimoMensajeConversacion'+e.idConversacionChat).classList.add('mensajeSinLeer');
             });
     },
 
@@ -68,7 +68,10 @@ const app = new Vue({
             var idConversacionChat = document.querySelector("input[name=idConversacionChat]").value;
             
             this.messages.push(message);
-            document.getElementById('ultimoMensajeConversacion'+idConversacionChat).innerHTML = message.mensaje;
+
+            if(document.getElementById('ultimoMensajeConversacion')){
+                document.getElementById('ultimoMensajeConversacion'+idConversacionChat).innerHTML = message.mensaje;
+            }
 
             axios.post('enviarmensaje',{
                 headers: {
