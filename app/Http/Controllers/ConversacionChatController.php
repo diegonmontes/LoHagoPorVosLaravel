@@ -239,20 +239,7 @@ class ConversacionChatController extends Controller
         //Enviamos todos los elementos y los ordenamos en forma desedente
         //Paginacion de 15 elementos por pagina
         $conversacion=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); 
-        
-        $idConversacionChat = $conversacion->idConversacionChat;
-        $arregloBuscarMensajes = ['idConversacionChat'=>$idConversacionChat];
-        
-        $arregloBuscarMensajes = new Request($arregloBuscarMensajes);
-        $listaMensajes = $mensajeChatController->buscar($arregloBuscarMensajes);
-        $listaMensajes = json_decode($listaMensajes);
-        $cantidadMensajes = count($listaMensajes);
-        if ($cantidadMensajes>0){
-            $ultimoMensaje = $listaMensajes[$cantidadMensajes-1]; // Obtenemos el ultimo mensaje
-            $conversacion['ultimoMensaje'] = $ultimoMensaje; // Se lo asignamos
-        }
-        
-
+        $conversacion = $conversacion[0];
         return view('conversacionchat.chat', compact('conversacion'));
     }
 
