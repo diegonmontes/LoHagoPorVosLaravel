@@ -123,11 +123,17 @@ class UserController extends Controller
         }
 
         if ($mailValidado){
+            if (count($persona)>0){ // Es decir ya tiene creado una persona
+                $idPersona = $persona[0]->idPersona;
+            } else { // No tiene creado una persona
+                $idPersona=null;
+            }
+
             return response()->json([
                 'success' => true,
                 'token' => Str::random(60),
                 'user' => $user,
-                'idPersona'=>$persona[0]->idPersona,
+                'idPersona'=>$idPersona,
             ]);
         } else {
             return response()->json([
