@@ -20,6 +20,9 @@ use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\PagorecibidoController;
 use App\Http\Controllers\TrabajoaspiranteController;
 use App\Http\Controllers\TrabajoasignadoController;
+use App\Http\Controllers\CategoriaTrabajoController;
+use App\Http\Controllers\ProvinciaController;
+
 //Vendor
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -1054,6 +1057,54 @@ class TrabajoController extends Controller
         $provincias = Provincia::all();
         $busqueda = true;
         return view('layouts/mainlayout',['listaTrabajos'=>$listaTrabajos,'categoriaTrabajo'=>$categoriaTrabajo,'listaCategoria'=>$listaCategoria, 'busqueda'=>$busqueda, 'provincias'=>$provincias]);
+    }
+
+    public function datosFiltrarFlutter(){
+        // Categorias provincias->localidades montoMin y montoMax, 
+
+        $categoriaController = new CategoriaTrabajoController();
+        $provinciaController = new ProvinciaController();
+        $localidadController = new LocalidadController();
+
+        $arregloGeneral = array();
+        $arregloGeneralCategorias = array();
+        $arregloGeneralProvincias = array();
+        
+
+        $arregloBuscarCategorias = ['eliminado'=>0];
+        $arregloBuscarCategorias = new Request($arregloBuscarCategorias);
+        $listaCategorias = $categoriaController->buscar($arregloBuscarCategorias);
+        $listaCategorias = json_decode($listaCategorias);
+
+        if (count($listaCategorias)>0){
+            foreach ($listaCategorias as $categoria){
+                //$arregloGeneral['categorias']=$categoria;
+                array_push($arregloGeneralCategorias,$categoria);
+            }
+        }
+
+        $arregloBuscarProvincias = ['eliminado'=>0];
+        $arregloBuscarProvincias = new Request($arregloBuscarProvincias);
+        $listaProvincias = $provinciaController->buscar($arregloBuscarProvincias);
+        $listaProvincias = json_decode($listaProvincias);
+
+        if (count($listaProvincias)>0){
+            foreach ($listaProvincias as $provincia){
+                $idProvincia = $provincia->idProvincia;
+                $arregloBuscarLocalidades = ['idProvincia'=>$idProvincia,'eliminado'=>0];
+                $arregloBuscarLocalidades = new Request($arregloBuscarLocalidades);
+                $listaLocalidades = $localidadController->buscar($arregloBuscarLocalidades);
+                $listaLocalidades = json_decode($listaLocalidades);
+                //print_R($listaLocalidades);
+                $provincia->localidades=$listaLocalidades;
+                array_push($arregloGeneralProvincias,$provincia);
+            }
+        }
+
+        $arregloGeneral[0]['categorias']=$arregloGeneralCategorias;
+        $arregloGeneral[0]['provincias']=$arregloGeneralProvincias;
+
+        return $arregloGeneral;
     }
 
 }

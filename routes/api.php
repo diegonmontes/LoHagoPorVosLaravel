@@ -45,8 +45,8 @@ Route::post('buscarComentarios','ComentarioController@buscarComentarios');
 Route::post('guardarComentario','ComentarioController@store');
 Route::post('misTrabajosFinalizados','TrabajoController@misTrabajosFinalizados');
 Route::post('buscarPersonaTrabajo','TrabajoController@buscarPersonaTrabajo');
-
-
+Route::post('listarTrabajosBusqueda','TrabajoController@buscar');
+Route::get('listarFiltros','TrabajoController@datosFiltrarFlutter');
 
 /** Trabajo Aspirantes */
 Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');
@@ -96,3 +96,4 @@ Route::post('enviarValoracion','ValoracionController@store');
 Route::post('buscarValoracionTrabajo','ValoracionController@buscar');
 Route::post('buscarDatosPostulacion','TrabajoasignadoController@buscarDatosPostulacion');
 Route::post('promedioValoraciones','ValoracionController@promedioValoraciones');
+
