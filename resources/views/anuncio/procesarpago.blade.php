@@ -5,10 +5,12 @@ use App\Http\Controllers\TrabajoasignadoController;
 use App\Http\Controllers\ConversacionChatController;
 use App\Http\Controllers\MensajeChatController;
 use App\Http\Controllers\TrabajoController;
+use App\Http\Controllers\MultaController;
 use Illuminate\Http\Request;
 use App\Estadotrabajo;
 use App\Trabajo;
 use App\ConversacionChat;
+use App\Multa;
 @endphp
 
 <?php
@@ -34,6 +36,8 @@ use App\ConversacionChat;
             $informacionPagoRecibido = ['idTrabajo'=>$idTrabajo,'idPago'=>$idPago,'metodo'=>$metodo,'monto'=>$monto,'tarjeta'=>$tarjeta,'fechapago'=>$fechapago,'fechaaprobado'=>$fechaaprobado];
             $requestInformacionPagoRecibido = new Request($informacionPagoRecibido);
             $PagoRecibidoController->store($requestInformacionPagoRecibido);
+
+
             //Actualizamos el estado del trabajo
             $paramTrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>3];
             $requesTrabajo = new Request($paramTrabajo);
@@ -59,7 +63,20 @@ use App\ConversacionChat;
             $trabajo= json_decode($trabajo);
             $trabajo = $trabajo[0];
             $tituloTrabajo = $trabajo->titulo;
-            $idPersona2= $trabajo->idPersona;
+            $idPersona2= $trabajo->idPersona; // Id de la persona que creo el trabajo 
+
+            $multaController = new MultaController;
+            $arregloBuscarMultas = ['idPersona'=>$idPersona2,'pagado'=>0,'eliminado'=>0]; // Id de la persona que creo el trabajo
+            $requestBuscarMultas = new Request($arregloBuscarMultas);
+            $listaMultas = $multaController->buscar($requestBuscarMultas);
+            $listaMultas = json_decode($listaMultas);
+            if (count($listaMultas)>0){
+                $objMulta = $listaMultas[0];
+                $idMulta = $objMulta->idMulta; // Obtenemos su id y lo buscamos de la otra forma para poder hacer update
+                $arregloActualizarMulta = ['pagado'=>1,'fechaPagado'=>now(),'updated_at'=>now()];
+                $requestActualizarMulta = new Request($arregloActualizarMulta);
+                Multa::find($idMulta)->update($requestActualizarMulta->all());
+            }
 
             
             //creo la conversacion

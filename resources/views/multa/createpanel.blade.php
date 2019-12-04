@@ -59,6 +59,22 @@
 									<input type="text" name="motivo" id="motivo" class="form-control input-sm">
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="form-group">
+									<label> Pagado </label>
+									<input type="checkbox" name="pagado" id="pagado" value="1" class="form-control input-sm">
+								</div>
+							</div>				
+
+							<div class="row">
+								<div class="form-group">
+									<label>Fecha Pago:</label>
+									<input type="text"  id="datepickerPago" class="form-control inputBordes" style="background-color: #fff;" readonly>
+                                    <input type="text" id="datepickerPagoAlt" name="fechaPagado" class="datepicker-picker" >
+								</div>
+							</div>
+
 							<br>
 							<div class="row">
 									<input type="submit"  value="Guardar" class="btn btn-success btn-block">
@@ -70,6 +86,35 @@
 
 			</div>
 		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.js"></script>
+		<script type="text/javascript">
+			$('#datepickerPago').datetimepicker({
+				altField: "#datepickerPagoAlt",
+				altFieldTimeOnly: false,
+				altFormat: "yy-mm-dd",
+				controlType: 'select',
+				oneLine: true,
+				altTimeFormat: "H:m",
+				dateFormat: "yy-mm-dd",
+				timeFormat: "HH:mm:ss",
+				minDate: '2019-01-01',
+				timeText:"Horario",
+				currentText: "Hoy",
+				closeText: "Cerrar",
+				prevText: "&#x3C;Anterior",
+				nextText: "&#x3ESiguiente",
+				monthNames: [ "Enero","Febrero","Marzo","Abril","Mayo","Junio",
+				"Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre" ],
+				monthNamesShort: [ "ene","feb","mar","abr","may","jun",
+				"jul","ago","sep","oct","nov","dic" ],
+				dayNames: [ "domingo","lunes","martes","miércoles","jueves","viernes","sábado" ],
+				dayNamesShort: [ "dom","lun","mar","mié","jue","vie","sáb" ],
+				dayNamesMin: [ "D","L","M","M","J","V","S" ],
+				showMonthAfterYear: false,
+				yearSuffix: "",
+				weekHeader: "Sm"
+			});   
+		</script>
 		<script>
 			
 			$("#formMulta").validate({

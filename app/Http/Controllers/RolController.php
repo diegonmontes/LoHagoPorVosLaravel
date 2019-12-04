@@ -94,7 +94,7 @@ class RolController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Rol::where('idRol',$id)->update(['eliminado'=>1]);
+        Rol::where('idRol',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Rol::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('rol.index')->with('success','Registro eliminado satisfactoriamente');
     }

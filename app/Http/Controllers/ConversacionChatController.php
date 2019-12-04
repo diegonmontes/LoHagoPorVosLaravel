@@ -121,7 +121,7 @@ class ConversacionChatController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        ConversacionChat::where('idConversacionChat',$id)->update(['eliminado'=>1]);
+        ConversacionChat::where('idConversacionChat',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //ConversacionChat::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('conversacionchat.index')->with('success','Registro eliminado satisfactoriamente');
     }
@@ -218,6 +218,29 @@ class ConversacionChatController extends Controller
       //  $listaConversaciones=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->paginate(15); //Mandamos todos los elementos y los ordenamos en forma desedente, paginamos con 15 elementos por pagina
         return view('conversacionchat.misconversaciones',compact('listaConversaciones'));
 
+    }
+
+    public function miChat(Request $request){        
+        $personaController = new PersonaController();
+        //Buscamos la persona logeada
+        $idUsuario = Auth::user()->idUsuario;
+        $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
+        $param = new Request($param);
+        $persona = $personaController->buscar($param);
+        $persona = json_decode($persona);
+        $idPersona = $persona[0]->idPersona;
+        //Buscamos la conversacion del anuncio
+        $paramConversacionAnuncio = ['idTrabajo'=>$request->idTrabajo];
+        $paramConversacionAnuncio = new Request($paramConversacionAnuncio);
+        $conversacionChatController = new ConversacionChatController();
+        $mensajeChatController = new MensajeChatController();
+        $conversacion = $conversacionChatController->buscar($paramConversacionAnuncio);
+        $conversacion = json_decode($conversacion);
+        //Enviamos todos los elementos y los ordenamos en forma desedente
+        //Paginacion de 15 elementos por pagina
+        $conversacion=ConversacionChat::orderBy('idConversacionChat','DESC')->where('eliminado','0')->where('idPersona1',$idPersona)->orWhere('idPersona2',$idPersona)->get(); 
+        $conversacion = $conversacion[0];
+        return view('conversacionchat.chat', compact('conversacion'));
     }
 
 }

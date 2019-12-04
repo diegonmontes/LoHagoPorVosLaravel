@@ -122,7 +122,7 @@ class TrabajoaspiranteController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Trabajoaspirante::where('idTrabajoAspirante',$id)->update(['eliminado'=>1]);
+        Trabajoaspirante::where('idTrabajoAspirante',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Trabajoaspirante::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('trabajoaspirante.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }

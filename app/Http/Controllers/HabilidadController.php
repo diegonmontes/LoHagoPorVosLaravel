@@ -124,7 +124,7 @@ class HabilidadController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Habilidad::where('idHabilidad',$id)->update(['eliminado'=>1]);
+        Habilidad::where('idHabilidad',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Habilidad::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('habilidad.index')->with('success','Registro eliminado satisfactoriamente');
     }

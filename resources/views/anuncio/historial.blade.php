@@ -11,6 +11,9 @@
         <a class="nav-link" href="#asignar" role="tab" data-toggle="tab">Asignar un postulante y pagar</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="#esperar" role="tab" data-toggle="tab">Esperando que se realice</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#terminadas" role="tab" data-toggle="tab">Valorar y terminar</a>
     </li>
     <li class="nav-item">
@@ -104,6 +107,54 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoAsignar->monto}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        @else
+            <h4> Nada para mostrar. </h4>
+        @endif
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="esperar">
+
+        @if(count($listaTrabajosEsperar)>0)
+        <div class="row" style="margin: auto">
+            @foreach($listaTrabajosEsperar as $trabajoEsperar)
+                <div class="card margenCardInicio">
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoEsperar->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoEsperar->imagenTrabajo == null || $trabajoEsperar->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoEsperar->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoEsperar->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoEsperar->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoEsperar->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <a href="{{route('veranuncio',$trabajoEsperar->idTrabajo)}}" class="btn btn-sm btn-primary">Ver el anuncio</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoEsperar->monto}}</label>
                             </div>
                         </div>
                     </div>

@@ -123,7 +123,7 @@ class CategoriaTrabajoController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        CategoriaTrabajo::where('idCategoriaTrabajo',$id)->update(['eliminado'=>1]);
+        CategoriaTrabajo::where('idCategoriaTrabajo',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Buscamos y eliminamos el elemento
         //CategoriaTrabajo::find($id)->delete();
         return redirect()->route('categoriatrabajo.index')->with('success','Registro eliminado satisfactoriamente');

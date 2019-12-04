@@ -97,7 +97,7 @@ class EstadoController extends Controller
    public function destroy($id)
    {
        // Actualizamos eliminado a 1 (Borrado lógico)
-       Estado::where('idEstado',$id)->update(['eliminado'=>1]);
+       Estado::where('idEstado',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
        //Buscamos y eliminamos el elemento
        //Estado::find($id)->delete(); 
        return redirect()->route('estado.index')->with('success','Registro eliminado satisfactoriamente');

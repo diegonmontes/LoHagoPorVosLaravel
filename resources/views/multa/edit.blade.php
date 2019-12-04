@@ -24,7 +24,7 @@
  
 			<div class="card">
 				<div class="card-header">
-					<h3>Editar mULTA</h3>
+					<h3>Editar multa</h3>
 				</div>
 				<div class="card-body">
 					<form method="POST" id="formMulta" name="formMulta" action="{{ route('multa.update',$multa->idMulta) }}"  role="form">
@@ -77,6 +77,13 @@
 							</div>
 						</div>
 
+						<div class="row">
+								<div class="form-group">
+									<label> Pagado </label>
+								<input type="checkbox" name="pagado" id="pagado" value="1" class="form-control input-sm" @if($multa->pagado){{'checked'}}@endif>
+								</div>
+							</div>	
+
 						
 						<div class="row">
 							<input type="submit"  value="Actualizar" class="btn btn-success btn-block">
@@ -85,6 +92,7 @@
 					</form>
 				</div>
 			</div>
+		</div>
 			<script>
 			
 			$("#formMulta").validate({

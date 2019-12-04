@@ -152,7 +152,7 @@ class MultaController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Multa::where('idMulta',$id)->update(['eliminado'=>1]);
+        Multa::where('idMulta',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Multa::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('multa.indexpanel')->with('success','Registro eliminado satisfactoriamente');
     }
@@ -173,7 +173,7 @@ class MultaController extends Controller
         }
 
         try {
-            Trabajo::find($idTrabajo)->update(['idEstado'=>6]);
+            Trabajo::find($idTrabajo)->update(['idEstado'=>6,'updated_at'=>now()]);
 
             // Creamos el registro nuevo en estadotrabajo
             $paramEstadotrabajo = ['idTrabajo'=>$idTrabajo,'idEstado'=>6];
@@ -188,7 +188,7 @@ class MultaController extends Controller
             $objConversacion = $listaConversaciones[0];
             $idConversacion = $objConversacion->idConversacionChat;
 
-            ConversacionChat::find($idConversacion)->update(['deshabilitado'=>true]);
+            ConversacionChat::find($idConversacion)->update(['deshabilitado'=>true,'updated_at'=>now()]);
             $paramMulta = ['idTrabajo'=>$idTrabajo,'idPersona'=>$idPersona,'motivo'=>$motivo,'valor'=>$valor];
             if (Multa::create($paramMulta)){
                 $multaCreada = true;

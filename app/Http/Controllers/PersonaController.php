@@ -489,7 +489,7 @@ class PersonaController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        Persona::where('idPersona',$id)->update(['eliminado'=>1]);
+        Persona::where('idPersona',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //Persona::find($id)->delete();
         return redirect()->route('persona.index')->with('success','Registro eliminado satisfactoriamente');
 

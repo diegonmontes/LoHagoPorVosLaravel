@@ -5,6 +5,7 @@
 
 
 @section('content')
+
 <section class="container h-100">
     <div class="row h-100 justify-content-center ">
         <div class="col-md-8">
@@ -57,7 +58,17 @@
 
                                         @else
                                         <li class="list-group-item msjVerAnuncio">Esperando a que se realice el trabajo</li>
-                                        <a href="{{route('trabajo.cancelartrabajo',$trabajo->idTrabajo)}}"> <button type="button" class="btn btn-danger">Cancelar el anuncio</button> </a>
+                                       
+                                        {{-- <a href="{{route('chatanuncio',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Ver chat</a> --}}
+                                        <form action="{{url('chat')}}" method="post">
+                                            {{ csrf_field() }}
+                                            <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
+                                            <input type="submit">
+                                        </form>
+                                        @endif
+
+                                        @if($puedeCancelar)
+                                        <li class="list-group-item"><a href="{{route('trabajo.cancelartrabajo',$trabajo->idTrabajo)}}"> <button type="button" class="btn btn-danger cancelarAnuncio">Cancelar el anuncio</button> </a></li>
                                         @endif
                                     @endif        
                                 @endif
@@ -66,6 +77,7 @@
                                 @if($soyElAsignadoPagado)
                                 
                                     <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-sm btn-primary">Termine el trabajo</a>
+                                    
 
                                 @else
                                     @if($esMiAnuncio)
@@ -100,6 +112,11 @@
 
                                 @else
                                     <a href="{{route('trabajorealizado',$trabajo->idTrabajo)}}" class="btn btn-lg btn-primary">Termine el trabajo</a>
+                                    <form action="{{url('chat')}}" method="post">
+                                        {{ csrf_field() }}
+                                        <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
+                                        <input type="submit">
+                                    </form>
                                 @endif
                                 @endif
                             @else

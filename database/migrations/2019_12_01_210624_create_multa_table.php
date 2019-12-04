@@ -20,6 +20,8 @@ class CreateMultaTable extends Migration
             $table->integer('idPersona')->unsigned()->nullable(false);
             $table->string('motivo',511);
             $table->string('valor',16);
+            $table->timestamp('fechaPagado');
+            $table->tinyInteger('pagado')->default(0);
             $table->tinyInteger('eliminado')->default(0);
             $table->foreign('idTrabajo')->references('idTrabajo')->on('trabajo');
             $table->foreign('idPersona')->references('idPersona')->on('persona');

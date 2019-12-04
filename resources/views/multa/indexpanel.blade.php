@@ -17,7 +17,8 @@
                         <th>ID Trabajo</th>
                         <th>Valor</th>
                         <th>Motivo</th>
-                        
+                        <th>Pagado</th>
+                        <th>Fecha Pago </th>
                         
                         <th colspan="1">Editar</th>
                         <th colspan="1">Eliminar</th>
@@ -32,6 +33,9 @@
                         <td>{{$multa->trabajo->idTrabajo." - ".$multa->trabajo->titulo}}</td>
                         <td>{{$multa->valor}}</td>
                         <td>{{$multa->motivo}}</td>
+                        <td>{{$multa->pagado}}</td>
+                        <td>{{$multa->fechaPago}}</td>
+                        
                         
                         <td><a class="btn btn-primary btn-sm" href="{{action('MultaController@edit', $multa->idMulta)}}" ><i class="fas fa-edit"></i></a></td>
                         <td>

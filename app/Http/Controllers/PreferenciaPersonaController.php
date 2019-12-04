@@ -117,7 +117,7 @@ class PreferenciaPersonaController extends Controller
     public function destroy($id)
     {
         // Actualizamos eliminado a 1 (Borrado lógico)
-        PreferenciaPersona::where('idPreferenciaPersona',$id)->update(['eliminado'=>1]);
+        PreferenciaPersona::where('idPreferenciaPersona',$id)->update(['eliminado'=>1,'updated_at'=>now()]);
         //PreferenciaPersona::find($id)->delete(); //Buscamos y eliminamos el elemento
         return redirect()->route('preferenciapersona.index')->with('success','Registro eliminado satisfactoriamente');
     }

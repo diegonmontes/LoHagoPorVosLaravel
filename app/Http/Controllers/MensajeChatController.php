@@ -269,7 +269,7 @@ class MensajeChatController extends Controller
             $persona = json_decode($persona);
             $idPersonaLogeada = $persona[0]->idPersona;
         }
-            MensajeChat::where('idPersona','!=',$idPersonaLogeada)->update(['visto'=>1,'fechaVisto'=>now()]);
+            MensajeChat::where('idPersona','!=',$idPersonaLogeada)->where('visto',0)->update(['visto'=>1,'fechaVisto'=>now()]);
     }
 
 
