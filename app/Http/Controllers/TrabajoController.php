@@ -474,6 +474,7 @@ class TrabajoController extends Controller
 
     // Esta funcion busca los trabajos con parametros que le enviemos
     public function buscar(Request $param){     
+
         $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
 
             //Funciones para filtrar
@@ -492,11 +493,11 @@ class TrabajoController extends Controller
             if (isset($param->categoria)){
                 $query->whereIn('idCategoriaTrabajo', $param->categoria);
             }
-            
 
-            // if (isset($param->provincia)){
-            //     $query->select('.idTrabajo')->whereIn('idCategoriaTrabajo', $param->categoria);
-            // }
+            if (isset($param->localidad)){
+                $query->whereIn('trabajo.idLocalidad', $param->localidad);
+            }
+
 
             //Otras funciones
 
@@ -1087,7 +1088,7 @@ class TrabajoController extends Controller
     }
     
     public function filtrar(Request $request){
-        $param=['idEstado'=>'1','eliminado'=>0,'filtrar'=>$request->filtrar,'categoria'=>$request->categoria,'rangoMonto'=>$request->rangoMonto, 'provincia'=>$request->provincia];
+        $param=['idEstado'=>'1','eliminado'=>0,'filtrar'=>$request->filtrar,'categoria'=>$request->categoria,'rangoMonto'=>$request->rangoMonto, 'provincia'=>$request->provincia, 'localidad'=>$request->localidad];
         $trabajoController = new TrabajoController();
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);

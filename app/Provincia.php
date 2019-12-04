@@ -12,7 +12,7 @@ class Provincia extends Model
 
     public function Localidad()
     {
-        return $this->hasMany('App\Localidad', 'idLocalidad', 'idProvincia');
+        return $this->hasMany('App\Localidad', 'idProvincia', 'idProvincia');
     }
 
 
