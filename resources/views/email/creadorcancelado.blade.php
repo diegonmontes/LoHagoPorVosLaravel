@@ -17,7 +17,7 @@
                 &iexcl;Hola {{$nombrePersonaCreador}} {{$nombrePersonaCreador}}!  <br/>
 
                 Has notificado que deseas cancelar un anuncio que hab&iacute;as creado y pagado.                 
-                &iexcl;Recuerde que debe abonar una multa de ${{$valor}},! se le sumar&aacute; en el importe en el pr&oacute;ximo anuncio que pague.
+                &iexcl;Recuerde que debe abonar una multa de ${{$valor}}! se le sumar&aacute; en el importe en el pr&oacute;ximo anuncio que pague.
 
                 <h3>Descripci&oacute;n del anuncio cancelado: </h3>
                 <Strong> T&iacute;tulo:</strong> {{$tituloTrabajo}} <br/>
