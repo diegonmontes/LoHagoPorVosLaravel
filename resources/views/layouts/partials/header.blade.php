@@ -66,8 +66,12 @@
                         <div class="card-body">
                             <hr>
                             <div class="form-group">
-                                <label for="rangoMonto">Monto:</label>
-                                <input type="number" name="rangoMonto" id="rangoMonto" class="form-control input-sm inputBordes" placeholder="$" min="0" pattern="^[0-9]+" style="-moz-appearance: textfield;">
+                                <label for="rangoMontoInferior">Monto minimo:</label>
+                                <input type="number" name="rangoMontoInferior" id="rangoMontoInferior" class="form-control input-sm inputBordes" placeholder="$" min="0" pattern="^[0-9]+" style="-moz-appearance: textfield;">
+                            </div>
+                            <div class="form-group">
+                                <label for="rangoMontoSuperior">Monto maximo:</label>
+                                <input type="number" name="rangoMontoSuperior" id="rangoMontoSuperior" class="form-control input-sm inputBordes" placeholder="$" min="0" pattern="^[0-9]+" style="-moz-appearance: textfield;">
                             </div>
                             <hr>
                             Categorias

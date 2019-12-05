@@ -63,7 +63,7 @@
                                         <form action="{{url('chat')}}" method="post">
                                             {{ csrf_field() }}
                                             <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
-                                            <input type="submit">
+                                            <button class="btn  btn-primary" style="width: -webkit-fill-available;" type="submit"> Ver chat </button>
                                         </form>
                                         @endif
 
@@ -115,7 +115,7 @@
                                     <form action="{{url('chat')}}" method="post">
                                         {{ csrf_field() }}
                                         <input type="hidden" name="idTrabajo" value="{{$trabajo->idTrabajo}}"/>
-                                        <input type="submit">
+                                        <button class="btn btn-success" style="width: -webkit-fill-available;" type="submit"> Ver chat </button>
                                     </form>
                                 @endif
                                 @endif
@@ -247,7 +247,10 @@
     </div>
 </div>
 
+@php 
 
+
+@endphp
 @endsection
 
 @section('js')

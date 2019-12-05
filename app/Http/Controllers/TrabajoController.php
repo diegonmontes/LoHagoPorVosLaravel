@@ -487,11 +487,22 @@ class TrabajoController extends Controller
                 $query->orwhere("trabajo.descripcion", 'like', '%'.$param->filtrar.'%');
             }
 
-            if(isset($param->rangoMonto)){
-                if($param->rangoMonto>0){
-                    $query->where("trabajo.monto",'<=',$param->rangoMonto);
-                }
+            if(isset($param->rangoMontoSuperior) && isset($param->rangoMontoSuperior) && $param->rangoMontoSuperior>0 && $param->rangoMontoInferior>0){
+                $query->where("trabajo.monto",'>=',$param->rangoMontoInferior)->where("trabajo.monto",'<=',$param->rangoMontoSuperior);
+            
+            }else if(isset($param->rangoMontoSuperior) && !isset($param->rangoMontoInferior) && $param->rangoMontoSuperior >0){
+                $query->where("trabajo.monto",'<=',$param->rangoMontoSuperior);
+
+            }else if(isset($param->rangoMontoInferior) && !isset($param->rangoMontoSuperior) && $param->rangoMontoInferior >0){
+
+                $query->where("trabajo.monto",'>=',$param->rangoMontoInferior);
             }
+
+            //if(isset($param->rangoMontoInferior)){
+            //    if($param->rangoMontoInferior>0){
+            //        $query->orwhere("trabajo.monto",'>=',$param->rangoMontoInferior);
+            //    }
+            //}
 
             if (isset($param->categoria)){
                 $query->whereIn('idCategoriaTrabajo', $param->categoria);
@@ -1091,7 +1102,7 @@ class TrabajoController extends Controller
     }
     
     public function filtrar(Request $request){
-        $param=['idEstado'=>'1','eliminado'=>0,'filtrar'=>$request->filtrar,'categoria'=>$request->categoria,'rangoMonto'=>$request->rangoMonto, 'provincia'=>$request->provincia, 'localidad'=>$request->localidad];
+        $param=['idEstado'=>'1','eliminado'=>0,'filtrar'=>$request->filtrar,'categoria'=>$request->categoria,'rangoMontoSuperior'=>$request->rangoMontoSuperior,'rangoMontoInferior'=>$request->rangoMontoInferior, 'provincia'=>$request->provincia, 'localidad'=>$request->localidad];
         $trabajoController = new TrabajoController();
         $param = new Request($param);
         $listaTrabajos =$trabajoController->buscar($param);
