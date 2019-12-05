@@ -606,6 +606,17 @@ class TrabajoController extends Controller
 
     public function historial(){
         $controlPersona = new PersonaController;
+        $categoriaTrabajo = new CategoriaTrabajo;
+        $trabajoAsignadoControl = new TrabajoasignadoController;
+        $pagoRecibidoController = new PagorecibidoController;
+        $MPController = new MercadoPagoController();
+
+
+        // Inicializamos en false
+        $pagado = false;
+        $asignado = false;
+        $link = "#";
+
         $idUsuario = Auth::user()->idUsuario;
         $param = ['idUsuario' => $idUsuario, 'eliminado' => 0];
         $param = new Request($param);
@@ -644,9 +655,44 @@ class TrabajoController extends Controller
         $listaTrabajosEsperar = $this->buscar($paramTrabajosEsperar);
         $listaTrabajosEsperar = json_decode($listaTrabajosEsperar);
 
-        $categoriaTrabajo = new CategoriaTrabajo;
 
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosCancelados'=>$listaTrabajosCancelados,'listaTrabajosEsperar'=>$listaTrabajosEsperar,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
+
+        if (count($listaTrabajosEvaluar)>0){
+            foreach ($listaTrabajosEvaluar as $trabajo){
+                $idTrabajo = $trabajo->idTrabajo;
+                $paramTrabajoAsignado = ['idTrabajo'=>$idTrabajo,'eliminado'=>0];
+                $paramTrabajoAsignado = new Request($paramTrabajoAsignado);
+                $personaAsignada = $trabajoAsignadoControl->buscar($paramTrabajoAsignado);
+                $personaAsignada = json_decode($personaAsignada);
+                if(count($personaAsignada)){
+                    //Si tiene una persona asignada  lo seteamos a true y buscamos el pago
+                    $asignado = true;
+                    $paramPago = ['idTrabajo'=>$idTrabajo,'eliminado'=>0];
+                    $paramPago = new Request($paramPago);
+                    $listaPagos = $pagoRecibidoController->buscar($paramPago);
+                    $listaPagos = json_decode($listaPagos);
+                    if (count($listaPagos)>0){
+                        $pagado = true;
+                    } else {
+                        $arregloTrabajo = ['monto'=>$trabajo->monto,'titulo'=>$trabajo->titulo,'idTrabajo'=>$trabajo->idTrabajo];
+                        $requestTrabajo = new Request($arregloTrabajo);
+                        $link = $MPController->crearPago($requestTrabajo);
+                        $link = json_decode($link);
+                        $pagado = false;
+                    }
+
+                }else{
+                    //En caso contrario le mostramos lo seteamos a false para asignar una persona
+                    $asignado = false;
+                }
+
+            }
+        }
+
+        //Ahora probamos si tiene un persona asignada
+        
+
+        return view('anuncio.historial',['pagado'=>$pagado,'asignado'=>$asignado, 'link'=>$link, 'listaTrabajos'=>$listaTrabajos,'listaTrabajosCancelados'=>$listaTrabajosCancelados,'listaTrabajosEsperar'=>$listaTrabajosEsperar,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
 
     }
 

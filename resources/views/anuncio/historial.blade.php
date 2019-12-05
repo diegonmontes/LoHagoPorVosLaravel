@@ -108,7 +108,14 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-md-6">
-                            <a class='btn btn-sm btn-primary' href="{{route('anuncio.postulante',$trabajoAsignar->idTrabajo)}}" > Elegir un postulante </a>
+                                @if($asignado)
+                                    @if(!($pagado))
+                                    <a class='btn btn-success btn-lg' href={{$link}}> Pagar </a>
+                                    
+                                    @endif
+                                @else
+                                    <a class='btn btn-sm btn-primary' href="{{route('anuncio.postulante',$trabajoAsignar->idTrabajo)}}" > Elegir un postulante </a>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoAsignar->monto}}</label>
