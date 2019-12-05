@@ -253,6 +253,16 @@
 									</div>
 								</div>
 
+								<div class="row">
+									<div class="col-xs-12 col-sm-12 col-md-12">
+										<label>N&uacute;mero de CBU:</label><br>
+										<input type="number" name="numeroCBU" id="numeroCBU" class="form-control input-sm" value="@if($existePersona){{ $persona->numeroCBU }}@endif">
+									</div>
+								</div>
+								<div class="row">
+									<span id="msgnumeroCBU" class="text-danger">{{ $errors->first('numeroCBU') }}</span>
+								</div>
+
 						
 							<br>
 							<div class="row">
@@ -583,6 +593,24 @@
 		}
 	}
 
+	function controlNumeroCBU() {
+		var numeroCBU = $('#numeroCBU').val();
+		var patron = /^[0-9]+$/; //Patron que debe respetarse
+		if(numeroCBU.length == 0){
+			if (!patron.test(telefonoPersona)){
+				$('#msgnumeroCBU').empty();
+				$('#msgnumeroCBU').append('Ingrese un numero de CBU v&aacute;lido.')
+			} else {
+				if (!(numeroCBU.length == 22)){
+					$('#msgnumeroCBU').empty();
+					$('#msgnumeroCBU').append('El CBU tiene 22 numeros.')
+					}
+			}
+		} else {
+			$('#msgnumeroCBU').empty();
+		}	
+	}
+
 	$(document).ready(function (e){
 		$("#formPersona").on('submit',(function(e){
 			e.preventDefault();
@@ -595,7 +623,8 @@
 			var idLocalidad = $('#idLocalidad').val();
 			var habilidades = $('#habilidades').val();
 			var preferenciaPersona =$('#preferenciaPersona').val();
-			var data={nombrePersona:nombrePersona,apellidoPersona:apellidoPersona,dniPersona:dniPersona,telefonoPersona:telefonoPersona,imagenPersona:imagenPersona,idProvincia:idProvincia,idLocalidad:idLocalidad,habilidades:habilidades,preferenciaPersona:preferenciaPersona};
+			var numeroCBU = $('#numeroCBU').val();
+			var data={nombrePersona:nombrePersona,apellidoPersona:apellidoPersona,dniPersona:dniPersona,telefonoPersona:telefonoPersona,imagenPersona:imagenPersona,idProvincia:idProvincia,idLocalidad:idLocalidad,habilidades:habilidades,preferenciaPersona:preferenciaPersona,numeroCBU:numeroCBU};
 			$.ajax({
 				headers: {
 					'X-CSRF-TOKEN': "{{ csrf_token() }}"

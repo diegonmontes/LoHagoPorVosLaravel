@@ -7,7 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
     <!-- Icono -->
-    <link rel="shortcut icon" href="images/lohagoporvos.ico">
+    <link rel="shortcut icon" href={{asset("images/lohagoporvos.ico")}}>
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <!-- Styles -->
@@ -21,8 +21,8 @@
     <!-- Script -->
     <script src="{{asset('js/app.js')}}"  ></script>
     <script src="{{asset('js/jquery.js')}}"></script>
-    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script>
-    <script src="{{asset('js/bootstrap.js')}}"></script>
+
+<!--    <script src="{{asset('js/jquery-3.2.1.min.js')}}"></script> -->
    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script> 
@@ -30,6 +30,8 @@
 
 
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="{{asset('js/bootstrap.js')}}"></script>
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
 

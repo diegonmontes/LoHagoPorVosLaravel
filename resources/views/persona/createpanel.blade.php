@@ -109,10 +109,15 @@
 						</div>
 
 						<div class="row">
-							<div class="form-group">
+							<div class="col-xs-12 col-sm-12 col-md-12">
 								<label>N&uacute;mero de CBU:</label><br>
-								<input type="text" name="numeroCBU" id="numeroCBU" class="form-control input-sm">
+								<input type="number" name="numeroCBU" id="numeroCBU" class="form-control input-sm">
 							</div>
+						</div>
+						<div class="row">
+
+							<span id="msgnumeroCBU" class="text-danger">{{ $errors->first('numeroCBU') }}</span>
+
 						</div>
 
 						<br>
@@ -389,7 +394,8 @@
 			var idLocalidad = $('#idLocalidad').val();
 			var habilidades = $('#habilidades').val();
 			var preferenciaPersona =$('#preferenciaPersona').val();
-			var data={nombrePersona:nombrePersona,apellidoPersona:apellidoPersona,dniPersona:dniPersona,telefonoPersona:telefonoPersona,imagenPersona:imagenPersona,idProvincia:idProvincia,idLocalidad:idLocalidad,habilidades:habilidades,preferenciaPersona:preferenciaPersona};
+			var numeroCBU = $('#numeroCBU').val();
+			var data={nombrePersona:nombrePersona,apellidoPersona:apellidoPersona,dniPersona:dniPersona,telefonoPersona:telefonoPersona,imagenPersona:imagenPersona,idProvincia:idProvincia,idLocalidad:idLocalidad,habilidades:habilidades,preferenciaPersona:preferenciaPersona,numeroCBU:numeroCBU};
 			$.ajax({
 				headers: {
 					'X-CSRF-TOKEN': "{{ csrf_token() }}"
