@@ -136,8 +136,10 @@ class MultaController extends Controller
             
         ] ;
         $this->validate($request,['idPersona'=>'required','motivo'=>'required|max:255','valor'=>'required|numeric','idTrabajo'=>'required'],$mensajesErrores);
-        
-
+        if (!(isset($request->pagado))){
+            $request->request->add(['pagado' => 0]); //add request
+        } // Si no esta seteado lo asignamos a false
+           
         Multa::find($id)->update($request->all()); // Si actualiza la multa , obtenemos su id para llenar el resto de las tablas
         return redirect()->route('multa.indexpanel')->with('success','Registro actualizado satisfactoriamente');
         
