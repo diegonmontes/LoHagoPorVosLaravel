@@ -477,7 +477,7 @@ class TrabajoController extends Controller
 
     // Esta funcion busca los trabajos con parametros que le enviemos
     public function buscar(Request $param){     
-
+        
         $query = Trabajo::OrderBy('idTrabajo','ASC'); // Ordenamos los trabajos por este medio
 
             //Funciones para filtrar
@@ -487,7 +487,8 @@ class TrabajoController extends Controller
                 $query->orwhere("trabajo.descripcion", 'like', '%'.$param->filtrar.'%');
             }
 
-            if(isset($param->rangoMontoSuperior) && isset($param->rangoMontoSuperior) && $param->rangoMontoSuperior>0 && $param->rangoMontoInferior>0){
+            if(isset($param->rangoMontoInferior) && isset($param->rangoMontoSuperior) && $param->rangoMontoInferior>0 && $param->rangoMontoInferior>0){
+                //print($param);
                 $query->where("trabajo.monto",'>=',$param->rangoMontoInferior)->where("trabajo.monto",'<=',$param->rangoMontoSuperior);
             
             }else if(isset($param->rangoMontoSuperior) && !isset($param->rangoMontoInferior) && $param->rangoMontoSuperior >0){
@@ -504,11 +505,11 @@ class TrabajoController extends Controller
             //    }
             //}
 
-            if (isset($param->categoria)){
+            if (isset($param->categoria) && (count($param->categoria)>0)){
                 $query->whereIn('idCategoriaTrabajo', $param->categoria);
             }
 
-            if (isset($param->localidad)){
+            if (isset($param->localidad) && (count($param->localidad)>0)){
                 $query->whereIn('trabajo.idLocalidad', $param->localidad);
             }
 
