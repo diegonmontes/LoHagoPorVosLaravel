@@ -47,6 +47,10 @@ Route::post('misTrabajosFinalizados','TrabajoController@misTrabajosFinalizados')
 Route::post('buscarPersonaTrabajo','TrabajoController@buscarPersonaTrabajo');
 Route::post('listarTrabajosBusqueda','TrabajoController@buscar');
 Route::get('listarFiltros','TrabajoController@datosFiltrarFlutter');
+Route::post('cancelarTrabajo','MultaController@cancelarTrabajo');
+
+
+
 
 /** Trabajo Aspirantes */
 Route::post('listarAspirantesTrabajo','TrabajoaspiranteController@buscarTrabajoAspirante');

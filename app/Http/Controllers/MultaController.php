@@ -166,10 +166,12 @@ class MultaController extends Controller
 
         if (isset($request->idPersona)){ // Si esta seteado significa que viene desde flutter o esta cancelando el que esta asignado
             $idPersona = $request->idPersona;
+            $usandoFlutter=true;
         } else { // Significa que esta en laravel y esta cancelando el creador
             $idUsuario = Auth::user()->idUsuario;
             $persona = Persona::where('idUsuario','=',$idUsuario)->get();
             $idPersona=$persona[0]->idPersona;
+            $usandoFlutter=false;
         }
 
         try {
@@ -209,6 +211,25 @@ class MultaController extends Controller
             $respuesta = true;
         } else {
             $respuesta = false;
+        }
+
+
+
+        if ($respuesta){
+            if ($usandoFlutter){
+                $respuesta = ['success'=>true];
+            } else {
+                return response()->json([
+                    'url' => route('inicio'),
+                    'success'   => true,
+                    'message'   => 'Los datos se han guardado correctamente.' 
+                    ], 200);
+            }
+        } else {
+            if ($usandoFlutter){
+                $respuesta = ['success'=>false,'error'=>'error'];
+            }
+
         }
 
         return $respuesta;
