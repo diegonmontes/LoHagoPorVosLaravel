@@ -643,14 +643,21 @@ class TrabajoController extends Controller
         $paramTrabajosCerradas = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>5]);
         $listaTrabajosCerradas = $this->buscar($paramTrabajosCerradas);
         $listaTrabajosCerradas = json_decode($listaTrabajosCerradas);
+        
 
+        //Buscamos todos los trabajos que anuncio la persona que estan cancelados
+        $paramTrabajosCancelados = new Request(['idPersona'=>$idPersona,'eliminado'=>0,'idEstado'=>6]);
+        $listaTrabajosCancelados = $this->buscar($paramTrabajosCancelados);
+        $listaTrabajosCancelados = json_decode($listaTrabajosCancelados);
+        
+        // Buscamos todos los trabajos de esa persona que esten en esperando a hacerse
         $paramTrabajosEsperar = new Request(['eliminado='=>0,'idEstado'=>3]);
         $listaTrabajosEsperar = $this->buscar($paramTrabajosEsperar);
         $listaTrabajosEsperar = json_decode($listaTrabajosEsperar);
 
         $categoriaTrabajo = new CategoriaTrabajo;
 
-        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosEsperar'=>$listaTrabajosEsperar,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
+        return view('anuncio.historial',['listaTrabajos'=>$listaTrabajos,'listaTrabajosCancelados'=>$listaTrabajosCancelados,'listaTrabajosEsperar'=>$listaTrabajosEsperar,'listaTrabajosTerminados'=>$listaTrabajosTerminados,'listaTrabajosEvaluar'=>$listaTrabajosEvaluar,'listaTrabajosCerradas'=>$listaTrabajosCerradas,'categoriaTrabajo'=>$categoriaTrabajo]);
 
     }
 

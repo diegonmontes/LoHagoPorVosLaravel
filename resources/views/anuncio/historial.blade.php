@@ -17,8 +17,13 @@
         <a class="nav-link" href="#terminadas" role="tab" data-toggle="tab">Valorar y terminar</a>
     </li>
     <li class="nav-item">
+        <a class="nav-link" href="#canceladas" role="tab" data-toggle="tab">Canceladas</a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link" href="#cerradas" role="tab" data-toggle="tab">Cerradas</a>
     </li>
+    
+    
 </ul>
           
 <!-- Tab panes -->
@@ -251,6 +256,54 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoCerrado->monto}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+        @else
+            <h4> Nada para mostrar. </h4>
+        @endif
+
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="canceladas">
+
+        @if(count($listaTrabajosCancelados)>0)
+        <div class="row" style="margin: auto">
+            @foreach($listaTrabajosCancelados as $trabajoCancelado)
+                <div class="card margenCardInicio">
+                <div class="card-body">
+                
+                <h5 class="card-title">{{ucfirst($trabajoCancelado->titulo)}}</h5>
+             <hr>
+             
+             @if($trabajoCancelado->imagenTrabajo == null || $trabajoCancelado->imagenTrabajo == '')
+                @php 
+                
+                $categoria = $categoriaTrabajo::find($trabajoCancelado->idCategoriaTrabajo);
+                $imagenCategoria = $categoria->imagenCategoriaTrabajo;
+
+                @endphp
+                
+                <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
+
+            @else
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoCancelado->imagenTrabajo}}">
+
+            @endif
+         
+         @php $descripcion = substr($trabajoCancelado->descripcion, 0, 100)  @endphp
+                <p class="card-text">{{$descripcion}} @if(strlen($trabajoCancelado->descripcion) > strlen($descripcion)){{'...' }} @endif</p>
+            </div>
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <li class="list-group-item msjVerAnuncio">Anuncio Cancelado</li>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="row precioAnuncio float-right"><div class="signoPeso"><i class="fas fa-dollar-sign"></i></div>{{$trabajoCancelado->monto}}</label>
                             </div>
                         </div>
                     </div>
