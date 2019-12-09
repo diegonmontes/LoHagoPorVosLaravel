@@ -63,12 +63,33 @@ img{ max-width:100%;}
 .chat_ib h5{ font-size:15px; color:#464646; margin:0 0 8px 0;}
 .chat_ib h5 span{ font-size:13px; float:right;}
 .chat_ib p{ font-size:14px; color:#989898; margin:auto}
-.chat_img {
+.chat_imgIzquierda {
   float: left;
-  width: 11%;
+  margin-right:30px;
 }
+
+
+.chat_imgIzquierda img{
+  border-radius:50%;
+  height:50px !important;
+  width:50px !important;
+  max-width:50px !important;
+}
+
+.chat_imgDerecha {
+  float: right;
+  width: 50px !important;
+  margin-left:30px;
+}
+
+.chat_imgDerecha img {
+  border-radius:50%;
+  height:50px !important;
+  width:50px !important;
+  max-width:50px !important;
+}
+
 .chat_ib {
-  float: left;
   padding: 0 0 0 15px;
   width: 88%;
 }
@@ -247,7 +268,7 @@ img{ max-width:100%;}
                     <a href="#" onclick="asignarActivo({{$conversacion->idConversacionChat}},{{$conversacion->deshabilitado}})" v-on:click="fetchMessages({{$conversacion->idConversacionChat}},{{$personaLogeada->idPersona}})">
                     <div class="chat_list" name="divConversacion" id="divConversacion{{$conversacion->idConversacionChat}}">
                         <div class="chat_people">
-                            <div class="chat_img"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
+                            <div class="chat_imgIzquierda"> <img src="{{asset("storage/perfiles/$personaReceptora->imagenPersona")}}" alt="imagen de perfil de {{$personaReceptora ->nombrePersona}} {{$personaReceptora->apellidoPersona}}">  </div>
                                 <div class="chat_ib">
                                 <h5> {{$personaReceptora->nombrePersona}} {{$personaReceptora->apellidoPersona}} <span name="notificacionConversacion{{$conversacion->idConversacionChat}}" id="notificacionConversacion{{$conversacion->idConversacionChat}}" @if((!$conversacion->ultimoMensaje->visto) && $conversacion->ultimoMensaje->idPersona != $personaEmisora->idPersona) class="circuloNotificacion" @endif> </span> <span class="chat_date">{{$conversacion->ultimoMensaje->created_at}}</span></h5>
                                 <p id="ultimoMensajeConversacion{{$conversacion->idConversacionChat}}" @if((!$conversacion->ultimoMensaje->visto) && $conversacion->ultimoMensaje->idPersona != $personaEmisora->idPersona) class="mensajeSinLeer" @endif >
