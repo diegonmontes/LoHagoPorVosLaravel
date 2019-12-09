@@ -103,6 +103,8 @@
             $("#msgnombreUsuario").append("El nombre de usuario es obligatorio.")
         }else{
             $("#msgnombreUsuario").empty();
+            $("#msgnombreUsuario").css("display","none");
+
         }
     }
 
@@ -128,6 +130,8 @@
         
         }else{
             $("#msgmailUsuario").empty();
+            $("#msgmailUsuario").css("display","none");
+
         }
     }
 
@@ -147,6 +151,8 @@
             $("#msgclaveUsuario").append("La contraseña debe contener como minimo 8 caracteres.");
         }else{
             $("#msgclaveUsuario").empty();
+            $("#msgclaveUsuario").css("display","none");
+
         }
 
     }
@@ -164,6 +170,8 @@
             $("#msgclaveUsuario").append("Las contraseñas no coinciden.");
         }else{
             $("#msgclaveUsuario").empty();
+            $("#msgclaveUsuario").css("display","none");
+
         }
     }
 

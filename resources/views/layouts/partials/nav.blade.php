@@ -9,12 +9,12 @@
     @if(Request::path() != 'login' && Request::path() != 'register')
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                <form class="navbar-form" role="search" action="{{route('buscar')}}">
+                <li class="nav-item liBuscar">
+                    <form class="navbar-form" role="search" action="{{route('buscar')}}">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Buscar" name="filtrar">
+                            <input type="text" class="form-control inputBuscar" placeholder="Buscar" name="filtrar">
                             <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                                <button class="btn btn-default botonLupa" type="submit"><i class="fas fa-search"></i></button>
                             </span>
                         </div>
                     </form>

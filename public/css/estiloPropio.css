@@ -343,6 +343,15 @@ Date picker
     margin-bottom: 3%
   }
 
+  #navbarSupportedContent{
+
+    background-color:#21b300;
+    padding-left: 3%;
+
+  }
+
+ 
+
  }
 
  @media (min-width: 576px) and (max-width: 767.98px) { 
@@ -370,6 +379,15 @@ Date picker
   .margenCardInicio{
     min-width: 576px;
     margin-bottom: 3%
+  }
+
+  #navbarSupportedContent{
+
+    background-color:#21b300;
+    padding-left: 3%;
+    margin-right: -3%;
+    margin-left: -3%;
+    
   }
 
 }
@@ -405,6 +423,15 @@ Date picker
   .navbar-nav li{
     width: max-content;
   }
+
+  #navbarSupportedContent{
+
+    background-color:#21b300;
+    padding-left: 3%;
+    margin-right: -3%;
+    margin-left: -3%;
+    
+  }
 }
 
 @media (min-width: 992px) and (max-width: 1199.98px) { 
@@ -424,6 +451,11 @@ Date picker
   .imgCarousel{
     width: 300px !important;
     min-height: 100% !important;
+  }
+
+  .liBuscar{
+    position: absolute;
+    margin-left: -35%;
   }
 }
 
@@ -468,6 +500,11 @@ Date picker
     top: 30%;
   }
 
+  .liBuscar{
+    position: absolute;
+    margin-left: -27%;
+  }
+
 }
 
 .imagenListaPostulante{
@@ -501,3 +538,16 @@ Date picker
   margin-bottom:-3px;
   color:#fff !important;
 }
+
+.botonLupa{
+  background-color:#fff;
+  border-right: 0px #fff solid;
+  border-radius: 0px 4px 4px 0px;
+}
+
+.inputBuscar{
+  background-color:#fff;
+  border-right: 0px#fff solid;
+  border: 0px #fff;
+}
+
