@@ -67,8 +67,32 @@ img{ max-width:100%;}
   float: left;
   width: 11%;
 }
-.chat_ib {
+.chat_imgIzquierda {
   float: left;
+  margin-right:30px;
+}
+
+.chat_imgIzquierda img{
+  border-radius:50%;
+  height:50px !important;
+  width:50px !important;
+  max-width:50px !important;
+}
+
+.chat_imgDerecha {
+  float: right;
+  width: 50px !important;
+  margin-left:30px;
+}
+
+.chat_imgDerecha img {
+  border-radius:50%;
+  height:50px !important;
+  width:50px !important;
+  max-width:50px !important;
+}
+
+.chat_ib {
   padding: 0 0 0 15px;
   width: 88%;
 }
@@ -194,6 +218,8 @@ img{ max-width:100%;}
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
             background-color: #555;
         }
+
+        
     </style>
 @endsection
 @section('content')
