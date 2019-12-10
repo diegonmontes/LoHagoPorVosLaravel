@@ -449,7 +449,6 @@ Date picker
   }
 
   .imgCarousel{
-    width: 300px !important;
     min-height: 100% !important;
   }
 
@@ -478,7 +477,6 @@ Date picker
   margin-right: 3%;
 } */
   .imgCarousel{
-    width: 35% !important;
     min-height: 100% !important;
   }
 

@@ -18,20 +18,14 @@
         <div class="carousel-inner">
           <div class="carousel-item active">
           <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="{{asset('images/lohagoporvosBannerUno.png')}}" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
-                <h5> Primera imagen </h5>
-                <p> Subtitulo</p>
             </div>
           </div>
           <div class="carousel-item">
                 <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="{{asset('images/lohagoporvosBannerDos.png')}}" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
-                <h5> Segunda imagen </h5>
-                <p> Subtitulo</p>
             </div>
           </div>
           <div class="carousel-item">
                 <img class="d-block w-100 imgCarousel" data-src="holder.js/800x400?auto=yes&amp;bg=777&amp;fg=555&amp;text=First slide" alt="First slide [800x400]" src="{{asset('images/lohagoporvosBannerTres.png')}}" data-holder-rendered="true">            <div class="carousel-caption d-none d-md-block">
-                <h5> Tercera imagen </h5>
-                <p> Subtitulo</p>
             </div>
           </div>
         </div>
