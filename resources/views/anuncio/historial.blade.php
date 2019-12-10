@@ -51,7 +51,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoPendiente->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoPendiente->imagenTrabajo" )}}" alt="{{$trabajoPendiente->imagenTrabajo}}">
 
             @endif
          
@@ -98,7 +98,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoAsignar->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoAsignar->imagenTrabajo" )}}" alt="{{$trabajoAsignar->imagenTrabajo}}">
 
             @endif
          
@@ -153,7 +153,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoEsperar->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoEsperar->imagenTrabajo" )}}" alt="{{$trabajoEsperar->imagenTrabajo}}">
 
             @endif
          
@@ -201,7 +201,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoTerminado->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoTerminado->imagenTrabajo" )}}" alt="{{$trabajoTerminado->imagenTrabajo}}">
 
             @endif
          
@@ -249,7 +249,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoCerrado->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoCerrado->imagenTrabajo" )}}" alt="{{$trabajoCerrado->imagenTrabajo}}">
 
             @endif
          
@@ -297,7 +297,7 @@
                 <img class="imagenAnuncio" src="{{ asset("images/imagenCategoria/$imagenCategoria" )}}" alt="{{$imagenCategoria}}">
 
             @else
-                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajo->imagenTrabajo" )}}" alt="{{$trabajoCancelado->imagenTrabajo}}">
+                <img class="imagenAnuncio" src="{{ asset("storage/trabajos/$trabajoCancelado->imagenTrabajo" )}}" alt="{{$trabajoCancelado->imagenTrabajo}}">
 
             @endif
          
