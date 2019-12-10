@@ -1,5 +1,10 @@
 
 @extends('layouts.layout')
+
+@section('jsHead')
+	<script src="{{asset('js/previaImagen.js')}}"></script>
+@endsection
+
 @section('css')
 
 <style >
@@ -234,13 +239,13 @@
           console.log(errors);
           //Quitamos el titulo y agregamos uno nuevo
           $('.tituloModal').empty();
-          $('.tituloModal').append('Error al actualizar los datos');
+          $('.tituloModal').append('Error al enviar la valoración');
           //Quitamso el icono de carga
           $('#cargando').empty();
           //Agregamos un mensaje
           $('#mensaje').append('<br><h5 style="margin-left: 3%">'+errors.errors.valor[0]+'</h5><br>');
           //Agregamos el boton cerrar
-          $('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+          $('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>');
           
           
         }                      

@@ -122,7 +122,7 @@
 									<div class="col-xs-12 col-sm-12 col-md-6">
 										<div class="form-group">
 											<label>TELEFONO</label><br>
-											<input type="text" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif" placeholder="(299)15123456" required>
+											<input type="number" name="telefonoPersona" id="telefonoPersona" class="form-control input-sm inputBordes" style="color: #1e1e27" value="@if($existePersona){{ $persona->telefonoPersona }}@endif" placeholder="(299)15123456" required>
 											<span id="msgtelefonoPersona" class="text-danger">{{ $errors->first('telefonoPersona') }}</span>
 
 										</div>
@@ -669,13 +669,13 @@
 				error: function(msg){
 					//Quitamos el titulo y agregamos uno nuevo
 					$('.tituloModal').empty();
-					$('.tituloModal').append('Error al crear el anuncio');
+					$('.tituloModal').append('Error al crear el perfil');
 					//Quitamso el icono de carga
 					$('#cargando').empty();
 					//Agregamos un mensaje
 					$('#mensaje').append('<br><h5 style="margin-left: 3%">Por favor revise todos los campos del formulario.</h5><br>');
 					//Agregamos el boton cerrar
-					$('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>');
+					$('.botonCerrar').append('<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>');
 					//Mostramos el mensaje de error
 					var errors = $.parseJSON(msg.responseText);
 					$.each(errors.errors, function (key, val) {
