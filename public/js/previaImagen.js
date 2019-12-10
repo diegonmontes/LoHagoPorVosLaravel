@@ -13,7 +13,6 @@ function showMyImage(fileInput) {
             return function(e) { 
                 aImg.src = e.target.result;
                 img.innerHTML = '<img id="thumbnil" class="preview-imagenTrabajo"   src="'+aImg.src+'" />';
-                console.log(aImg.src);
             }; 
         })(img);
         reader.readAsDataURL(file);
